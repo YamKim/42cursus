@@ -346,48 +346,41 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 	return (ret);
 }
 
-/*  */
+/* split string */
 int		is_charset(char c, char *charset)
 {
-	int	idx;
-
-	idx = 0;
-	while (charset[idx])
+	while (*charset)
 	{
-		if (c == charset[idx])
+		if (c == *(charset++))
 			return (1);
-		++idx;
 	}
 	return (0);
 }
 
-#include <stdio.h>
+// use double pointer to save the position of single pointer
 int		word_handle(char **str, char *charset, char **ft_sp, int idx)
 {
 	char	*get_word(char *str, char *charset);
 	int		ret;
 
 	ret = 0;
-	printf("idx: %d\n", idx);
 	while (**str)
 	{
-		printf("str: %c\n", **str);
 		while (**str && is_charset(**str, charset))
 			++(*str);
 		if (**str && !is_charset(**str, charset))
 		{
-			// when 'idx' is -1 -> count word
-			if (idx == -1)
-				++ret;
 			// when 'idx' is greater or equal with 0, fill the word
-			else
-			{
+			if (idx >= 0)
 				ft_sp[idx] = get_word(*str, charset);
-				break ;
-			}
+			// when 'idx' is -1 -> count word
+			else
+				++ret;
 		}
 		while (**str && !is_charset(**str, charset))
-			++(*str);
+			++(*str);	
+		if (idx >= 0)
+			break;
 	}
 	return (ret);
 }
@@ -403,12 +396,9 @@ char	*get_word(char *str, char *charset)
 		++size;
 	ret = (char *)malloc(sizeof(char) * (size + 1));
 	ret[size] = '\0';
-	idx = 0;
-	while (idx < size)
-	{
+	idx = -1;
+	while (++idx < size)
 		ret[idx] = str[idx];
-		++idx;
-	}
 	return (ret);
 }
 
@@ -416,18 +406,19 @@ char	**ft_split(char *str, char *charset)
 {
 	char	**ret;
 	int		size;
-	int		k;
-
-	char *str_tmp1 = str;
+	int		idx;
+	char	*str_tmp1;
+	char	*str_tmp2;
+		
+	str_tmp1 = str;
 	size = word_handle(&str_tmp1, charset, 0, -1);
-	printf("size: %d\n", size);
 	if (!(ret = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
 	ret[size] = NULL;
-	k = 0;
-	char *str_tmp2 = str;
-	while (k < size)
-		word_handle(&str_tmp2, charset, ret, k++);
+	idx = 0;
+	str_tmp2 = str;
+	while (idx < size)
+		word_handle(&str_tmp2, charset, ret, idx++);
 	return (ret);
 }
 
