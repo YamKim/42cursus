@@ -9,6 +9,21 @@ void	ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
+void	ft_putstr(char *str)
+{
+	while (*str)
+		ft_putchar(*(str++));
+}
+
+int		ft_strlen(char *str)
+{
+	int	ret;
+
+	ret = 0;
+	while (*(str++))
+		++ret;
+	return (ret);
+}
 
 void	ft_putnbr(int nbr)
 {
@@ -29,26 +44,6 @@ void	ft_putnbr(int nbr)
 	ft_putchar(nbr_tmp % 10 + '0');
 }
 
-void	ft_putstr(char *str)
-{
-	int	idx;
-
-	idx = 0;
-	while (str[idx])
-		write(1, &str[idx++], 1);
-}
-
-int		ft_strlen(char *str)
-{
-	int	ret;
-
-	ret = 0;
-	while (*(str++))
-		++ret;
-	return (ret);
-}
-
-#include <stdio.h>
 /* copy string */
 char	*ft_strcpy(char *dst, char *src)
 {
