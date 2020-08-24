@@ -158,7 +158,7 @@ unsigned int	ft_strlcat(char *dst, char *src, unsigned int size)
 		return (src_len + size);
 	itr = size - len + 1;
 	while (*src && --itr)
-		*(dst++) = *(src++);
+		*(dst++)  = *(src++);
 	*dst = '\0';
 	return (src_len + len);
 }
