@@ -1,7 +1,6 @@
-# FT String Header
+# BASIC
 [upper directory](..)
 
-## FT String Functions
 [basic string](#basic)
 - ft_putchar
 - ft_putstr
@@ -132,10 +131,11 @@
     목적: 
     1. size만큼의 크기를 갖는 dst(str 데이터)를 만들기 위함.  
     2. 복사될 수 있는 src의 길이를 반환하여 전체 값을 복사하기 위한 버퍼 크기 가늠.   
+
     반환: (int) 복사하고자 했던 src의 길이  
     예시: printf("res: %d, dst:%s\n", ft_strlcpy(str1, "Hello", 3), str1);  
-    주의: str1 배열로 초기화하기(참고: ft_putstr)  
     장점: strncpy 보완. size - 1 까지의 값만 복사하기 때문에 항상 '\0'값이 들어갈 공간 확보.  
+    > 주의: str1 배열로 초기화하기(참고: ft_putstr)  
 
 ### compare
 ---
@@ -156,7 +156,7 @@
     목적: 두 str의 데이터를 비교하고 다른 값이 나오는 시점의 값 차이를 구함.  
     반환: (int) s1과 s2가 달라지는 시점의 ASCII값 차이. (같으면 0)  
     예시: printf("res: %d\n", ft_strncmp("Abc", "ABc"));  
-    주의: 'while (*(s1++) 1= *(s2++))'로 쓰는 경우, 비교 후, return 시 다음 값에 대한 연산을 수행.
+    > 주의: 'while (*(s1++) 1= *(s2++))'로 쓰는 경우, 비교 후, return 시 다음 값에 대한 연산을 수행.
 
 - ft_strncmp
     ```c
@@ -223,7 +223,7 @@
     반환: (char *) dst에 src를 덧붙인 str 데이터  
     단점: ft_strcat 참고  
     예시: printf("res: %s\n", ft_strncat(dest, "ABC", 2));  
-    주의: ft_strcat 참고  
+    > 주의: ft_strcat 참고  
 
 - ft_strlcat
     ```c
