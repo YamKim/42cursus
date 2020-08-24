@@ -353,7 +353,7 @@ int		is_charset(char c, char *charset)
 }
 
 // use double pointer to save the position of single pointer
-int		word_handle(char **str, char *charset, char **ft_sp, int idx)
+int		handle_word(char **str, char *charset, char **ft_sp, int k)
 {
 	char	*get_word(char *str, char *charset);
 	int		ret;
@@ -365,16 +365,17 @@ int		word_handle(char **str, char *charset, char **ft_sp, int idx)
 			++(*str);
 		if (**str && !is_charset(**str, charset))
 		{
-			// when 'idx' is greater or equal with 0, fill the word
-			if (idx >= 0)
-				ft_sp[idx] = get_word(*str, charset);
+			// when 'idx' is greater or equal with 0,
+			// fill the word until facing charset
+			if (k >= 0)
+				ft_sp[k] = get_word(*str, charset);
 			// when 'idx' is -1 -> count word
 			else
 				++ret;
 		}
 		while (**str && !is_charset(**str, charset))
 			++(*str);	
-		if (idx >= 0)
+		if (k >= 0)
 			break;
 	}
 	return (ret);
@@ -401,19 +402,19 @@ char	**ft_split(char *str, char *charset)
 {
 	char	**ret;
 	int		size;
-	int		idx;
+	int		k;
 	char	*str_tmp1;
 	char	*str_tmp2;
 		
 	str_tmp1 = str;
-	size = word_handle(&str_tmp1, charset, 0, -1);
+	size = handle_word(&str_tmp1, charset, 0, -1);
 	if (!(ret = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
 	ret[size] = NULL;
-	idx = 0;
+	k = 0;
 	str_tmp2 = str;
-	while (idx < size)
-		word_handle(&str_tmp2, charset, ret, idx++);
+	while (k < size)
+		handle_word(&str_tmp2, charset, ret, k++);
 	return (ret);
 }
 

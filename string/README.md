@@ -1,25 +1,45 @@
-# BASIC
+# Contents
+
 [upper directory](..)
 
-[basic string](#basic)
+**Basic Functions** 
+
+[basic](#basic)
 - ft_putchar
 - ft_putstr
 - ft_strlen
 
-[copy string](#copy)
+[copy](#copy)
 - ft_strcpy
 - ft_strncpy
 - ft_strlcpy
 
-[compare string](#compare)
+[compare](#compare)
 - ft_strcmp
 - ft_strncmp
 
-[concat string](#concat)
+[concat](#concat)
 - ft_strcat
 - ft_strncat
 - ft_strlcat
 
+---
+
+**Application Functions**
+
+[number](#number)
+- ft_putnbr
+- ft_atoi
+- ft_atoi_base
+- cnt_digits
+- ft_convert_base
+
+[technic](#technic)
+- find_idx
+- ft_strstr
+- handle_word  
+
+## Basic Functions
 ### basic
 ---
 - ft_putchar
@@ -256,3 +276,10 @@
 
     참고: 버퍼 크기는 배열의 총 크기이며, 길이는 '\0'값을 제외한 그 앞까지의 크기를 말함.  
     예시: printf("res: %d, dest: %s\n", ft_strlcat(dest, "abc", 8), dest); 
+
+## Application Functions
+### number
+---
+
+### technic
+---
