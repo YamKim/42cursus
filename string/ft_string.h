@@ -1,14 +1,15 @@
 #ifndef FT_STRIHG_H
 # define FT_STINRG_H
 
-#include <unistd.h>
-#include <stdlib.h>
+# include <unistd.h>
+# include <stdlib.h>
 
-/* print string */
+/* basic */
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
+
 void	ft_putstr(char *str)
 {
 	void	ft_putchar(char c);
@@ -69,7 +70,7 @@ char	*strdup_slice(char *src, int beg, int end)
 	return (ret);
 }
 
-/* copy string */
+/* copy */
 char	*ft_strcpy(char *dst, char *src)
 {
 	char	*ret;
@@ -110,7 +111,7 @@ unsigned int	ft_strlcpy(char *dst, char *src, unsigned int size)
 	return (ret);
 }
 
-/* compare string */
+/* compare */
 int	ft_strcmp(char *s1, char *s2)
 {
 	while (*s1 || *s2)
@@ -138,7 +139,7 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 	return ((int)(*s1 - *s2));
 }
 
-/* concat string */
+/* concat */
 char	*ft_strcat(char *dst, char *src)
 {
 	char	*ret;
@@ -168,7 +169,7 @@ char	*ft_strncat(char *dst, char *src, unsigned int nb)
 
 unsigned int	ft_strlcat(char *dst, char *src, unsigned int size)
 {
-	int				ft_strlen(char c);
+	int				ft_strlen(char *str);
 	unsigned int	len;
 	unsigned int	src_len;
 	unsigned int	itr;
@@ -189,7 +190,7 @@ unsigned int	ft_strlcat(char *dst, char *src, unsigned int size)
 	return (src_len + len);
 }
 
-/* check string */
+/* check */
 int	is_space(char c)
 {
 	if (c == '\f' || c == '\n' || c == '\r'
@@ -205,49 +206,34 @@ int	is_numeric(char c)
 	return (0);
 }
 
-int	is_uniq_str(char *str)
-{
-	char	*tmp;
-
-	while (*str)
-	{
-		tmp = str + 1;
-		while (*tmp)
-		{
-			if (*tmp == *str)
-				return (0);
-			++tmp;
-		}
-		++str;
-		tmp = str;
-	}
-	return (1);
-}
-
-int	check_base(char *base)
-{
-	char	c;
-
-	if (!base[0] || !base[1])
-		return (0);
-	if(!is_uniq_str(base))
-		return (0);
-	while (*base)
-	{
-		c = *base;
-		if (c == '-' || c == '+' || is_space(c))
-			return (0);
-		++base;
-	}
-	return (1);
-}
-
 
 /*===============================================
 Number
 ===============================================*/
+void			ft_putnbr(int nbr)
+{
+	void			ft_putchar(char c);
+	int				sign;
+	unsigned int	nbr_tmp;
+
+	if (!nbr)
+		return ;
+	sign = nbr < 0 ? 1 : 0;
+	if (sign)
+	{
+		ft_putchar('-');
+		nbr_tmp = -nbr;
+	}
+	else
+		nbr_tmp = nbr;
+	ft_putnbr(nbr_tmp / 10);	
+	ft_putchar(nbr_tmp % 10 + '0');
+}
+
 int		ft_atoi(char *str)
 {
+	int				is_space(char c);
+	int				is_numeric(char c);
 	unsigned int	ret;
 	unsigned int	sign;
 
@@ -280,16 +266,60 @@ int		find_idx(char *str, char c)
 	return (-1);
 }
 
+/* ft_atoi_base */
+int	is_uniq_str(char *str)
+{
+	char	*tmp;
+
+	while (*str)
+	{
+		tmp = str + 1;
+		while (*tmp)
+		{
+			if (*tmp == *str)
+				return (0);
+			++tmp;
+		}
+		++str;
+		tmp = str;
+	}
+	return (1);
+}
+
+int	check_base(char *base)
+{
+	int		is_uniq_str(char *str);
+	int		is_space(char c);
+	char	c;
+
+	if (!base[0] || !base[1])
+		return (0);
+	if(!is_uniq_str(base))
+		return (0);
+	while (*base)
+	{
+		c = *base;
+		if (c == '-' || c == '+' || is_space(c))
+			return (0);
+		++base;
+	}
+	return (1);
+}
+
 int		ft_atoi_base(char *nbr, char *base)
 {
+	int				check_base(char *base);
+	int				ft_strlen(char *str);
+	int				is_space(char c);
+	int				find_idx(char *str, char c);
 	unsigned int	ret;
 	unsigned int	sign;
 	unsigned int	base_type;
 	int				add;
 
-	base_type = ft_strlen(base);
 	if (!check_base(base))
 		return (0);
+	base_type = ft_strlen(base);
 	while (is_space(*nbr))
 		++nbr;
 	sign = 0;
@@ -308,6 +338,7 @@ int		ft_atoi_base(char *nbr, char *base)
 	return (sign % 2 != 0 ? -ret : ret);
 }
 
+/* ft_convert_base */
 unsigned int	cnt_digits(unsigned int nbr, int type)
 {
 	unsigned int	ret;
@@ -323,6 +354,10 @@ unsigned int	cnt_digits(unsigned int nbr, int type)
 
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 {
+	int				check_base(char *base);
+	int				ft_atoi_base(char *nbr, char *base);
+	int				ft_strlen(char *str);
+	unsigned int	cnt_digits(unsigned int nbr, int type);
 	char			*ret;
 	int				from;
 	unsigned int	nbr_tmp;
@@ -360,8 +395,24 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 /*===============================================
 Technic
 ===============================================*/
+/* ft_strstr */
+char	*ft_strstr(char *str, char *to_find)
+{
+	int	ft_strlen(char *str);
+	int	ft_strncmp(char *s1, char *s2, unsigned int n);
+
+	while (*str)
+	{
+		if (!ft_strncmp(str, to_find, ft_strlen(to_find)))
+			return (str);
+		++str;
+	}	
+	return (NULL);	
+}
+
 int		ft_strstr_idx(char *str, char *to_find)
 {
+	int	ft_strlen(char *str);
 	int	ft_strncmp(char *s1, char *s2, unsigned int n);
 	int	ret;
 
@@ -374,19 +425,6 @@ int		ft_strstr_idx(char *str, char *to_find)
 		++str;
 	}
 	return (-1);
-}
-
-char	*ft_strstr(char *str, char *to_find)
-{
-	int	ft_strncmp(char *s1, char *s2, unsigned int n);
-
-	while (*str)
-	{
-		if (!ft_strncmp(str, to_find, ft_strlen(to_find)))
-			return (str);
-		++str;
-	}	
-	return (NULL);	
 }
 
 /* ft_split */
