@@ -8,6 +8,8 @@
 - ft_putchar
 - ft_putstr
 - ft_strlen
+- ft_strdup
+- strdup_slice
 
 [copy](#copy)
 - ft_strcpy
@@ -85,6 +87,61 @@
     목적: str의 길이를 구하기 위함.  
     반환: (int) str의 길이.   
     예시: printf("len: %d\n", ft_strlen("Hello World!\n"));
+
+- ft_strdup
+    ```c
+    char	*ft_strdup(char *src)
+    {
+    	char	*ret;
+    	int		idx;
+    	int		len;
+
+    	len = ft_strlen(src);
+    	ret = (char *)malloc(sizeof(char) * len);
+    	idx = 0;
+    	while (src[idx] != '\0')
+    	{
+    		ret[idx] = src[idx];
+    		++idx;
+    	}
+    	ret[idx] = '\0';
+    	return (ret);
+    }
+    ```
+    목적: str와 같은 데이터를 가진 새로운 데이터를 초기화하기 위함.  
+    반환: (char *) str 값을 가진 데이터. 
+    예시: char *new = ft_strdup("Hello World!");
+
+- strdup_slice
+    ```c
+    char    *strdup_slice(char *src, int beg, int end)
+    {
+        char    *ret;
+        int     idx;
+        int     len;
+        int     range;
+
+        len = ft_strlen(src);
+        range = end - beg + 1;
+        if (range > len)
+            return (NULL);
+        ret = (char *)malloc(sizeof(char) * range + 1);
+        idx = 0;
+        while (idx < range)
+        {
+            ret[idx] = src[beg + idx];
+            ++idx;
+        }
+        ret[idx] = '\0';
+        return (ret);
+    }
+    ```
+    목적: str의 부분 데이터를 가진 새로운 데이터를 초기화하기 위함.  
+    반환: (char *)
+    1. range가 len 이하 경우: str의 부분 값을 가진 데이터  
+    2. range가 len 초과 경우: NULL
+
+    예시: char *new = strdup_slice("Hello World!", 6, 11);
 
 ### copy
 ---
@@ -270,9 +327,9 @@
     }
     ```
     목적: dst 데이터(str) 뒤에 src 데이터를 최종 버퍼 크기가 size가 되도록 이어 붙임.  
-    반환: 
-    1. (int) dst 길이가 size보다 작으면 (src의 길이 + size) 값. 이는, dst가 src를 이어 붙이기 위한 최소 버퍼 크기를 의미. 
-    2. (int) dst 길이가 size보다 크면 dst에 src를 이어붙인 길이. 이는 버퍼 크기 
+    반환: (int)
+    1. dst 길이가 size보다 작으면 (src의 길이 + size) 값. 이는, dst가 src를 이어 붙이기 위한 최소 버퍼 크기를 의미. 
+    2. dst 길이가 size보다 크면 dst에 src를 이어붙인 길이. 이는 버퍼 크기 
 
     참고: 버퍼 크기는 배열의 총 크기이며, 길이는 '\0'값을 제외한 그 앞까지의 크기를 말함.  
     예시: printf("res: %d, dest: %s\n", ft_strlcat(dest, "abc", 8), dest); 
@@ -283,3 +340,113 @@
 
 ### technic
 ---
+- ft_strstr
+    ```c
+    char	*ft_strstr(char *str, char *to_find)
+    {
+    	while (*str)
+    	{
+    		if (!ft_strncmp(str, to_find, ft_strlen(to_find)))
+    			return (str);
+    		++str;
+    	}	
+    	return (NULL);	
+    }
+
+    // 응용
+    int     ft_strstr_idx(char *str, char *to_find)
+    {
+        int ret;
+
+        ret = 0;
+        while (*str)
+        {
+            if (!ft_strncmp(str, to_find, ft_strlen(to_find)))
+                return (ret);
+            ++ret;
+            ++str;
+        }
+        return (-1);
+    }
+    ```
+    목적: str 데이터가 to_find 데이터를 가지는지 판별.  
+    반환: (char *)
+    1. to_find가 시작하는 인덱스부터의 str 데이터.  
+    2. 찾지 못한다면, NULL  
+
+    설명: str 데이터의 시작점을 옮기며, to_find 데이터 전부를 비교.  
+    예시: printf("res: %s\n", ft_strstr("Hello World!", "or"));  
+    > 응용: to_find가 발견되는 첫 index 반환
+
+- ft_split
+    ```c
+    int		is_charset(char c, char *charset)
+    {
+    	while (*charset)
+    	{
+    		if (c == *(charset++))
+    			return (1);
+    	}
+    	return (0);
+    }
+    ```
+    목적: c가 charset의 요소인지 확인하기 위함.  
+    반환: (int) 맞으면 1, 아니면 0.
+
+    ```c
+    char    *strdup_range(char *src, int beg, int end)
+    {
+        char    *ret;
+        int     idx;
+        int     len;
+        int     range;
+
+        len = ft_strlen(src);
+        range = end - beg + 1;
+
+        if (range > len)
+            return (NULL);
+
+        ret = (char *)malloc(sizeof(char) * range + 1);
+        idx = 0;
+        while (idx < range)
+        {
+            ret[idx] = src[beg + idx];
+            ++idx;
+        }
+        ret[idx] = '\0';
+        return (ret);
+    }
+    ```
+    목적:
+    1. k가 음수인 경우: str이 charset의 요소에 의해 몇등분 되는지 계수.
+    2. k가 0이상인 경우: ft_sp[k]에 charset의 요소를 만나기 전까지의 str 데이터 삽입.
+
+    반환: (int) charset으로 구분되는 str의 단어수  
+    설명: str이 이중포인터로 쓰여서, charset의 요소를 만날 때 진행되어 온 주솟값을 기억. 
+
+    ```c
+    char	**ft_split(char *str, char *charset)
+    {
+    	char	**ret;
+    	int		size;
+    	int		k;
+    	char	*str_tmp1;
+    	char	*str_tmp2;
+    
+    	str_tmp1 = str;
+    	size = handle_word(&str_tmp1, charset, 0, -1);
+    	if (!(ret = (char **)malloc(sizeof(char *) * (size + 1))))
+    		return (NULL);
+    	ret[size] = NULL;
+    	k = 0;
+    	str_tmp2 = str;
+    	while (k < size)
+    		handle_word(&str_tmp2, charset, ret, k++);
+    	return (ret);
+    }
+    ```
+    목적: str의 데이터를 charset에 속한 요소를 기준으로 나누어 이중배열에 대입.  
+    반환: (char **) charset의 요소들을 기준으로 나누어진 각 str 값을 가지는 배열.  
+    예시: char **a = ft_split("Hello World!", "ld");
+    > 결과: a[0] = "He", a[1] = "o Wor", a[2] = "!"
