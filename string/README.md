@@ -37,9 +37,8 @@
 - ft_convert_base
 
 [technic](#technic)
-- find_idx
 - ft_strstr
-- handle_word  
+- ft_split  
 
 ## Basic Functions
 ### basic
@@ -48,7 +47,7 @@
     ```c
     void	ft_putchar(char c)
     {
-    	write(1, &c, 1);
+        write(1, &c, 1);
     }
     ```
     목적: char 자료형의 데이터를 편리하게 출력하기 위함.  
@@ -57,10 +56,12 @@
 
 - ft_putstr
     ```c
-    void    ft_putstr(char *str)
+    void	ft_putstr(char *str)
     {
-        while (*str)
-            ft_putchar(*(str++));
+    	void	ft_putchar(char c);
+
+    	while (*str)
+    		ft_putchar(*(str++));
     }
     ```
     목적: char *자료형(str)의 데이터를 편리하게 출력하기 위함.  
@@ -92,6 +93,7 @@
     ```c
     char	*ft_strdup(char *src)
     {
+        int     ft_strlen(char *str);
     	char	*ret;
     	int		idx;
     	int		len;
@@ -116,6 +118,7 @@
     ```c
     char    *strdup_slice(char *src, int beg, int end)
     {
+        int     ft_strlen(char *str);
         char    *ret;
         int     idx;
         int     len;
@@ -306,6 +309,7 @@
     ```c
     unsigned int	ft_strlcat(char *dst, char *src, unsigned int size)
     {
+        int             ft_strlen(char *str);
 	    unsigned int	len;
 	    unsigned int	src_len;
 	    unsigned int	itr;
@@ -337,6 +341,207 @@
 ## Application Functions
 ### number
 ---
+- ft_putnbr
+    ```c
+    void            ft_putnbr(int nbr)
+    {
+        void            ft_putchar(char c);
+        int             sign;
+        unsigned int    nbr_tmp;
+
+        if (!nbr)
+            return ;
+        sign = nbr < 0 ? 1 : 0;
+        if (sign)
+        {
+            ft_putchar('-');
+            nbr_tmp = -nbr;
+        }
+        else
+            nbr_tmp = nbr;
+        ft_putnbr(nbr_tmp / 10);
+        ft_putchar(nbr_tmp % 10 + '0');
+    }
+    ```
+    목적: int 자료형 수를 출력하기 위함.  
+    반환: (void) 표준출력에 nbr 출력.    
+    예시: ft_putnbr(42);
+
+- ft_atoi
+    ```c
+    int		ft_atoi(char *str)
+    {
+    	int				is_space(char c);
+    	int				is_numeric(char c);
+    	unsigned int	ret;
+    	unsigned int	sign;
+
+    	sign = 0;
+    	while (is_space(*str))
+    		++str;
+    	while (*str == '-' || *str == '+')
+    	{
+    		if (*str == '-')
+    			++sign;
+    		++str;
+    	}
+    	ret = 0;
+    	while (is_numeric(*str))
+    		ret = ret * 10 + (int)(*(str++) - '0');
+    	return (sign % 2 == 0 ? ret : -ret);
+    }
+    ```
+    목적: str 데이터를 int 데이터로 바꾸어 사용하기 위함.  
+    반환: (int) str 데이터의 형 변환된 정수값.  
+    예시: printf("res: %d\n", 42 + ft_atoi("42"));  
+
+- ft_atoi_base
+    ```c
+    int	is_uniq_str(char *str)
+    {
+    	char	*tmp;
+
+    	while (*str)
+    	{
+    		tmp = str + 1;
+    		while (*tmp)
+    		{
+    			if (*tmp == *str)
+    				return (0);
+    			++tmp;
+    		}
+    		++str;
+    		tmp = str;
+    	}
+    	return (1);
+    }
+    ```
+    목적: str 내에 중복되는 char가 없는지 확인.  
+    반환: (int) 있으면 0, 없으면 1.
+    
+    ```c
+    int	check_base(char *base)
+    {
+    	int		is_uniq_str(char *str);
+    	int		is_space(char c);
+    	char	c;
+
+    	if (!base[0] || !base[1])
+    		return (0);
+    	if(!is_uniq_str(base))
+    		return (0);
+    	while (*base)
+    	{
+    		c = *base;
+    		if (c == '-' || c == '+' || is_space(c))
+    			return (0);
+    		++base;
+    	}
+    	return (1);
+    }
+    ```
+    목적: base가 주어진 조건을 만족하는지 확인.  
+    반환: (int) 만족하면 1, 만족하지 않으면 0.
+
+    ```c
+    int		ft_atoi_base(char *nbr, char *base)
+    {
+    	int				check_base(char *base);
+    	int				ft_strlen(char *str);
+    	int				is_space(char c);
+    	int				find_idx(char *str, char c);
+    	unsigned int	ret;
+    	unsigned int	sign;
+    	unsigned int	base_type;
+    	int				add;
+
+    	if (!check_base(base))
+    		return (0);
+    	base_type = ft_strlen(base);
+    	while (is_space(*nbr))
+    		++nbr;
+    	sign = 0;
+    	while (*nbr == '-' || *nbr == '+')
+    	{
+    		if (*nbr == '-')
+    			++sign;
+    		++nbr;
+    	}
+    	ret = 0;
+    	while ((add = find_idx(base, nbr[0])) != -1)
+    	{
+    		ret = ret * base_type + add;
+    		++nbr;
+    	}
+    	return (sign % 2 != 0 ? -ret : ret);
+    }
+    ```
+    목적: 주어진 base진수의 str 데이터 nbr을 10진수로 변환.  
+    반환: (int) 변환된 10진수 수.
+    예시: printf("res: %d\n", ft_atoi_base("2a", "0123456789abcdef"));
+
+- ft_convert_base
+    ```c
+    unsigned int	cnt_digits(unsigned int nbr, int type)
+    {
+    	unsigned int	ret;
+
+    	ret = 0;
+    	while (nbr)
+    	{
+    		nbr /= type;
+    		ret++;
+    	}
+    	return (ret);
+    }
+    ```
+    목적: nbr의 자릿수(10진법 기준)를 계수하여 반환.  
+    반환: (int) nbr의 자릿수
+
+    ```c
+    char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
+    {
+    	int				check_base(char *base);
+    	int				ft_atoi_base(char *nbr, char *base);
+    	int				ft_strlen(char *str);
+    	unsigned int	cnt_digits(unsigned int nbr, int type);
+    	char			*ret;
+    	int				from;
+    	unsigned int	nbr_tmp;
+    	unsigned int	size;
+    	int				type;
+    
+    	if (!check_base(base_from) || !check_base(base_to))
+    		return (NULL);
+    	from = ft_atoi_base(nbr, base_from);
+    	type = ft_strlen(base_to);
+    	if (from < 0)
+    	{
+    		nbr_tmp = -from;
+    		size = cnt_digits(nbr_tmp, type) + 1;
+    		if (!(ret = (char *)malloc(sizeof(char) * size)))
+    			return (NULL);
+    		ret[0] = '-';
+    	}
+    	else
+    	{
+    		nbr_tmp = from;
+    		size = cnt_digits(nbr_tmp, type);
+    		if (!(ret = (char *)malloc(sizeof(char) * size)))
+    			return (NULL);
+    	}
+    	ret[size--] = '\0';
+    	while (nbr_tmp)
+    	{
+    		ret[size--] = base_to[nbr_tmp % type];
+    		nbr_tmp /= type;
+    	}
+    	return (ret);
+    }
+    ```
+    목적: base_from진법의 nbr(str 데이터)을 base_to진법의 수로 바꾸기 위함.  
+    반환: (char *) base_to 진법의 수  
+    예시: printf("res: %s\n", ft_convert_base("2a", "0123456789abcdef", "01"));
 
 ### technic
 ---
@@ -344,6 +549,9 @@
     ```c
     char	*ft_strstr(char *str, char *to_find)
     {
+        int	ft_strlen(char *str);
+        int	ft_strncmp(char *s1, char *s2, unsigned int n);
+
     	while (*str)
     	{
     		if (!ft_strncmp(str, to_find, ft_strlen(to_find)))
@@ -356,6 +564,8 @@
     // 응용
     int     ft_strstr_idx(char *str, char *to_find)
     {
+        int	ft_strlen(char *str);
+        int	ft_strncmp(char *s1, char *s2, unsigned int n);
         int ret;
 
         ret = 0;
@@ -394,45 +604,53 @@
     반환: (int) 맞으면 1, 아니면 0.
 
     ```c
-    char    *strdup_range(char *src, int beg, int end)
+    int		handle_word(char **str, char *charset, char **ft_sp, int k)
     {
-        char    *ret;
-        int     idx;
-        int     len;
-        int     range;
+    	int		is_charset(char c, char *charset);
+    	char	*strdup_slice(char *src, int beg, int end);
+    	int		ret;
+    	int		word_len;
+    	char	*beg;
 
-        len = ft_strlen(src);
-        range = end - beg + 1;
-
-        if (range > len)
-            return (NULL);
-
-        ret = (char *)malloc(sizeof(char) * range + 1);
-        idx = 0;
-        while (idx < range)
-        {
-            ret[idx] = src[beg + idx];
-            ++idx;
-        }
-        ret[idx] = '\0';
-        return (ret);
+    	ret = 0;
+    	word_len = 0;
+    	while (**str)
+    	{
+    		while (**str && is_charset(**str, charset))
+    			++(*str);
+    		beg = *str;
+    		if (**str && !is_charset(**str, charset))
+    			++ret;
+    		while (**str && !is_charset(**str, charset))
+    		{
+    			++(*str);
+    			++word_len;
+    		}
+    		if (k >= 0)
+    			break;
+    	}
+    	if (k >= 0)
+    		ft_sp[k] = strdup_slice(beg, 0, word_len - 1);
+    	return (ret);
     }
     ```
     목적:
     1. k가 음수인 경우: str이 charset의 요소에 의해 몇등분 되는지 계수.
     2. k가 0이상인 경우: ft_sp[k]에 charset의 요소를 만나기 전까지의 str 데이터 삽입.
 
-    반환: (int) charset으로 구분되는 str의 단어수  
-    설명: str이 이중포인터로 쓰여서, charset의 요소를 만날 때 진행되어 온 주솟값을 기억. 
+    반환: (int) charset으로 구분되는 str의 단어 수  
+    설명: str이 이중포인터이므로, charset의 요소를 만날 때까지 진행된 주솟값을 기억. 
 
     ```c
     char	**ft_split(char *str, char *charset)
     {
+    	int		handle_word(char **str, char *charset, char **ft_sp, int k);
     	char	**ret;
     	int		size;
     	int		k;
     	char	*str_tmp1;
     	char	*str_tmp2;
+    
     
     	str_tmp1 = str;
     	size = handle_word(&str_tmp1, charset, 0, -1);
