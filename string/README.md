@@ -1,6 +1,6 @@
 # Contents
 
-[upper directory](..)
+[upper directory](https://github.com/YamKim/ft_lib)
 
 **Basic Functions** 
 
