@@ -7,7 +7,7 @@
 /* basic */
 void	ft_putchar(char c)
 {
-	write(1, &c, 1);
+	write(1, &c, sizeof(char));
 }
 
 void	ft_putstr(char *str)
@@ -489,4 +489,5 @@ char	**ft_split(char *str, char *charset)
 		handle_word(&str_tmp2, charset, ret, k++);
 	return (ret);
 }
+
 #endif
