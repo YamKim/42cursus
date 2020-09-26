@@ -23,14 +23,14 @@
 ### basic
 - my_fgetc
     ```c
-    int		my_fgetc(int *fd)
-    {
-	    char	buf;
+	int	my_fgetc(int *fd)
+	{
+		char	buf;
 
-	    if (0 < read(*fd, &buf, sizeof(char)))
-	    	return (buf);
-	    return (EOF);
-    }
+		if (0 < read(*fd, &buf, sizeof(char)))
+			return (buf);
+		return (EOF);
+	}
     ```
     목적: file descriptor의 첫글자를 읽어들임. 여러 글자를 읽기 위한 도구.  
     반환: (int) 
@@ -40,17 +40,17 @@
 
 - my_fgets
     ```c
-    char	*my_fgets(char *str, int size, int *fd)
-    {
-    	int		idx;
-    	char	buf;
+	char	*my_fgets(char *str, int size, int *fd)
+	{
+		int		idx;
+		char	buf;
 
-    	idx = 0;
-    	while ((0 < (buf = my_fgetc(fd))) && (size - idx))
-    		str[idx++] = buf;
-    	str[idx] = '\0';
-    	return (str);
-    }
+		idx = 0;
+		while ((0 < (buf = my_fgetc(fd))) && (size - idx))
+			str[idx++] = buf;
+		str[idx] = '\0';
+		return (str);
+	}
     ```
     목적: file descriptor를 size만큼 읽어, str에 복사해 넣기.  
     반환: (char *) size 길이의 str (str의 버퍼 크기를 미리 크게 세팅해야함)  
@@ -58,35 +58,34 @@
 
 - my_input()
     ```c
-    char	*my_input()
-    {
-    	unsigned int	ft_strlcpy(char *dst, char *src, unsigned int size);
-    	char			*pre;
-    	char			*cur;
-    	int				size;
-    	char			buf;
+	char	*my_input(void)
+	{
+		char	*pre;
+		char	*cur;
+		int		size;
+		char	buf;
 
-    	size = 1;
-    	if (!(pre = (char *)malloc(sizeof(char) * (size + 1))))
-    		return (NULL);
-    	pre[size] = '\0';
-    	if (!(0 < read(STD_IN, pre, sizeof(char))))
-    		return (NULL);
-    	while (0 < read(STD_IN, &buf, sizeof(char)))
-    	{
-    		if (buf == 10)
-    			break ;
-    		++size;
-    		if (!(cur = (char *)malloc(sizeof(char) * (size + 1))))
-    			return (NULL);
-    		ft_strlcpy(cur, pre, size + 1);
-    		cur[size - 1] = buf;
-    		cur[size] = '\0';
-    		free(pre);
-    		pre = cur;
-    	}
-    	return (cur);	
-    }
+		size = 1;
+		if (!(pre = (char *)malloc(sizeof(char) * (size + 1))))
+			return (NULL);
+		pre[size] = '\0';
+		if (!(0 < read(STD_IN, pre, sizeof(char))))
+			return (NULL);
+		while (0 < read(STD_IN, &buf, sizeof(char)))
+		{
+			if (buf == 10)
+				break ;
+			++size;
+			if (!(cur = (char *)malloc(sizeof(char) * (size + 1))))
+				return (NULL);
+			ft_strlcpy(cur, pre, size + 1);
+			cur[size - 1] = buf;
+			cur[size] = '\0';
+			free(pre);
+			pre = cur;
+		}
+		return (cur);
+	}
     ```
     목적: 표준입력으로부터 문자열을 입력받아 (char *) 자료형 변수로 가지고 있기 위함.  
     반환: (char *) 표준입력으로 입력받은 데이터.  
@@ -98,21 +97,21 @@
 ### file
 - get_size
     ```c
-    int		get_size(char *target)
-    {
-    	int	fd;
-    	int	size;
+	int		get_size(char *target)
+	{
+		int	fd;
+		int	size;
 
-    	size = 0;
-    	if (0 < (fd = open(target, O_RDONLY)))
-    	{
-    		while (0 < my_fgetc(&fd))
-    			++size;
-    	}
-    	else
-    		return (-1);
-    	return (size);
-    }
+		size = 0;
+		if (0 < (fd = open(target, O_RDONLY)))
+		{
+			while (0 < my_fgetc(&fd))
+				++size;
+		}
+		else
+			return (-1);
+		return (size);
+	}
     ```
     목적: target의 이름을 가진 파일의 크기를 계산하기 위함.  
     반환: (int) 파일의 크기(글자 수)  
