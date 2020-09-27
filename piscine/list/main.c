@@ -8,8 +8,14 @@ void	free_data(void *data)
 
 void	data_addition(void *data)
 {
-
 	*(int *)data = *(int *)data + 1;
+}
+
+int		data_cmp(void *data1, void *data2)
+{
+	if (data1 == data2)
+		return (0);
+	return (1);
 }
 
 int main(void) {
@@ -26,10 +32,10 @@ int main(void) {
 	ft_list_push_back(&listEx, bp);
 	int *cp; int c = 3; cp = &c;
 	ft_list_push_back(&listEx, cp);
-	//int *dp; int d = 4; dp = &d;
-	//ft_list_push_back(&listEx, dp);
-	//int *ep; int e = 5; ep = &e;
-	//ft_list_push_back(&listEx, ep);
+	int *dp; int d = 4; dp = &d;
+	ft_list_push_back(&listEx, dp);
+	int *ep; int e = 5; ep = &e;
+	ft_list_push_back(&listEx, ep);
 	//ft_list_push_front(&listEx, cp);
 	//printf("addr: %p, data: %d\n", listEx, *(int *)listEx->data);
 	//printf("len: %d\n", ft_list_size(listEx));
@@ -47,6 +53,12 @@ int main(void) {
 	//printf("addr: %p, data: %d\n", pick, *(int *)pick->data);
 	//ft_list_reverse(&listEx);
 //	printf("len: %d\n", ft_list_size(listEx));
+	
+	//ft_list_foreach(listEx, data_addition);
+	//ft_list_foreach_if(listEx, data_addition, ep, data_cmp);
+	t_list *find = ft_list_find(listEx, dp, data_cmp);
+	printf("data: %p\n", dp);
+	printf("addr: %p, data: %p\n", find, find->data);
 
 #if 1
 	printf("original value\n");
