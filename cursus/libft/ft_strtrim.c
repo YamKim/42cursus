@@ -6,30 +6,40 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 06:35:48 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/01 08:00:14 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/01 19:38:48 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h> /////////
+#include <stdio.h> ///////////
 
-size_t	pass_set(char *s, char const *set, int start, int dir)
+static size_t	pass_set(char *s, char const *set, int start, int dir)
 {
 	size_t	ret;
 
 	ret = 0;
 	while (s[start + ret] && ft_strchr(set, s[start + ret]))
 		ret += dir;
-
 	return (ret);
 }
 
 char			*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	first;
+	size_t	last;
+	size_t	len_s1;
+	size_t	len_ret;
+	char	*ret;
 
 	first = pass_set((char *)s1, set, 0, 1);
+	len_s1 = ft_strlen((char *)s1);
+	last = len_s1 + pass_set((char *)s1, set, len_s1 - 1, -1);
+	len_ret = last - first;
 	printf("first idx: %d\n", (int)first);
-	printf("s1: %s\n", s1 + first);
-	return (NULL);	
+	printf("last idx: %d\n", (int)last);
+	printf("len_ret: %d\n", (int)len_ret);
+	if (!(ret = (char *)malloc(sizeof(char) * len_ret + 1)))
+		return (NULL);
+	ft_strlcpy(ret, (char *)s1 + first, len_ret + 1);
+	return (ret);	
 }
