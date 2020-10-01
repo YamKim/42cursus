@@ -6,12 +6,11 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 06:35:48 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/01 19:38:48 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/02 06:31:35 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h> ///////////
 
 static size_t	pass_set(char *s, char const *set, int start, int dir)
 {
@@ -35,11 +34,8 @@ char			*ft_strtrim(char const *s1, char const *set)
 	len_s1 = ft_strlen((char *)s1);
 	last = len_s1 + pass_set((char *)s1, set, len_s1 - 1, -1);
 	len_ret = last - first;
-	printf("first idx: %d\n", (int)first);
-	printf("last idx: %d\n", (int)last);
-	printf("len_ret: %d\n", (int)len_ret);
 	if (!(ret = (char *)malloc(sizeof(char) * len_ret + 1)))
 		return (NULL);
 	ft_strlcpy(ret, (char *)s1 + first, len_ret + 1);
-	return (ret);	
+	return (ret);
 }
