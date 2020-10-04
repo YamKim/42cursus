@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 15:24:12 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/02 15:46:03 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/04 19:45:12 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
 	if (s == NULL || fd < 0)
 		return ;

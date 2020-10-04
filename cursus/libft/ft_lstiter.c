@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 07:50:32 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/03 07:54:08 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/04 19:42:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
 	if (lst == NULL || f == NULL)
 		return ;

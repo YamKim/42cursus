@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:44:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/09/29 17:44:01 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/04 18:26:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	unsigned int	ret;
-	unsigned int	idx;
+	int	ret;
+	int	itr;
 
 	ret = 0;
-	idx = (unsigned int)size;
-	while (*src && --idx)
+	itr = (int)size;
+	while (*src && --itr)
 	{
 		*(dest++) = *(src++);
 		++ret;
