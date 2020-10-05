@@ -446,9 +446,46 @@ int main(void) {
 ```
 
 # libc 외
-### string 테크닉
-- ft_substr
-- ft_strjoin
+## string technic
+### ft_substr
++ 목적: string s의 부분 string을 사용하기 위함.
++ 구현:  
+	1. s의 길이를 구하고, start가 길이 이상인 경우, NUL을 가지는 버퍼를 반환합니다.
+	2. start가 s의 길이보다 작으면 그 부분부터 len개의 char가 s에 존재하는지 조사합니다.
+	3. 가능하다면, len개의 char 모두 복사하고, 그렇지 않다면 s의 끝까지 복사합니다.
+```cpp
+// 형태
+char *ft_substr(char const *s, unsigned int start, size_t len)
+// 사용 예시
+int main(void) {
+	char *src = "Hello 42 World";
+	char *res = ft_substr(src, 6, (size_t)2);
+	printf("result: %s\n", res);
+}
+// 출력 결과: 
+// result: 42
+```
+
+## string technic
+### ft_strjoin
++ 목적: string s의 부분 string을 사용하기 위함.
++ 구현:  
+	1. s의 길이를 구하고, start가 길이 이상인 경우, NUL을 가지는 버퍼를 반환합니다.
+	2. start가 s의 길이보다 작으면 그 부분부터 len개의 char가 s에 존재하는지 조사합니다.
+	3. 가능하다면, len개의 char 모두 복사하고, 그렇지 않다면 s의 끝까지 복사합니다.
+```cpp
+// 형태
+char *ft_substr(char const *s, unsigned int start, size_t len)
+// 사용 예시
+int main(void) {
+	char *src = "Hello 42 World";
+	char *res = ft_substr(src, 6, (size_t)2);
+	printf("result: %s\n", res);
+}
+// 출력 결과: 
+// result: 42
+```
+
 - ft_strtrim
 - ft_split
 - ft_itoa
