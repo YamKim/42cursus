@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 06:00:43 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/02 06:46:25 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 07:40:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static size_t	handle_word(char **str, char c, char **ft_sp, int k)
 	return ((size_t)ret);
 }
 
-void			free_all(char **ret, int k)
+void			free_all(char **ft_sp, int k)
 {
 	int	idx;
 
@@ -70,7 +70,7 @@ char			**ft_split(char const *s, char c)
 	while (k < size)
 	{
 		handle_word(&str_tmp2, c, ret, k++);
-		if (str_tmp2[k] == NULL)
+		if (ret[k] == NULL)
 		{
 			free_all(ret, k);
 			break ;

@@ -19,7 +19,7 @@ void *ft_memset(void *s, int c, size_t n)
 int main(void) {
     char *s = strdup("Hello 42 Wolrd"); // 모두가 아는 그 인사..
     void *s_init = ft_memset((void *)s, '1', strlen(s));
-    printf("size: %d, s_init: %s\n", (int)strlen(s), (char *)s_init);
+    printf("size: %ld, s_init: %s\n", strlen(s), (char *)s_init);
 }
 // 출력결과:
 // size: 14, s_init: 11111111111111
@@ -37,7 +37,7 @@ void ft_bzero(void *s, size_t n)
 int main(void) {
     char *s = strdup("Hello 42 World");
     bzero((void *)s, strlen(s));
-    printf("size: %d, s_init: %s\n", (int)strlen(s), s);
+    printf("size: %ld, s_init: %s\n", strlen(s), s);
 }
 // 출력결과:
 // size: 0, s:
@@ -168,11 +168,11 @@ int main(void) {
 	1. str의 요소가 NUL(문자열의 마지막)이 될 때까지 증가 시키며 요소의 수를 셉니다.
 ```cpp
 // 형태
-int	ft_strlen(char *str)
+size_t ft_strlen(char *str)
 // 사용 예시
 int main(void) {
 	char *src = strdup("Hello 42 World");
-	printf("len: %d\n", ft_strlen(src));
+	printf("len: %ld\n", ft_strlen(src));
 }
 // 출력 결과: 
 // len: 14

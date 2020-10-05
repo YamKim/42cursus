@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 16:06:22 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/04 18:23:23 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 07:42:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	int	ret;
+	size_t	ret;
 
 	ret = 0;
 	while (*(str++))

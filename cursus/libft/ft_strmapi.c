@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 11:18:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/02 11:48:26 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 07:43:12 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
 	char	*ret;
-	int		idx;
-	int		len;
+	size_t	idx;
+	size_t	len;
 
 	if (s == NULL || f == NULL)
 		return (NULL);
