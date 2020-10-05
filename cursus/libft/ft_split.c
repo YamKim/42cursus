@@ -40,6 +40,18 @@ static size_t	handle_word(char **str, char c, char **ft_sp, int k)
 	return ((size_t)ret);
 }
 
+void			free_all(char **ret, int k)
+{
+	int	idx;
+
+	idx = 0;
+	while (idx < k)
+	{
+		free(ft_sp[idx]);
+		++idx;
+	}
+}
+
 char			**ft_split(char const *s, char c)
 {
 	char	**ret;
@@ -56,6 +68,13 @@ char			**ft_split(char const *s, char c)
 	k = 0;
 	str_tmp2 = (char *)s;
 	while (k < size)
+	{
 		handle_word(&str_tmp2, c, ret, k++);
+		if (str_tmp2[k] == NULL)
+		{
+			free_all(ret, k);
+			break ;
+		}
+	}
 	return (ret);
 }
