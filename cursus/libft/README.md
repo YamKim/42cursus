@@ -178,6 +178,24 @@ int main(void) {
 // len: 14
 ```
 
+### ft_strdup
+: duplicate a string  
++ 목적: 입력받은 문자열을 요소로 갖는 char *를 만드는 것.
++ 구현:  
+	1. 입력받은 string(s)의 길이를 구하고, 길이 + 1의 크기를 갖는 메모리를 할당합니다.
+	2. string의 각 요소 값을 새로 할당한 포인터에 복사합니다. 마지막 요소는 (NUL)로 채우기.
+```cpp
+// 형태
+char *ft_strdup(const char *s)
+// 사용 예시
+int main(void) {
+	char *src = ft_strdup("Hello 42 World");
+	printf("result: %s\n", src);
+}
+// 출력 결과: 
+// result: Hello 42 World
+```
+
 ### ft_strlcpy  
 : size-bounded string copying  
 + 목적: dest의 버퍼 크기가 size가 되도록 src의 값을 ***안전히(마지막 요소는 NUL로)*** dest에 복사.    
@@ -192,7 +210,7 @@ int main(void) {
 size_t ft_strlcpy(char *dest, const char *src, size_t size)
 // 사용 예시
 int main(void) {
-	char *src = strdup("Hello 42 World");
+	char *src = ft_strdup("Hello 42 World");
 	char dest[0xF0];
 	size_t len = ft_strlcpy(dest, src, (size_t)20);
 	printf("len: %d, dest: %s\n", (int)len, dest);
@@ -216,8 +234,8 @@ int main(void) {
 size_t ft_strlcat(char *dest, const char *src, size_t size)
 // 사용 예시
 int main(void) {
-	char *src = strdup("Hello 42 World");
-	char *dest = strdup("yekim, ");
+	char *src = ft_strdup("Hello 42 World");
+	char *dest = ft_strdup("yekim, ");
 	size_t len = ft_strlcat(dest, src, (size_t)16);
 	printf("len: %d, dest: %s\n", (int)len, dest);
 }
@@ -236,7 +254,7 @@ int main(void) {
 char *ft_strchr(const char *s, int c)
 // 사용 예시
 int main(void) {
-	char *src = strdup("Hello 42 World");
+	char *src = ft_strdup("Hello 42 World");
 	char *res = ft_strchr(src, (int)'o');
 	printf("dest: %s\n", res);
 }
@@ -255,7 +273,7 @@ int main(void) {
 char *ft_strrchr(const char *s, int c)
 // 사용 예시
 int main(void) {
-	char *src = strdup("Hello 42 World");
+	char *src = ft_strdup("Hello 42 World");
 	char *res = ft_strrchr(src, (int)'o');
 	printf("dest: %s\n", res);
 }
@@ -273,8 +291,8 @@ int main(void) {
 int ft_strncmp(const char *s1, const char *s2, size_t n)
 // 사용 예시
 int main(void) {
-	char *src1 = strdup("Hello 32 World");
-	char *src2 = strdup("Hello 42 World");
+	char *src1 = ft_strdup("Hello 32 World");
+	char *src2 = ft_strdup("Hello 42 World");
 	int n = ft_strncmp(src1, src2, ft_strlen(src1));
 	if (n > 0)			printf("result: src1 > src2\n");
 	else if (n == 0)	printf("result: src1 = src2\n");
@@ -293,11 +311,11 @@ int main(void) {
 	3. (haystack의 길이 - needle의 길이)가 0보다 작아도 루프를 돌지 않습니다.
 ```cpp
 // 형태
-int ft_strncmp(const char *s1, const char *s2, size_t n)
+char *ft_strnstr(const char *haystack, const char *needle)
 // 사용 예시
 int main(void) {
-	char *haystack = strdup("Hello 42 World");
-	char *needle = strdup("42");
+	char *haystack = ft_strdup("Hello 42 World");
+	char *needle = ft_strdup("42");
 	char *res = ft_strnstr(haystack, needle);
 	printf("result: %s\n", res);
 }
@@ -305,13 +323,130 @@ int main(void) {
 // result: 42 World
 ```
 
-## stdlib.h
-- ft_atoi
+# stdlib.h
+## memory/number allocation
+### ft_calloc
+: allocate dynamic memory
++ 목적: nmemb x size 만큼의 공간을 만들고, 요소를 NUL로 채우는 것.
++ 구현:  
+	1. 최종으로 반환할 크기(nmemb x size)만큼 버퍼를 만들기.
+	2. 각 버퍼에 접근하여 NUL로 채우기.
+```cpp
+// 형태
+void *ft_calloc(size_t nmemb, size_t size)
+// 사용 예시
+int main(void) {
+	char *hi = ft_calloc(4, sizeof(char));
+	hi[0] = 'H';
+	hi[1] = 'i';
+	hi[2] = '!';
+	printf("result: %s\n", hi);
+	return (0);
+}
+// 출력 결과: 
+// result: Hi!
+```
 
+### ft_atoi
+: convert a string to an integer
++ 목적: string으로 숫자를 받을 때, 이를 int형 숫자로 변환(user로부터 input 받을 때 사용).
++ 구현:  
+	1. string nptr의 각 요소에 접근하여 white space인 경우 건너뜁니다.
+	2. 부호('-', '+')가 연이어 나올 경우, '-'의 수를 셉니다.
+	3. 만약, 부호 다음 공백이나 숫자가 아닌 수가 나오면 0을 반환합니다.
+	4. 부호 다음 숫자가 나온 경우, 루프 안에서 자릿수에 맞는 값을 누적시킵니다.  
+	   참고: ret = ret * 10 + (int)(*(nptr++) - '0');
+	5. 반환 직전에 ('-'의 수 % 2)를 기준으로 음수라면 '-'를 붙여 반환합니다.
++ 주의: -(int의 최솟값)은 int 자료형이 담지 못하기 때문에, 이를 담기위해 unsigned int 이용하기.  
+```cpp
+// 형태
+int ft_atoi(const char *nptr)
+// 사용 예시
+int main(void) {
+	int nbrEx1 = ft_atoi(" - 4242  ");
+	int nbrEx2 = ft_atoi(" --+-4242");
+	printf("nbr1: %d, nbr2: %d\n", nbrEx1, nbrEx2);
+}
+// 출력 결과: 
+// nbr1: 0, nbr2: -4242
+```
+
+# stdio.h
+## file 관련
+### ft_putchar_fd
+: fputc - output of characters
++ 목적: 표준출력이 아닌, 파일에 char를 출력하기 위함.
++ 구현:  
+	1. write 함수를 사용하여 입력받은 file descriptor에 char 출력합니다.
++ 참고: 지면을 아끼기 위해, 파일 open시 오류처리는 따로 하지 않겠습니다.
+```cpp
+// 형태
+void ft_putchar_fd(char c, int fd)
+// 사용 예시
+int main(void) {
+	int fd = open("test.txt", O_CREAT | O_TRUNC | O_WRONLY);
+	ft_putchar_fd('h', fd);
+	ft_putchar_fd('i', fd);
+}
+// sudo cat -e test.txt: 
+// hi%
+```
+
+### ft_putstr_fd
+: fputs - output of characters
++ 목적: 표준출력이 아닌, 파일에 string을 출력하기 위함.
++ 구현:  
+	1. ft_putchar_fd와 같이 write함수를 사용합니다.
+	2. string의 길이를 구하여 버퍼를 통째로 출려합니다.
+```cpp
+// 형태
+void ft_putstr_fd(char *s, int fd)
+// 사용 예시
+int main(void) {
+	int fd = open("test.txt", O_CREAT | O_TRUNC | O_WRONLY);
+	ft_putstr_fd("Hello 42 World", fd);
+} 
+// sudo cat -e test.txt: 
+// Hello 42 World%
+```
+
+### ft_putendl_fd
+: fputs - output of characters
++ 목적: 표준출력이 아닌, 파일에 string 출력 후 줄바꿈을 추가하는 것.
++ 구현:  
+	1. ft_putstr_fd로 string을 출력 후, ft_putchar_fd로 줄바꿈을 추가합니다.
+```cpp
+// 형태
+void ft_putendl_fd(char *s, int fd)
+// 사용 예시
+int main(void) {
+	int fd = open("test.txt", O_CREAT | O_TRUNC | O_WRONLY);
+	ft_putendl_fd("Hello 42 World", fd);
+} 
+// sudo cat -e test.txt: 
+// Hello 42 World$
+```
+
+### ft_putnbr_fd
+: fputs - output of characters
++ 목적: int형 숫자를 파일에 출력하는 것.
++ 구현:  
+	1. (n / 10)과 (n % 10)을 적절히 사용하여 각자리의 숫자를 뽑아냅니다.
+	2. ft_putchar_fd를 이용하여 각자리의 숫자를 출력합니다.  
+```cpp
+// 형태
+void ft_putnbr_fd(int n, int fd)
+// 사용 예시
+int main(void) {
+	int fd = open("test.txt", O_CREAT | O_TRUNC | O_WRONLY);
+	ft_putnbr_fd(424242, fd);
+} 
+// sudo cat -e test.txt: 
+// 424242%
+```
+
+# libc 외
 ### string 테크닉
-
-- ft_calloc
-- ft_strdup
 - ft_substr
 - ft_strjoin
 - ft_strtrim
@@ -328,11 +463,7 @@ int main(void) {
 - ft_toupper
 - ft_tolower
 
-### 파일관련
-- ft_putchar_fd
-- ft_putstr_fd
-- ft_putendl_fd
-- ft_putnbr_fd
+
 
 ### list 관련
 - ft_lstnew
