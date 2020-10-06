@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 06:00:43 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/06 19:24:02 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 19:26:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static size_t	get_size(const char *s, char c)
 	ret = 0;
 	while (*s)
 	{
-		while((*s != '\0') && (*s == c))
+		while ((*s != '\0') && (*s == c))
 			++s;
 		if ((*s != '\0') && (*s != c))
 			++ret;
 		while ((*s != '\0') && (*s != c))
-			++s;	
+			++s;
 	}
 	return (ret);
 }
@@ -43,7 +43,7 @@ static char		*get_next(const char **s, size_t *len_word, char c)
 		++(*s);
 	}
 	return (ret);
-} 
+}
 
 static char		**free_all(char **tab, int k)
 {
