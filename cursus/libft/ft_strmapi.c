@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 11:18:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/06 07:43:12 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 17:44:44 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	if (!(ret = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
 	ret[len] = '\0';
+	idx = 0;
 	while (s[idx])
 	{
 		ret[idx] = f(idx, s[idx]);

@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 06:35:48 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/02 06:31:35 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 17:42:05 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char			*ft_strtrim(char const *s1, char const *set)
 	first = pass_set((char *)s1, set, 0, 1);
 	len_s1 = ft_strlen((char *)s1);
 	last = len_s1 + pass_set((char *)s1, set, len_s1 - 1, -1);
+	if (last <= first)
+		return (ft_strdup(""));
 	len_ret = last - first;
 	if (!(ret = (char *)malloc(sizeof(char) * len_ret + 1)))
 		return (NULL);

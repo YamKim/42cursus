@@ -6,75 +6,80 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 06:00:43 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/06 07:40:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 19:24:02 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	handle_word(char **str, char c, char **ft_sp, int k)
+static size_t	get_size(const char *s, char c)
 {
-	int		ret;
-	int		word_len;
-	char	*beg;
+	size_t	ret;
 
 	ret = 0;
-	word_len = 0;
-	while (**str)
+	while (*s)
 	{
-		while (**str && (**str == c))
-			++(*str);
-		beg = *str;
-		if (**str && (**str != c))
+		while((*s != '\0') && (*s == c))
+			++s;
+		if ((*s != '\0') && (*s != c))
 			++ret;
-		while (**str && (**str != c))
-		{
-			++(*str);
-			++word_len;
-		}
-		if (k >= 0)
-			break ;
+		while ((*s != '\0') && (*s != c))
+			++s;	
 	}
-	if (k >= 0)
-		ft_sp[k] = ft_substr(beg, 0, word_len);
-	return ((size_t)ret);
+	return (ret);
 }
 
-void			free_all(char **ft_sp, int k)
+static char		*get_next(const char **s, size_t *len_word, char c)
+{
+	char	*ret;
+
+	while ((**s != '\0') && (**s == c))
+		++(*s);
+	ret = (char *)*s;
+	*len_word = 0;
+	while ((**s != '\0') && (**s != c))
+	{
+		++(*len_word);
+		++(*s);
+	}
+	return (ret);
+} 
+
+static char		**free_all(char **tab, int k)
 {
 	int	idx;
 
 	idx = 0;
 	while (idx < k)
 	{
-		free(ft_sp[idx]);
+		free(tab[idx]);
 		++idx;
 	}
+	free(tab);
+	return (NULL);
 }
 
 char			**ft_split(char const *s, char c)
 {
 	char	**ret;
+	char	*beg_word;
+	size_t	len_word;
 	size_t	size;
-	int		k;
-	char	*str_tmp1;
-	char	*str_tmp2;
+	size_t	k;
 
-	str_tmp1 = (char *)s;
-	size = handle_word(&str_tmp1, c, 0, -1);
+	size = get_size(s, c);
 	if (!(ret = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
-	ret[size] = NULL;
+	ret[size] = 0;
 	k = 0;
-	str_tmp2 = (char *)s;
+	beg_word = (char *)s;
 	while (k < size)
 	{
-		handle_word(&str_tmp2, c, ret, k++);
-		if (ret[k] == NULL)
-		{
-			free_all(ret, k);
-			break ;
-		}
+		beg_word = get_next(&s, &len_word, c);
+		if (!(ret[k] = (char *)malloc(sizeof(char) * (len_word + 1))))
+			return (free_all(ret, k));
+		ft_strlcpy(ret[k], beg_word, len_word + 1);
+		++k;
 	}
 	return (ret);
 }

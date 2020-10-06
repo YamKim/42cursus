@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 18:23:43 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/01 07:08:12 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 08:20:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			ft_atoi(const char *nptr)
 	sign = 0;
 	while (ft_isspace(*nptr))
 		++nptr;
-	while (*nptr == '-' || *nptr == '+')
+	if (*nptr == '-' || *nptr == '+')
 	{
 		if (*nptr == '-')
 			++sign;

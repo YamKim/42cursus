@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:44:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/06 07:42:30 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/06 11:31:45 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	ret;
-	size_t	itr;
+	size_t	len_src;
 
 	ret = 0;
-	itr = size;
-	while (*src && --itr)
+	if (src == NULL)
+		return (ret);
+	len_src = ft_strlen(src);
+	if (dest == NULL || size == 0)
+		return (len_src);
+	while (ret < len_src && ret < size - 1)
 	{
-		*(dest++) = *(src++);
+		dest[ret] = src[ret];
 		++ret;
 	}
-	*dest = '\0';
-	while (*(src++))
-		++ret;
-	return (ret);
+	dest[ret] = '\0';
+	return (len_src);
 }

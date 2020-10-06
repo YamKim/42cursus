@@ -200,11 +200,10 @@ int main(void) {
 : size-bounded string copying  
 + 목적: dest의 버퍼 크기가 size가 되도록 src의 값을 ***안전히(마지막 요소는 NUL로)*** dest에 복사.    
 + 구현:  
-	1. 만약, size가 src의 길이+1(NUL이 들어갈 공간)보다 크다면 모두 복사하고 마지막 요소는 NUL로 채웁니다.
+	1. size가 src 길이+1(NUL이 들어갈 공간) 이상이면, src 길이만큼 복사하고 마지막 요소는 NUL로 채웁니다.
 	2. 그 외 경우라면, size-1개의 문자를 복사하고 마지막 요소는 NUL로 채웁니다.  
-	3. src의 길이를 반환하여, 최대 복사할 수 있는 길이(버퍼 크기가 아닌)를 가르쳐줍니다.  
+	3. 복사 후, src의 길이를 반환하여 최대 복사할 수 있는 길이(버퍼 크기가 아닌)를 가르쳐줍니다.  
 	   (마지막은 NULL이 되어야 하기 때문에, 전체를 복사하려면 예제에서는 size에 15이상 대입해야합니다.)  
-+ 참고: 저는 len(길이)과 size(크기)를 별개로 명명했습니다. len은 문자의 수, size는 버퍼의 크기입니다!
 ```cpp
 // 형태
 size_t ft_strlcpy(char *dest, const char *src, size_t size)
@@ -212,6 +211,8 @@ size_t ft_strlcpy(char *dest, const char *src, size_t size)
 int main(void) {
 	char *src = ft_strdup("Hello 42 World");
 	char dest[0xF0];
+	dest[0] = '4';
+	dest[5] = '2';
 	size_t len = ft_strlcpy(dest, src, (size_t)20);
 	printf("len: %d, dest: %s\n", (int)len, dest);
 }
@@ -224,11 +225,9 @@ int main(void) {
 + 목적: dest의 버퍼 크기가 size가 되도록 src의 값을 ***안전히(마지막 요소는 NUL로)*** dest에 덧붙임.
 + 구현:  
 	1. 만약, dest의 길이가 size보다 크거나 같다면 덧붙일 수 없기 때문에, 의도했던 크기(NUL 포함)를 반환합니다.  
-	   (size + src의 길이)
-	2. dest의 길이가 size보다 작다면, size - dst_len개의 글자를 덧붙일 수 있습니다.
-	   (공간 절약을 위해, itr에 1을 더 더하고 while문에서 --itr로 시작합니다.) 
-	3. 문자를 모두 덧붙였다면, 마지막 요소는 NUL로 채워주고, 덧붙여 만들 수 있는 최대길이를 반환합니다.
-+ 참고: 저는 len(길이)과 size(크기)를 별개로 명명했습니다. len은 문자의 수, size는 버퍼의 크기입니다!
+	   (src의 길이 + size)
+	2. dest의 길이가 size보다 작다면, dest 뒤로 size - len_dest 크기를 복사할 수 있습니다.
+	3. src를 모두 붙일 수 있었다면, src 길이 + dest 길이를 반환합니다.
 ```cpp
 // 형태
 size_t ft_strlcat(char *dest, const char *src, size_t size)
@@ -248,7 +247,9 @@ int main(void) {
 + 목적: string s에서 c번째 ASCII 값을 발견하면 c를 포함한 이 후의 주소를 반환. (앞에서부터)
 + 구현:  
 	1. c를 char로 typecasting하여 s의 각 요소와 비교하고, 발견했을 때 해당 주소 반환합니다. (앞에서부터)
-	2. 발견하지 못한 경우 NULL을 반환합니다.
+	2. [0, strlen(s)-1]까지 비교합니다.
+	3. 마지막 요소까지 비교해도 발견하지 못한 경우 NULL을 반환합니다.
++ 주의: 
 ```cpp
 // 형태
 char *ft_strchr(const char *s, int c)
@@ -267,7 +268,8 @@ int main(void) {
 + 목적: string s에서 c번째 ASCII 값을 발견하면 c를 포함한 이 후의 주소를 반환. (뒤에서부터)
 + 구현:  
 	1. c를 char로 typecasting하여 s의 각 요소와 비교하고, 발견했을 때 해당 주소 반환합니다. (뒤에서부터)
-	2. 발견하지 못한 경우 NULL을 반환합니다.
+	2. [strlen(s)-1, 0]까지 비교합니다.
+	3. 발견하지 못한 경우 NULL을 반환합니다.
 ```cpp
 // 형태
 char *ft_strrchr(const char *s, int c)
@@ -352,11 +354,11 @@ int main(void) {
 + 목적: string으로 숫자를 받을 때, 이를 int형 숫자로 변환(user로부터 input 받을 때 사용).
 + 구현:  
 	1. string nptr의 각 요소에 접근하여 white space인 경우 건너뜁니다.
-	2. 부호('-', '+')가 연이어 나올 경우, '-'의 수를 셉니다.
-	3. 만약, 부호 다음 공백이나 숫자가 아닌 수가 나오면 0을 반환합니다.
+	2. 부호('-', '+')가 연이어 나올 경우, 0을 반환합니다. ('-'가 나온다면, 기억해두기)
+	3. 부호 다음 공백이나 숫자가 아닌 수가 나오면 0을 반환합니다.
 	4. 부호 다음 숫자가 나온 경우, 루프 안에서 자릿수에 맞는 값을 누적시킵니다.  
 	   참고: ret = ret * 10 + (int)(*(nptr++) - '0');
-	5. 반환 직전에 ('-'의 수 % 2)를 기준으로 음수라면 '-'를 붙여 반환합니다.
+	5. 반환 직전에 '-' 존재여부를 기준으로 음수라면 '-'를 붙여 반환합니다.
 + 주의: -(int의 최솟값)은 int 자료형이 담지 못하기 때문에, 이를 담기위해 unsigned int 이용하기.  
 ```cpp
 // 형태
@@ -368,7 +370,7 @@ int main(void) {
 	printf("nbr1: %d, nbr2: %d\n", nbrEx1, nbrEx2);
 }
 // 출력 결과: 
-// nbr1: 0, nbr2: -4242
+// nbr1: 0, nbr2: 0
 ```
 
 # stdio.h
