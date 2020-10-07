@@ -12,32 +12,54 @@
 
 #include "libft.h"
 
-static size_t	pass_set(char *s, char const *set, int start, int dir)
+static int		get_first(const char *s1, const char *set)
 {
-	size_t	ret;
+	size_t	len;
+	size_t	idx;
 
-	ret = 0;
-	while (s[start + ret] && ft_strchr(set, s[start + ret]))
-		ret += dir;
-	return (ret);
+	len = ft_strlen(s1);
+	idx = 0;
+	while (idx < len)
+	{
+		if (ft_strchr(set, s1[idx]) == 0)
+			break ;
+		idx++;
+	}
+	return (idx);
+}
+
+static int		get_last(const char *s1, const char *set)
+{
+	size_t	len;
+	size_t	idx;
+
+	len = ft_strlen(s1);
+	idx = 0;
+	while (idx < len)
+	{
+		if (ft_strchr(set, s1[len - idx - 1]) == 0)
+			break ;
+		idx++;
+	}
+	return (len - idx);
 }
 
 char			*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	first;
-	size_t	last;
-	size_t	len_s1;
-	size_t	len_ret;
+	int		first;
+	int		last;
 	char	*ret;
 
-	first = pass_set((char *)s1, set, 0, 1);
-	len_s1 = ft_strlen((char *)s1);
-	last = len_s1 + pass_set((char *)s1, set, len_s1 - 1, -1);
-	if (last <= first)
-		return (ft_strdup(""));
-	len_ret = last - first;
-	if (!(ret = (char *)malloc(sizeof(char) * len_ret + 1)))
+	if (s1 == NULL)
 		return (NULL);
-	ft_strlcpy(ret, (char *)s1 + first, len_ret + 1);
+	if (set == NULL)
+		return (ft_strdup(s1));
+	first = get_first((char *)s1, set);
+	last = get_last((char *)s1, set);
+	if (first >= last)
+		return (ft_strdup(""));
+	if (!(ret = (char *)malloc(sizeof(char) * (last - first + 1))))
+		return (NULL);
+	ft_strlcpy(ret, s1 + first, last - first + 1);
 	return (ret);
 }
