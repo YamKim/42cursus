@@ -12,14 +12,14 @@
 
 #include "libft.h"
 
-void	print_nbr(unsigned int n, int fd)
+static void	print_nbr(unsigned int n, int fd)
 {
 	if (n >= 10)
 		print_nbr(n / 10, fd);
 	ft_putchar_fd(n % 10 + '0', fd);
 }
 
-void	ft_putnbr_fd(int n, int fd)
+void		ft_putnbr_fd(int n, int fd)
 {
 	int				sign;
 	unsigned int	n_tmp;
