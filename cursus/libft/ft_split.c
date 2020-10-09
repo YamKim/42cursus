@@ -67,6 +67,8 @@ char			**ft_split(char const *s, char c)
 	size_t	size;
 	size_t	k;
 
+	if (s == NULL)
+		return (0);
 	size = get_size(s, c);
 	if (!(ret = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
