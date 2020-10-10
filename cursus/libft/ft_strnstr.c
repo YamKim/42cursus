@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:44:09 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/06 07:45:56 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/11 06:25:18 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 	size_t	len_needle;
 	size_t	count;
 
+	if (*needle == '\0')
+		return ((char *)haystack);
 	count = 0;
 	len_haystack = ft_strlen((char *)haystack);
 	len_haystack = len_haystack >= n ? n : len_haystack;
