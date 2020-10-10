@@ -18,10 +18,17 @@ int main(void) {
 		printf("failure opening file\n");
 		return (0);
 	}
+	printf("fd: %d\n", fd);
 	read(fd, buf1, sizeof(char) * read_size);
+	printf("read_size: %ld\n", read_size);
 	write(1, buf1, sizeof(char) * read_size);
 	printf("\nNEXT=======================\n");
-	read(fd, buf2, sizeof(char) * read_size);
+	printf("fd: %d\n", fd);
+	read_size = read(fd, buf2, sizeof(char) * read_size);
+	printf("read_size: %ld\n", read_size);
+	for (size_t i = 0; i < read_size; ++i) {
+		printf("%ld: %c\n", i, buf2[i]);
+	}
 	write(1, buf2, sizeof(char) * read_size);
 	close(fd);
 	return (0);
