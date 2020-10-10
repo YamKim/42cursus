@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 17:43:54 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/06 16:39:21 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/11 06:29:17 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_strchr(const char *s, int c)
 {
 	size_t	idx;
 
+	if (*s == '\0')
+		return (NULL);
 	idx = 0;
 	while (s[idx])
 	{
