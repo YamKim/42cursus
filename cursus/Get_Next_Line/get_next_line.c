@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/10 08:15:09 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/10 11:24:39 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/11 08:55:23 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,31 @@ int	split_lines(char **line, char **backup)
 	return (0);	
 }
 
+int	keep_bufs(char **backup, const char *buf, ssize_t read_size)
+{
+	size_t	len_backup;
+	size_t	len_buf;
+	size_t	len_total;
+	size_t	idx;
+	char	*new_backup;
+
+	len_backup = ft_strlen(*backup);
+	len_total = len_backup + read_size + 1;
+	if (!(new_backup = (char *)malloc(sizeof(char) * len_total)))
+		return (-1);
+	idx = ft_strlcpy(new_backup, buf, len_total);
+	ft_strlcpy(new_backup + idx, buf, len_total); 		
+	free(*backup);
+	*backup = new_backup;	
+	return (1);
+}
+
 int	get_next_line(int fd, char **line)
 {
 	static char	*backup;
 	char		buf[BUFFER_SIZE];
 	char		*next_line;
+	ssize_t		read_size;
 
 	if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
 		return (-1);
@@ -42,10 +62,9 @@ int	get_next_line(int fd, char **line)
 	while ((next_line = ft_strchr(backup, '\n')) == 0)
 	{
 		// 덧붙이는 알고리즘 넣기
-		if (read(fd, buf, BUFFER_SIZE) > 0)
+		while ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
 		{
 			printf("read file==================\n");
-			backup = buf;
 			break ;
 		}
 		return (-1);
