@@ -16,8 +16,6 @@ char	*ft_strchr(const char *s, int c)
 {
 	size_t	idx;
 
-	if (*s == '\0')
-		return (NULL);
 	idx = 0;
 	while (s[idx])
 	{
