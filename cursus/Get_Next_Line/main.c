@@ -10,7 +10,7 @@ int main(void) {
 	if ((fd = open("test.txt", O_RDONLY)) <= 0)
 		return (-1);
 	char *line;
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 2; ++i) {
 		if (get_next_line(fd, &line) == -1) 
 			printf("gnl failuare\n");
 		printf("gnl result: %s\n===========================\n", line);
