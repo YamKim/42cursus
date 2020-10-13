@@ -10,22 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h> /////////////
+#include  "get_next_line.h"
 
-int	split_lines(char **line, char **backup)
+static int	split_lines(char **line, char **backup, char *next_line)
 {
-	char *next_line;
+	char	*new_backup;
 
-	free(line);
 	if (!(*line = (char *)malloc(sizeof(char) * (next_line - *backup + 1))))
 		return (-1);
 	ft_strlcpy(*line, *backup, next_line - *backup + 1);
-	*backup = next_line + 1; // next addr of \n
+	new_backup = ft_strdup(next_line + 1); 
+	if (new_backup[0] == '\0')
+	{
+		free(new_backup);
+		free(*backup);
+		new_backup = NULL;
+		*backup = NULL;
+		return (1);
+	}
+	free(*backup);
+	*backup = new_backup;
 	return (1);	
 }
 
-int	keep_bufs(char **backup, const char *buf, ssize_t read_size)
+static int	keep_bufs(char **backup, const char *buf, ssize_t read_size)
 {
 	size_t	len_backup;
 	size_t	len_total;
@@ -40,8 +48,22 @@ int	keep_bufs(char **backup, const char *buf, ssize_t read_size)
 	ft_strlcpy(new_backup + idx, buf, len_total); 		
 	free(*backup);
 	*backup = new_backup;	
-	printf("new_backup: %s\n", *backup);
 	return (1);
+}
+
+static int	return_all(char **line, char **backup, ssize_t read_size)
+{
+	if (read_size < 0)
+		return (-1);
+	if (*backup == NULL)
+	{
+		if (!(*line = ft_strdup("")))
+			return (-1);
+		return (0);
+	}
+	*line = *backup;
+	*backup = NULL;
+	return (0);
 }
 
 int	get_next_line(int fd, char **line)
@@ -53,24 +75,13 @@ int	get_next_line(int fd, char **line)
 
 	if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
 		return (-1);
-	printf("DEBUG=================\n");
-	// 다음 라인을 찾을 때까지는 뒤에 내용 덧붙이기
-	// next_line이 있으면 빠져나오기
 	while ((next_line = ft_strchr(backup, (int)'\n')) == NULL)
 	{
-		// 덧붙이는 알고리즘 넣기
-		// 읽어서 붙였는데, next_line이 안나오면 계속 붙이기
-		buf[BUFFER_SIZE] = '\0';
-		if ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
-		{
-#if 1
-			if (keep_bufs(&backup, buf, read_size) == -1)
-			{
-				return (-1);
-			}
-#endif
-		}
+		if ((read_size = read(fd, buf, BUFFER_SIZE)) <= 0)
+			return (return_all(line, &backup, read_size));
+		buf[read_size] = '\0';
+		if (keep_bufs(&backup, buf, read_size) == -1)
+			return (-1);
 	}
-	// 다음 라인을 찾았다면, 분리해서 line에 값 넣기
-	return (split_lines(line, &backup));
+	return (split_lines(line, &backup, next_line));
 }

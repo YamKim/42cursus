@@ -47,3 +47,15 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	dest[ret] = '\0';
 	return (len_src);
 }
+
+char	*ft_strdup(const char *s)
+{
+	char	*ret;
+	size_t	len;
+
+	len = ft_strlen((char *)s);
+	if (!(ret = (char *)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	ft_strlcpy(ret, s, len + 1);
+	return (ret);
+}
