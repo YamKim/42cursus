@@ -41,11 +41,11 @@ static int	keep_bufs(char **backup, const char *buf, ssize_t read_size)
 	char	*new_backup;
 
 	len_backup = ft_strlen(*backup);
-	len_total = len_backup + read_size + 1;
-	if (!(new_backup = (char *)malloc(sizeof(char) * len_total)))
+	len_total = len_backup + read_size;
+	if (!(new_backup = (char *)malloc(sizeof(char) * (len_total + 1))))
 		return (-1);
-	idx = ft_strlcpy(new_backup, *backup, len_total);
-	ft_strlcpy(new_backup + idx, buf, len_total); 		
+	idx = ft_strlcpy(new_backup, *backup, len_total + 1);
+	ft_strlcpy(new_backup + idx, buf, len_total + 1); 		
 	free(*backup);
 	*backup = new_backup;	
 	return (1);
