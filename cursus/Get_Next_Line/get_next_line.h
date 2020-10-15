@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/10 07:38:05 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/10 08:14:56 by yekim            ###   ########.fr       */
+/*   Created: 2020/10/16 06:47:14 by yekim             #+#    #+#             */
+/*   Updated: 2020/10/16 06:48:12 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
