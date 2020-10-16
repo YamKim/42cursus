@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/16 17:21:14 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/16 18:54:37 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,28 @@ void simple_printf(char *format, ...) {
 #include <stdio.h>
 int get_width_prec_info(const char **format, t_info *info)
 {
+	int width;
+	int precision;
 
-
+	width = 0;
+	while (ft_isdigit((int)**format))
+	{
+		width = width * 10 + (**format - '0');
+		++(*format);
+	}
+	info->width = width;
+	precision = 0;
+	if (**format == '.')
+	while (ft_isdigit((int)**format))
+	{
+		precision = precision * 10 + (**format - '0');
+		++(*format);
+	}
+	info->precision = precision;	
+	return (0);
 }
 
-
-int	get_flag_info(const char **format, t_info *info)
+int	get_info(const char **format, t_info *info)
 {
 	if (**format == ' ')
 		info->flag = 1;
@@ -54,21 +70,7 @@ int	get_flag_info(const char **format, t_info *info)
 		info->flag = 4;
 	if (info->flag != 0)
 		++(*format);
-	while (ft_isdigit((int)**format))
-	{
-		++(info->width);
-		++(*format);
-	}
-#if 0
-	if (**format == '.')
-	{
-		while (ft_isdigit((int)**format))
-		{
-			++(info->precision);
-			++format;
-		}
-	}
-#endif
+	get_width_prec_info(format, info);
 	return (1);
 }
 
@@ -107,7 +109,7 @@ int main(void) {
 	//printf("printf result\n");
 	//printf("Hello %-d %s\n", -42, "World");
 	printf("ft_printf result\n");
-	ft_printf("Hello %-3d %s\n", -42, "World");
+	ft_printf("Hello %-15d %s\n", -42, "World");
 #if 0
 	int a = printf("This is % 5d\n", 24);
 	printf("a: %d\n", a);
