@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 06:46:51 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/16 06:46:52 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/16 11:18:24 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,13 @@
 static int	split_lines(char **line, char **backup, char *next_line)
 {
 	char	*new_backup;
+	size_t	len_total;
 
-	if (!(*line = (char *)malloc(sizeof(char) * (next_line - *backup + 1))))
+	len_total = next_line - *backup;
+	if (!(*line = (char *)malloc(sizeof(char) * (len_total + 1))))
 		return (-1);
-	ft_strlcpy(*line, *backup, next_line - *backup + 1);
+	ft_strlcpy(*line, *backup, len_total + 1);
 	new_backup = ft_strdup(next_line + 1);
-	if (new_backup[0] == '\0')
-	{
-		free(new_backup);
-		free(*backup);
-		new_backup = NULL;
-		*backup = NULL;
-		return (1);
-	}
 	free(*backup);
 	*backup = new_backup;
 	return (1);
