@@ -61,15 +61,15 @@ $(NAME) : $(OBJS)
 	@$(AR) $(ARFLAGS) $@ $^
 
 bonus: $(NAME) $(OBJS_B)
-	$(AR) $(ARFLAGS) $(NAME) $(OBJS_B)
+	@$(AR) $(ARFLAGS) $(NAME) $(OBJS_B)
 
 all : $(NAME)
 
 clean :
-	$(RM) $(OBJS) $(OBJS_B)
+	@$(RM) $(OBJS) $(OBJS_B)
 
 fclean :
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re : fclean all
 

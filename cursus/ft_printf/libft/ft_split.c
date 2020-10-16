@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/02 06:00:43 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/06 19:26:50 by yekim            ###   ########.fr       */
+/*   Created: 2020/10/16 06:45:14 by yekim             #+#    #+#             */
+/*   Updated: 2020/10/16 06:45:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char			**ft_split(char const *s, char c)
 	size_t	size;
 	size_t	k;
 
+	if (s == NULL)
+		return (0);
 	size = get_size(s, c);
 	if (!(ret = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);

@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/16 06:44:44 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/16 06:44:45 by yekim            ###   ########.fr       */
+/*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
+/*   Updated: 2020/10/16 16:34:54 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-void	ft_putstr_fd(char *s, int fd)
+# include <stdarg.h>
+# include "../libft/libft.h"
+
+typedef struct		s_info
 {
-	if (s == NULL || fd < 0)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
+	int		flag;
+	int		width;
+	int		precision;
+}					t_info;
+
+#endif
