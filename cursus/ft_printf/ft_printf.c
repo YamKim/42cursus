@@ -6,80 +6,33 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/16 18:54:37 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/18 15:43:14 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void simple_printf(char *format, ...) {
-	va_list ap;
 
-	va_start(ap, format);
-	while (*format) {
-		if (*format == '%') {
-			++format;
-			if (*format == 'd') {
-				int num = va_arg(ap, int);
-				ft_putnbr_fd(num, 1);	
-			}
-			if (*format == 's') {
-				char *str = va_arg(ap, char *);
-				ft_putstr_fd(str, 1);
-			}
-		}
-		else
-			ft_putchar_fd(*format, 1);
-		++format;
-	}
+int		print_va(va_list ap, const t_info *info)
+{
+	int		ret;
+	
+	if (info->conversion == 'c') 
+		ret = printf_char(va_arg(ap, int), info); 
+	if (info->conversion == 's')
+		ret = printf_str(va_arg(ap, char *), info); 
+		
+	return (ret);
 }
 
 #include <stdio.h>
-int get_width_prec_info(const char **format, t_info *info)
-{
-	int width;
-	int precision;
-
-	width = 0;
-	while (ft_isdigit((int)**format))
-	{
-		width = width * 10 + (**format - '0');
-		++(*format);
-	}
-	info->width = width;
-	precision = 0;
-	if (**format == '.')
-	while (ft_isdigit((int)**format))
-	{
-		precision = precision * 10 + (**format - '0');
-		++(*format);
-	}
-	info->precision = precision;	
-	return (0);
-}
-
-int	get_info(const char **format, t_info *info)
-{
-	if (**format == ' ')
-		info->flag = 1;
-	else if (**format == '0')
-		info->flag = 2;
-	else if (**format == '+')
-		info->flag = 3;
-	else if (**format == '-')
-		info->flag = 4;
-	if (info->flag != 0)
-		++(*format);
-	get_width_prec_info(format, info);
-	return (1);
-}
-
-#if 1
 int ft_printf(const char *format, ... ) {
 	va_list	ap;
-	t_info infoEx;
+	t_info	info;
+	int		ret;
 
 	va_start(ap, format);
+	ret = 0;
 	while (*format)
 	{
 		if (*format == '%')
@@ -87,33 +40,18 @@ int ft_printf(const char *format, ... ) {
 			// % 발견하면 일단 다음 한칸 넘기기 
 			++format;
 			// get_info 들어가기 전에 info 초기화해주기
-			infoEx.flag = 0;
-			infoEx.width = 0;
-			infoEx.precision = 0;
-			get_info(&format, &infoEx);	
-			printf("flag: %d, width: %d, precision: %d\n", infoEx.flag, infoEx.width, infoEx.precision);
-			printf("next_format\n");
-			printf("%s", format);
-			break;
+			initialize_info(&info);
+			get_info(&format, &info);	
+		//	printf("flag: %d, width: %d\n", info.flag, info.width);
+		//	printf("precision: %d, conversion: %c\n", info.precision, info.conversion);
+			ret += print_va(ap, &info);
+			// conversion 출력 skip
+			++format;
 		}
-		ft_putchar_fd(*format, 0);
+		ft_putchar_fd(*format, STD_OUT);
+		++ret;
 		++format;
 	}
-	return (1);
+	return (ret);
 }
-#endif
 
-int main(void) {
-	//char *format = ft_strdup("Hello %d %s!");	
-	//simple_printf(format, 42, "World");
-	//printf("printf result\n");
-	//printf("Hello %-d %s\n", -42, "World");
-	printf("ft_printf result\n");
-	ft_printf("Hello %-15d %s\n", -42, "World");
-#if 0
-	int a = printf("This is % 5d\n", 24);
-	printf("a: %d\n", a);
-#endif
-
-	return (0);
-}
