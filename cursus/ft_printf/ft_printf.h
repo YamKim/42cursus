@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/18 15:49:47 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/18 23:40:48 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ typedef struct	s_info
 {
 	int			flag;
 	int			width;
-	int			precision;
-	char		conversion;
+	int			prec;
+	char		conv;
 }				t_info;
+
+# define FLAG			" 0+-"
 
 # ifndef INFO_INIT
 #  define INFO_INIT		0
@@ -44,25 +46,31 @@ typedef struct	s_info
 # endif
 
 /*
-*****************************   MAIN FUNCTION   *******************************
+******************************   ft_printf   ********************************
 */
 int				ft_printf(const char *format, ...);
 
 /*
-*****************************   FLAG FUNCTION   *******************************
+*****************************   printf_info   ******************************
 */
 void			initialize_info(t_info *info);
 int				get_width_prec_info(const char **format, t_info *info);
 int				get_info(const char **format, t_info *info);
+
+/*
+****************************   printf_char   *******************************
+*/
+int				printf_char(char c, const t_info *info);
+
+/*
+****************************   printf_str    *******************************
+*/
+int				printf_str(const char *str, const t_info *info);
+
+/*
+***************************   printf_utils    ******************************
+*/
+int				write_pad_prec(const char *str, const t_info *info);
+int				write_prec_pad(const char *str, const t_info *info);
+
 #endif
-
-
-/*
-**************************   PRINT CHAR FUNCTION   ****************************
-*/
-int				printf_char(int c, const t_info *info);
-
-/*
-**************************   PRINT STR FUNCTION    ****************************
-*/
-int				printf_str(const char* str, const t_info *info);

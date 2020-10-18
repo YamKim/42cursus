@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*   printf_info.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/18 14:52:56 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/18 22:28:35 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	initialize_info(t_info *info)
 {
 	info->flag = INFO_INIT;
 	info->width = INFO_INIT;
-	info->precision = INFO_INIT;
+	info->prec = INFO_INIT;
 }
 
 int		get_width_prec_info(const char **format, t_info *info)
@@ -31,7 +31,7 @@ int		get_width_prec_info(const char **format, t_info *info)
 		++(*format);
 		while (ft_isdigit((int)**format))
 		{
-			info->precision = info->precision * 10 + (**format - '0');
+			info->prec = info->prec * 10 + (**format - '0');
 			++(*format);
 		}
 	}
@@ -52,6 +52,7 @@ int		get_info(const char **format, t_info *info)
 	if (info->flag != 0)
 		++(*format);
 	get_width_prec_info(format, info);
-	info->conversion = **format;
+	info->conv = **format;
 	return (1);
 }
+
