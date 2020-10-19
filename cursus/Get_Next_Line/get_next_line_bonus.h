@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 06:47:10 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/16 13:36:24 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/19 14:36:49 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # endif
 
 # ifndef OPEN_SIZE
-#  define OPEN_SIZE 32
+#  define OPEN_SIZE 10240
 # endif
 
 int		get_next_line(int fd, char **line);
