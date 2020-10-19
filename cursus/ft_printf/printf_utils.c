@@ -4,21 +4,19 @@ int		write_pad_prec(const char *str, const t_info *info)
 {
 	int		ret;
 	int		pad_len;
+	int		put_len;
 	char	pad;
 
-	if (info->flag == INFO_INIT || info->flag == FLAG_SPACE) 
-		pad = ' ';
-	else if (info->flag == FLAG_ZERO)
-		pad = '0';
+	pad = PAD_TYPE[info->flag];
 	ret = 0;
-	pad_len = info->width - info->prec;
-	pad_len = pad_len >= 0 ? pad_len : 0;
+	put_len = (int)ft_strlen(str);
+	if (info->prec != INFO_INIT)
+		put_len = calc_min(ft_strlen(str), info->prec);
+	pad_len = info->width - put_len;
+	pad_len = calc_max(pad_len, 0);
 	while (pad_len--)
 		ret += write(STD_OUT, &pad, sizeof(pad));
-	if (info->prec != INFO_INIT)
-		ret += write(STD_OUT, str, info->prec);
-	else
-		ret += write(STD_OUT, str, ft_strlen(str));
+	ret += write(STD_OUT, str, put_len);
 	return (ret);
 }
 
@@ -26,19 +24,17 @@ int		write_prec_pad(const char *str, const t_info *info)
 {
 	int		ret;
 	int		pad_len;
+	int		put_len;
 	char	pad;
 
-	if (info->flag == INFO_INIT || info->flag == FLAG_SPACE) 
-		pad = ' ';
-	else if (info->flag == FLAG_ZERO)
-		pad = '0';
+	pad = PAD_TYPE[info->flag];
 	ret = 0;
-	pad_len = info->width - info->prec;
-	pad_len = pad_len >= 0 ? pad_len : 0;
+	put_len = (int)ft_strlen(str);
 	if (info->prec != INFO_INIT)
-		ret += write(STD_OUT, str, info->prec);
-	else
-		ret += write(STD_OUT, str, ft_strlen(str));
+		put_len = calc_min(ft_strlen(str), info->prec);
+	pad_len = info->width - put_len;
+	pad_len = calc_max(pad_len, 0);
+	ret += write(STD_OUT, str, put_len);
 	while (pad_len--)
 		ret += write(STD_OUT, &pad, sizeof(pad));
 	return (ret);
