@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/19 17:11:31 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/20 08:18:53 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,17 @@ typedef struct	s_info
 	char		conv;
 }				t_info;
 
-# define PAD_TYPE		"  0  "
-# define HEX_BASE		"0123456789abcdef"
-# ifndef INFO_INIT
-#  define INFO_INIT		0
-# endif
-# ifndef FLAG_SPACE
-#  define FLAG_SPACE	1
-# endif
-# ifndef FLAG_ZERO
-#  define FLAG_ZERO		2
-# endif
-# ifndef FLAG_PLUS
-#  define FLAG_PLUS		3
-# endif
-# ifndef FLAG_MINUS
-#  define FLAG_MINUS	4
-# endif
-# ifndef STD_OUT
-#  define STD_OUT		1
-# endif
-# ifndef ASTERISK
-#  define ASTERISK		-1
-# endif
-# define MINUS_PREC		-2
-# define MALLOC_ERR		-1
+# define PAD_TYPE	"  0  "
+# define HEX_BASE	"0123456789abcdef"
+# define INFO_INIT	0
+# define FLAG_SPACE	1
+# define FLAG_ZERO	2
+# define FLAG_PLUS	3
+# define FLAG_MINUS	4
+# define STD_OUT	1
+# define ASTERISK	-1
+# define MINUS_PREC	-2
+# define MALLOC_ERR	-1
 
 /*
 ******************************   ft_printf   ********************************
@@ -70,10 +56,16 @@ int				printf_str(const char *str, const t_info *info);
 int				printf_addr(const void *addr, const t_info *info);
 
 /*
+***************************   printf_conv2   *******************************
+*/
+int				printf_int(const int dec, const t_info *info);
+
+/*
 ***************************   printf_utils    ******************************
 */
 int				write_pad_prec(const char *str, const t_info *info);
 int				write_prec_pad(const char *str, const t_info *info);
+char			*add_prefix(const char *prefix, const char *str);
 
 /*
 ****************************   printf_calc    ******************************
@@ -85,7 +77,7 @@ int				calc_abs(int nbr);
 /*
 ****************************   printf_base    ******************************
 */
-int				get_hex_len(unsigned long dec);
-int				get_hex_str(unsigned long dec, char *hex_str, int idx);
+int				get_hex_len(unsigned long dec, int first_zero);
+int				get_hex_str(unsigned long dec, char *hex_str, int idx, int first_zero);
 
 #endif

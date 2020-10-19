@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 10:03:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/19 20:07:14 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/20 08:30:26 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,12 @@ int	printf_addr(const void *addr, const t_info *info)
 	int		ret;
 	char	*hex_str;
 
-	ret = get_hex_len((unsigned long)addr);
-	if (ret == 0)
-	{
-		if (!(hex_str = ft_strdup("0x0")))
-			return (MALLOC_ERR);
-	}
-	else
-	{
-		if (!(hex_str = (char *)malloc(sizeof(char) * (ret + 3))))
-			return (MALLOC_ERR);
-		hex_str[ret + 3 - 1] = '\0';
-		hex_str[0] = '0';
-		hex_str[1] = 'x';
-		get_hex_str((unsigned long)addr, hex_str, ret + 3 - 1 - 1);
-	}
+	ret = get_hex_len((unsigned long)addr, 1);
+	if (!(hex_str = (char *)malloc(sizeof(char) * (ret + 1))))
+		return (MALLOC_ERR);
+	hex_str[ret] = '\0';
+	get_hex_str((unsigned long)addr, hex_str, ret - 1, 1);
+	hex_str = add_prefix("0x", hex_str);
 	if (info->flag == FLAG_MINUS)
 		ret = write_prec_pad(hex_str, info);
 	else

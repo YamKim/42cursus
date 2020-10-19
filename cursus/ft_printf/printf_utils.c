@@ -40,3 +40,12 @@ int		write_prec_pad(const char *str, const t_info *info)
 	return (ret);
 }
 
+char	*add_prefix(const char *prefix, const char *str)
+{
+	char	*ret;
+
+	ret = ft_strjoin(prefix, str);
+	free((char *)str);
+
+	return (ret);
+}
