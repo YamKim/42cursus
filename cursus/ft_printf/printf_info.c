@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/19 12:47:18 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/20 12:20:53 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	initialize_info(t_info *info)
 {
-	info->flag = INFO_INIT;
+	info->flag.zero = 0;
+	info->flag.minus = 0;
+	info->flag.plus = 0;
+	info->flag.space = 0;
 	info->width = INFO_INIT;
-	info->prec = INFO_INIT;
+	info->prec = 0;
 }
 
 void	set_asterisk(va_list *ap, t_info *info)
@@ -30,7 +33,7 @@ void	set_asterisk(va_list *ap, t_info *info)
 		if (tmp_width < 0)
 		{
 			info->width = calc_abs(tmp_width);
-			info->flag = FLAG_MINUS;
+			info->flag.minus = 1;
 		}
 		else
 			info->width = tmp_width;
@@ -83,16 +86,19 @@ int		get_prec_info(const char **format, t_info *info)
 int		get_info(const char **format, t_info *info)
 {
 	initialize_info(info);
-	if (**format == ' ')
-		info->flag = FLAG_SPACE;
-	else if (**format == '0')
-		info->flag = FLAG_ZERO;
-	else if (**format == '+')
-		info->flag = FLAG_PLUS;
-	else if (**format == '-')
-		info->flag = FLAG_MINUS;
-	if (info->flag != 0)
-		++(*format);
+	// FLAG_TYPE이 끝날 떄까지 수행
+	while (**format != '\0' && ft_strchr(FLAG_TYPE, **format))
+	{
+		if (**format == '0' && info->width == 0)		
+			info->flag.zero = 1;
+		else if (**format == '-')
+			info->flag.minus = 1;
+		else if (**format == '+')
+			info->flag.plus = 1;
+		else if (**format == ' ')
+			info->flag.space = 1;
+		++(*format);	
+	}	
 	get_width_info(format, info);
 	get_prec_info(format, info);
 	info->conv = **format;

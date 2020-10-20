@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/20 07:28:56 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/20 12:25:15 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,21 @@ int ft_printf(const char *format, ... ) {
 	ret = 0;
 	while (*format)
 	{
-		if (*format == '%')
+		if (*format != '%')
+			ret += write(STD_OUT, format++, 1); 
+		else 
 		{
 			// % 발견하면 일단 다음 한칸 넘기기 
 			++format;
 			// get_info 들어가기 전에 info 초기화해주기
 			initialize_info(&info);
-			get_info(&format, &info);	
+			get_info(&format, &info);
 			ret += print_va(&ap, &info);
 			// conversion 출력 skip
 			++format;
 		}
-		ret += write(STD_OUT, format, sizeof(*format)); 
-		++format;
 	}
-	printf("flag: %d, width: %d\n", info.flag, info.width);
+	printf("plus: %d, minus: %d, zero: %d, space: %d\n", info.flag.plus, info.flag.minus, info.flag.zero, info.flag.space);
 	printf("precision: %d, conversion: %c\n", info.prec, info.conv);
 	return (ret);
 }

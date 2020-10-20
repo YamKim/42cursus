@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 10:03:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/20 08:30:26 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/20 10:09:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	printf_char(char c, const t_info *info)
 		write(STD_OUT, "\0", 1);
 		return (1);
 	}
-	if (info->flag == FLAG_MINUS)
+	if (info->flag.minus)
 		ret = write_prec_pad(&c, info);
 	else
 		ret = write_pad_prec(&c, info);
@@ -37,7 +37,7 @@ int	printf_str(const char *str, const t_info *info)
 		write(STD_OUT, "(null)", 6);
 		return (6);
 	}
-	if (info->flag == FLAG_MINUS)
+	if (info->flag.minus)
 		ret = write_prec_pad(str, info);
 	else
 		ret = write_pad_prec(str, info);
@@ -55,7 +55,7 @@ int	printf_addr(const void *addr, const t_info *info)
 	hex_str[ret] = '\0';
 	get_hex_str((unsigned long)addr, hex_str, ret - 1, 1);
 	hex_str = add_prefix("0x", hex_str);
-	if (info->flag == FLAG_MINUS)
+	if (info->flag.minus)
 		ret = write_prec_pad(hex_str, info);
 	else
 		ret = write_pad_prec(hex_str, info);

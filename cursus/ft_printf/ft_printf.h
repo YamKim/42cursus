@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/20 08:18:53 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/20 12:11:13 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,27 @@
 # include <stdarg.h>
 # include "../libft/libft.h"
 
+typedef struct	s_flag
+{
+	int			zero;
+	int			minus;
+	int			plus;
+	int			space;
+}				t_flag;
+
 typedef struct	s_info
 {
-	int			flag;
+	t_flag		flag;
 	int			width;
 	int			prec;
 	char		conv;
 }				t_info;
 
 # define PAD_TYPE	"  0  "
+# define FLAG_TYPE	"0-+ "
+# define CONV_TYPE	"csdiupxX%"
 # define HEX_BASE	"0123456789abcdef"
 # define INFO_INIT	0
-# define FLAG_SPACE	1
-# define FLAG_ZERO	2
-# define FLAG_PLUS	3
-# define FLAG_MINUS	4
 # define STD_OUT	1
 # define ASTERISK	-1
 # define MINUS_PREC	-2

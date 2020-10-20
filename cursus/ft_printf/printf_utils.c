@@ -7,7 +7,7 @@ int		write_pad_prec(const char *str, const t_info *info)
 	int		put_len;
 	char	pad;
 
-	pad = PAD_TYPE[info->flag];
+	pad = info->flag.zero == 1 ? '0' : ' ';
 	ret = 0;
 	put_len = (int)ft_strlen(str);
 	if (info->prec != INFO_INIT)
@@ -27,7 +27,7 @@ int		write_prec_pad(const char *str, const t_info *info)
 	int		put_len;
 	char	pad;
 
-	pad = PAD_TYPE[info->flag];
+	pad = info->flag.zero == 1 ? '0' : ' ';
 	ret = 0;
 	put_len = (int)ft_strlen(str);
 	if (info->prec != INFO_INIT)
