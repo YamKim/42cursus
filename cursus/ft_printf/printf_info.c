@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/20 12:20:53 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/21 11:48:34 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		get_prec_info(const char **format, t_info *info)
 int		get_info(const char **format, t_info *info)
 {
 	initialize_info(info);
-	// FLAG_TYPE이 끝날 떄까지 수행
+	// FLAG_TYPE이 끝날 때까지 수행
 	while (**format != '\0' && ft_strchr(FLAG_TYPE, **format))
 	{
 		if (**format == '0' && info->width == 0)		

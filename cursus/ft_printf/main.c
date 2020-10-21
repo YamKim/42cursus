@@ -26,7 +26,7 @@ int main(void)
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 #endif
 
-#if 0
+#if 1
 	(void)str;
 	result_f = ft_printf("f = [%-20s]\n", "asdfsadf");
 	result_r =    printf("r = [%-20s]\n", "asdfsadf");
@@ -41,8 +41,8 @@ int main(void)
 	result_r =    printf("r = [%-5c]\n", 'a');
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	char *strNull = NULL;
-	result_f = ft_printf("f = [%s]\n", strNull);
-	result_r =    printf("r = [%s]\n", strNull);
+	result_f = ft_printf("f = [%0.5s]\n", strNull);
+	result_r =    printf("r = [%-.5s]\n", strNull);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%.3s]\n", "hello");
 	result_r =    printf("r = [%.3s]\n", "hello");
@@ -58,7 +58,8 @@ int main(void)
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 #endif
 #if 0
-	result_f = ft_printf("f = [%7.5u]\n", 123);
+	(void)str;
+	result_f = ft_printf("f = [%+7.5u]\n", 123);
 	result_r =    printf("r = [%7.5u]\n", 123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%#10.5x]\n", 123);
@@ -66,13 +67,15 @@ int main(void)
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 #endif
 
-	result_f = ft_printf("f = [%+10.5d]\n", 123);
-	result_r =    printf("r = [%+10.5d]\n", 123);
+#if 0
+	result_f = ft_printf("f = [% 10.5d]\n", 123);
+	result_r =    printf("r = [% 10.5d]\n", 123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	(void)str;
-	result_f = ft_printf("f = [%0 10d]\n", -123);
-	result_r =    printf("r = [%0 10d]\n", -123);
+	result_f = ft_printf("f = [%- .5d]\n", -123);
+	result_r =    printf("r = [%- .5d]\n", -123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+#endif
 
 #if 0
 	(void)str;

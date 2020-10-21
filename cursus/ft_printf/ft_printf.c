@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/20 12:25:15 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/21 07:03:44 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		print_va(va_list *ap, const t_info *info)
 	if (info->conv == 'p')
 		ret = printf_addr(va_arg(*ap, void *), info); 
 	if (info->conv == 'd')
-		ret = printf_int(va_arg(*ap, int), info); 
+		ret = printf_int(va_arg(*ap, int), (t_info *)info); 
 		
 	return (ret);
 }

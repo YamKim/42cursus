@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/20 12:11:13 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/21 11:50:44 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,16 @@ typedef struct	s_flag
 typedef struct	s_info
 {
 	t_flag		flag;
+	int			sign;
 	int			width;
 	int			prec;
 	char		conv;
+	int			len;
 }				t_info;
 
 # define PAD_TYPE	"  0  "
-# define FLAG_TYPE	"0-+ "
+# define FLAG_TYPE	" 0+-"
+# define SIGN_TYPE	" +-"
 # define CONV_TYPE	"csdiupxX%"
 # define HEX_BASE	"0123456789abcdef"
 # define INFO_INIT	0
@@ -41,6 +44,8 @@ typedef struct	s_info
 # define ASTERISK	-1
 # define MINUS_PREC	-2
 # define MALLOC_ERR	-1
+# define SIGN_MINUS	-1
+# define SIGN_PLUS	1
 
 /*
 ******************************   ft_printf   ********************************
@@ -69,8 +74,7 @@ int				printf_int(const int dec, const t_info *info);
 /*
 ***************************   printf_utils    ******************************
 */
-int				write_pad_prec(const char *str, const t_info *info);
-int				write_prec_pad(const char *str, const t_info *info);
+int				put_space_and_str(const char *str, const t_info *info);
 char			*add_prefix(const char *prefix, const char *str);
 
 /*
