@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 10:03:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/21 11:46:54 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/21 17:53:37 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	printf_char(char c, const t_info *info)
 	return (ret);
 }
 
+#include <stdio.h>
 int	printf_str(const char *str, const t_info *info)
 {
 	int	ret;

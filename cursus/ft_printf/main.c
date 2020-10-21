@@ -24,9 +24,6 @@ int main(void)
 	result_f = ft_printf("f = [%-20p]\n", (void *)0);
 	result_r =    printf("r = [%-20p]\n", (void *)0);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-#endif
-
-#if 1
 	(void)str;
 	result_f = ft_printf("f = [%-20s]\n", "asdfsadf");
 	result_r =    printf("r = [%-20s]\n", "asdfsadf");
@@ -40,9 +37,10 @@ int main(void)
 	result_f = ft_printf("f = [%-5c]\n", 'a');
 	result_r =    printf("r = [%-5c]\n", 'a');
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	char *strNull = NULL;
-	result_f = ft_printf("f = [%0.5s]\n", strNull);
-	result_r =    printf("r = [%-.5s]\n", strNull);
+	(void)str;
+	//char *strNull = NULL;
+	result_f = ft_printf("f = [%0.5s]\n", "\0");
+	result_r =    printf("r = [%-.5s]\n", "\0");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%.3s]\n", "hello");
 	result_r =    printf("r = [%.3s]\n", "hello");
@@ -75,9 +73,6 @@ int main(void)
 	result_f = ft_printf("f = [%- .5d]\n", -123);
 	result_r =    printf("r = [%- .5d]\n", -123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-#endif
-
-#if 0
 	(void)str;
 	result_f = ft_printf("f = [% d]\n", 123);
 	result_r =    printf("r = [% d]\n", 123);
@@ -118,14 +113,19 @@ int main(void)
 	result_f = ft_printf("f = [%0d]\n", -1);
 	result_r =    printf("r = [%0d]\n", -1);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	(void)str;
 	result_f = ft_printf("f = [%0+d]\n", -123);
 	result_r =    printf("r = [%0+d]\n", -123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%0 10d]\n", -123);
-	result_r =    printf("r = [%0 10d]\n", -123);
+#endif
+
+#if 1
+	(void)str;
+	result_f = ft_printf("f = [%0 10.5d]\n", -123);
+	result_r =    printf("r = [%0 10.5d]\n", -123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%0 10d]\n", -123);
-	result_r =    printf("r = [%0 10d]\n", -123);
+	result_f = ft_printf("f = [%0 10.5d]\n", -123);
+	result_r =    printf("r = [%0 10.5d]\n", -123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%0+10d]\n", -123);
 	result_r =    printf("r = [%0+10d]\n", -123);

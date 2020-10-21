@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/21 11:48:34 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/21 17:50:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,23 @@ void	set_asterisk(va_list *ap, t_info *info)
 	}
 }
 
-int		get_width_info(const char **format, t_info *info)
+void	get_width_info(const char **format, t_info *info)
 {
 	if (**format == '*')
 	{
 		info->width = ASTERISK;
 		++(*format);
-		return (1);
+		return ;
 	}
 	while (ft_isdigit((int)**format))
 	{
 		info->width = info->width * 10 + (**format - '0');
 		++(*format);
 	}
-	return (1);
 }
 
-int		get_prec_info(const char **format, t_info *info)
+#include <stdio.h>
+void	get_prec_info(const char **format, t_info *info)
 {
 	if (**format == '.')
 	{
@@ -72,7 +72,7 @@ int		get_prec_info(const char **format, t_info *info)
 		{
 			info->prec = ASTERISK;
 			++(*format);
-			return (1);
+			return ;
 		}
 		while (ft_isdigit((int)**format))
 		{
@@ -80,10 +80,9 @@ int		get_prec_info(const char **format, t_info *info)
 			++(*format);
 		}
 	}
-	return (1);
 }
 
-int		get_info(const char **format, t_info *info)
+void	get_info(const char **format, t_info *info)
 {
 	initialize_info(info);
 	// FLAG_TYPE이 끝날 때까지 수행
@@ -100,7 +99,10 @@ int		get_info(const char **format, t_info *info)
 		++(*format);	
 	}	
 	get_width_info(format, info);
+//	printf("info->width: %d\n", info->width);
+//	printf("next_format: %s\n", *format);
 	get_prec_info(format, info);
+//	printf("info->prec: %d\n", info->prec);
 	info->conv = **format;
-	return (1);
+//	printf("info->conv: %c\n", info->conv);
 }

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/21 11:50:44 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/21 17:45:55 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct	s_info
 # define PAD_TYPE	"  0  "
 # define FLAG_TYPE	" 0+-"
 # define SIGN_TYPE	" +-"
+# define NUM_TYPE	"dif"
 # define CONV_TYPE	"csdiupxX%"
 # define HEX_BASE	"0123456789abcdef"
 # define INFO_INIT	0
@@ -57,7 +58,7 @@ int				ft_printf(const char *format, ...);
 */
 void			initialize_info(t_info *info);
 void			set_asterisk(va_list *ap, t_info *info);
-int				get_info(const char **format, t_info *info);
+void			get_info(const char **format, t_info *info);
 
 /*
 ****************************   printf_conv   *******************************
