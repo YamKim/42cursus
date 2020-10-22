@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 06:46:44 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/16 13:36:34 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/22 10:40:02 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	return_all(char **line, char **backup, ssize_t read_size)
 
 int			get_next_line(int fd, char **line)
 {
-	static char	*backup[OPEN_SIZE];
+	static char	*backup[OPEN_MAX];
 	char		buf[BUFFER_SIZE + 1];
 	char		*next_line;
 	ssize_t		read_size;
