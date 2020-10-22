@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 06:46:51 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/16 11:18:24 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/22 12:30:43 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ static int	return_all(char **line, char **backup, ssize_t read_size)
 int			get_next_line(int fd, char **line)
 {
 	static char	*backup;
-	char		buf[BUFFER_SIZE + 1];
+	char		*buf;
 	char		*next_line;
 	ssize_t		read_size;
 
 	if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
+		return (-1);
+	if (!(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
 	while ((next_line = ft_strchr(backup, (int)'\n')) == NULL)
 	{
@@ -77,5 +79,6 @@ int			get_next_line(int fd, char **line)
 		if (keep_bufs(&backup, buf, read_size) == -1)
 			return (-1);
 	}
+	free(buf);
 	return (split_lines(line, &backup, next_line));
 }
