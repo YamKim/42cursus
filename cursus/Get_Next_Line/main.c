@@ -10,9 +10,8 @@ int main(void) {
 	if ((fd = open("test.txt", O_RDONLY)) <= 0)
 		return (-1);
 	char *line;
-	int	res;
-	res = get_next_line(fd, &line);
-	printf("res: %d\n", res);
+	get_next_line(fd, &line);
+	printf("res: %s\n", line);
 	free(line);
 	return (0);
 }
