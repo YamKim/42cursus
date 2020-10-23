@@ -11,13 +11,8 @@ int main(void) {
 		return (-1);
 	char *line;
 	int	res;
-	for (int i = 0; i < 5; ++i) {
-		res = get_next_line(fd, &line);
-		if (res == -1) 
-			printf("gnl failuare\n");
-		if (res == 0) 
-			printf("EOF has been reached\n");
-		printf("gnl result: %s\n===========================\n", line);
-	}
+	res = get_next_line(fd, &line);
+	printf("res: %d\n", res);
+	free(line);
 	return (0);
 }
