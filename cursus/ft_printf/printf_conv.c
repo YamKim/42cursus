@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 10:03:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/21 17:53:37 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/23 08:31:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	printf_str(const char *str, const t_info *info)
 	int	ret;
 
 	((t_info *)info)->len = (int)ft_strlen(str);
-	if (str == NULL)
+	if (info->len == 0)
 	{
 		write(STD_OUT, "(null)", 6);
 		return (6);
@@ -44,16 +44,13 @@ int	printf_str(const char *str, const t_info *info)
 int	printf_addr(const void *addr, const t_info *info)
 {
 	int		ret;
-	char	*hex_str;
+	char	*addr_nbr;
 
-	((t_info *)info)->len = (int)ft_strlen(addr);
-	ret = get_hex_len((unsigned long)addr, 1);
-	if (!(hex_str = (char *)malloc(sizeof(char) * (ret + 1))))
-		return (MALLOC_ERR);
-	hex_str[ret] = '\0';
-	get_hex_str((unsigned long)addr, hex_str, ret - 1, 1);
-	hex_str = add_prefix("0x", hex_str);
-	ret = put_space_and_str(hex_str, info);
-	free(hex_str);
+	if (!(addr_nbr = gen_nbr_str((unsigned long)addr, BASE_HEX)))
+		return (-1);
+	addr_nbr = add_prefix("0x", addr_nbr);
+	((t_info *)info)->len = (int)ft_strlen(addr_nbr);
+	ret = put_space_and_str(addr_nbr, info);
+	free(addr_nbr);
 	return (ret);
 }

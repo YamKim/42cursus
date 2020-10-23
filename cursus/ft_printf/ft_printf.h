@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/21 17:45:55 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/23 09:33:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ typedef struct	s_info
 
 # define PAD_TYPE	"  0  "
 # define FLAG_TYPE	" 0+-"
-# define SIGN_TYPE	" +-"
 # define NUM_TYPE	"dif"
 # define CONV_TYPE	"csdiupxX%"
-# define HEX_BASE	"0123456789abcdef"
+# define BASE_HEX	"0123456789abcdef"
+# define BASE_DEC	"0123456789"
 # define INFO_INIT	0
 # define STD_OUT	1
 # define ASTERISK	-1
@@ -90,5 +90,7 @@ int				calc_abs(int nbr);
 */
 int				get_hex_len(unsigned long dec, int first_zero);
 int				get_hex_str(unsigned long dec, char *hex_str, int idx, int first_zero);
+int				get_nbr_len(long long int nbr, const int base_size);
+char			*gen_nbr_str(long long int nbr, const char *base_type);
 
 #endif

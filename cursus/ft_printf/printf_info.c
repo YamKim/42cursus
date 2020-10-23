@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/21 17:50:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/22 18:40:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	get_width_info(const char **format, t_info *info)
 	}
 }
 
-#include <stdio.h>
+#include <stdio.h> //
 void	get_prec_info(const char **format, t_info *info)
 {
 	if (**format == '.')

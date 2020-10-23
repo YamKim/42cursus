@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 07:19:54 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/21 18:02:21 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/22 19:08:23 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	printf_int(const int dec, const t_info *info)
 	char	*dec_str;
 	char	*dec_str_without_sign;
 
-	if (!(dec_str = ft_itoa((int)dec)))
+	if (!(dec_str = gen_nbr_str(dec, BASE_DEC)))
 		return (MALLOC_ERR);
 	if (dec_str[0] == '-')
 	{
