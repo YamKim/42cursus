@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 06:46:51 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/23 23:52:37 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/25 08:27:40 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			get_next_line(int fd, char **line)
 	char		*next_line;
 	ssize_t		read_size;
 
-	if (fd < 0 || line == 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > OPEN_MAX || line == 0 || BUFFER_SIZE <= 0)
 		return (-1);
 	if (!(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
