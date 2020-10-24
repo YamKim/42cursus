@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/23 09:33:36 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/24 23:24:03 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ typedef struct	s_info
 # define FLAG_TYPE	" 0+-"
 # define NUM_TYPE	"dif"
 # define CONV_TYPE	"csdiupxX%"
-# define BASE_HEX	"0123456789abcdef"
+# define BASE_HEX_LOWER	"0123456789abcdef"
+# define BASE_HEX_UPPER	"0123456789ABCDEF"
 # define BASE_DEC	"0123456789"
 # define INFO_INIT	0
 # define STD_OUT	1
@@ -63,14 +64,16 @@ void			get_info(const char **format, t_info *info);
 /*
 ****************************   printf_conv   *******************************
 */
-int				printf_char(char c, const t_info *info);
-int				printf_str(const char *str, const t_info *info);
-int				printf_addr(const void *addr, const t_info *info);
+int				printf_c(char c, const t_info *info);
+int				printf_s(const char *str, const t_info *info);
+int				printf_p(const void *addr, const t_info *info);
 
 /*
 ***************************   printf_conv2   *******************************
 */
-int				printf_int(const int dec, const t_info *info);
+int				printf_d(const int dec, const t_info *info);
+int				printf_u(const unsigned int dec, const t_info *info);
+int				printf_x(const unsigned int dec, const t_info *info);
 
 /*
 ***************************   printf_utils    ******************************

@@ -6,13 +6,13 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 10:03:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/23 08:31:36 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/24 23:22:04 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	printf_char(char c, const t_info *info)
+int	printf_c(char c, const t_info *info)
 {
 	int	ret;
 
@@ -26,8 +26,7 @@ int	printf_char(char c, const t_info *info)
 	return (ret);
 }
 
-#include <stdio.h>
-int	printf_str(const char *str, const t_info *info)
+int	printf_s(const char *str, const t_info *info)
 {
 	int	ret;
 
@@ -41,12 +40,13 @@ int	printf_str(const char *str, const t_info *info)
 	return (ret);
 }
 
-int	printf_addr(const void *addr, const t_info *info)
+#include <stdio.h> //
+int	printf_p(const void *addr, const t_info *info)
 {
 	int		ret;
 	char	*addr_nbr;
 
-	if (!(addr_nbr = gen_nbr_str((unsigned long)addr, BASE_HEX)))
+	if (!(addr_nbr = gen_nbr_str((unsigned long)addr, BASE_HEX_LOWER)))
 		return (-1);
 	addr_nbr = add_prefix("0x", addr_nbr);
 	((t_info *)info)->len = (int)ft_strlen(addr_nbr);

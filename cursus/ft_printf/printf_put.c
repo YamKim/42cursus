@@ -10,7 +10,7 @@ int		get_str_len(const t_info *info, int *pad_len)
 			ret += 1;
 	if (info->prec != INFO_INIT)
 	{
-		if (info->conv == 's' || info->conv == 'c' || info->conv == 'f')	
+		if (ft_strchr("scf", info->conv))
 			((t_info *)info)->len = calc_min(info->len, info->prec);
 	}
 	ret += info->len;
@@ -42,15 +42,15 @@ char	*gen_str(const char *str, const t_info *info, int *ret_len)
 	*ret_len = get_str_len(info, &pad_len);
 	if (!(ret = (char *)malloc(sizeof(char) * (*ret_len + 1))))
 		return (NULL);
-	if (ft_strchr(NUM_TYPE, info->conv))
+	if (ft_strchr("diufx", info->conv))
 		ft_memset((void *)ret, '0', *ret_len);
 	ret[*ret_len] = '\0';
 	if (ft_strchr(NUM_TYPE, info->conv))
 		if (info->flag.plus || info->flag.space || info->sign == SIGN_MINUS)
 			ret[0] = get_sign(info);
-	if (info->conv == 'd')
+	if (ft_strchr("diupx", info->conv))
 		ft_strlcpy(ret + (*ret_len - info->len), str, info->len + 1);
-	if (info->conv == 's' || info->conv == 'c' || info->conv == 'f')
+	if (ft_strchr("scf", info->conv))
 		ft_strlcpy(ret + (*ret_len - info->len - pad_len), str, info->len + 1);
 	return (ret);
 }

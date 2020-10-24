@@ -6,35 +6,33 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/22 18:22:31 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/24 23:23:47 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+#include <stdio.h>
 int		print_va(va_list *ap, const t_info *info)
 {
 	int		ret;
 	
 	set_asterisk(ap, (t_info *)info);
 	if (info->conv == 'c') 
-		ret = printf_char((char)va_arg(*ap, int), info); 
+		ret = printf_c((char)va_arg(*ap, int), info); 
 	if (info->conv == 's')
-		ret = printf_str(va_arg(*ap, char *), info); 
+		ret = printf_s(va_arg(*ap, char *), info); 
 	if (info->conv == 'p')
-		ret = printf_addr(va_arg(*ap, void *), info); 
+		ret = printf_p(va_arg(*ap, void *), info); 
 	if (info->conv == 'd' || info->conv == 'i')
-		ret = printf_int(va_arg(*ap, int), (t_info *)info); 
-#if 0
-	if (info->conv == 'x' || info->conv == 'X' || info->conv == 'u')
-#endif
-		
-		
-		
+		ret = printf_d(va_arg(*ap, int), (t_info *)info); 
+	if (info->conv == 'u')
+		ret = printf_u(va_arg(*ap, int), (t_info *)info); 
+	if (info->conv == 'x' || info->conv == 'X')
+		ret = printf_x(va_arg(*ap, int), (t_info *)info); 
 	return (ret);
 }
 
-#include <stdio.h>
 int ft_printf(const char *format, ... ) {
 	va_list	ap;
 	t_info	info;
