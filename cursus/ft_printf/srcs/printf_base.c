@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 16:52:39 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/28 08:22:59 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/28 16:22:18 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ char	*add_prefix(const char *prefix, const char *str)
 
 char	*get_sign(const t_info *info)
 {
-	if (info->sign == SIGN_MINUS)
-		return ("-");
 	if (info->flag.plus)
 		return ("+");
 	else if (info->flag.space)

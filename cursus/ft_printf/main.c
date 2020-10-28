@@ -10,14 +10,17 @@ void	x_test();
 
 int main(void)
 {
-	printf("ret = %d\n", printf("%%p::[%010d]\n", 8473));
+#if 0
+	   printf("ret = %d\n",    printf("%%p::[%010d]\n", 8473));
 	ft_printf("ret = %d\n", ft_printf("%%p::[%010d]\n", 8473));
-	printf("ret = %d\n", printf("%%p::[%10d]\n", 8473));
+	   printf("ret = %d\n",    printf("%%p::[%10d]\n", 8473));
     ft_printf("ret = %d\n", ft_printf("%%p::[%10d]\n", 8473));
-	printf("ret = %d\n", printf("%%p::[%010d]\n", -8473));
+	   printf("ret = %d\n",    printf("%%p::[%010d]\n", -8473));
     ft_printf("ret = %d\n", ft_printf("%%p::[%010d]\n", -8473));
-	printf("ret = %d\n", printf("%%p::[% 6.3d]\n", 3));
+	   printf("ret = %d\n",    printf("%%p::[% 6.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
+#endif
+	d_test();
 #if 0
 	printf("ret = %d\n", printf("%%p::[%06.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[%06.3d]\n", 3));
@@ -261,7 +264,7 @@ void	u_test(void) {
 	printf("result_r = %d\n\n", result_r);
 }
 
-void d_print(void) {
+void d_test(void) {
 	int result_f;
 	int result_r;
 	result_f = ft_printf("f = [% 10.5d]\n", 123);
@@ -312,7 +315,7 @@ void d_print(void) {
 	result_f = ft_printf("f = [%0+4d]\n", -123);
 	result_r =    printf("r = [%0+4d]\n", -123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%0+10.5d]\n", -123);
+	result_f = ft_printf("f = [%0+10d]\n", -123);
 	result_r =    printf("r = [%0+10d]\n", -123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 }

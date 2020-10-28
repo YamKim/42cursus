@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/27 22:12:15 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/28 15:36:56 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ int ft_printf(const char *format, ... ) {
 			++format;
 		}
 	}
-//	printf("plus: %d, minus: %d, zero: %d, space: %d\n", info.flag.plus, info.flag.minus, info.flag.zero, info.flag.space);
-
-//	printf("precision: %d, conversion: %c\n", info.prec, info.type);
 	return (ret);
 }
 

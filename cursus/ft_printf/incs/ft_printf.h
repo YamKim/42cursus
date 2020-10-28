@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/28 09:09:26 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/28 14:06:27 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,26 @@ int				printf_x(const unsigned int dec, t_info *info);
 /*
 ****************************   printf_put    *******************************
 */
-int				put_space_and_str(const char *str, const t_info *info);
+int				put_signed_num(const char *str, t_info *info);
+int				put_unsigned_num(const char *str, t_info *info);
 int				set_and_put(const char *str, const t_info *info);
+int				put_space_and_str(const char *str, const t_info *info);
 
 /*
 ***************************   printf_disp    *******************************
 */
 int				disp_control(const char *str, t_info *info);
-int				put_sign_num(const char *str, t_info *info);
+void			set_pad_space(t_info *info);
+int				put_signed_num(const char *str, t_info *info);
+int				put_unsigned_num(const char *str, t_info *info);
+
+/*
+***************************   printf_disp2   *******************************
+*/
+int				put_pad_disp_space(const char *str, t_info *info);
+int				put_space_pad_disp(const char *str, t_info *info);
+int				put_zeroflag_disp(const char *str, t_info *info);
+int				put_space_sign_pad_disp(const char *str, t_info *info);
 
 /*
 ****************************   printf_calc    ******************************
