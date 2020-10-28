@@ -1,4 +1,4 @@
-#include "ft_printf.h"
+#include "./incs/ft_printf.h"
 
 #include <stdio.h>
 #include <locale.h>
@@ -6,196 +6,22 @@
 
 void	u_test();
 void	d_test();
+void	x_test();
 
 int main(void)
 {
-	int result_f;
-	int result_r;
-	char *str = "123";
-	(void)str;
-	(void)result_r;
-//Hexadecimal lowers - no modifers
-	result_f = ft_printf("result_f: [%x]\n", 17);
-	result_r =    printf("result_r: [%x]\n", 17);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%x]\n", 0);
-	result_r =    printf("result_r: [%x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%x]\n", 3);
-	result_r =    printf("result_r: [%x]\n", 3);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%x]\n", 4294967295u);
-	result_r =    printf("result_r: [%x]\n", 4294967295u);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-//Hexadecimal lowers with field width
-	result_f = 	ft_printf("result_f: [%7x]\n", 33);
-	result_r =    printf("result_r: [%7x]\n", 33);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%3x]\n", 0);
-	result_r =    printf("result_r: [%3x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%5x]\n", 52625);
-	result_r =    printf("result_r: [%5x]\n", 52625);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%2x]\n", 94827);
-	result_r =    printf("result_r: [%2x]\n", 94827);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%-7x]\n", 33);
-	result_r =    printf("result_r: [%-7x]\n", 33);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%-3x]\n", 0);
-	result_r =    printf("result_r: [%-3x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%-5x]\n", 52625);
-	result_r =    printf("result_r: [%-5x]\n", 52625);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%-4x]\n", 9648627);
-	result_r =    printf("result_r: [%-4x]\n", 9648627);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	printf("Hexadecimal lowers with precision\n");
-	result_f = 	ft_printf("result_f: [%.5x]\n", 21);
-	result_r =    printf("result_r: [%.5x]\n", 21);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%.3x]\n", 0);
-	result_r =    printf("result_r: [%.3x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%.4x]\n", 5263);
-	result_r =    printf("result_r: [%.4x]\n", 5263);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = 	ft_printf("result_f: [%.3x]\n", 938862);
-	result_r =    printf("result_r: [%.3x]\n", 938862);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-//Hex\nadecimal lowers with zero field width padding
-//	printf("result_r: %05x\n", 43);
-//	printf("result_r: %03x\n", 0);
-//	printf("result_r: %03x\n", 698334);
-//Hex\nadecimal lowers with field width and precision
-	result_f = ft_printf("result_f: [%8.5x]\n", 34);
-	result_r =    printf("result_r: [%8.5x]\n", 34);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%8.5x]\n", 0);
-	result_r =    printf("result_r: [%8.5x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%8.3x]\n", 8375);
-	result_r =    printf("result_r: [%8.3x]\n", 8375);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%2.7x]\n", 3267);
-	result_r =    printf("result_r: [%2.7x]\n", 3267);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%3.3x]\n", 6983);
-	result_r =    printf("result_r: [%3.3x]\n", 6983);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-//Hex\nadecimal lowers with field width and precision, left-justified
-	result_f = ft_printf("result_f: [%-8.5x]\n", 34);
-	result_r =    printf("result_r: [%-8.5x]\n", 34);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%-8.5x]\n", 0);
-	result_r =    printf("result_r: [%-8.5x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%-8.3x]\n", 8375);
-	result_r =    printf("result_r: [%-8.3x]\n", 8375);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%-2.7x]\n", 3267);
-	result_r =    printf("result_r: [%-2.7x]\n", 3267);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%-3.3x]\n", 6983);
-	result_r =    printf("result_r: [%-3.3x]\n", 6983);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-//Hex\nadecimal lowers with field width and precision with zeropadding
-//	printf("result_r: result_r: %08.5x\n", 34);
-//	printf("result_r: %08.5x\n", 0);
-//	printf("result_r: %08.3x\n", 8375);
-//	printf("result_r: %02.7x\n", 3267);
-//	printf("result_r: %03.3x\n", 6983);
-//Hex\nadecimal lowers with field width and precision, left-justified with zeropadding
-//	printf("result_r: %0-8.5x\n", 34);
-//	printf("result_r: %0-8.5x\n", 0);
-//	printf("result_r: %0-8.3x\n", 8375);
-//	printf("result_r: %0-2.7x\n", 3267);
-//	printf("result_r: %0-3.3x\n", 6983);
-//Hexadecimal lower - zero precision zero value
-	result_f = ft_printf("result_f: [%.0x]\n", 0);
-	result_r =    printf("result_r: [%.0x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%.x]\n", 0);
-	result_r =    printf("result_r: [%.x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%5.0x]\n", 0);
-	result_r =    printf("result_r: [%5.0x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%5.x]\n", 0);
-	result_r =    printf("result_r: [%5.x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%-5.0x]\n", 0);
-	result_r =    printf("result_r: [%-5.0x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
-	result_f = ft_printf("result_f: [%-5.x]\n", 0);
-	result_r =    printf("result_r: [%-5.x]\n", 0);
-	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	printf("ret = %d\n", printf("%%p::[%010d]\n", 8473));
+	ft_printf("ret = %d\n", ft_printf("%%p::[%010d]\n", 8473));
+	printf("ret = %d\n", printf("%%p::[%10d]\n", 8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%10d]\n", 8473));
+	printf("ret = %d\n", printf("%%p::[%010d]\n", -8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%010d]\n", -8473));
+	printf("ret = %d\n", printf("%%p::[% 6.3d]\n", 3));
+    ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
 #if 0
-
-
-/* -----------------------------------------------------------------------------
-** 						%X HEXADECIMAL UPPERS TESTS (MANDATORY)
-** ---------------------------------------------------------------------------*/
-//Hex\nadecimal uppers - no modifers
-	printf("this %X number", 17);
-	printf("this %X number", 0);
-	printf("%X", 3);
-	printf("%X", 4294967295u);
-//Hex\nadecimal uppers with field width
-	printf("%7X", 33);
-	printf("%3X", 0);
-	printf("%5X", 52625);
-	printf("%2X", 94827);
-	printf("%-7X", 33);
-	printf("%-3X", 0);
-	printf("%-5X", 52625);
-	printf("%-4X", 9648627);
-//Hex\nadecimal uppers with precision
-	printf("%.5X", 21);
-	printf("%.3X", 0);
-	printf("%.4X", 5263);
-	printf("%.3X", 938862);
-//Hexadecimal uppers with zero field width padding
-//	printf("%05X", 43);
-//	printf("%03X", 0);
-//	printf("%03X", 698334);
-//Hexadecimal uppers with field width and precision
-	printf("%8.5X", 34);
-	printf("%8.5X", 0);
-	printf("%8.3X", 8375);
-	printf("%2.7X", 3267);
-	printf("%3.3X", 6983);
-//Hexadecimal uppers with field width and precision, left-justified
-	printf("%-8.5X", 34);
-	printf("%-8.5X", 0);
-	printf("%-8.3X", 8375);
-	printf("%-2.7X", 3267);
-	printf("%-3.3X", 6983);
-//Hexadecimal uppers with field width and precision with zeropadding
-//	printf("%08.5X", 34);
-//	printf("%08.5X", 0);
-//	printf("%08.3X", 8375);
-//	printf("%02.7X", 3267);
-//	printf("%03.3X", 6983);
-//Hexadecimal uppers with field width and precision, left-justified with zeropadding
-//	printf("%0-8.5X", 34);
-//	printf("%0-8.5X", 0);
-//	printf("%0-8.3X", 8375);
-//	printf("%0-2.7X", 3267);
-//	printf("%0-3.3X", 6983);
-//Hexadecimal uppers - zero precision zero value
-	printf("%.0X", 0);
-	printf("%.X", 0);
-	printf("%5.0X", 0);
-	printf("%5.X", 0);
-	printf("%-5.0X", 0);
-	printf("%-5.X", 0);
+	printf("ret = %d\n", printf("%%p::[%06.3d]\n", 3));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%06.3d]\n", 3));
 #endif
-
-//	u_test();
-//	d_test();
 #if 0
 	static char *s_hidden = "hi low\0don't print me lol\0";
 	(void)str;
@@ -223,32 +49,6 @@ int main(void)
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%-20p]\n", (void *)0);
 	result_r =    printf("r = [%-20p]\n", (void *)0);
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-#endif
-#if 0
-	(void)str;
-	result_f = ft_printf("f = [%-20s]\n", "asdfsadf");
-	result_r =    printf("r = [%-20s]\n", "asdfsadf");
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%-*.*s]\n", 20, 3, "asdfsadf");
-	result_r =    printf("r = [%-*.*s]\n", 20, 3, "asdfsadf");
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%*.3s]\n", 20, "asdfsadf");
-	result_r =    printf("r = [%*.3s]\n", 20, "asdfsadf");
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%c]\n", '\0');
-	result_r =    printf("r = [%c]\n", '\0');
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%-5c]\n", 'a');
-	result_r =    printf("r = [%-5c]\n", 'a');
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	(void)str;
-	//char *strNull = NULL;
-	result_f = ft_printf("f = [%-.5s]\n", "\0");
-	result_r =    printf("r = [%-.5s]\n", "\0");
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%-.5s]\n", "\0");
-	result_r =    printf("r = [%-.5s]\n", "\0");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 #endif
 #if 0
@@ -455,6 +255,10 @@ void	u_test(void) {
 	printf("result_f = %d\n\n", result_f);
 //	printf("result_r = %d\n\n", result_r);
 
+	result_f = ft_printf("%3.0uasdsadf\n", 0);
+	result_r =    printf("%3.0uasdsadf\n", 0);
+	printf("result_f = %d\n"  , result_f);
+	printf("result_r = %d\n\n", result_r);
 }
 
 void d_print(void) {
@@ -510,5 +314,174 @@ void d_print(void) {
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%0+10.5d]\n", -123);
 	result_r =    printf("r = [%0+10d]\n", -123);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+}
+
+void x_test(void)
+{
+	int result_r;
+	int result_f;
+//Hexadecimal lowers - no modifers
+	result_f = ft_printf("result_f: [%x]\n", 17);
+	result_r =    printf("result_r: [%x]\n", 17);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%x]\n", 0);
+	result_r =    printf("result_r: [%x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%x]\n", 3);
+	result_r =    printf("result_r: [%x]\n", 3);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%x]\n", 4294967295u);
+	result_r =    printf("result_r: [%x]\n", 4294967295u);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+//Hexadecimal lowers with field width
+	result_f = 	ft_printf("result_f: [%7x]\n", 33);
+	result_r =    printf("result_r: [%7x]\n", 33);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%3x]\n", 0);
+	result_r =    printf("result_r: [%3x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%5x]\n", 52625);
+	result_r =    printf("result_r: [%5x]\n", 52625);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%2x]\n", 94827);
+	result_r =    printf("result_r: [%2x]\n", 94827);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%-7x]\n", 33);
+	result_r =    printf("result_r: [%-7x]\n", 33);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%-3x]\n", 0);
+	result_r =    printf("result_r: [%-3x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%-5x]\n", 52625);
+	result_r =    printf("result_r: [%-5x]\n", 52625);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%-4x]\n", 9648627);
+	result_r =    printf("result_r: [%-4x]\n", 9648627);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	printf("Hexadecimal lowers with precision\n");
+	result_f = 	ft_printf("result_f: [%.5x]\n", 21);
+	result_r =    printf("result_r: [%.5x]\n", 21);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%.3x]\n", 0);
+	result_r =    printf("result_r: [%.3x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%.4x]\n", 5263);
+	result_r =    printf("result_r: [%.4x]\n", 5263);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = 	ft_printf("result_f: [%.3x]\n", 938862);
+	result_r =    printf("result_r: [%.3x]\n", 938862);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+//Hex\nadecimal lowers with zero field width padding
+//	printf("result_r: %05x\n", 43);
+//	printf("result_r: %03x\n", 0);
+//	printf("result_r: %03x\n", 698334);
+//Hex\nadecimal lowers with field width and precision
+	result_f = ft_printf("result_f: [%8.5x]\n", 34);
+	result_r =    printf("result_r: [%8.5x]\n", 34);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%8.5x]\n", 0);
+	result_r =    printf("result_r: [%8.5x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%8.3x]\n", 8375);
+	result_r =    printf("result_r: [%8.3x]\n", 8375);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%2.7x]\n", 3267);
+	result_r =    printf("result_r: [%2.7x]\n", 3267);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%3.3x]\n", 6983);
+	result_r =    printf("result_r: [%3.3x]\n", 6983);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+//Hex\nadecimal lowers with field width and precision, left-justified
+	result_f = ft_printf("result_f: [%-8.5x]\n", 34);
+	result_r =    printf("result_r: [%-8.5x]\n", 34);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%-8.5x]\n", 0);
+	result_r =    printf("result_r: [%-8.5x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%-8.3x]\n", 8375);
+	result_r =    printf("result_r: [%-8.3x]\n", 8375);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%-2.7x]\n", 3267);
+	result_r =    printf("result_r: [%-2.7x]\n", 3267);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%-3.3x]\n", 6983);
+	result_r =    printf("result_r: [%-3.3x]\n", 6983);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+//Hex\nadecimal lowers with field width and precision with zeropadding
+//	printf("result_r: result_r: %08.5x\n", 34);
+//	printf("result_r: %08.5x\n", 0);
+//	printf("result_r: %08.3x\n", 8375);
+//	printf("result_r: %02.7x\n", 3267);
+//	printf("result_r: %03.3x\n", 6983);
+//Hex\nadecimal lowers with field width and precision, left-justified with zeropadding
+//	printf("result_r: %0-8.5x\n", 34);
+//	printf("result_r: %0-8.5x\n", 0);
+//	printf("result_r: %0-8.3x\n", 8375);
+//	printf("result_r: %0-2.7x\n", 3267);
+//	printf("result_r: %0-3.3x\n", 6983);
+	printf("Hexadecimal lower - zero precision zero value\n");
+	result_f = ft_printf("result_f: [%.0x]\n", 15);
+	result_r =    printf("result_r: [%.0x]\n", 15);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%.0x]\n", 0);
+	result_r =    printf("result_r: [%.0x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%.x]\n", 0);
+	result_r =    printf("result_r: [%.x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%5.0x]\n", 0);
+	result_r =    printf("result_r: [%5.0x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%5.x]\n", 0);
+	result_r =    printf("result_r: [%5.x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%-5.0x]\n", 0);
+	result_r =    printf("result_r: [%-5.0x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+	result_f = ft_printf("result_f: [%-5.x]\n", 0);
+	result_r =    printf("result_r: [%-5.x]\n", 0);
+	printf("length\nresult_f: %d\nresult_r: %d\n\n", result_f, result_r);
+
+}
+
+void s_test(void) {
+	int result_r;
+	int result_f;
+	result_f = ft_printf("f = [%-20s]\n", "asdfsadf");
+	result_r =    printf("r = [%-20s]\n", "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-*.*s]\n", 20, 3, "asdfsadf");
+	result_r =    printf("r = [%-*.*s]\n", 20, 3, "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%*.3s]\n", 20, "asdfsadf");
+	result_r =    printf("r = [%*.3s]\n", 20, "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	printf("asdfsadf\n");
+	result_f = ft_printf("f = [%5.10s]\n", "asdfsadf");
+	result_r =    printf("r = [%5.10s]\n", "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%10.10s]\n", "asdfsadf");
+	result_r =    printf("r = [%10.10s]\n", "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%3.4s]\n", "asdfsadf");
+	result_r =    printf("r = [%3.4s]\n", "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%10.4s]\n", "asdfsadf");
+	result_r =    printf("r = [%10.4s]\n", "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%c]\n", '\0');
+	result_f = ft_printf("f = [%c]\n", '\0');
+	result_f = ft_printf("f = [%c]\n", '\0');
+	result_r =    printf("r = [%c]\n", '\0');
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-5c]\n", 'a');
+	result_r =    printf("r = [%-5c]\n", 'a');
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-.5s]\n", "\0");
+	result_r =    printf("r = [%-.5s]\n", "\0");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-.5s]\n", "\0");
+	result_r =    printf("r = [%-.5s]\n", "\0");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 }

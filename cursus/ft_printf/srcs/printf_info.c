@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/22 18:40:21 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/28 07:40:24 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../incs/ft_printf.h"
 
 void	initialize_info(t_info *info)
 {
@@ -18,8 +18,12 @@ void	initialize_info(t_info *info)
 	info->flag.minus = 0;
 	info->flag.plus = 0;
 	info->flag.space = 0;
+	info->sign = SIGN_PLUS;
 	info->width = INFO_INIT;
 	info->prec = 0;
+	info->prec_flag = 0;
+	info->pad_len = 0;
+	info->space_len = 0;
 }
 
 void	set_asterisk(va_list *ap, t_info *info)
@@ -55,6 +59,8 @@ void	get_width_info(const char **format, t_info *info)
 		++(*format);
 		return ;
 	}
+	if (ft_isdigit((int)**format))
+		info->width_flag = 1;
 	while (ft_isdigit((int)**format))
 	{
 		info->width = info->width * 10 + (**format - '0');
@@ -62,11 +68,11 @@ void	get_width_info(const char **format, t_info *info)
 	}
 }
 
-#include <stdio.h> //
 void	get_prec_info(const char **format, t_info *info)
 {
 	if (**format == '.')
 	{
+		info->prec_flag = PREC_FLAG;
 		++(*format);
 		if (**format == '*')
 		{
@@ -99,10 +105,6 @@ void	get_info(const char **format, t_info *info)
 		++(*format);	
 	}	
 	get_width_info(format, info);
-//	printf("info->width: %d\n", info->width);
-//	printf("next_format: %s\n", *format);
 	get_prec_info(format, info);
-//	printf("info->prec: %d\n", info->prec);
-	info->conv = **format;
-//	printf("info->conv: %c\n", info->conv);
+	info->type = **format;
 }

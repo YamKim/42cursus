@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 16:21:14 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/19 16:52:52 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/27 14:46:58 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../incs/ft_printf.h"
 
 int	calc_max(int nbr1, int nbr2)
 {

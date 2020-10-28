@@ -1,28 +1,28 @@
-#include "ft_printf.h"
+#include "../incs/ft_printf.h"
+
+
 
 int		get_str_len(const t_info *info, int *pad_len)
 {
 	int	ret;
 	
 	ret = 0;
-	if (ft_strchr(NUM_TYPE, info->conv))
+	if (ft_strchr("diuxXf", info->type))
 		if (info->flag.plus || info->flag.space || info->sign == SIGN_MINUS)
 			ret += 1;
-	if (info->prec != INFO_INIT)
-	{
-		if (ft_strchr("scf", info->conv))
-			((t_info *)info)->len = calc_min(info->len, info->prec);
-	}
-	ret += info->len;
-	// flag가 zero면 width도 생각해야함
 	*pad_len = calc_max(info->prec - info->len, 0);
+	if (ft_strchr("scf", info->type))
+		if (info->prec > 0)
+			((t_info *)info)->len = calc_min(info->len, info->prec);
+	ret += info->len;
 	if (info->flag.zero)
 		*pad_len = calc_max(info->width - ret, *pad_len);
-	ret += *pad_len;
-	return (ret);
+	if (ft_strchr("cs", info->type))
+		return (ret);
+	return (ret + *pad_len);
 }
 
-char	get_sign(const t_info *info)
+char	get_sign2(const t_info *info)
 {
 	if (info->sign == SIGN_MINUS)
 		return ('-');
@@ -33,7 +33,6 @@ char	get_sign(const t_info *info)
 	return ('?');
 }
 
-#include <stdio.h>
 char	*gen_str(const char *str, const t_info *info, int *ret_len)
 {
 	char	*ret;
@@ -42,16 +41,18 @@ char	*gen_str(const char *str, const t_info *info, int *ret_len)
 	*ret_len = get_str_len(info, &pad_len);
 	if (!(ret = (char *)malloc(sizeof(char) * (*ret_len + 1))))
 		return (NULL);
-	if (ft_strchr("diufx", info->conv))
-		ft_memset((void *)ret, '0', *ret_len);
 	ret[*ret_len] = '\0';
-	if (ft_strchr(NUM_TYPE, info->conv))
+	if (ft_strchr("diuxXf", info->type))
+		ft_memset((void *)ret, '0', *ret_len);
+	if (ft_strchr("diuxXf", info->type))
 		if (info->flag.plus || info->flag.space || info->sign == SIGN_MINUS)
-			ret[0] = get_sign(info);
-	if (ft_strchr("diupx", info->conv))
+			ret[0] = get_sign2(info);
+	if (ft_strchr("diupxX", info->type))
 		ft_strlcpy(ret + (*ret_len - info->len), str, info->len + 1);
-	if (ft_strchr("scf", info->conv))
+	else if (ft_strchr("f", info->type))
 		ft_strlcpy(ret + (*ret_len - info->len - pad_len), str, info->len + 1);
+	else if (ft_strchr("cs", info->type))
+		ft_strlcpy(ret + (*ret_len - info->len), str, info->len + 1);
 	return (ret);
 }
 
@@ -74,15 +75,5 @@ int		put_space_and_str(const char *str, const t_info *info)
 		while (space_len--)
 			ret += write(STD_OUT, " ", 1);
 	free(str_disp);
-	return (ret);
-}
-
-char	*add_prefix(const char *prefix, const char *str)
-{
-	char	*ret;
-
-	ret = ft_strjoin(prefix, str);
-	free((char *)str);
-
 	return (ret);
 }

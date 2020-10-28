@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 16:52:39 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/24 15:44:19 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/28 08:22:59 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../incs/ft_printf.h"
 
 int	get_nbr_len(long long int nbr, const int base_size)
 {
@@ -33,7 +33,6 @@ int	get_nbr_len(long long int nbr, const int base_size)
 	return (ret);
 }
 
-#include <stdio.h>//
 char	*gen_nbr_str(long long int nbr, const char *base_type)
 {
 	char					*ret;
@@ -58,4 +57,25 @@ char	*gen_nbr_str(long long int nbr, const char *base_type)
 	}
 	ret[0] = nbr < 0 ? '-' : ret[0];
 	return (ret);
+}
+
+char	*add_prefix(const char *prefix, const char *str)
+{
+	char	*ret;
+
+	ret = ft_strjoin(prefix, str);
+	free((char *)str);
+
+	return (ret);
+}
+
+char	*get_sign(const t_info *info)
+{
+	if (info->sign == SIGN_MINUS)
+		return ("-");
+	if (info->flag.plus)
+		return ("+");
+	else if (info->flag.space)
+		return (" ");
+	return ("?");
 }
