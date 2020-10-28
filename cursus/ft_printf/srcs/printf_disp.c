@@ -73,15 +73,17 @@ int		put_sign_num(const char *str, t_info *info)
 			ret += put_pad_disp_space(&str[1], info);
 		}
 		else
-			ret += put_pad_disp_space(str + 1, info);
+			ret += put_pad_disp_space(str, info);
 	}
 	else if (info->flag.zero)
 		ret += put_sign_zero_disp(str, info);
 	else
+	{
 		if (info->flag.plus || info->flag.space || info->sign)
 			ret += put_space_pad_disp(str + 1, info);
 		else
 			ret += put_space_pad_disp(str, info);
+	}
 	return (ret);
 }
 #endif
