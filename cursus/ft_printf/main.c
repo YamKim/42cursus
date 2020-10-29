@@ -1,8 +1,8 @@
-#include "./incs/ft_printf.h"
-
 #include <stdio.h>
 #include <locale.h>
 #include <wchar.h>
+
+#include "./incs/ft_printf.h"
 
 void	u_test();
 void	d_test();
@@ -20,7 +20,14 @@ int main(void)
 	   printf("ret = %d\n",    printf("%%p::[% 6.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
 #endif
-	d_test();
+	int result_r;
+	int result_f;
+	//printf("st16 %0.*d\n", 3, 2);
+	result_r =    printf("st16 [%.*d]\n", 3, 2);
+	result_f = ft_printf("st16 [%.*d]\n", 3, 2);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+
+	//u_test();
 #if 0
 	printf("ret = %d\n", printf("%%p::[%06.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[%06.3d]\n", 3));
@@ -131,6 +138,9 @@ int main(void)
 void	u_test(void) {
 	int result_f;
 	int result_r;
+	result_f =    printf("%d\n", printf("%-.12u\n", -20000000));
+	result_r = ft_printf("%d\n", ft_printf("%-.12u\n", -20000000));
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%-20.30u]\n", 1231248678);
 	result_r =    printf("r = [%-20.30u]\n", 1231248678);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
@@ -267,6 +277,19 @@ void	u_test(void) {
 void d_test(void) {
 	int result_f;
 	int result_r;
+	result_f =    printf("%d\n", printf("%-.12i\n", -20000000));
+	result_r = ft_printf("%d\n", ft_printf("%-.12i\n", -20000000));
+	result_f =    printf("%d\n", printf("%-.12d\n", -20000000));
+	result_r = ft_printf("%d\n", ft_printf("%-.12d\n", -20000000));
+	result_f =    printf("ret = %d\n",    printf("%%p::[%-4d]\n", -2464));
+    result_r = ft_printf("ret = %d\n", ft_printf("%%p::[%-4d]\n", -2464));
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f =    printf("ret = %d\n",    printf("%%p::[%-5d]\n", -2464));
+    result_r = ft_printf("ret = %d\n", ft_printf("%%p::[%-5d]\n", -2464));
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f =    printf("ret = %d\n",    printf("%%p::[%.5d]\n", -2464));
+    result_r = ft_printf("ret = %d\n", ft_printf("%%p::[%.5d]\n", -2464));
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [% 10.5d]\n", 123);
 	result_r =    printf("r = [% 10.5d]\n", 123);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);

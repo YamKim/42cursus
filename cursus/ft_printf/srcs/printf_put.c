@@ -1,7 +1,5 @@
 #include "../incs/ft_printf.h"
 
-
-
 int		get_str_len(const t_info *info, int *pad_len)
 {
 	int	ret;

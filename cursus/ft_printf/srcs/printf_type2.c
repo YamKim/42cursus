@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:44:34 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/28 17:28:37 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 07:51:34 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,6 @@ int	printf_x(const unsigned int dec, t_info *info)
 	if (info->type == 'X')
 		if (!(hex_str = gen_nbr_str(dec, BASE_HEX_UPPER)))
 			return (MALLOC_ERR);
-	if (info->prec == 0 && dec == 0 && info->prec_flag)
-		hex_str[0] = info->width == 0 ? '\0' : ' ';
-	if (!(hex_str = gen_nbr_str(dec, BASE_DEC)))
-		return (MALLOC_ERR);
 	if (info->prec == 0 && dec == 0 && info->prec_flag)
 		hex_str[0] = info->width == 0 ? '\0' : ' ';
 	info->len = (int)ft_strlen(hex_str);

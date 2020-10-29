@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newNBRmain.c                                       :+:      :+:    :+:   */
+/*   printf_diuxX.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbrunel <mbrunel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 10:29:29 by abourin           #+#    #+#             */
-/*   Updated: 2020/10/28 17:34:13 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 09:09:31 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../incs/ft_printf.h"
 #include <stdio.h>
 
 int main(void)
 {
-	int t;
-	char c;
-
-	c = 'a';
-	t = 50;
 	printf("pp %.50d\n", 10000);
 	printf("p5 %.3d\n", 100);
 	printf("p6 %.0d\n", 100);
@@ -73,19 +69,19 @@ int main(void)
     printf("ret = %d\n", printf("%%p::[%010d]\n", -8473));
     printf("ret = %d\n", printf("%%p::[%10d]\n", -8473));
     printf("ret = %d\n", printf("%%p::[%.5d]\n", -8473));
-    printf("ret = %d\n", printf("%%p::[%01.1d]\n", -8473));
-    printf("ret = %d\n", printf("%%p::[%010.1d]\n", -8473));
-    printf("ret = %d\n", printf("%%p::[%01.50d]\n", -8473));
     printf("ret = %d\n", printf("%%p::[%1.50d]\n", -8473));
-    printf("ret = %d\n", printf("%%p::[%0100.50d]\n", -8473));
     printf("ret = %d\n", printf("%%p::[%010d]\n", 8473));
     printf("ret = %d\n", printf("%%p::[%10d]\n", 8473));
     printf("ret = %d\n", printf("%%p::[%.5d]\n", 8473));
-    printf("ret = %d\n", printf("%%p::[%01.1d]\n", 8473));
-    printf("ret = %d\n", printf("%%p::[%010.1d]\n", 8473));
-    printf("ret = %d\n", printf("%%p::[%01.50d]\n", 8473));
+    //printf("ret = %d\n", printf("%%p::[%01.1d]\n", -8473));
+    //printf("ret = %d\n", printf("%%p::[%010.1d]\n", -8473));
+    //printf("ret = %d\n", printf("%%p::[%01.50d]\n", -8473));
+    //printf("ret = %d\n", printf("%%p::[%0100.50d]\n", -8473));
+    //printf("ret = %d\n", printf("%%p::[%01.1d]\n", 8473));
+    //printf("ret = %d\n", printf("%%p::[%010.1d]\n", 8473));
+    //printf("ret = %d\n", printf("%%p::[%01.50d]\n", 8473));
     printf("ret = %d\n", printf("%%p::[%1.50d]\n", 8473));
-    printf("ret = %d\n", printf("%%p::[%0100.50d]\n", 8473));
+    //printf("ret = %d\n", printf("%%p::[%0100.50d]\n", 8473));
 	printf("%d\n", printf("1chiffre 1 %d chiffre 2 %d\n", 42, -42));
 	printf("%d\n", printf("4chiffre 1 %-12d chiffre 2 %-12d\n", 42, -42));
 	printf("t1 %050d\n", 10);
@@ -127,10 +123,7 @@ int main(void)
 	printf("04 Test de chiffre sans h : %d, et %d\n", 432767, -432767);
 	printf("31 This is an int : %.0d\n", 0);
 	printf("32 This is an int : %0d\n", 0);
-	printf("percent 1 %012%\n");
-	printf("percent 2 %12%\n");
-	printf("percent 3 %-12%\n");
-	printf("percent 4 %0%\n");
+	int t = 50;
 	printf("%d\n", t);
 	printf("%d\n", t);
 	printf("%d\n", t);
@@ -151,6 +144,7 @@ int main(void)
 	printf("st15 %*d\n", 50, 5);
 	printf("st16 %0.*d\n", 50, 5);
 	printf("st17 %0.*d\n", 0, 0);
+#if 0
 	printf("st118 %*d\n", 100, 0);
 	printf("st119 %*d\n", 1000, 10);
 	printf("st120 %*d\n", 10000, 467);
@@ -170,4 +164,5 @@ int main(void)
 	printf("neg9 %*.*d\n", 15856, 155, -3000);
 	printf("neg10 %*.*d\n", -15586, 15, 150);
 	printf("neg11 %*.*d\n", -15586, 15, 0);
+#endif
 }

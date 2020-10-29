@@ -4,7 +4,7 @@ void	set_pad_space(t_info *info)
 {
 	if (info->prec > 0)
 	{
-		if (info->prec > info->len)
+		if (info->prec >= info->len)
 		{
 			if (info->flag.plus || info->flag.space || info->sign)
 				info->pad_len = info->prec - info->len + 1;
@@ -27,13 +27,21 @@ int		put_signed_num(const char *str, t_info *info)
 	set_pad_space(info);
 	if (info->flag.minus)
 	{
+		//printf("case1\n");
 		ret += write(STD_OUT, &str[0], 1);
+		info->len -= 1;
 		ret += put_pad_disp_space(&str[1], info);
 	}
 	else if (info->flag.zero)
+	{
+		//printf("case2\n");
 		ret += put_zeroflag_disp(str, info);
+	}
 	else
+	{
+		//printf("case3\n");
 		ret += put_space_sign_pad_disp(str, info);
+	}
 	return (ret);
 }
 

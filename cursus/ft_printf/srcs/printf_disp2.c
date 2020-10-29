@@ -14,6 +14,7 @@ int		put_pad_disp_space(const char *str, t_info *info)
 		ret += write(STD_OUT, " ", 1);	
 	return (ret);
 }
+
 int		put_space_pad_disp(const char *str, t_info *info)
 {
 	int	ret;
