@@ -1,6 +1,5 @@
 #include "../incs/ft_printf.h"
 
-#include <stdio.h>
 int		put_pad_disp_space(const char *str, t_info *info)
 {
 	int	ret;

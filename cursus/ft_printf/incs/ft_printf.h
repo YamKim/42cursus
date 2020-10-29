@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 16:08:15 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 20:10:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ typedef struct	s_info
 	int			len;
 }				t_info;
 
-# define PAD_TYPE	"  0  "
 # define FLAG_TYPE	" 0+-"
-# define NUM_TYPE	"dif"
 # define CONV_TYPE	"csdiupxX%"
 # define BASE_HEX_LOWER	"0123456789abcdef"
 # define BASE_HEX_UPPER	"0123456789ABCDEF"
@@ -115,9 +113,6 @@ int				calc_abs(int nbr);
 /*
 ****************************   printf_base    ******************************
 */
-int				get_hex_len(unsigned long dec, int first_zero);
-int				get_hex_str(unsigned long dec, char *hex_str, int idx, int first_zero);
-int				get_nbr_len(long long int nbr, const int base_size);
 char			*gen_nbr_str(long long int nbr, const char *base_type);
 char			*add_prefix(const char *prefix, const char *str);
 char			*get_sign(const t_info *info);

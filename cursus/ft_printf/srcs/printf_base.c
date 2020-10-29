@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 16:52:39 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/28 16:22:18 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 20:04:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	*add_prefix(const char *prefix, const char *str)
 
 	ret = ft_strjoin(prefix, str);
 	free((char *)str);
-
 	return (ret);
 }
 

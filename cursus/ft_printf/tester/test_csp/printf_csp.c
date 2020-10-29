@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_cs.c                                        :+:      :+:    :+:   */
+/*   printf_csp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbrunel <mbrunel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 10:29:29 by abourin           #+#    #+#             */
-/*   Updated: 2020/10/29 16:06:16 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 18:56:12 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int main(void)
 	printf("p3 %.4s\n", NULL);
 	printf("p4 %.5s\n", "aaaaa");
 	printf("Hello 42 school! %s\n", NULL);
+	printf("%p\n", NULL);
+	printf("%15p\n", NULL);
+	printf("%-15p\n", NULL);
 	printf("%c\n", 'a');
 	printf("%10c\n", 't');
 	printf("%1c\n", 'y');
@@ -35,6 +38,7 @@ int main(void)
 	printf("%10s\n", "Ok");
 	printf("%d\n", printf("4caractere 1 %12c caractere 2 %12c\n", 'a', 'c'));
 	printf("1caractere 1 %c caractere 2 %c\n", 'a', 'c');
+	printf("04 Test de chiffre sans h : %d, et %d\n", 432767, -432767);
 	printf("%d\n", printf("1string 1 %s string 2 %s\n", "toto", "bonjour"));
 	printf("%d\n", printf("4string 1 %12s string 2 %12s\n", "toto", "bonjour"));
 	printf("%d\n", printf("4string 1 %-12s string 2 %-12s\n", "toto", "bonjour"));

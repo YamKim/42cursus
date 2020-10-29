@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:44:21 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 17:18:12 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 19:26:41 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	printf_p(const void *addr, const t_info *info)
 		addr_nbr[0] = info->width == 0 ? '\0' : ' ';
 	addr_nbr = add_prefix("0x", addr_nbr);
 	((t_info *)info)->len = (int)ft_strlen(addr_nbr);
-	ret = put_space_and_str(addr_nbr, info);
+	ret = put_char_string(addr_nbr, (t_info *)info);
 	free(addr_nbr);
 	return (ret);
 }

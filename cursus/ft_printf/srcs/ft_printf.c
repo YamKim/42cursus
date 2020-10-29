@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 08:36:36 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 20:04:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int		print_va(va_list *ap, const t_info *info)
 	int		ret;
 	
 	set_asterisk(ap, (t_info *)info);
+	if (info->type == '%') 
+		ret = printf_c('%', info); 
 	if (info->type == 'c') 
 		ret = printf_c((char)va_arg(*ap, int), info); 
 	if (info->type == 's')
@@ -46,15 +48,8 @@ int ft_printf(const char *format, ... ) {
 		else 
 		{
 			++format;
-			if (*format == '%')
-			{
-				ret += write(STD_OUT, format++, 1);
-				continue ;
-			}
-			// get_info 들어가기 전에 info 초기화해주기
 			get_info(&format, &info);
 			ret += print_va(&ap, &info);
-			// conversion 출력 skip
 			++format;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 14:47:40 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 20:00:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	initialize_info(t_info *info)
 	info->space_len = 0;
 }
 
-#include <stdio.h>
 void	set_asterisk(va_list *ap, t_info *info)
 {
 	int	tmp_width;
@@ -48,7 +47,6 @@ void	set_asterisk(va_list *ap, t_info *info)
 		tmp_prec = va_arg(*ap, int);
 		info->prec = calc_abs(tmp_prec);
 		if (tmp_prec < 0)
-			// MINUS_PREC: precision없는 것과 같이 동작
 			info->prec = MINUS_PREC;
 	}
 }
@@ -95,7 +93,7 @@ void	get_info(const char **format, t_info *info)
 	initialize_info(info);
 	while (**format != '\0' && ft_strchr(FLAG_TYPE, **format))
 	{
-		if (**format == '0' && info->width == 0)		
+		if (**format == '0' && info->width == 0)
 			info->flag.zero = 1;
 		else if (**format == '-')
 			info->flag.minus = 1;
@@ -103,7 +101,7 @@ void	get_info(const char **format, t_info *info)
 			info->flag.plus = 1;
 		else if (**format == ' ')
 			info->flag.space = 1;
-		++(*format);	
+		++(*format);
 	}	
 	get_width_info(format, info);
 	get_prec_info(format, info);

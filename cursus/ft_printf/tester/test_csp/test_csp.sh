@@ -3,8 +3,8 @@ CFLAGS='-Werror -Wall -Wextra'
 RED='\033[0;32m'
 PRINTFA='libftprintf.a'
 NC='\033[0m' # No Color
-PT_TEST='printf_cs.c'
-FPT_TEST='ftprintf_cs.c'
+PT_TEST='printf_csp.c'
+FPT_TEST='ftprintf_csp.c'
 echo 'Please enter a path for libftprintf.a'
 	rm -f test.c
 	cp ${PT_TEST} ft.c

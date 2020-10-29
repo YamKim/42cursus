@@ -10,7 +10,6 @@ SRC = ft_printf.c \
 	printf_info.c \
 	printf_type.c \
 	printf_type2.c \
-	printf_put.c \
 	printf_disp.c \
 	printf_disp2.c \
 	printf_base.c \

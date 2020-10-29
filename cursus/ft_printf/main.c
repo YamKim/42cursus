@@ -8,6 +8,7 @@ void	u_test();
 void	d_test();
 void	x_test();
 void	s_test();
+void	p_test();
 
 int main(void)
 {
@@ -21,9 +22,37 @@ int main(void)
 	   printf("ret = %d\n",    printf("%%p::[% 6.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
 #endif
-	s_test();
+	//p_test();
+	//s_test();
 	//printf("st16 %0.*d\n", 3, 2);
 	//u_test();
+	int result_f;
+	int result_r;
+	
+#if 1
+	result_f = ft_printf("[%%]\n");
+	result_r =    printf("[%%]\n");
+	result_f = ft_printf("[%-010%]\n");
+	result_r =    printf("[%0-10%]\n");
+	result_f = ft_printf("[%010%]\n");
+	result_r =    printf("[%010%]\n");
+	result_f = ft_printf("[%10%]\n");
+	result_r =    printf("[%10%]\n");
+	result_f = ft_printf("[%-12%]\n");
+	result_r =    printf("[%-12%]\n");
+#endif
+#if 0
+	result_f = ft_printf("%d\n", printf("%%\n"));
+	result_r =    printf("%d\n", printf("%%\n"));
+	result_f = ft_printf("%d\n", printf("truc\n"));
+	result_r =    printf("%d\n", printf("truc\n"));
+	result_f = ft_printf("percent 1 %012%\n");
+	result_r =    printf("percent 1 %012%\n");
+	result_f = ft_printf("percent 2 %12%\n");
+	result_r =    printf("percent 2 %12%\n");
+	result_f = ft_printf("percent 4 %0%\n");
+	result_r =    printf("percent 4 %0%\n");
+#endif
 #if 0
 	printf("ret = %d\n", printf("%%p::[%06.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[%06.3d]\n", 3));
@@ -42,20 +71,7 @@ int main(void)
 	result_f = ft_printf("f = [%.09s]\n", "\0");
 	printf("result_f = %d\n\n", result_f);
 #endif
-#if 0
-	char *strNULL = "\0";
-	result_f = ft_printf("f = [%p]\n", strNULL);
-	result_r =    printf("r = [%p]\n", strNULL);
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%5p]\n", str);
-	result_r =    printf("r = [%5p]\n", str);
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%-20p]\n", str);
-	result_r =    printf("r = [%-20p]\n", str);
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%-20p]\n", (void *)0);
-	result_r =    printf("r = [%-20p]\n", (void *)0);
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+#if 1
 #endif
 #if 0
 	result_f = ft_printf("f = [%0+10d]\n", -123);
@@ -531,4 +547,26 @@ void s_test(void) {
 	result_r =    printf("r = [%-.5s]\n", "\0");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 #endif
+}
+
+void p_test(void)
+{
+	int result_f;
+	int result_r;
+	char *strNULL = "\0";
+	result_f = ft_printf("f = [%p]\n", strNULL);
+	result_r =    printf("r = [%p]\n", strNULL);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	char *str = "abcd";
+	result_f = ft_printf("f = [%5p]\n", str);
+	result_r =    printf("r = [%5p]\n", str);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-20p]\n", str);
+	result_r =    printf("r = [%-20p]\n", str);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-20p]\n", (void *)0);
+	result_r =    printf("r = [%-20p]\n", (void *)0);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+
+
 }
