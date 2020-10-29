@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:44:21 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/27 17:28:30 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 17:18:12 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ int	printf_c(char c, const t_info *info)
 
 	((t_info *)info)->len = sizeof(c);
 	if (c == '\0')
-	{
-		write(STD_OUT, "\0", 1);
-		return (1);
-	}
-	ret = put_space_and_str(&c, info);
+		return (write(STD_OUT, "\0", 1));
+	ret = put_char_string(&c, (t_info *)info);
 	return (ret);
 }
 
@@ -31,17 +28,11 @@ int	printf_s(const char *str, const t_info *info)
 	int	ret;
 
 	if (str == NULL)
-	{
-		write(STD_OUT, "(null)", 6);
-		return (6);
-	}
+		return (0);
 	((t_info *)info)->len = (int)ft_strlen(str);
 	if (info->len == 0)
-	{
-		write(STD_OUT, "(null)", 6);
-		return (6);
-	}
-	ret = put_space_and_str(str, info);
+		return (0);
+	ret = put_char_string(str, (t_info *)info);
 	return (ret);
 }
 

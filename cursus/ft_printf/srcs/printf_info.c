@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 07:49:47 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 14:47:40 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	initialize_info(t_info *info)
 	info->space_len = 0;
 }
 
+#include <stdio.h>
 void	set_asterisk(va_list *ap, t_info *info)
 {
 	int	tmp_width;
@@ -47,6 +48,7 @@ void	set_asterisk(va_list *ap, t_info *info)
 		tmp_prec = va_arg(*ap, int);
 		info->prec = calc_abs(tmp_prec);
 		if (tmp_prec < 0)
+			// MINUS_PREC: precision없는 것과 같이 동작
 			info->prec = MINUS_PREC;
 	}
 }

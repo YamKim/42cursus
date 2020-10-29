@@ -6,7 +6,7 @@
 /*   By: mbrunel <mbrunel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 10:29:29 by abourin           #+#    #+#             */
-/*   Updated: 2020/10/29 09:09:11 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 16:03:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ int main(void)
     ft_printf("ret = %d\n", ft_printf("%%p::[%010d]\n", 8473));
     ft_printf("ret = %d\n", ft_printf("%%p::[%10d]\n", 8473));
     ft_printf("ret = %d\n", ft_printf("%%p::[%.5d]\n", 8473));
-    //ft_printf("ret = %d\n", ft_printf("%%p::[%01.1d]\n", -8473));
-    //ft_printf("ret = %d\n", ft_printf("%%p::[%010.1d]\n", -8473));
-    //ft_printf("ret = %d\n", ft_printf("%%p::[%01.50d]\n", -8473));
-    //ft_printf("ret = %d\n", ft_printf("%%p::[%0100.50d]\n", -8473));
-    //ft_printf("ret = %d\n", ft_printf("%%p::[%01.1d]\n", 8473));
-    //ft_printf("ret = %d\n", ft_printf("%%p::[%010.1d]\n", 8473));
-    //ft_printf("ret = %d\n", ft_printf("%%p::[%01.50d]\n", 8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%01.1d]\n", -8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%010.1d]\n", -8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%01.50d]\n", -8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%0100.50d]\n", -8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%01.1d]\n", 8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%010.1d]\n", 8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%01.50d]\n", 8473));
     ft_printf("ret = %d\n", ft_printf("%%p::[%1.50d]\n", 8473));
-    //ft_printf("ret = %d\n", ft_printf("%%p::[%0100.50d]\n", 8473));
+    ft_printf("ret = %d\n", ft_printf("%%p::[%0100.50d]\n", 8473));
 	ft_printf("%d\n", ft_printf("1chiffre 1 %d chiffre 2 %d\n", 42, -42));
 	ft_printf("%d\n", ft_printf("4chiffre 1 %-12d chiffre 2 %-12d\n", 42, -42));
 	ft_printf("t1 %050d\n", 10);
@@ -142,7 +142,6 @@ int main(void)
 	ft_printf("st13 %*d\n", 0, 0);
 	ft_printf("st14 %.*d\n", 0, 0);
 	ft_printf("st15 %*d\n", 50, 5);
-#if 0
 	ft_printf("st16 %0.*d\n", 50, 5);
 	ft_printf("st17 %0.*d\n", 0, 0);
 	ft_printf("st118 %*d\n", 100, 0);
@@ -164,5 +163,6 @@ int main(void)
 	ft_printf("neg9 %*.*d\n", 15856, 155, -3000);
 	ft_printf("neg10 %*.*d\n", -15586, 15, 150);
 	ft_printf("neg11 %*.*d\n", -15586, 15, 0);
+#if 0
 #endif
 }

@@ -7,6 +7,7 @@
 void	u_test();
 void	d_test();
 void	x_test();
+void	s_test();
 
 int main(void)
 {
@@ -20,13 +21,8 @@ int main(void)
 	   printf("ret = %d\n",    printf("%%p::[% 6.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
 #endif
-	int result_r;
-	int result_f;
+	s_test();
 	//printf("st16 %0.*d\n", 3, 2);
-	result_r =    printf("st16 [%.*d]\n", 3, 2);
-	result_f = ft_printf("st16 [%.*d]\n", 3, 2);
-	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-
 	//u_test();
 #if 0
 	printf("ret = %d\n", printf("%%p::[%06.3d]\n", 3));
@@ -277,6 +273,19 @@ void	u_test(void) {
 void d_test(void) {
 	int result_f;
 	int result_r;
+	result_r =    printf("[%0.*d]\n", 50, 5);
+	result_f = ft_printf("[%0.*d]\n", 50, 5);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_r =    printf("[%10.5d]\n", 5);
+	result_f = ft_printf("[%10.5d]\n", 5);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_r =    printf("[%*.*d]\n", 0, 50, 5);
+	result_f = ft_printf("[%*.*d]\n", 0, 50, 5);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_r =    printf("[%.*d]\n", 3, 2);
+	result_f = ft_printf("[%.*d]\n", 3, 2);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+
 	result_f =    printf("%d\n", printf("%-.12i\n", -20000000));
 	result_r = ft_printf("%d\n", ft_printf("%-.12i\n", -20000000));
 	result_f =    printf("%d\n", printf("%-.12d\n", -20000000));
@@ -474,6 +483,10 @@ void x_test(void)
 void s_test(void) {
 	int result_r;
 	int result_f;
+#if 1
+	result_f = ft_printf("f = [%c]\n", '\0');
+	result_r =    printf("r = [%c]\n", '\0');
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%-20s]\n", "asdfsadf");
 	result_r =    printf("r = [%-20s]\n", "asdfsadf");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
@@ -483,6 +496,13 @@ void s_test(void) {
 	result_f = ft_printf("f = [%*.3s]\n", 20, "asdfsadf");
 	result_r =    printf("r = [%*.3s]\n", 20, "asdfsadf");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	printf("case 7\n");
+	result_f = ft_printf("f = [%20.15s]\n", "asdfsadf");
+	result_r =    printf("r = [%20.15s]\n", "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	printf("case 8\n");
+	result_f = ft_printf("f = [%7.15s]\n", "asdfsadf");
+	result_r =    printf("r = [%7.15s]\n", "asdfsadf");
 	printf("asdfsadf\n");
 	result_f = ft_printf("f = [%5.10s]\n", "asdfsadf");
 	result_r =    printf("r = [%5.10s]\n", "asdfsadf");
@@ -510,4 +530,5 @@ void s_test(void) {
 	result_f = ft_printf("f = [%-.5s]\n", "\0");
 	result_r =    printf("r = [%-.5s]\n", "\0");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+#endif
 }

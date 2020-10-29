@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/28 14:06:27 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/29 16:08:15 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ int				put_space_and_str(const char *str, const t_info *info);
 /*
 ***************************   printf_disp    *******************************
 */
-int				disp_control(const char *str, t_info *info);
 void			set_pad_space(t_info *info);
 int				put_signed_num(const char *str, t_info *info);
 int				put_unsigned_num(const char *str, t_info *info);
+int				put_char_string(const char *str, t_info *info);
 
 /*
 ***************************   printf_disp2   *******************************

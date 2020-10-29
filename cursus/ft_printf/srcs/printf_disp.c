@@ -4,6 +4,8 @@ void	set_pad_space(t_info *info)
 {
 	if (info->prec > 0)
 	{
+		if (info->flag.zero)
+			info->flag.zero = 0;
 		if (info->prec >= info->len)
 		{
 			if (info->flag.plus || info->flag.space || info->sign)
@@ -12,8 +14,15 @@ void	set_pad_space(t_info *info)
 				info->pad_len = info->prec - info->len;
 		}
 		else
+		{
 			info->pad_len = 0;
-		info->space_len = calc_max(info->width - (info->pad_len + info->len), 0);	
+			if (ft_strchr("csf", info->type))
+				info->len = info->prec;
+		}
+		if (ft_strchr("csf", info->type))
+			info->space_len = calc_max(info->width - info->len, 0);
+		else
+			info->space_len = calc_max(info->width - (info->pad_len + info->len), 0);	
 	}
 	else
 		info->space_len = calc_max(info->width - info->len, 0);
@@ -52,20 +61,29 @@ int		put_unsigned_num(const char *str, t_info *info)
 	ret = 0;
 	set_pad_space(info);
 	if (info->flag.minus)
+	{
+	//	printf("case1\n");
 		ret += put_pad_disp_space(str, info);
+	}
 	else if (info->flag.zero)
+	{
+	//	printf("case2\n");
 		ret += put_zeroflag_disp(str, info);
+	}
 	else
+	{
+	//	printf("case3\n");
 		ret += put_space_pad_disp(str, info);
+	}
 	return (ret);
 }
 
-int		disp_control(const char *str, t_info *info)
+int		put_char_string(const char *str, t_info *info)
 {
 	int	ret;
-	set_pad_space(info);
-	ret = 0;
 
+	ret = 0;
+	set_pad_space(info);
 	if (info->flag.minus)
 		ret = put_pad_disp_space(str, info);	
 	else
