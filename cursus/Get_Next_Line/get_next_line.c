@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 06:46:51 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 13:18:14 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/30 07:23:09 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,21 @@ int			get_next_line(int fd, char **line)
 
 	if (fd < 0 || fd > OPEN_MAX || line == 0 || BUFFER_SIZE <= 0)
 		return (-1);
-	if (!(buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1)))
+	if (!(buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
 	while ((next_line = ft_strchr(backup, (int)'\n')) == NULL)
 	{
 		if ((read_size = read(fd, buf, BUFFER_SIZE)) <= 0)
+		{
+			free(buf);
 			return (return_all(line, &backup, read_size));
+		}
 		buf[read_size] = '\0';
 		if (keep_bufs(&backup, buf, read_size) == -1)
+		{
+			free(buf);
 			return (-1);
+		}
 	}
 	free(buf);
 	return (split_lines(line, &backup, next_line));

@@ -9,7 +9,7 @@ int main(void) {
 	int fd;
 	if ((fd = open("test.txt", O_RDONLY)) <= 0)
 		return (-1);
-		char *line;
+	char *line;
 	while (get_next_line(fd, &line) > 0)
 	{
 		printf("gnl res: %s\n", line);
