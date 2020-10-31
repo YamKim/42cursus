@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 20:10:21 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/31 17:30:04 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ typedef struct	s_info
 	t_flag		flag;
 	int			sign;
 	int			width;
-	int			width_flag;
-	int			pad_len;
-	int			space_len;
 	int			prec;
-	int			prec_flag;
+	int			pad_len;
+	int			point;
+	int			space_len;
 	char		type;
 	int			len;
 }				t_info;
@@ -45,10 +44,8 @@ typedef struct	s_info
 # define BASE_DEC	"0123456789"
 # define INFO_INIT	0
 # define STD_OUT	1
-# define ASTERISK	-1
+# define ASTERISK	-3
 # define MINUS_PREC	-2
-# define WIDTH_FLAG	1	
-# define PREC_FLAG	1	
 # define MALLOC_ERR	-1
 # define SIGN_MINUS	1
 # define SIGN_PLUS	0
@@ -68,16 +65,16 @@ void			get_info(const char **format, t_info *info);
 /*
 ****************************   printf_type   *******************************
 */
-int				printf_c(char c, const t_info *info);
-int				printf_s(const char *str, const t_info *info);
-int				printf_p(const void *addr, const t_info *info);
+int				printf_c(const char c, t_info *info);
+int				printf_s(const char *str, t_info *info);
+int				printf_p(const void *addr, t_info *info);
 
 /*
 ***************************   printf_type2   *******************************
 */
 int				printf_d(const int dec, t_info *info);
 int				printf_u(const unsigned int dec, t_info *info);
-int				printf_x(const unsigned int dec, t_info *info);
+int				printf_x(const unsigned int dec, t_info *info, char *base_type);
 
 /*
 ****************************   printf_put    *******************************

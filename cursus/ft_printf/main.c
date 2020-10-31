@@ -7,6 +7,7 @@
 void	u_test();
 void	d_test();
 void	x_test();
+void	c_test();
 void	s_test();
 void	p_test();
 
@@ -22,14 +23,36 @@ int main(void)
 	   printf("ret = %d\n",    printf("%%p::[% 6.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
 #endif
+	s_test();
 	//p_test();
-	//s_test();
+	//c_test();
 	//printf("st16 %0.*d\n", 3, 2);
 	//u_test();
+	
+#if 0
+	char c = 'a';
 	int result_f;
 	int result_r;
+	result_f = ft_printf("f = [%-4.c]\n", c);
+	result_r =    printf("r = [%-4.c]\n", c);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-4c]\n", c);
+	result_r =    printf("r = [%-4c]\n", c);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	
-#if 1
+#endif
+#if 0
+	int result_f;
+	int result_r;
+	char *s = "abc";
+	result_f = ft_printf("-->|%-16.s|<--\n", s);
+	result_r =    printf("-->|%-16.s|<--\n", s);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+
+#endif
+#if 0
+	int result_f;
+	int result_r;
 	result_f = ft_printf("[%%]\n");
 	result_r =    printf("[%%]\n");
 	result_f = ft_printf("[%-010%]\n");
@@ -289,6 +312,59 @@ void	u_test(void) {
 void d_test(void) {
 	int result_f;
 	int result_r;
+	int d = 12;
+	printf("case1\n");
+	result_r =    printf("lover |%04.*d|\n", -5, d);
+	result_f = ft_printf("lover |%04.*d|\n", -5, d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	printf("case2\n");
+	result_r =    printf("lover |%04.*d|\n", 5, d);
+	result_f = ft_printf("lover |%04.*d|\n", 5, d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	printf("case4\n");
+	result_r =    printf("lover |%0*.d|\n", 4, d);
+	result_f = ft_printf("lover |%0*.d|\n", 4, d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	printf("case5\n");
+	result_r =    printf("lover |%0*.*d|\n", 4, 0, d);
+	result_f = ft_printf("lover |%0*.*d|\n", 4, 0, d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	printf("case6\n");
+	result_r =    printf("lover |%0*.0d|\n", 4, d);
+	result_f = ft_printf("lover |%0*.0d|\n", 4, d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	d = -12;
+	printf("case7\n");
+	result_r =    printf("lover |%04.d|\n", d);
+	result_f = ft_printf("lover |%04.d|\n", d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	printf("case8\n");
+	result_r =    printf("lover |%04.*d|\n", 0, d);
+	result_f = ft_printf("lover |%04.*d|\n", 0, d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	printf("case9\n");
+	result_r =    printf("lover |%04.0d|\n", d);
+	result_f = ft_printf("lover |%04.0d|\n", d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	d = 12;
+	printf("case10\n");
+	result_r =    printf("lover |%+0*.0d|\n", 4, d);
+	result_f = ft_printf("lover |%+0*.0d|\n", 4, d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
+	printf("case11\n");
+	result_r =    printf("lover |%04d|\n", d);
+	result_f = ft_printf("lover |%04d|\n", d);
+	printf("result_r = %d\n", result_r);
+	printf("result_f = %d\n\n", result_f);
 	result_r =    printf("[%0.*d]\n", 50, 5);
 	result_f = ft_printf("[%0.*d]\n", 50, 5);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
@@ -496,18 +572,58 @@ void x_test(void)
 
 }
 
+void c_test(void) {
+	int result_r;
+	int result_f;
+	char c = 'a';
+	result_f =    printf("-->|%-4.c|<--\n", c); 
+	result_r = ft_printf("-->|%-4.c|<--\n", c); 
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f =    printf("-->|%-4c|<--\n", c);  
+	result_r = ft_printf("-->|%-4c|<--\n", c);  
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f =    printf("-->|%-3.c|<--\n", c); 
+	result_r = ft_printf("-->|%-3.c|<--\n", c); 
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f =    printf("-->|%-3c|<--\n", c);  
+	result_r = ft_printf("-->|%-3c|<--\n", c);  
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f =    printf("-->|%-2.c|<--\n", c); 
+	result_r = ft_printf("-->|%-2.c|<--\n", c); 
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f =    printf("-->|%-2c|<--\n", c);  
+	result_r = ft_printf("-->|%-2c|<--\n", c);  
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+}
+
 void s_test(void) {
 	int result_r;
 	int result_f;
-#if 1
+	char *s = "";
+	result_f = ft_printf("-->|%-16.s|<--\n", s);
+	result_r =    printf("-->|%-16.s|<--\n", s);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+#if 0
+	result_f = ft_printf("p3 %.4s\n", NULL);
+	result_r =    printf("p3 %.4s\n", NULL);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("p3 %4s\n", NULL);
+	result_r =    printf("p3 %4s\n", NULL);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%c]\n", '\0');
 	result_r =    printf("r = [%c]\n", '\0');
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%-20s]\n", "asdfsadf");
 	result_r =    printf("r = [%-20s]\n", "asdfsadf");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-	result_f = ft_printf("f = [%-*.*s]\n", 20, 3, "asdfsadf");
-	result_r =    printf("r = [%-*.*s]\n", 20, 3, "asdfsadf");
+	result_f = ft_printf("f = [%-*.*s]\n", 0, 20, "asdfsadf");
+	result_r =    printf("r = [%-*.*s]\n", 0, 20, "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-*.*s]\n", 20, -3, "asdfsadf");
+	result_r =    printf("r = [%-*.*s]\n", 20, -3, "asdfsadf");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("f = [%-*.20s]\n", 20, "asdfsadf");
+	result_r =    printf("r = [%-*.20s]\n", 20, "asdfsadf");
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 	result_f = ft_printf("f = [%*.3s]\n", 20, "asdfsadf");
 	result_r =    printf("r = [%*.3s]\n", 20, "asdfsadf");

@@ -6,11 +6,12 @@
 /*   By: mbrunel <mbrunel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 10:29:29 by abourin           #+#    #+#             */
-/*   Updated: 2020/10/29 18:56:12 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/31 17:19:41 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "../../incs/ft_printf.h"
 
 int main(void)
 {
@@ -19,6 +20,10 @@ int main(void)
 
 	c = 'a';
 	t = 50;
+	ft_printf("r = [%-4.c]\n", c);
+	ft_printf("r = [%-4c]\n", c);
+#if 0
+	ft_printf("p1 %-4.s\n", "cccc");
 	ft_printf("p1 %.4s\n", "cccc");
 	ft_printf("p2 %.10s\n", "cccc");
 	ft_printf("p3 %.4s\n", NULL);
@@ -69,4 +74,5 @@ int main(void)
 	ft_printf("neg11 %*.*s\n", -15586, 15, "coucou");
 	ft_printf("***************%*s%*d**************%*u*************\n", 10, "coucou", 10, 10, -50, 20);
 	ft_printf("taaa %100s\n", "hello");
+#endif
 }

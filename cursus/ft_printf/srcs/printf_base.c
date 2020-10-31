@@ -6,13 +6,13 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 16:52:39 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 20:04:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/31 14:11:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_printf.h"
 
-int	get_nbr_len(long long int nbr, const int base_size)
+int		get_nbr_len(long long int nbr, const int base_size)
 {
 	int						ret;
 	long long unsigned int	nbr_tmp;
@@ -43,7 +43,7 @@ char	*gen_nbr_str(long long int nbr, const char *base_type)
 
 	if (nbr == 0)
 		return (ft_strdup("0"));
-	base_size = (int)ft_strlen(base_type);	
+	base_size = (int)ft_strlen(base_type);
 	size = get_nbr_len(nbr, base_size);
 	if (!(ret = (char *)malloc(sizeof(char) * (size + 1))))
 		return (NULL);

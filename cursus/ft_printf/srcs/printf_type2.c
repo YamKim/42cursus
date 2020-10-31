@@ -6,13 +6,12 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:44:34 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 07:51:34 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/31 14:23:47 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_printf.h"
 
-#include <stdio.h>
 int	printf_d(const int dec, t_info *info)
 {
 	int		ret;
@@ -20,8 +19,8 @@ int	printf_d(const int dec, t_info *info)
 
 	if (!(dec_str = gen_nbr_str(dec, BASE_DEC)))
 		return (MALLOC_ERR);
-	if (info->prec == 0 && dec == 0 && info->prec_flag)
-		dec_str[0] = info->width == 0 ? '\0' : ' ';
+	if (info->point == 1 && info->prec == 0 && dec == 0)
+		dec_str[0] = '\0';
 	if (dec < 0)
 		info->sign = SIGN_MINUS;
 	info->len = (int)ft_strlen(dec_str);
@@ -48,8 +47,8 @@ int	printf_u(const unsigned int dec, t_info *info)
 
 	if (!(dec_str = gen_nbr_str(dec, BASE_DEC)))
 		return (MALLOC_ERR);
-	if (info->prec == 0 && dec == 0 && info->prec_flag)
-		dec_str[0] = info->width == 0 ? '\0' : ' ';
+	if (info->point == 1 && info->prec == 0 && dec == 0)
+		dec_str[0] = '\0';
 	info->len = (int)ft_strlen(dec_str);
 	if ((info->flag.plus || info->flag.space) && !info->sign)
 	{
@@ -67,19 +66,15 @@ int	printf_u(const unsigned int dec, t_info *info)
 	return (ret);
 }
 
-int	printf_x(const unsigned int dec, t_info *info)
+int	printf_x(const unsigned int dec, t_info *info, char *base_type)
 {
 	int		ret;
 	char	*hex_str;
 
-	if (info->type == 'x')
-		if (!(hex_str = gen_nbr_str(dec, BASE_HEX_LOWER)))
-			return (MALLOC_ERR);
-	if (info->type == 'X')
-		if (!(hex_str = gen_nbr_str(dec, BASE_HEX_UPPER)))
-			return (MALLOC_ERR);
-	if (info->prec == 0 && dec == 0 && info->prec_flag)
-		hex_str[0] = info->width == 0 ? '\0' : ' ';
+	if (!(hex_str = gen_nbr_str(dec, base_type)))
+		return (MALLOC_ERR);
+	if (info->point == 1 && info->prec == 0 && dec == 0)
+		hex_str[0] = '\0';
 	info->len = (int)ft_strlen(hex_str);
 	if ((info->flag.plus || info->flag.space) && !info->sign)
 	{

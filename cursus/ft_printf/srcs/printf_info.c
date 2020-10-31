@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/29 20:00:16 by yekim            ###   ########.fr       */
+/*   Updated: 2020/10/31 14:18:29 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	initialize_info(t_info *info)
 	info->flag.plus = 0;
 	info->flag.space = 0;
 	info->sign = SIGN_PLUS;
-	info->width = INFO_INIT;
+	info->width = 0;
 	info->prec = 0;
-	info->prec_flag = 0;
+	info->point = 0;
 	info->pad_len = 0;
 	info->space_len = 0;
 }
@@ -42,12 +42,16 @@ void	set_asterisk(va_list *ap, t_info *info)
 		else
 			info->width = tmp_width;
 	}
-	if (info->prec == ASTERISK)
+	if (info->prec == ASTERISK && info->point)
 	{
 		tmp_prec = va_arg(*ap, int);
-		info->prec = calc_abs(tmp_prec);
 		if (tmp_prec < 0)
-			info->prec = MINUS_PREC;
+		{
+			info->prec = 0;
+			info->point = 0;
+		}
+		else
+			info->prec = tmp_prec;
 	}
 }
 
@@ -59,8 +63,6 @@ void	get_width_info(const char **format, t_info *info)
 		++(*format);
 		return ;
 	}
-	if (ft_isdigit((int)**format))
-		info->width_flag = 1;
 	while (ft_isdigit((int)**format))
 	{
 		info->width = info->width * 10 + (**format - '0');
@@ -72,8 +74,11 @@ void	get_prec_info(const char **format, t_info *info)
 {
 	if (**format == '.')
 	{
-		info->prec_flag = PREC_FLAG;
+		info->point = 1;
 		++(*format);
+	}
+	if (info->point)
+	{
 		if (**format == '*')
 		{
 			info->prec = ASTERISK;
@@ -102,7 +107,7 @@ void	get_info(const char **format, t_info *info)
 		else if (**format == ' ')
 			info->flag.space = 1;
 		++(*format);
-	}	
+	}
 	get_width_info(format, info);
 	get_prec_info(format, info);
 	info->type = **format;
