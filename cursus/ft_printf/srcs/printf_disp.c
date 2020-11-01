@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 14:11:35 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/31 17:47:08 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/01 13:54:10 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ void	set_pad_space_str(t_info *info)
 {
 	if (info->point)
 	{
-		if (info->prec >= info->len)
-			info->pad_len = info->prec - info->len;
-		else
+		if (info->len > info->prec)
 		{
 			if (ft_strchr("s", info->type))
 				info->len = info->prec;
@@ -89,8 +87,6 @@ int		put_char_string(const char *str, t_info *info)
 		return (-1);
 	if (info->flag.minus)
 		ret = put_pad_disp_space(str, info);
-	else if (info->flag.zero)
-		ret = put_zeroflag_disp(str, info);
 	else
 		ret = put_space_pad_disp(str, info);
 	return (ret);
