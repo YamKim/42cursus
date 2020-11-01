@@ -15,10 +15,11 @@ int main(void) {
 		printf("gnl res: %s\n", line);
 		free(line);
 	}
+	printf("gnl res: %s\n", line);
 	free(line);
 	printf("gnl finished\n");
 	printf("stop to leaking check\n");
-#if 0
+#if 1
 	while (1)
 	{}
 #endif
