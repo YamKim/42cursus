@@ -28,7 +28,7 @@ int main(void)
 	//d_test();
 	//s_test();
 	//p_test();
-	//c_test();
+	c_test();
 	//printf("st16 %0.*d\n", 3, 2);
 	//u_test();
 	
@@ -709,7 +709,7 @@ void c_test(void) {
 	result_f = ft_printf("-->|%2.c|<--\n", c);
 	result_r =    printf("-->|%2.c|<--\n", c);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
-#if 0
+#if 1
 	result_f =    printf("-->|%-4.c|<--\n", c); 
 	result_r = ft_printf("-->|%-4.c|<--\n", c); 
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
