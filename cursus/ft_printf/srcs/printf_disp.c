@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 14:11:35 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/01 13:54:10 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/02 19:12:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	set_pad_space_str(t_info *info)
 	info->space_len = calc_max(info->width - info->len, 0);
 }
 
-int		put_signed_num(const char *str, t_info *info)
+int		print_signed_num(const char *str, t_info *info)
 {
 	int	ret;
 
@@ -62,7 +62,7 @@ int		put_signed_num(const char *str, t_info *info)
 	return (ret);
 }
 
-int		put_unsigned_num(const char *str, t_info *info)
+int		print_unsigned_num(const char *str, t_info *info)
 {
 	int	ret;
 
@@ -77,16 +77,19 @@ int		put_unsigned_num(const char *str, t_info *info)
 	return (ret);
 }
 
-int		put_char_string(const char *str, t_info *info)
+int		print_string(const char *str, t_info *info)
 {
 	int	ret;
 
 	ret = 0;
 	set_pad_space_str(info);
-	if (info->flag.zero)
-		return (-1);
+	if (ft_strchr("sp", info->type))
+		if (info->flag.zero)
+			return (-1);
 	if (info->flag.minus)
 		ret = put_pad_disp_space(str, info);
+	else if (ft_strchr("%", info->type) && info->flag.zero)
+		ret = put_zeroflag_disp(str, info);
 	else
 		ret = put_space_pad_disp(str, info);
 	return (ret);

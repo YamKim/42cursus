@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:44:34 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/01 13:52:29 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/02 15:49:18 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	printf_d(const int dec, t_info *info)
 			dec_str = add_prefix(" ", dec_str);
 	}
 	if (info->flag.plus || info->flag.space || info->sign)
-		ret = put_signed_num(dec_str, (t_info *)info);
+		ret = print_signed_num(dec_str, (t_info *)info);
 	else
-		ret = put_unsigned_num(dec_str, (t_info *)info);
+		ret = print_unsigned_num(dec_str, (t_info *)info);
 	free(dec_str);
 	return (ret);
 }
@@ -59,9 +59,9 @@ int	printf_u(const unsigned int dec, t_info *info)
 			dec_str = add_prefix(" ", dec_str);
 	}
 	if (info->flag.plus || info->flag.space)
-		ret = put_signed_num(dec_str, (t_info *)info);
+		ret = print_signed_num(dec_str, (t_info *)info);
 	else
-		ret = put_unsigned_num(dec_str, (t_info *)info);
+		ret = print_unsigned_num(dec_str, (t_info *)info);
 	free(dec_str);
 	return (ret);
 }
@@ -85,9 +85,9 @@ int	printf_x(const unsigned int dec, t_info *info, char *base_type)
 			hex_str = add_prefix(" ", hex_str);
 	}
 	if (info->flag.plus || info->flag.space)
-		ret = put_signed_num(hex_str, (t_info *)info);
+		ret = print_signed_num(hex_str, (t_info *)info);
 	else
-		ret = put_unsigned_num(hex_str, (t_info *)info);
+		ret = print_unsigned_num(hex_str, (t_info *)info);
 	free(hex_str);
 	return (ret);
 }

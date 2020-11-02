@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/31 16:57:19 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/02 15:40:47 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	print_va(va_list *ap, t_info *info)
 
 	set_asterisk(ap, (t_info *)info);
 	if (info->type == '%')
-		ret = printf_c('%', info);
+		ret = printf_s("%", info);
 	if (info->type == 'c')
 		ret = printf_c((char)va_arg(*ap, int), info);
 	if (info->type == 's')
@@ -26,13 +26,13 @@ int	print_va(va_list *ap, t_info *info)
 	if (info->type == 'p')
 		ret = printf_p(va_arg(*ap, void *), info);
 	if (info->type == 'd' || info->type == 'i')
-		ret = printf_d(va_arg(*ap, int), (t_info *)info);
+		ret = printf_d(va_arg(*ap, int), info);
 	if (info->type == 'u')
-		ret = printf_u(va_arg(*ap, int), (t_info *)info);
+		ret = printf_u(va_arg(*ap, int), info);
 	if (info->type == 'x')
-		ret = printf_x(va_arg(*ap, int), (t_info *)info, BASE_HEX_LOWER);
+		ret = printf_x(va_arg(*ap, int), info, BASE_HEX_LOWER);
 	if (info->type == 'X')
-		ret = printf_x(va_arg(*ap, int), (t_info *)info, BASE_HEX_UPPER);
+		ret = printf_x(va_arg(*ap, int), info, BASE_HEX_UPPER);
 	return (ret);
 }
 
