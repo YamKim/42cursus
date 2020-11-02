@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 06:46:44 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/25 08:29:53 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/02 13:36:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,16 @@ int			get_next_line(int fd, char **line)
 	while ((next_line = ft_strchr(backup[fd], (int)'\n')) == NULL)
 	{
 		if ((read_size = read(fd, buf, BUFFER_SIZE)) <= 0)
+		{
+			free(buf);
 			return (return_all(line, &(backup[fd]), read_size));
+		}
 		buf[read_size] = '\0';
 		if (keep_bufs(&(backup[fd]), buf, read_size) == -1)
+		{
+			free(buf);
 			return (-1);
+		}
 	}
 	free(buf);
 	return (split_lines(line, &(backup[fd]), next_line));
