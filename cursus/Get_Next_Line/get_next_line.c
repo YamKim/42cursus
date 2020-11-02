@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 06:46:51 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/30 07:23:09 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/02 14:01:42 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	return_all(char **line, char **backup, ssize_t read_size)
 
 int			get_next_line(int fd, char **line)
 {
-	static char	*backup;
+	static char	*backup[OPEN_MAX + 1];
 	char		*buf;
 	char		*next_line;
 	ssize_t		read_size;
@@ -77,20 +77,20 @@ int			get_next_line(int fd, char **line)
 		return (-1);
 	if (!(buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	while ((next_line = ft_strchr(backup, (int)'\n')) == NULL)
+	while ((next_line = ft_strchr(backup[fd], (int)'\n')) == NULL)
 	{
 		if ((read_size = read(fd, buf, BUFFER_SIZE)) <= 0)
 		{
 			free(buf);
-			return (return_all(line, &backup, read_size));
+			return (return_all(line, &(backup[fd]), read_size));
 		}
 		buf[read_size] = '\0';
-		if (keep_bufs(&backup, buf, read_size) == -1)
+		if (keep_bufs(&(backup[fd]), buf, read_size) == -1)
 		{
 			free(buf);
 			return (-1);
 		}
 	}
 	free(buf);
-	return (split_lines(line, &backup, next_line));
+	return (split_lines(line, &(backup[fd]), next_line));
 }
