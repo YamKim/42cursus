@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/31 17:30:04 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/02 15:47:45 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,12 @@ int				printf_u(const unsigned int dec, t_info *info);
 int				printf_x(const unsigned int dec, t_info *info, char *base_type);
 
 /*
-****************************   printf_put    *******************************
-*/
-int				put_signed_num(const char *str, t_info *info);
-int				put_unsigned_num(const char *str, t_info *info);
-int				set_and_put(const char *str, const t_info *info);
-int				put_space_and_str(const char *str, const t_info *info);
-
-/*
 ***************************   printf_disp    *******************************
 */
 void			set_pad_space(t_info *info);
-int				put_signed_num(const char *str, t_info *info);
-int				put_unsigned_num(const char *str, t_info *info);
-int				put_char_string(const char *str, t_info *info);
+int				print_signed_num(const char *str, t_info *info);
+int				print_unsigned_num(const char *str, t_info *info);
+int				print_string(const char *str, t_info *info);
 
 /*
 ***************************   printf_disp2   *******************************

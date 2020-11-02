@@ -10,6 +10,7 @@ void	x_test();
 void	c_test();
 void	s_test();
 void	p_test();
+void	per_test();
 
 int main(void)
 {
@@ -23,7 +24,8 @@ int main(void)
 	   printf("ret = %d\n",    printf("%%p::[% 6.3d]\n", 3));
     ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
 #endif
-	d_test();
+	per_test();
+	//d_test();
 	//s_test();
 	//p_test();
 	//c_test();
@@ -313,6 +315,8 @@ void	u_test(void) {
 void d_test(void) {
 	int result_f;
 	int result_r;
+	printf("%0*.*d", -4, 5, 42);
+	printf("%+-.d", 42);
 
 #if 0
 	printf("For Velog===================================\n");
@@ -699,6 +703,9 @@ void c_test(void) {
 	int result_r;
 	int result_f;
 	char c = 'a';
+	for (int i = 0; i < 128; ++i)
+		printf("|%4.c|\n", i);
+
 	result_f = ft_printf("-->|%2.c|<--\n", c);
 	result_r =    printf("-->|%2.c|<--\n", c);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
@@ -846,4 +853,64 @@ void p_test(void)
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 
 
+}
+
+void per_test(void)
+{
+	int result_f;
+	int result_r;
+	result_f = ft_printf("-->|%-4.*%|<--\n", 1);
+	result_r =    printf("-->|%-4.*%|<--\n", 1);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%-4.1%|<--\n");
+	result_r =    printf("-->|%-4.1%|<--\n");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.%|<--\n");
+	result_r =    printf("-->|%0.%|<--\n");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", -4);
+	result_r =    printf("-->|%0.*%|<--\n", -4);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", -3);
+	result_r =    printf("-->|%0.*%|<--\n", -3);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", -2);
+	result_r =    printf("-->|%0.*%|<--\n", -2);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", -1);
+	result_r =    printf("-->|%0.*%|<--\n", -1);
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", 0); 
+	result_r =    printf("-->|%0.*%|<--\n", 0); 
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", 1); 
+	result_r =    printf("-->|%0.*%|<--\n", 1); 
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", 2); 
+	result_r =    printf("-->|%0.*%|<--\n", 2); 
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", 3); 
+	result_r =    printf("-->|%0.*%|<--\n", 3); 
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.*%|<--\n", 4); 
+	result_r =    printf("-->|%0.*%|<--\n", 4); 
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.0%|<--\n");
+	result_r =    printf("-->|%0.0%|<--\n");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.1%|<--\n");
+	result_r =    printf("-->|%0.1%|<--\n");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.2%|<--\n");
+	result_r =    printf("-->|%0.2%|<--\n");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.3%|<--\n");
+	result_r =    printf("-->|%0.3%|<--\n");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0.4%|<--\n");
+	result_r =    printf("-->|%0.4%|<--\n");
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
+	result_f = ft_printf("-->|%0%|<--\n");  
+	result_r =    printf("-->|%0%|<--\n");  
+	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 }
