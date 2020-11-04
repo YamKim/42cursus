@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/02 15:47:45 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/04 18:28:53 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct	s_info
 # define MINUS_PREC	-2
 # define MALLOC_ERR	-1
 # define SIGN_MINUS	1
-# define SIGN_PLUS	0
 
 /*
 ******************************   ft_printf   ********************************
@@ -102,8 +101,8 @@ int				calc_abs(int nbr);
 /*
 ****************************   printf_base    ******************************
 */
-char			*gen_nbr_str(long long int nbr, const char *base_type);
+char			*gen_nbr_str(unsigned long nbr, const char *base_type);
 char			*add_prefix(const char *prefix, const char *str);
-char			*get_sign(const t_info *info);
+char			*add_sign(const char *nbr_str, t_info *info);
 
 #endif

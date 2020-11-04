@@ -11,6 +11,7 @@ void	c_test();
 void	s_test();
 void	p_test();
 void	per_test();
+void	tester_error();
 
 int main(void)
 {
@@ -25,12 +26,20 @@ int main(void)
     ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
 #endif
 	per_test();
-	//d_test();
-	//s_test();
-	//p_test();
-	c_test();
+	d_test();
+	s_test();
+	p_test();
+	//c_test();
 	//printf("st16 %0.*d\n", 3, 2);
 	//u_test();
+	//tester_error();
+	printf("wait for leaks check!\n");
+#if 1
+	while (1)
+	{
+
+	}
+#endif
 	
 #if 0
 	char c = 'a';
@@ -317,11 +326,12 @@ void d_test(void) {
 	int result_r;
 	printf("%0*.*d", -4, 5, 42);
 	printf("%+-.d", 42);
+	int d;
 
 #if 0
 	printf("For Velog===================================\n");
 	printf("unsigned case===============================\n");
-	int d = 4242;
+	d = 4242;
 	printf("case1\n");
 	result_f = ft_printf("-->|%2d|<--\n", d);
 	result_r =    printf("-->|%2d|<--\n", d);
@@ -355,7 +365,6 @@ void d_test(void) {
 	result_r =    printf("-->|%10.7d|<--\n", d);
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 #endif
-
 
 #if 0
 	printf("For Velog===================================\n");
@@ -398,7 +407,7 @@ void d_test(void) {
 #if 0
 	printf("For Velog===================================\n");
 	printf("zero flag===================================\n");
-	int d = -4242;
+	d = -4242;
 	printf("case2\n");
 	result_f = ft_printf("-->|%08d|<--\n", d);
 	result_r =    printf("-->|%08d|<--\n", d);
@@ -408,7 +417,7 @@ void d_test(void) {
 #if 1
 	printf("For Velog===================================\n");
 	printf("asterisk case===============================\n");
-	int d = -4242;
+	d = -4242;
 	printf("case1\n");
 	result_f = ft_printf("-->|%*d|<--\n", -6, d);
 	result_r =    printf("-->|%*d|<--\n", -6, d);
@@ -914,3 +923,94 @@ void per_test(void)
 	result_r =    printf("-->|%0%|<--\n");  
 	printf("result_f = %d\nresult_r = %d\n\n", result_f, result_r);
 }
+
+void tester_error(void)
+{
+	int result_f;
+	int result_r;
+	(void)result_f;
+	(void)result_r;
+	//result_f = ft_printf("|%53c|\n|%0189.51d|\n|%-103.21d|\n|%*p|\n|%102c|\n" ,-27,231647176,-1119242596,-94,(void*)17541392615378030860lu,80);
+	//result_r =    printf("|%53c|\n|%0189.51d|\n|%-103.21d|\n|%*p|\n|%102c|\n" ,-27,231647176,-1119242596,-94,(void*)17541392615378030860lu,80);
+	//printf("result_f = %d\n", result_f);
+	//printf("result_r = %d\n\n",result_r);
+#if 0
+	result_f = ft_printf("|%*p|\n" ,-94,(void*)17541392615378030860lu);
+	result_r =    printf("|%*p|\n" ,-94,(void*)17541392615378030860lu);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("|%*p|\n" ,-94,(void*)175413926153u);
+	result_r =    printf("|%*p|\n" ,-94,(void*)175413926153u);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("|%*x|\n" ,-94, 17541615u);
+	result_r =    printf("|%*x|\n" ,-94, 17541615u);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%117.51s%0022.90i%106.16s%-26p%--83.182u" ,"\\w/D^i\\5I1Fo_t|jL{1:78",302655923,"#Xcwl?d@KjMTSDV^Qtax0ayEv6",(void*)14070820740064816673lu,2575039322u);
+	result_r =    printf("%117.51s%0022.90i%106.16s%-26p%--83.182u" ,"\\w/D^i\\5I1Fo_t|jL{1:78",302655923,"#Xcwl?d@KjMTSDV^Qtax0ayEv6",(void*)14070820740064816673lu,2575039322u);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-168p%*c%-37.186X%-62.12u%-7.80i" ,(void*)11003863505839120615lu,68,73,2383510380u,2783952512u,-1271710852);
+	result_r =    printf("%-168p%*c%-37.186X%-62.12u%-7.80i" ,(void*)11003863505839120615lu,68,73,2383510380u,2783952512u,-1271710852);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-58.50i%0141.*%%-13.25X%-36p%--82.48x" ,-325554652,-122,636795324u,(void*)17352689100821810594lu,2670537659u);
+	result_r =    printf("%-58.50i%0141.*%%-13.25X%-36p%--82.48x" ,-325554652,-122,636795324u,(void*)17352689100821810594lu,2670537659u);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%103.165s%-97.173u%-13.119i%-136c%--*p" ,"*\t{~QTa5BqO*g[sBW-\r|S\\",2675659708u,1850142310,-41,107,(void*)17179493381796959667lu);
+	result_r =    printf("%103.165s%-97.173u%-13.119i%-136c%--*p" ,"*\t{~QTa5BqO*g[sBW-\r|S\\",2675659708u,1850142310,-41,107,(void*)17179493381796959667lu);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-144p%144c" ,(void*)14534807036665133330lu,-61);
+	result_r =    printf("%-144p%144c" ,(void*)14534807036665133330lu,-61);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-144.75d%--78.X%-190p%00041.*x%-23.70%" ,-265040099,1164608268u,(void*)17615309680892657552lu,106,3685356723u);
+	result_r =    printf("%-144.75d%--78.X%-190p%00041.*x%-23.70%" ,-265040099,1164608268u,(void*)17615309680892657552lu,106,3685356723u);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-153.61d%0105.36i%-77.70u%-80p" ,1957997024,1534377111,2603846243u,(void*)17500981794874329626lu);
+	result_r =    printf("%-153.61d%0105.36i%-77.70u%-80p" ,1957997024,1534377111,2603846243u,(void*)17500981794874329626lu);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-197p%03.35d%-101.10%" ,(void*)16358200459980665292lu,1110276224);
+	result_r =    printf("%-197p%03.35d%-101.10%" ,(void*)16358200459980665292lu,1110276224);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-138.17%%--*p%-14p%---167p%--47.91u" ,-13,(void*)10740891812216954868lu,(void*)2144050129394666231lu,(void*)11614427029332157430lu,2673098069u);
+	result_r =    printf("%-138.17%%--*p%-14p%---167p%--47.91u" ,-13,(void*)10740891812216954868lu,(void*)2144050129394666231lu,(void*)11614427029332157430lu,2673098069u);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%--140p%-92.95s%-102.115i" ,(void*)15758905526233078610lu,NULL,-1446158942);
+	result_r =    printf("%--140p%-92.95s%-102.115i" ,(void*)15758905526233078610lu,NULL,-1446158942);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%--*p%0*.119x%-133.14d%0156.113d%-40c" ,19,(void*)9420508942149040314lu,5,3622177574u,267981691,-545348429,63);
+	result_r =    printf("%--*p%0*.119x%-133.14d%0156.113d%-40c" ,19,(void*)9420508942149040314lu,5,3622177574u,267981691,-545348429,63);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%*p%-114.86%%-27.22d" ,-112,(void*)10233099178825149944lu,500193481);
+	result_r =    printf("%*p%-114.86%%-27.22d" ,-112,(void*)10233099178825149944lu,500193481);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-164.*%%-108c%-157p%--14p" ,91,-9,(void*)8907860934591409401lu,(void*)15408969479809857993lu);
+	result_r =    printf("%-164.*%%-108c%-157p%--14p" ,91,-9,(void*)8907860934591409401lu,(void*)15408969479809857993lu);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%-170.%%-*.182%%--130.136u%--35p" ,133,2033636620u,(void*)9790833151496085968lu);
+	result_r =    printf("%-170.%%-*.182%%--130.136u%--35p" ,133,2033636620u,(void*)9790833151496085968lu);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%0078.34d%-197.122s%158p" ,204031315,"{Be-'BlT",(void*)12817666508860541147lu);
+	result_r =    printf("%0078.34d%-197.122s%158p" ,204031315,"{Be-'BlT",(void*)12817666508860541147lu);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+	result_f = ft_printf("%--99.174%%-152p%---41.22i" ,(void*)13623062879853167239lu,-83457563);
+	result_r =    printf("%--99.174%%-152p%---41.22i" ,(void*)13623062879853167239lu,-83457563);
+	printf("result_f = %d\n", result_f);
+	printf("result_r = %d\n\n",result_r);
+#endif
+}
+

@@ -12,8 +12,8 @@ SRC = ft_printf.c \
 	printf_type2.c \
 	printf_disp.c \
 	printf_disp2.c \
-	printf_base.c \
-	printf_calc.c \
+	printf_nbr_set.c \
+	printf_calc.c
 
 LIBSRC = ft_memset.c \
 	ft_bzero.c \

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 11:44:21 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/02 19:51:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/04 18:08:26 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	printf_p(const void *addr, t_info *info)
 	if (info->point == 1 && info->prec == 0 && (unsigned long)addr == 0)
 		addr_nbr[0] = '\0';
 	addr_nbr = add_prefix("0x", addr_nbr);
-	((t_info *)info)->len = (int)ft_strlen(addr_nbr);
+	info->len = (int)ft_strlen(addr_nbr);
 	ret = print_string(addr_nbr, info);
 	free(addr_nbr);
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 12:11:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/10/31 14:18:29 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/04 18:33:01 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	initialize_info(t_info *info)
 	info->flag.minus = 0;
 	info->flag.plus = 0;
 	info->flag.space = 0;
-	info->sign = SIGN_PLUS;
+	info->sign = 0;
 	info->width = 0;
 	info->prec = 0;
 	info->point = 0;
