@@ -26,9 +26,9 @@ int main(void)
     ft_printf("ret = %d\n", ft_printf("%%p::[% 6.3d]\n", 3));
 #endif
 	per_test();
-	d_test();
-	s_test();
-	p_test();
+	//d_test();
+	//s_test();
+	//p_test();
 	//c_test();
 	//printf("st16 %0.*d\n", 3, 2);
 	//u_test();
