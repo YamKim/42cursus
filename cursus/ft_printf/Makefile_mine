@@ -14,11 +14,9 @@ SRC = ft_printf.c \
 	printf_nbr_set.c \
 	printf_calc.c
 
-SRCDIR = ./srcs
-INCDIR = ./incs
-OBJDIR = ./objs
-LIBDIR = ./libft
-LIBFT = ./libft/libft.a
+SRCDIR = srcs
+INCDIR = incs
+OBJDIR = objs
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 OBJS = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
@@ -26,23 +24,21 @@ OBJS = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(MAKE) -C $(LIBDIR) all
-	@cp $(LIBFT) $(NAME)
-	@$(AR) $(ARFLAGS) $(NAME) $^
-	@ranlib $(NAME)
+	$(MAKE) -C ./libft all
+	cp ./libft/libft.a $(NAME)
+	$(AR) $(ARFLAGS) $(NAME) $^
+	ranlib $(NAME)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir $(OBJDIR) 2> /dev/null || true
-	@$(CC) $(CFLAGS) -I$(INCDIR) -o $@ -c $<
+$(OBJS): $(SRCS)
+	@mkdir -p objs
+	@$(CC) $(CFLAGS) -c $< -I $(INCDIR) -o $@
 
 clean:
-	@$(RM) $(OBJDIR)
-	@$(MAKE) -C $(LIBDIR) clean
+	@$(RM) $(OBJS)
+	@$(MAKE) -C ./libft clean
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(MAKE) -C $(LIBDIR) fclean
+	@$(RM) $(OBJDIR)
 
 re: fclean all
-
-.PHONY: all clean fclean re
