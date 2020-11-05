@@ -1,0 +1,10 @@
+%
+000000000%
+%
+2
+truc
+5
+percent 1 00000000000%
+percent 2            %
+percent 3 %           
+percent 4 %

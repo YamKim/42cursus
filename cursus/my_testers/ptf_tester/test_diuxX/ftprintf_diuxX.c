@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftprintf_diuxX.c                                   :+:      :+:    :+:   */
+/*   printf_diuxX.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbrunel <mbrunel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 10:29:29 by abourin           #+#    #+#             */
-/*   Updated: 2020/10/31 14:26:01 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/05 12:28:59 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incs/ft_printf.h"
+#include "../../../ft_printf/incs/ft_printf.h"
 #include <stdio.h>
 
 int main(void)
 {
-#if 1
-	int d = 12;
+	int d;
+	(void)d;
+#if 0
+	d = 12;
 	ft_printf("lover |%0*.d|\n", 4, d);
 	ft_printf("lover |%0*.*d|\n", 4, 0, d);
 	ft_printf("lover |%0*.0d|\n", 4, d);
+#endif
 	d = -12;
 	ft_printf("lover |%04.d|\n", d);
 	ft_printf("lover |%04.*d|\n", 0, d);
-	ft_printf("lover |%04.0d|\n", d); ft_printf("lover |%+0*.0d|\n", 4, d);
+	ft_printf("lover |%04.0d|\n", d);
+	ft_printf("lover |%+0*.0d|\n", 4, d);
 	ft_printf("pp %.50d\n", 10000);
 	ft_printf("p5 %.3d\n", 100);
 	ft_printf("p6 %.0d\n", 100);
@@ -172,5 +176,4 @@ int main(void)
 	ft_printf("neg9 %*.*d\n", 15856, 155, -3000);
 	ft_printf("neg10 %*.*d\n", -15586, 15, 150);
 	ft_printf("neg11 %*.*d\n", -15586, 15, 0);
-#endif
 }

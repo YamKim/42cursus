@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/05 12:34:30 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/05 13:05:31 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	print_va(va_list *ap, t_info *info)
 	if (info->type == 'd' || info->type == 'i')
 		ret = printf_d(va_arg(*ap, int), info);
 	if (info->type == 'u')
-		ret = printf_u(va_arg(*ap, int), info);
+		ret = printf_u(va_arg(*ap, unsigned int), info);
 	if (info->type == 'x')
-		ret = printf_x(va_arg(*ap, int), info, BASE_HEX_LOWER);
+		ret = printf_x(va_arg(*ap, unsigned int), info, BASE_HEX_LOWER);
 	if (info->type == 'X')
-		ret = printf_x(va_arg(*ap, int), info, BASE_HEX_UPPER);
+		ret = printf_x(va_arg(*ap, unsigned int), info, BASE_HEX_UPPER);
 	return (ret);
 }
 
