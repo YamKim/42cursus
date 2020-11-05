@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/16 15:47:36 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/02 15:40:47 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/05 12:34:30 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	ft_printf(const char *format, ...)
 	va_list	ap;
 	t_info	info;
 	int		ret;
+	int		check_print_va;
 
 	va_start(ap, format);
 	ret = 0;
@@ -52,7 +53,9 @@ int	ft_printf(const char *format, ...)
 		{
 			++format;
 			get_info(&format, &info);
-			ret += print_va(&ap, &info);
+			if ((check_print_va = print_va(&ap, &info)) < 0)
+				return (-1);
+			ret += check_print_va;
 			++format;
 		}
 	}

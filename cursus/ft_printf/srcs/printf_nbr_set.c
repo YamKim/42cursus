@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 16:52:39 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/04 18:23:15 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/05 12:21:38 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ char	*add_sign(const char *nbr_str, t_info *info)
 
 	ret = NULL;
 	info->len += 1;
-	if (info->flag.plus)
+	if (info->sign == SIGN_MINUS)
+		ret = add_prefix("-", nbr_str);
+	else if (info->flag.plus)
 		ret = add_prefix("+", nbr_str);
 	else if (info->flag.space)
 		ret = add_prefix(" ", nbr_str);
-	else if (info->sign == SIGN_MINUS)
-		ret = add_prefix("-", nbr_str);
 	return (ret);
 }
