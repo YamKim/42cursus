@@ -22,4 +22,4 @@ COPY	./srcs/config.inc.php ./ft_server
 EXPOSE	80
 EXPOSE	443
 
-CMD		bash ./run.sh
+#CMD		bash ./run.sh
