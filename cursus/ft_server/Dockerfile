@@ -14,12 +14,15 @@ RUN		apt-get install -y php-mbstring
 RUN		apt-get install -y php7.3-fpm 
 RUN		apt-get install -y php-curl
 
-COPY	./srcs/run.sh ./
-COPY	./srcs/default ./ft_server
-COPY	./srcs/wp-config.php ./ft_server
-COPY	./srcs/config.inc.php ./ft_server
+COPY	./srcs/run.sh /
+COPY	./srcs/autoIdxFlag.sh /
+COPY	./srcs/default /ft_server
+COPY	./srcs/wp-config.php /ft_server
+COPY	./srcs/config.inc.php /ft_server
+
+WORKDIR /
+
+CMD		/run.sh
 
 EXPOSE	80
 EXPOSE	443
-
-#CMD		bash ./run.sh
