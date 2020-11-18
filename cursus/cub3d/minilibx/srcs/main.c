@@ -2,37 +2,53 @@
 
 extern int	world_map[MAP_WIDTH][MAP_HEIGHT];
 
-void verLine (t_info *info, int x, int y1, int y2, int color)
+#if 0
+void verLine (t_player *player, int x, int y1, int y2, int color)
 {
     int temp;
 
     temp = y1;
     while (temp <= y2)
     {
-        mlx_pixel_put(info->mlx, info->win, x, temp, color);
+        mlx_pixel_put(player->mlx_ptr, player->win_ptr, x, temp, color);
         temp++;
     }
 }
+#endif
 
-int key_press(int key, t_info *info)
+void verLine (t_player *player, int x, int h_start, int h, int color) {
+	int	y;
+
+	y = 0;
+	while (y < h)
+	{
+		(player->data)[(y + h_start) * SCREEN_WIDTH + x] = color;
+		++y;
+	}
+}
+
+int key_press(int key, t_player *player)
 {
     if (key == KEY_W)
-		move_forward(info);
+		move_forward(player);
 
     if (key == KEY_S)
-		move_backward(info);
+		move_backward(player);
 
     if (key == KEY_A)
-		turn_left(info);
+		turn_left(player);
 
     if (key == KEY_D)
-		turn_right(info);
+		turn_right(player);
     if (key == KEY_ESC)
+	{
+		//mlx_destroy_image(player->mlx, player->img_ptr);
         exit(0);
+	}
     return (0);
 }
 
-int main_loop(t_info *info)
+int main_loop(t_player *player)
 {
     int		t;
 	double	camera_t;
@@ -50,11 +66,11 @@ int main_loop(t_info *info)
     while (t < SCREEN_WIDTH)
     {
         camera_t = (2 * t / (double)(SCREEN_WIDTH)) - 1;
-        ray_dir.x = info->dir.x + info->plane.x * camera_t;
-        ray_dir.y = info->dir.y + info->plane.y * camera_t;
+        ray_dir.x = player->dir.x + player->plane.x * camera_t;
+        ray_dir.y = player->dir.y + player->plane.y * camera_t;
 
-        map.x = (int)(info->pos.x);
-        map.y = (int)(info->pos.y);
+        map.x = (int)(player->pos.x);
+        map.y = (int)(player->pos.y);
 
 
         delta_dist.x = fabs(1 / ray_dir.x);
@@ -65,22 +81,22 @@ int main_loop(t_info *info)
         if (ray_dir.x < 0)
         {
             step.x = -1;
-            side_dist.x = (info->pos.x - map.x) * delta_dist.x;
+            side_dist.x = (player->pos.x - map.x) * delta_dist.x;
         }
         else
         {
             step.x = 1;
-            side_dist.x = (map.x + 1.0 - info->pos.x) * delta_dist.x;
+            side_dist.x = (map.x + 1.0 - player->pos.x) * delta_dist.x;
         }
         if (ray_dir.y < 0)
         {
             step.y = -1;
-            side_dist.y = (info->pos.y - map.y) * delta_dist.y;
+            side_dist.y = (player->pos.y - map.y) * delta_dist.y;
         }
         else
         {
             step.y = 1;
-            side_dist.y = (map.y + 1.0 - info->pos.y) * delta_dist.y;
+            side_dist.y = (map.y + 1.0 - player->pos.y) * delta_dist.y;
         }
 
         while (hit == 0)
@@ -102,9 +118,9 @@ int main_loop(t_info *info)
         }
 
         if (side == 0)
-            perpWallDist = (map.x - info->pos.x + (1 - step.x) / 2) / ray_dir.x;
+            perpWallDist = (map.x - player->pos.x + (1 - step.x) / 2) / ray_dir.x;
         else
-            perpWallDist = (map.y - info->pos.y + (1 - step.y) / 2) / ray_dir.y;
+            perpWallDist = (map.y - player->pos.y + (1 - step.y) / 2) / ray_dir.y;
 
         int lineHeight = (int)(SCREEN_HEIGHT / perpWallDist);
         int drawStart = (-lineHeight / 2) + (SCREEN_HEIGHT / 2);
@@ -128,30 +144,45 @@ int main_loop(t_info *info)
 
         if (side == 1)
             color = color / 2;
-        verLine(info, t, drawStart, drawEnd, color);
-        t++;
+		verLine(player, t, drawStart, drawEnd - drawStart, color);
+        //verLine(player, t, drawStart, drawEnd, color);
+        ++t;
     } 
+	mlx_put_image_to_window(player->mlx_ptr, player->win_ptr, player->img_ptr, 0, 0);
 	return (1);
 }
 
 int main()
 {
-    t_info info;
-    info.mlx = mlx_init();
+    t_player	player;
 
-    info.pos.x = 12;
-    info.pos.y = 5;
-    info.dir.x = -1;
-    info.dir.y = 0;
-    info.plane.x = 0;
-    info.plane.y = 0.66;
-    info.trans_speed = 0.05;
-    info.rot_speed = 0.05;
+	player.mlx_ptr = mlx_init();
 
-    info.win = mlx_new_window(info.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "mlx");
+    player.pos.x = 12;
+    player.pos.y = 5;
+    player.dir.x = -1;
+    player.dir.y = 0;
+    player.plane.x = 0;
+    player.plane.y = 0.66;
+    player.trans_speed = 0.05;
+    player.rot_speed = 0.05;
 
-    mlx_loop_hook(info.mlx, &main_loop, &info);
-    mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
+    player.win_ptr = mlx_new_window(player.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "mlx");
+	player.img_ptr = mlx_new_image(player.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	player.data = (int *)mlx_get_data_addr(player.img_ptr, &player.bpp, &player.size_l, &player.edian);
 
-    mlx_loop(info.mlx);
+#if 0
+	int y = 0;
+	while (y < 100)
+	{
+		player.data[y * SCREEN_WIDTH + 50] = 0x00FF0000;
+		++y;
+	}
+	mlx_put_image_to_window(player.mlx_ptr, player.win_ptr, player.img_ptr, 0, 0);
+#endif
+
+    mlx_loop_hook(player.mlx_ptr, &main_loop, &player);
+    mlx_hook(player.win_ptr, X_EVENT_KEY_PRESS, 0, &key_press, &player);
+
+    mlx_loop(player.mlx_ptr);
 }

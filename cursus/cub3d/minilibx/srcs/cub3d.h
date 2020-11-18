@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/18 07:16:52 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/18 14:10:20 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,30 @@ typedef struct		s_veci
 	int				y;
 }					t_veci;
 
-typedef struct		s_info
+typedef struct		s_player
 {
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*img_ptr;
+	int				*data;
+	int				size_l;
+	int				bpp;
+	int				edian;
 	t_vecd			pos;
 	t_vecd			dir;
 	t_vecd			plane;
-	void			*mlx;
-	void			*win;
 	double			trans_speed;
 	double			rot_speed;
-}					t_info;
+}					t_player;
 
 /*
 ** FUNCTIONS ======================================
 ** player motion
 */
-void				move_forward(t_info *info);
-void				move_backward(t_info *info);
-void				turn_left(t_info *info);
-void				turn_right(t_info *info);
+void				move_forward(t_player *player);
+void				move_backward(t_player *player);
+void				turn_left(t_player *player);
+void				turn_right(t_player *player);
 
 /*
 ** vector calc

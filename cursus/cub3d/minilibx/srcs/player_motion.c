@@ -28,38 +28,37 @@ int world_map[MAP_WIDTH][MAP_HEIGHT] =
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-void	move_forward(t_info *info)
+void	move_forward(t_player *player)
 {
 	t_vecd	after_move;
 
-	after_move.x = info->pos.x + info->dir.x * info->trans_speed;
-	after_move.y = info->pos.y + info->dir.y * info->trans_speed;
-    if (!world_map[(int)after_move.x][(int)(info->pos.y)])
-        info->pos.x = after_move.x;
-    if (!world_map[(int)(info->pos.x)][(int)after_move.y])
-        info->pos.y = after_move.y;
+	after_move = translate_vec(player->pos, player->dir, player->trans_speed);
+    if (!world_map[(int)after_move.x][(int)(player->pos.y)])
+        player->pos.x = after_move.x;
+    if (!world_map[(int)(player->pos.x)][(int)after_move.y])
+        player->pos.y = after_move.y;
 }
 
-void	move_backward(t_info *info)
+void	move_backward(t_player *player)
 {
 	t_vecd	after_move;
 	
-	after_move = translate_vec(info->pos, info->dir, info->trans_speed);
-    if (!world_map[(int)after_move.x][(int)(info->pos.y)])
-		info->pos.x = after_move.x;
-    if (!world_map[(int)(info->pos.x)][(int)after_move.y])
-		info->pos.y = after_move.y;
+	after_move = translate_vec(player->pos, player->dir, -player->trans_speed);
+    if (!world_map[(int)after_move.x][(int)(player->pos.y)])
+		player->pos.x = after_move.x;
+    if (!world_map[(int)(player->pos.x)][(int)after_move.y])
+		player->pos.y = after_move.y;
 }
 
-void	turn_left(t_info *info)
+void	turn_left(t_player *player)
 {
-	info->dir = rotate_vec(info->dir, info->rot_speed);	
-	info->plane = rotate_vec(info->plane, info->rot_speed);
+	player->dir = rotate_vec(player->dir, player->rot_speed);	
+	player->plane = rotate_vec(player->plane, player->rot_speed);
 }
 
-void	turn_right(t_info *info)
+void	turn_right(t_player *player)
 {
-	info->dir = rotate_vec(info->dir, -info->rot_speed);	
-	info->plane = rotate_vec(info->plane, -info->rot_speed);
+	player->dir = rotate_vec(player->dir, -player->rot_speed);	
+	player->plane = rotate_vec(player->plane, -player->rot_speed);
 }
 

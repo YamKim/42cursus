@@ -5,21 +5,19 @@ SRC = main.c \
 	vector_calc.c \
 	player_motion.c
 
-all: $(NAME)
 
 OBJ = $(SRC:.c=.o)
 
-$(NAME): $(OBJ)
-	$(CC) -L../ -lmlx -framework OpenGL -framework Appkit $(NAME) $^
+all: $(NAME)
 
-$(OBJ): $(SRC)
-	$(CC)  -I. -o $@ -c $<
-	
+$(NAME): $(SRC)
+	$(CC) -L../ -lmlx -framework OpenGL -framework Appkit -o $(NAME) $^
 
 clean:
 	rm -rf $(OBJ)
 
-fclean:
+fclean: clean
+	rm -rf $(NAME)
 
 re: fclean all
 
