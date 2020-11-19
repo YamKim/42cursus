@@ -4,7 +4,8 @@ CC = gcc
 SRC = main.c \
 	player_motion.c \
 	calc_basic.c \
-	calc_vector.c
+	calc_vector.c \
+	calc_dda.c
 
 OBJ = $(SRC:.c=.o)
 

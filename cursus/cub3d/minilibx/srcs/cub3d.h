@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/19 11:13:49 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/19 17:01:47 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct		s_disp
 
 typedef struct		s_player
 {
-	t_veci			map;
 	t_vecd			pos;
 	t_vecd			dir;
 	t_vecd			plane;
@@ -110,6 +109,6 @@ t_vecd				rotate_vec(t_vecd dir, double theta);
 /*
 ** calc dda
 */
-double				dda_algorithm(t_player *player, const t_vecd ray_dir);
+double				dda_algorithm(const t_player *player, const t_vecd ray_dir, t_veci *hit_point, int *side);
 
 #endif

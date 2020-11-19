@@ -4,69 +4,110 @@ extern int	world_map[MAP_WIDTH][MAP_HEIGHT];
 
 typedef struct		s_dda
 {
+	t_vecd			ray_dir;
 	t_vecd			side_dist;
 	t_vecd			delta_dist;
 	t_veci			step;
 	int				hit;
-	int				side;
 }					t_dda;
 
-double	dda_algorithm(t_player *player, const t_vecd ray_dir)
+t_veci	get_step(const t_vecd ray_dir)
 {
-	t_dda	dda;
+	t_veci	ret;
+
+	if (ray_dir.x < 0.0)
+		ret.x = -1;
+	else
+		ret.x = 1;
+	if (ray_dir.y < 0.0)
+		ret.y = -1;
+	else
+		ret.y = 1;
+	return (ret);
+} 
+
+t_vecd	get_delta_dist(const t_vecd ray_dir)
+{
+	t_vecd	ret;
+
+	if (ray_dir.y == 0.0)
+		ret.x = 0.0;
+	else
+	{
+		if (ray_dir.x == 0.0)
+			ret.x = 1.0;
+		else
+			ret.x = fabs(1 / ray_dir.x);
+	}
+	if (ray_dir.x == 0.0)
+		ret.y = 0.0;
+	else
+	{
+		if (ray_dir.y == 0)
+			ret.y = 1.0;
+		else
+			ret.y = fabs(1 / ray_dir.y);
+	}
+	return (ret);
+}
+
+t_vecd	get_side_dist(const t_player *player, const t_dda dda, const t_veci hit_point)
+{
+	t_vecd	ret;
+
+	if (dda.ray_dir.x < 0.0)
+		ret.x = (player->pos.x - hit_point.x) * dda.delta_dist.x;
+	else
+		ret.x = (hit_point.x + 1.0 - player->pos.x) * dda.delta_dist.x;
+	if (dda.ray_dir.y < 0.0)
+		ret.y = (player->pos.y - hit_point.y) * dda.delta_dist.y;
+	else
+		ret.y = (hit_point.y + 1.0 - player->pos.y) * dda.delta_dist.y;
+	return (ret);
+}
+
+int		dda_run(const t_dda dda, t_veci *hit_point)
+{
 	int		hit;
-	double	perpWallDist;
-	t_veci	map;
+	int		ret;
+	t_vecd	ray_dist;
 
-	map = player->map;
-
-	dda.delta_dist.x = fabs(1 / ray_dir.x);
-	dda.delta_dist.y = fabs(1 / ray_dir.y);
 	hit = 0;
-	
-	if (ray_dir.x < 0)
-	{
-		dda.step.x = -1;
-		dda.side_dist.x = (player->pos.x - map.x) * dda.delta_dist.x;
-	}
-	else
-	{
-		dda.step.x = 1;
-		dda.side_dist.x = (map.x + 1.0 - player->pos.x) * dda.delta_dist.x;
-	}
-	if (ray_dir.y < 0)
-    {
-		dda.step.y = -1;
-		dda.side_dist.y = (player->pos.y - map.y) * dda.delta_dist.y;
-	}
-	else
-	{
-		dda.step.y = 1;
-		dda.side_dist.y = (map.y + 1.0 - player->pos.y) * dda.delta_dist.y;
-	}
-	
+	ray_dist.x = dda.side_dist.x;
+	ray_dist.y = dda.side_dist.y;
 	while (hit == 0)
 	{
-		if (dda.side_dist.x < dda.side_dist.y)
+		if (ray_dist.x < ray_dist.y)
 		{
-			dda.side_dist.x += dda.delta_dist.x;
-			map.x += dda.step.x;
-			dda.side = 0;
+			ray_dist.x = ray_dist.x + dda.delta_dist.x;
+			hit_point->x += dda.step.x;
+			ret = 0;
 		}
 		else
 		{
-			dda.side_dist.y += dda.delta_dist.y;
-			map.y += dda.step.y;
-			dda.side = 1;
+			ray_dist.y = ray_dist.y + dda.delta_dist.y;
+			hit_point->y += dda.step.y;
+			ret = 1;
 		}
-		if (world_map[map.x][map.y] > 0)
+		if (world_map[hit_point->x][hit_point->y] > 0)
 			hit = 1;
 	}
+	return (ret);
+}
 
-	if (dda.side == 0)
-		perpWallDist = (map.x - player->pos.x + (double)(1 - dda.step.x) / 2) / ray_dir.x;
+double	dda_algorithm(const t_player *player, const t_vecd ray_dir, t_veci *hit_point, int *side)
+{
+	t_dda	dda;
+	double	perpWallDist;
+
+	dda.ray_dir = ray_dir;
+	dda.delta_dist = get_delta_dist(dda.ray_dir);
+	dda.step = get_step(dda.ray_dir);
+	dda.side_dist = get_side_dist(player, dda, *hit_point);
+	*side = dda_run(dda, hit_point); 
+	if (*side == 0)
+		perpWallDist = (hit_point->x - player->pos.x + (double)(1 - dda.step.x) / 2) / ray_dir.x;
 	else
-		perpWallDist = (map.y - player->pos.y + (double)(1 - dda.step.y) / 2) / ray_dir.y;
-
+		perpWallDist = (hit_point->y - player->pos.y + (double)(1 - dda.step.y) / 2) / ray_dir.y;
 	return (perpWallDist);
 }
