@@ -2,9 +2,9 @@ NAME = program.out
 CC = gcc
 
 SRC = main.c \
-	vector_calc.c \
-	player_motion.c
-
+	player_motion.c \
+	calc_basic.c \
+	calc_vector.c
 
 OBJ = $(SRC:.c=.o)
 

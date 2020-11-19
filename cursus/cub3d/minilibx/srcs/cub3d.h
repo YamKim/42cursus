@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/18 14:10:20 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/19 11:13:49 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,38 @@ typedef struct		s_veci
 	int				y;
 }					t_veci;
 
-typedef struct		s_player
+typedef struct		s_img
 {
-	void			*mlx_ptr;
-	void			*win_ptr;
 	void			*img_ptr;
 	int				*data;
 	int				size_l;
 	int				bpp;
 	int				edian;
+}					t_img;
+
+typedef struct		s_disp
+{
+	void			*mlx_ptr;
+	void			*win_ptr;
+	t_img			img;
+}					t_disp;	
+
+typedef struct		s_player
+{
+	t_veci			map;
 	t_vecd			pos;
 	t_vecd			dir;
 	t_vecd			plane;
 	double			trans_speed;
 	double			rot_speed;
 }					t_player;
+
+typedef struct		s_loop
+{
+	t_disp			*disp;
+	t_player		*player;
+}					t_loop;
+
 
 /*
 ** FUNCTIONS ======================================
@@ -79,9 +96,20 @@ void				turn_left(t_player *player);
 void				turn_right(t_player *player);
 
 /*
-** vector calc
+** calc basic
+*/
+int					calc_max(int nbr1, int nbr2);
+int					calc_min(int nbr1, int nbr2);
+
+/*
+** calc vector
 */
 t_vecd				translate_vec(t_vecd pos, t_vecd dir, double trans);
 t_vecd				rotate_vec(t_vecd dir, double theta);
+
+/*
+** calc dda
+*/
+double				dda_algorithm(t_player *player, const t_vecd ray_dir);
 
 #endif
