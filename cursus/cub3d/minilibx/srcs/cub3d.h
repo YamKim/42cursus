@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/20 21:29:25 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/21 00:12:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@
 # define COLOR_FLOOR 0x00CC9900
 
 /*
+** texture setting
+*/
+# define TEXTURE_WIDTH 64
+# define TEXTURE_HEIGHT 64
+# define TEXTURE_NUMBER 8
+# define TEXTURE_TOTALSIZE 4096
+
+/*
 ** structures
 */
 typedef struct		s_vecd
@@ -61,18 +69,29 @@ typedef struct		s_veci
 
 typedef struct		s_img
 {
-	void			*img_ptr;
+	void			*ptr;
 	int				*data;
+	int				width;
+	int				height;
 	int				size_l;
 	int				bpp;
-	int				edian;
+	int				endian;
 }					t_img;
+
+typedef struct		s_texture
+{
+	void			*ptr;
+	int				*data;
+	int				width;
+	int				height;
+}					t_texture;
 
 typedef struct		s_disp
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
 	t_img			img;
+	t_texture		texture[TEXTURE_NUMBER];
 }					t_disp;	
 
 typedef struct		s_player
@@ -98,6 +117,7 @@ typedef struct		s_dda
 	t_veci			step;
 	int				hit;
 }					t_dda;
+
 
 /*
 ** FUNCTIONS ======================================

@@ -18,7 +18,6 @@ int		get_color(t_veci map)
 	return (color);
 }
 
-
 int key_press(int key, t_player *player)
 {
     if (key == KEY_W)
@@ -68,9 +67,34 @@ int main_loop(t_loop *loop_var)
 		draw_line(disp->img.data, t, perp_wall_dist, color);
         ++t;
     } 
-	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.img_ptr, 0, 0);
+	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.ptr, 0, 0);
 	clear_draw(disp->img.data);
 	return (1);
+}
+
+void	load_texture(t_texture *texture, char *file_name)
+{
+	t_disp	tmp_disp;
+	int		tmp_val;
+
+	tmp_disp.mlx_ptr = mlx_init();
+	texture->ptr = mlx_xpm_file_to_image(tmp_disp.mlx_ptr, file_name,
+											&(texture->width), &(texture->height));
+	texture->data = (int *)mlx_get_data_addr(texture->ptr,
+											&tmp_val, &tmp_val, &tmp_val);	
+	mlx_destroy_image(tmp_disp.mlx_ptr, texture->ptr);
+}
+
+void	load_texture_group(t_disp *disp)
+{
+    load_texture(&(disp->texture[0]), "textures/eagle.xpm");
+    load_texture(&(disp->texture[1]), "textures/redbrick.xpm");
+    load_texture(&(disp->texture[2]), "textures/purplestone.xpm");
+    load_texture(&(disp->texture[3]), "textures/greystone.xpm");
+    load_texture(&(disp->texture[4]), "textures/bluestone.xpm");
+    load_texture(&(disp->texture[5]), "textures/mossy.xpm");
+    load_texture(&(disp->texture[6]), "textures/wood.xpm");
+    load_texture(&(disp->texture[7]), "textures/colorstone.xpm");
 }
 
 int main()
@@ -91,9 +115,12 @@ int main()
 	player.rot_speed = 0.1;
 	
 	disp.win_ptr = mlx_new_window(disp.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "mlx");
-	disp.img.img_ptr = mlx_new_image(disp.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
-	disp.img.data = (int *)mlx_get_data_addr(disp.img.img_ptr, &(disp.img.bpp),
-					&(disp.img.size_l), &(disp.img.edian));
+	disp.img.ptr = mlx_new_image(disp.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	disp.img.data = (int *)mlx_get_data_addr(disp.img.ptr, &(disp.img.bpp),
+					&(disp.img.size_l), &(disp.img.endian));
+	// texture part
+	load_texture_group(&disp);
+
 	loop_var.disp = &disp;
 	loop_var.player = &player;
 	mlx_loop_hook(disp.mlx_ptr, &main_loop, &loop_var);
