@@ -5,7 +5,8 @@ SRC = main.c \
 	player_motion.c \
 	calc_basic.c \
 	calc_vector.c \
-	calc_dda.c
+	calc_dda.c \
+	disp_draw.c
 
 OBJ = $(SRC:.c=.o)
 

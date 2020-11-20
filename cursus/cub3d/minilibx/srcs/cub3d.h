@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/20 08:45:39 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/20 21:29:25 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@
 
 # define X_EVENT_KEY_PRESS   2
 # define X_EVENT_KEY_EXIT    17
+
+/*
+** color code
+*/
+# define COLOR_CEIL 0x0099CCFF
+# define COLOR_FLOOR 0x00CC9900
 
 /*
 ** structures
@@ -103,21 +109,25 @@ void				turn_left(t_player *player);
 void				turn_right(t_player *player);
 
 /*
-** calc basic
+** calculate basic algorithm
 */
 int					calc_max(int nbr1, int nbr2);
 int					calc_min(int nbr1, int nbr2);
 
 /*
-** calc vector
+** calculate vector operation
 */
 t_vecd				translate_vec(t_vecd pos, t_vecd dir, double trans);
 t_vecd				rotate_vec(t_vecd dir, double theta);
 
 /*
-** calc dda
+** calculate dda algorithm
 */
 double				dda_algorithm(const t_player *player, const t_vecd ray_dir, t_veci *hit_point, int *side);
 
-
+/*
+** display drawing
+*/
+void				draw_line(int *data, int x, double perp_wall_dist, int color);
+void				clear_draw(int *data);
 #endif

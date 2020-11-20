@@ -18,42 +18,6 @@ int		get_color(t_veci map)
 	return (color);
 }
 
-void	draw_line(int *data, int x, double perp_wall_dist, int color)
-{
-	int	line_height;
-	int	draw_beg;
-	int	draw_end;
-	int	y;
-
-	line_height = (int)(SCREEN_HEIGHT / perp_wall_dist);
-	draw_beg = calc_max((SCREEN_HEIGHT / 2) - (line_height / 2), 0);
-	draw_end = calc_min((SCREEN_HEIGHT / 2) + (line_height / 2), SCREEN_HEIGHT - 1);
-
-	y = 0;
-	while (y < line_height)
-	{
-		data[(y + draw_beg) * SCREEN_WIDTH + x] = color;
-		++y;
-	}
-}
-
-void	clear_draw(int *data)
-{
-	int	y;
-	int	x;
-
-	x = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		y = 0;
-		while (y < SCREEN_HEIGHT)
-		{
-			data[y * SCREEN_WIDTH + x] = 0;
-			++y;
-		}
-		++x;
-	}
-}
 
 int key_press(int key, t_player *player)
 {
