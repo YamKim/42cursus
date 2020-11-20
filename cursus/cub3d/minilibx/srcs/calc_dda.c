@@ -1,16 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calc_dda.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
+/*   Updated: 2020/11/20 10:57:11 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-extern int	world_map[MAP_WIDTH][MAP_HEIGHT];
-
-typedef struct		s_dda
-{
-	t_vecd			ray_dir;
-	t_vecd			side_dist;
-	t_vecd			delta_dist;
-	t_veci			step;
-	int				hit;
-}					t_dda;
-
+extern int world_map[MAP_WIDTH][MAP_HEIGHT];
 t_veci	get_step(const t_vecd ray_dir)
 {
 	t_veci	ret;
@@ -24,7 +26,7 @@ t_veci	get_step(const t_vecd ray_dir)
 	else
 		ret.y = 1;
 	return (ret);
-} 
+}
 
 t_vecd	get_delta_dist(const t_vecd ray_dir)
 {
@@ -51,7 +53,10 @@ t_vecd	get_delta_dist(const t_vecd ray_dir)
 	return (ret);
 }
 
-t_vecd	get_side_dist(const t_player *player, const t_dda dda, const t_veci hit_point)
+t_vecd	get_side_dist(
+		const t_player *player,
+		const t_dda dda,
+		const t_veci hit_point)
 {
 	t_vecd	ret;
 
@@ -95,19 +100,29 @@ int		dda_run(const t_dda dda, t_veci *hit_point)
 	return (ret);
 }
 
-double	dda_algorithm(const t_player *player, const t_vecd ray_dir, t_veci *hit_point, int *side)
+double	dda_algorithm(
+		const t_player *player,
+		const t_vecd ray_dir,
+		t_veci *hit_point,
+		int *side)
 {
 	t_dda	dda;
-	double	perpWallDist;
+	double	ret;
 
 	dda.ray_dir = ray_dir;
 	dda.delta_dist = get_delta_dist(dda.ray_dir);
 	dda.step = get_step(dda.ray_dir);
 	dda.side_dist = get_side_dist(player, dda, *hit_point);
-	*side = dda_run(dda, hit_point); 
+	*side = dda_run(dda, hit_point);
 	if (*side == 0)
-		perpWallDist = (hit_point->x - player->pos.x + (double)(1 - dda.step.x) / 2) / ray_dir.x;
+	{
+		ret = (hit_point->x - player->pos.x + (double)(1 - dda.step.x) / 2);
+		ret = ret / dda.ray_dir.x;
+	}
 	else
-		perpWallDist = (hit_point->y - player->pos.y + (double)(1 - dda.step.y) / 2) / ray_dir.y;
-	return (perpWallDist);
+	{
+		ret = (hit_point->y - player->pos.y + (double)(1 - dda.step.y) / 2);
+		ret = ret / dda.ray_dir.y;
+	}
+	return (ret);
 }

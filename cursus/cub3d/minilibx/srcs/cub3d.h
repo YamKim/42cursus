@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/19 17:01:47 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/20 08:45:39 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,14 @@ typedef struct		s_loop
 	t_player		*player;
 }					t_loop;
 
+typedef struct		s_dda
+{
+	t_vecd			ray_dir;
+	t_vecd			side_dist;
+	t_vecd			delta_dist;
+	t_veci			step;
+	int				hit;
+}					t_dda;
 
 /*
 ** FUNCTIONS ======================================
@@ -110,5 +118,6 @@ t_vecd				rotate_vec(t_vecd dir, double theta);
 ** calc dda
 */
 double				dda_algorithm(const t_player *player, const t_vecd ray_dir, t_veci *hit_point, int *side);
+
 
 #endif

@@ -1,7 +1,6 @@
 # include "cub3d.h"
 
-extern int	world_map[MAP_WIDTH][MAP_HEIGHT];
-
+extern int world_map[MAP_WIDTH][MAP_HEIGHT];
 int		get_color(t_veci map)
 {
 	int color;
@@ -38,6 +37,24 @@ void	draw_line(int *data, int x, double perp_wall_dist, int color)
 	}
 }
 
+void	clear_draw(int *data)
+{
+	int	y;
+	int	x;
+
+	x = 0;
+	while (x < SCREEN_WIDTH)
+	{
+		y = 0;
+		while (y < SCREEN_HEIGHT)
+		{
+			data[y * SCREEN_WIDTH + x] = 0;
+			++y;
+		}
+		++x;
+	}
+}
+
 int key_press(int key, t_player *player)
 {
     if (key == KEY_W)
@@ -53,7 +70,6 @@ int key_press(int key, t_player *player)
     return (0);
 }
 
-#if 1
 int main_loop(t_loop *loop_var)
 {
 	t_disp		*disp;
@@ -70,7 +86,6 @@ int main_loop(t_loop *loop_var)
     double	perp_wall_dist;
 
     t = 0;
-#if 1
     while (t < SCREEN_WIDTH)
     {
 		hit_point.x = (int)(player->pos.x);
@@ -89,11 +104,10 @@ int main_loop(t_loop *loop_var)
 		draw_line(disp->img.data, t, perp_wall_dist, color);
         ++t;
     } 
-#endif
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.img_ptr, 0, 0);
+	clear_draw(disp->img.data);
 	return (1);
 }
-#endif
 
 int main()
 {
@@ -109,8 +123,8 @@ int main()
 	player.dir.y = 0;
 	player.plane.x = 0;
 	player.plane.y = 0.66;
-	player.trans_speed = 0.1;
-	player.rot_speed = 0.05;
+	player.trans_speed = 0.5;
+	player.rot_speed = 0.1;
 	
 	disp.win_ptr = mlx_new_window(disp.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "mlx");
 	disp.img.img_ptr = mlx_new_image(disp.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
