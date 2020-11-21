@@ -1,21 +1,38 @@
 # include "cub3d.h"
 
 extern int world_map[MAP_WIDTH][MAP_HEIGHT];
-int		get_color(t_veci map)
-{
-	int color;
 
-	if (world_map[map.x][map.y] == 1)
-	    color = 0xFF0000;
-	else if (world_map[map.x][map.y] == 2)
-	    color = 0x00FF00;
-	else if (world_map[map.x][map.y] == 3)
-	    color = 0x0000FF;
-	else if (world_map[map.x][map.y] == 4)
-	    color = 0xFFFFFF;
+int		draw_texture(
+		t_disp disp,
+		int *data,
+		const t_player player,
+		const t_vecd ray_dir,
+		const int x,
+		const t_hit hit_point)
+{
+	double	wall_t;
+	t_texture	texture;
+	int		texture_t;
+	int		texture_num;
+
+	texture_num = world_map[hit_point.x][hit_point.y] - 1;
+	texture = disp.texture[texture_num];
+	texture.width = disp.texture[texture_num].width;
+	texture.height = disp.texture[texture_num].height;
+
+	if (hit_point.side == 0)
+		wall_t = player.pos.y + hit_point.perp_wall_dist * ray_dir.y;
 	else
-	    color = 0x123145;
-	return (color);
+		wall_t = player.pos.x + hit_point.perp_wall_dist * ray_dir.x;
+	wall_t -= floor(wall_t);
+	
+	texture_t = (int)(wall_t * (double)(texture.width));
+	if(hit_point.side == 0 && ray_dir.x > 0)
+		texture_t = texture.width - texture_t - 1;
+	if(hit_point.side == 1 && ray_dir.y < 0)
+		texture_t = texture.width - texture_t - 1;
+	draw_texture_line(data, texture, x, texture_t, hit_point);
+	return (1);	
 }
 
 int key_press(int key, t_player *player)
@@ -37,7 +54,7 @@ int main_loop(t_loop *loop_var)
 {
 	t_disp		*disp;
 	t_player	*player;
-	t_veci		hit_point;
+	t_hit		hit_point;
 
 	disp = loop_var->disp;
 	player = loop_var->player;
@@ -45,8 +62,6 @@ int main_loop(t_loop *loop_var)
     int		t;
 	double	camera_t;
 	t_vecd	ray_dir;
-
-    double	perp_wall_dist;
 
     t = 0;
     while (t < SCREEN_WIDTH)
@@ -56,15 +71,9 @@ int main_loop(t_loop *loop_var)
         camera_t = (2 * t / (double)(SCREEN_WIDTH)) - 1;
         ray_dir.x = player->dir.x + player->plane.x * camera_t;
         ray_dir.y = player->dir.y + player->plane.y * camera_t;
-
-		int side = 0;
-        perp_wall_dist = dda_algorithm(player, ray_dir, &hit_point, &side);
-
-		int color;
-		color = get_color(hit_point);
-        if (side == 1)
-           color = color / 2;
-		draw_line(disp->img.data, t, perp_wall_dist, color);
+		hit_point.perp_wall_dist = dda_algorithm(player, ray_dir, &hit_point);
+		draw_texture(*disp, disp->img.data, *player, ray_dir, t, hit_point);
+		//draw_line(disp->img.data, t, hit_point);
         ++t;
     } 
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.ptr, 0, 0);
@@ -72,30 +81,6 @@ int main_loop(t_loop *loop_var)
 	return (1);
 }
 
-void	load_texture(t_texture *texture, char *file_name)
-{
-	t_disp	tmp_disp;
-	int		tmp_val;
-
-	tmp_disp.mlx_ptr = mlx_init();
-	texture->ptr = mlx_xpm_file_to_image(tmp_disp.mlx_ptr, file_name,
-											&(texture->width), &(texture->height));
-	texture->data = (int *)mlx_get_data_addr(texture->ptr,
-											&tmp_val, &tmp_val, &tmp_val);	
-	mlx_destroy_image(tmp_disp.mlx_ptr, texture->ptr);
-}
-
-void	load_texture_group(t_disp *disp)
-{
-    load_texture(&(disp->texture[0]), "textures/eagle.xpm");
-    load_texture(&(disp->texture[1]), "textures/redbrick.xpm");
-    load_texture(&(disp->texture[2]), "textures/purplestone.xpm");
-    load_texture(&(disp->texture[3]), "textures/greystone.xpm");
-    load_texture(&(disp->texture[4]), "textures/bluestone.xpm");
-    load_texture(&(disp->texture[5]), "textures/mossy.xpm");
-    load_texture(&(disp->texture[6]), "textures/wood.xpm");
-    load_texture(&(disp->texture[7]), "textures/colorstone.xpm");
-}
 
 int main()
 {
@@ -120,6 +105,7 @@ int main()
 					&(disp.img.size_l), &(disp.img.endian));
 	// texture part
 	load_texture_group(&disp);
+	check_texture(disp);
 
 	loop_var.disp = &disp;
 	loop_var.player = &player;

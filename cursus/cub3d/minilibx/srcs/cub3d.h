@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/21 00:12:36 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/21 23:27:06 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,15 @@ typedef struct		s_dda
 	int				hit;
 }					t_dda;
 
+typedef struct		s_hit
+{
+	int				y;
+	int				x;
+	int				side;
+	int				color;
+	double			perp_wall_dist;
+}					t_hit;
+
 
 /*
 ** FUNCTIONS ======================================
@@ -143,11 +152,20 @@ t_vecd				rotate_vec(t_vecd dir, double theta);
 /*
 ** calculate dda algorithm
 */
-double				dda_algorithm(const t_player *player, const t_vecd ray_dir, t_veci *hit_point, int *side);
+double				dda_algorithm(const t_player *player, const t_vecd ray_dir, t_hit *hit_point);
 
 /*
 ** display drawing
 */
-void				draw_line(int *data, int x, double perp_wall_dist, int color);
+void				draw_line(int *data, const int x, const t_hit hit_point);
+void				draw_texture_line(int *data, t_texture texture, const int x, const int texture_x, const t_hit hit_point);
 void				clear_draw(int *data);
+
+/*
+** load images from xpm files
+*/
+t_texture			load_texture(char *file_name);
+void				load_texture_group(t_disp *disp);
+void				check_texture(const t_disp disp);
+
 #endif

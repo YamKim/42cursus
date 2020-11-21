@@ -6,13 +6,24 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/20 10:57:11 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/21 19:46:38 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 extern int world_map[MAP_WIDTH][MAP_HEIGHT];
+
+/*==============================================================================
+** @ function name: get_step
+** @ input parameter:
+**			1. direction vector of ray
+** @ output:
+**
+** @ return : step which is decide		
+** @ brief  : decide the step direction for dda algorithm
+** @ warning: 
+===============================================================================*/
 t_veci	get_step(const t_vecd ray_dir)
 {
 	t_veci	ret;
@@ -28,6 +39,16 @@ t_veci	get_step(const t_vecd ray_dir)
 	return (ret);
 }
 
+/*==============================================================================
+** @ function name: get_delta_dist
+** @ input parameter:
+**			1. direction vector of ray
+** @ output:
+**
+** @ return : delta distance. ray distance between x sides or y sides 
+** @ brief  : calculate delta distance for accumulating ray distance.
+** @ warning: 
+===============================================================================*/
 t_vecd	get_delta_dist(const t_vecd ray_dir)
 {
 	t_vecd	ret;
@@ -53,10 +74,22 @@ t_vecd	get_delta_dist(const t_vecd ray_dir)
 	return (ret);
 }
 
+/*==============================================================================
+** @ function name: get_side_dist
+** @ input parameter:
+**			1. information of player for using position of player
+**			2. information of dda including values related with ray distance
+**			3. hit point which is changed as ray keeps straight
+** @ output:
+**
+** @ return : side distance. distance between player and first x side or y side
+** @ brief  : calculate side distance based on ray distance.
+** @ warning: 
+===============================================================================*/
 t_vecd	get_side_dist(
 		const t_player *player,
 		const t_dda dda,
-		const t_veci hit_point)
+		const t_hit hit_point)
 {
 	t_vecd	ret;
 
@@ -71,40 +104,61 @@ t_vecd	get_side_dist(
 	return (ret);
 }
 
-int		dda_run(const t_dda dda, t_veci *hit_point)
+/*==============================================================================
+** @ function name: run_dda_algorithm
+** @ input parameter:
+**			1. information of dda for using side/delta distance, step
+**			2. hit point which is changed as ray keeps straight
+** @ output:
+**			1. changed position of hit point.
+**			2. side hit by ray (x side: return 0, y side: return 1)
+** @ return :
+** @ brief  : run algorithm accumulating ray distance until finding hit spot.
+** @ warning: 
+===============================================================================*/
+void	run_dda_algorithm(const t_dda dda, t_hit *hit_point)
 {
-	int		hit;
+	int		hit_flag;
 	int		ret;
 	t_vecd	ray_dist;
 
-	hit = 0;
+	hit_flag = 0;
 	ray_dist.x = dda.side_dist.x;
 	ray_dist.y = dda.side_dist.y;
-	while (hit == 0)
+	while (hit_flag == 0)
 	{
 		if (ray_dist.x < ray_dist.y)
 		{
 			ray_dist.x = ray_dist.x + dda.delta_dist.x;
 			hit_point->x += dda.step.x;
-			ret = 0;
+			hit_point->side = 0;
 		}
 		else
 		{
 			ray_dist.y = ray_dist.y + dda.delta_dist.y;
 			hit_point->y += dda.step.y;
-			ret = 1;
+			hit_point->side = 1;
 		}
 		if (world_map[hit_point->x][hit_point->y] > 0)
-			hit = 1;
+			hit_flag = 1;
 	}
-	return (ret);
 }
 
+/*==============================================================================
+** @ function name: dda_algorithm
+** @ input parameter:
+**			1. information of player to use the position of player
+**			2. vector of ray direction
+** @ output:
+**			1. changed position of hit point and side of hit spot.
+** @ return : perpendicular distance between player and wall.
+** @ brief  : set values and run dda algorithm to obtain hit spot and perp dist.
+** @ warning: 
+===============================================================================*/
 double	dda_algorithm(
 		const t_player *player,
 		const t_vecd ray_dir,
-		t_veci *hit_point,
-		int *side)
+		t_hit *hit_point)
 {
 	t_dda	dda;
 	double	ret;
@@ -113,8 +167,8 @@ double	dda_algorithm(
 	dda.delta_dist = get_delta_dist(dda.ray_dir);
 	dda.step = get_step(dda.ray_dir);
 	dda.side_dist = get_side_dist(player, dda, *hit_point);
-	*side = dda_run(dda, hit_point);
-	if (*side == 0)
+	run_dda_algorithm(dda, hit_point);
+	if (hit_point->side == 0)
 	{
 		ret = (hit_point->x - player->pos.x + (double)(1 - dda.step.x) / 2);
 		ret = ret / dda.ray_dir.x;
