@@ -6,7 +6,8 @@ SRC = main.c \
 	calc_basic.c \
 	calc_vector.c \
 	calc_dda.c \
-	disp_draw.c \
+	disp_draw_untextured.c \
+	disp_draw_textured.c \
 	load_image.c
 
 OBJ = $(SRC:.c=.o)

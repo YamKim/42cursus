@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/21 19:46:38 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/22 14:48:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,7 @@ void	run_dda_algorithm(const t_dda dda, t_hit *hit_point)
 /*==============================================================================
 ** @ function name: dda_algorithm
 ** @ input parameter:
-**			1. information of player to use the position of player
-**			2. vector of ray direction
+**			1. information of player to use the position of player and ray dir
 ** @ output:
 **			1. changed position of hit point and side of hit spot.
 ** @ return : perpendicular distance between player and wall.
@@ -157,13 +156,12 @@ void	run_dda_algorithm(const t_dda dda, t_hit *hit_point)
 ===============================================================================*/
 double	dda_algorithm(
 		const t_player *player,
-		const t_vecd ray_dir,
 		t_hit *hit_point)
 {
 	t_dda	dda;
 	double	ret;
 
-	dda.ray_dir = ray_dir;
+	dda.ray_dir = player->ray_dir;
 	dda.delta_dist = get_delta_dist(dda.ray_dir);
 	dda.step = get_step(dda.ray_dir);
 	dda.side_dist = get_side_dist(player, dda, *hit_point);

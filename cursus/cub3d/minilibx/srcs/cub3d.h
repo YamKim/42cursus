@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/21 23:27:06 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/22 15:42:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct		s_player
 	t_vecd			plane;
 	double			trans_speed;
 	double			rot_speed;
+	t_vecd			ray_dir;
 }					t_player;
 
 typedef struct		s_loop
@@ -127,6 +128,16 @@ typedef struct		s_hit
 	double			perp_wall_dist;
 }					t_hit;
 
+typedef struct		s_draw
+{
+	int				y;
+	int				x;
+	int				ty;
+	int				tx;
+	int				line_height;
+	int				beg;
+	int				end;
+}					t_draw;
 
 /*
 ** FUNCTIONS ======================================
@@ -152,14 +163,18 @@ t_vecd				rotate_vec(t_vecd dir, double theta);
 /*
 ** calculate dda algorithm
 */
-double				dda_algorithm(const t_player *player, const t_vecd ray_dir, t_hit *hit_point);
+double				dda_algorithm(const t_player *player, t_hit *hit_point);
 
 /*
-** display drawing
+** display drawing untextured line
 */
 void				draw_line(int *data, const int x, const t_hit hit_point);
-void				draw_texture_line(int *data, t_texture texture, const int x, const int texture_x, const t_hit hit_point);
 void				clear_draw(int *data);
+
+/*
+** display drawing textured line
+*/
+int					draw_texture_line(t_disp disp, const t_player player, const int x, const t_hit hit_point);
 
 /*
 ** load images from xpm files
