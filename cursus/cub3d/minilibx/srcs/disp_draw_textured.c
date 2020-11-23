@@ -26,12 +26,13 @@ void	draw_textured_wall(
 	while (draw.y < draw.beg) data[(draw.y++) * SCREEN_WIDTH + draw.x] = COLOR_CEIL;
 	while (draw.y < draw.beg + draw.line_height)
 	{
-	    draw.ty = (int)tpos & (texture.height - 1);
-	    tpos += step_ty;
+	    //draw.ty = (int)tpos & (texture.height - 1);
+		draw.ty = calc_min((int)tpos, texture.height - 1); 
 	    hit_point.color = texture.data[draw.ty * texture.width + draw.tx];
 	    if (hit_point.side == 1)
 	        hit_point.color = (hit_point.color >> 1) & 8355711;
 	    data[(draw.y++) * SCREEN_WIDTH + draw.x] = hit_point.color;
+	    tpos += step_ty;
 	}
 	while (draw.y < SCREEN_HEIGHT)
 		data[(draw.y++) * SCREEN_WIDTH + draw.x] = COLOR_FLOOR;

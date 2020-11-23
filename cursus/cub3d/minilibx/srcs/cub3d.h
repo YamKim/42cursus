@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/22 15:42:16 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/23 10:35:31 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include "../mlx.h"
 # include <math.h>
 # include <string.h>
-# include <stdio.h>
+# include <unistd.h>
+# include <stdio.h> //
 # include <stdlib.h>
+# include <limits.h>
 
 /*
 ** PRECOMPILING ======================================
@@ -49,8 +51,19 @@
 */
 # define TEXTURE_WIDTH 64
 # define TEXTURE_HEIGHT 64
-# define TEXTURE_NUMBER 8
+# define TEXTURE_NUMBER 11
 # define TEXTURE_TOTALSIZE 4096
+
+/*
+** error code
+*/
+# define ERR_TEXTURE_CALL 1
+# define ERR_MESSAGE "ERROR ERROR ERROR\n"
+
+/*
+** get next line
+*/
+# define BUFFER_SIZE 1024
 
 /*
 ** structures
@@ -168,19 +181,34 @@ double				dda_algorithm(const t_player *player, t_hit *hit_point);
 /*
 ** display drawing untextured line
 */
-void				draw_line(int *data, const int x, const t_hit hit_point);
+void				draw_untextured_line(int *data, const int x, const t_hit hit_point);
 void				clear_draw(int *data);
 
 /*
 ** display drawing textured line
 */
-int					draw_texture_line(t_disp disp, const t_player player, const int x, const t_hit hit_point);
+int					draw_textured_line(t_disp disp, const t_player player, const int x, const t_hit hit_point);
 
 /*
 ** load images from xpm files
 */
-t_texture			load_texture(char *file_name);
-void				load_texture_group(t_disp *disp);
-void				check_texture(const t_disp disp);
+int					load_texture_group(t_disp *disp);
+
+/*
+** get nextline 
+*/
+int					get_next_line(int fd, char **line);
+
+/*
+** utilities for string
+*/
+size_t				ft_strlen(const char *str);
+char				*ft_strchr(const char *s, int c);
+size_t				ft_strlcpy(char *dest, const char *src, size_t size);
+char				*ft_strdup(const char *s);
+
+
+
+
 
 #endif

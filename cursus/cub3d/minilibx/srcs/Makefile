@@ -8,6 +8,8 @@ SRC = main.c \
 	calc_dda.c \
 	disp_draw_untextured.c \
 	disp_draw_textured.c \
+	get_next_line.c \
+	string_utils.c \
 	load_image.c
 
 OBJ = $(SRC:.c=.o)

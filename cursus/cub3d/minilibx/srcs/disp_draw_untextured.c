@@ -42,7 +42,7 @@ void	set_draw_untextured_wall(t_draw *draw, const t_hit hit_point)
 ** @ warning: 
 **
 ===============================================================================*/
-void	draw_line(int *data, const int x, const t_hit hit_point)
+void	draw_untextured_line(int *data, const int x, const t_hit hit_point)
 {
 	t_draw	draw;
 
