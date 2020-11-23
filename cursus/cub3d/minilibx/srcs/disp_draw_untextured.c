@@ -21,9 +21,12 @@ int		get_color(const t_hit map)
 	return (ret);
 }
 
-void	set_draw_untextured_wall(t_draw *draw, const t_hit hit_point)
+void	set_draw_untex_wall(t_draw *draw, t_hit hit_point)
 {
-	draw->line_height = (int)(SCREEN_HEIGHT / hit_point.perp_wall_dist);
+	if (fabs(hit_point.perp_wall_dist - 0.0) < EPSILON)
+		draw->line_height = (int)(SCREEN_HEIGHT * 2);
+	else
+		draw->line_height = (int)(SCREEN_HEIGHT / hit_point.perp_wall_dist);
 	draw->beg = calc_max((SCREEN_HEIGHT / 2) - (draw->line_height / 2), 0);
 	draw->end = calc_min((SCREEN_HEIGHT / 2) + (draw->line_height / 2), SCREEN_HEIGHT - 1);
 	draw->y = 0;
@@ -42,13 +45,14 @@ void	set_draw_untextured_wall(t_draw *draw, const t_hit hit_point)
 ** @ warning: 
 **
 ===============================================================================*/
-void	draw_untextured_line(int *data, const int x, const t_hit hit_point)
+void	draw_untex_line(int *data, const int x, const t_hit hit_point)
 {
 	t_draw	draw;
 
-	set_draw_untextured_wall(&draw, hit_point);
+	set_draw_untex_wall(&draw, hit_point);
 	while (draw.y < draw.beg)
 		data[(draw.y++) * SCREEN_WIDTH + x] = COLOR_CEIL;
+	draw.y = draw.beg;
 	while (draw.y < draw.end)
 		data[(draw.y++) * SCREEN_WIDTH + x] = get_color(hit_point);
 	while (draw.y < SCREEN_HEIGHT)

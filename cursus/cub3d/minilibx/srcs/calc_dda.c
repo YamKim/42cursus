@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/22 14:48:16 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/23 18:26:01 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,20 @@ t_veci	get_step(const t_vecd ray_dir)
 t_vecd	get_delta_dist(const t_vecd ray_dir)
 {
 	t_vecd	ret;
-
-	if (ray_dir.y == 0.0)
+	if (fabs(ray_dir.y - 0.0) < EPSILON)
 		ret.x = 0.0;
 	else
 	{
-		if (ray_dir.x == 0.0)
+		if (fabs(ray_dir.x - 0.0) < EPSILON)
 			ret.x = 1.0;
 		else
 			ret.x = fabs(1 / ray_dir.x);
 	}
-	if (ray_dir.x == 0.0)
+	if (fabs(ray_dir.x - 0.0) < EPSILON)
 		ret.y = 0.0;
 	else
 	{
-		if (ray_dir.y == 0)
+		if (fabs(ray_dir.y - 0.0) < EPSILON)
 			ret.y = 1.0;
 		else
 			ret.y = fabs(1 / ray_dir.y);
@@ -154,9 +153,7 @@ void	run_dda_algorithm(const t_dda dda, t_hit *hit_point)
 ** @ brief  : set values and run dda algorithm to obtain hit spot and perp dist.
 ** @ warning: 
 ===============================================================================*/
-double	dda_algorithm(
-		const t_player *player,
-		t_hit *hit_point)
+double	dda_algorithm(const t_player *player, t_hit *hit_point)
 {
 	t_dda	dda;
 	double	ret;

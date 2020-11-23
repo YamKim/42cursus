@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/23 10:35:31 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/23 18:02:25 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@
 # define BUFFER_SIZE 1024
 
 /*
+** calc_basic
+*/
+# define EPSILON 0.00001
+
+/*
 ** structures
 */
 typedef struct		s_vecd
@@ -91,20 +96,20 @@ typedef struct		s_img
 	int				endian;
 }					t_img;
 
-typedef struct		s_texture
+typedef struct		s_tex
 {
 	void			*ptr;
 	int				*data;
 	int				width;
 	int				height;
-}					t_texture;
+}					t_tex;
 
 typedef struct		s_disp
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
 	t_img			img;
-	t_texture		texture[TEXTURE_NUMBER];
+	t_tex			tex[TEXTURE_NUMBER];
 }					t_disp;	
 
 typedef struct		s_player
@@ -179,20 +184,20 @@ t_vecd				rotate_vec(t_vecd dir, double theta);
 double				dda_algorithm(const t_player *player, t_hit *hit_point);
 
 /*
-** display drawing untextured line
+** display drawing untex line
 */
-void				draw_untextured_line(int *data, const int x, const t_hit hit_point);
+void				draw_untex_line(int *data, const int x, const t_hit hit_point);
 void				clear_draw(int *data);
 
 /*
-** display drawing textured line
+** display drawing tex line
 */
-int					draw_textured_line(t_disp disp, const t_player player, const int x, const t_hit hit_point);
+int					draw_tex_line(t_disp disp, const t_player player, const int x, const t_hit hit_point);
 
 /*
 ** load images from xpm files
 */
-int					load_texture_group(t_disp *disp);
+int					load_tex_group(t_disp *disp);
 
 /*
 ** get nextline 
@@ -206,9 +211,6 @@ size_t				ft_strlen(const char *str);
 char				*ft_strchr(const char *s, int c);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 char				*ft_strdup(const char *s);
-
-
-
 
 
 #endif

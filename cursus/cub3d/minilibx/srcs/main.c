@@ -32,12 +32,12 @@ int main_loop(t_loop *lv)
         lv->player->ray_dir.x = lv->player->dir.x + lv->player->plane.x * camera_t;
         lv->player->ray_dir.y = lv->player->dir.y + lv->player->plane.y * camera_t;
 		hit_point.perp_wall_dist = dda_algorithm(lv->player, &hit_point);
-		draw_textured_line(*lv->disp, *lv->player, t, hit_point);
-		//draw_untextured_line(lv->disp->img.data, t, hit_point);
+		//draw_tex_line(*lv->disp, *lv->player, t, hit_point);
+		draw_untex_line(lv->disp->img.data, t, hit_point);
         ++t;
     } 
 	mlx_put_image_to_window(lv->disp->mlx_ptr, lv->disp->win_ptr, lv->disp->img.ptr, 0, 0);
-	clear_draw(lv->disp->img.data);
+	//clear_draw(lv->disp->img.data);
 	return (1);
 }
 
@@ -49,8 +49,8 @@ void	set_player_info(t_player *player)
 	player->dir.y = 0;
 	player->plane.x = 0;
 	player->plane.y = 0.66;
-	player->trans_speed = 0.5;
-	player->rot_speed = 0.1;
+	player->trans_speed = 0.1;
+	player->rot_speed = 0.05;
 }
 
 int main()
@@ -66,7 +66,7 @@ int main()
 	disp.img.data = (int *)mlx_get_data_addr(disp.img.ptr, &(disp.img.bpp),
 					&(disp.img.size_l), &(disp.img.endian));
 	// texture part
-	load_texture_group(&disp);
+	load_tex_group(&disp);
 	loop_var.disp = &disp;
 	loop_var.player = &player;
 	mlx_loop_hook(disp.mlx_ptr, &main_loop, &loop_var);
