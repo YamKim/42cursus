@@ -2,21 +2,21 @@
 
 extern int world_map[MAP_WIDTH][MAP_HEIGHT];
 
-int		get_color(const t_hit map)
+int		get_color(const t_hit hit_point)
 {
 	int	ret;
 
-	if (world_map[map.x][map.y] == 1)
+	if (world_map[hit_point.pos.x][hit_point.pos.y] == 1)
 	    ret = 0xFF0000;
-	else if (world_map[map.x][map.y] == 2)
+	else if (world_map[hit_point.pos.x][hit_point.pos.y] == 2)
 	    ret = 0x00FF00;
-	else if (world_map[map.x][map.y] == 3)
+	else if (world_map[hit_point.pos.x][hit_point.pos.y] == 3)
 	    ret = 0x0000FF;
-	else if (world_map[map.x][map.y] == 4)
+	else if (world_map[hit_point.pos.x][hit_point.pos.y] == 4)
 	    ret = 0xFFFFFF;
 	else
 	    ret = 0x123145;
-    if (map.side == 1)
+    if (hit_point.side == 1)
         ret /= 2;
 	return (ret);
 }
@@ -45,7 +45,7 @@ void	set_draw_untex_wall(t_draw *draw, t_hit hit_point)
 ** @ warning: 
 **
 ===============================================================================*/
-void	draw_untex_line(int *data, const int x, const t_hit hit_point)
+void	draw_untex_wall(int *data, const int x, const t_hit hit_point)
 {
 	t_draw	draw;
 

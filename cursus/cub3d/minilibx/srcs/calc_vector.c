@@ -39,3 +39,18 @@ t_vecd	rotate_vec(t_vecd dir, double theta)
 	ret.y = dir.x * sin(theta) + dir.y * cos(theta);
 	return (ret);
 }
+
+double	calc_dist(t_vecd v1, t_vecd v2)
+{
+	t_vecd	ret;
+
+	ret.x = (v1.x - v2.x) * (v1.x - v2.x);
+	ret.y = (v1.y - v2.y) * (v1.y - v2.y);
+	
+	return (ret.x + ret.y);
+}
+
+double	calc_det(t_vecd v1, t_vecd v2)
+{
+	return (v1.x * v2.y - v2.x * v1.y);
+}

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/23 18:02:25 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/24 17:26:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@
 # define EPSILON 0.00001
 
 /*
+** sprite setting
+*/
+# define SPRITE_NUMBER 19
+
+/*
 ** structures
 */
 typedef struct		s_vecd
@@ -84,6 +89,18 @@ typedef struct		s_veci
 	int				x;
 	int				y;
 }					t_veci;
+
+typedef struct		s_spr
+{
+	t_vecd			pos;
+	int				tex_nbr;
+}					t_spr;
+
+typedef struct		s_pair
+{
+	int				order;
+	double			dist;
+}					t_pair;
 
 typedef struct		s_img
 {
@@ -139,8 +156,7 @@ typedef struct		s_dda
 
 typedef struct		s_hit
 {
-	int				y;
-	int				x;
+	t_veci			pos;
 	int				side;
 	int				color;
 	double			perp_wall_dist;
@@ -171,6 +187,8 @@ void				turn_right(t_player *player);
 */
 int					calc_max(int nbr1, int nbr2);
 int					calc_min(int nbr1, int nbr2);
+double				calc_dist(t_vecd p1, t_vecd p2);
+double				calc_det(t_vecd v1, t_vecd v2);
 
 /*
 ** calculate vector operation
@@ -186,13 +204,13 @@ double				dda_algorithm(const t_player *player, t_hit *hit_point);
 /*
 ** display drawing untex line
 */
-void				draw_untex_line(int *data, const int x, const t_hit hit_point);
+void				draw_untex_wall(int *data, const int x, const t_hit hit_point);
 void				clear_draw(int *data);
 
 /*
 ** display drawing tex line
 */
-int					draw_tex_line(t_disp disp, const t_player player, const int x, const t_hit hit_point);
+int					draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point);
 
 /*
 ** load images from xpm files

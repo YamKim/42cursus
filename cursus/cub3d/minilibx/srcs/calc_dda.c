@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/23 18:26:01 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/24 15:14:29 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ t_vecd	get_side_dist(
 	t_vecd	ret;
 
 	if (dda.ray_dir.x < 0.0)
-		ret.x = (player->pos.x - hit_point.x) * dda.delta_dist.x;
+		ret.x = (player->pos.x - hit_point.pos.x) * dda.delta_dist.x;
 	else
-		ret.x = (hit_point.x + 1.0 - player->pos.x) * dda.delta_dist.x;
+		ret.x = (hit_point.pos.x + 1.0 - player->pos.x) * dda.delta_dist.x;
 	if (dda.ray_dir.y < 0.0)
-		ret.y = (player->pos.y - hit_point.y) * dda.delta_dist.y;
+		ret.y = (player->pos.y - hit_point.pos.y) * dda.delta_dist.y;
 	else
-		ret.y = (hit_point.y + 1.0 - player->pos.y) * dda.delta_dist.y;
+		ret.y = (hit_point.pos.y + 1.0 - player->pos.y) * dda.delta_dist.y;
 	return (ret);
 }
 
@@ -129,16 +129,16 @@ void	run_dda_algorithm(const t_dda dda, t_hit *hit_point)
 		if (ray_dist.x < ray_dist.y)
 		{
 			ray_dist.x = ray_dist.x + dda.delta_dist.x;
-			hit_point->x += dda.step.x;
+			hit_point->pos.x += dda.step.x;
 			hit_point->side = 0;
 		}
 		else
 		{
 			ray_dist.y = ray_dist.y + dda.delta_dist.y;
-			hit_point->y += dda.step.y;
+			hit_point->pos.y += dda.step.y;
 			hit_point->side = 1;
 		}
-		if (world_map[hit_point->x][hit_point->y] > 0)
+		if (world_map[hit_point->pos.x][hit_point->pos.y] > 0)
 			hit_flag = 1;
 	}
 }
@@ -165,12 +165,12 @@ double	dda_algorithm(const t_player *player, t_hit *hit_point)
 	run_dda_algorithm(dda, hit_point);
 	if (hit_point->side == 0)
 	{
-		ret = (hit_point->x - player->pos.x + (double)(1 - dda.step.x) / 2);
+		ret = (hit_point->pos.x - player->pos.x + (double)(1 - dda.step.x) / 2);
 		ret = ret / dda.ray_dir.x;
 	}
 	else
 	{
-		ret = (hit_point->y - player->pos.y + (double)(1 - dda.step.y) / 2);
+		ret = (hit_point->pos.y - player->pos.y + (double)(1 - dda.step.y) / 2);
 		ret = ret / dda.ray_dir.y;
 	}
 	return (ret);
