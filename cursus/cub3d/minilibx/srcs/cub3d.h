@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/24 17:26:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/25 11:43:54 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct		s_player
 	double			trans_speed;
 	double			rot_speed;
 	t_vecd			ray_dir;
+	t_vecd			sray_dist;
 }					t_player;
 
 typedef struct		s_loop
@@ -171,6 +172,8 @@ typedef struct		s_draw
 	int				line_height;
 	int				beg;
 	int				end;
+	int				xbeg;
+	int				xend;
 }					t_draw;
 
 /*
