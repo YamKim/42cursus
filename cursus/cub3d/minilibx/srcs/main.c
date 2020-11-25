@@ -59,18 +59,6 @@ void	set_sprite(t_pair *spr_pair, t_player player)
 		spr_pair[i].dist = calc_dist(player.pos, g_sprite[i].pos);
 		++i;
 	}	
-#if 0
-	if (fabs(test_pos.x - player.pos.x) > EPSILON)
-	{
-		for (int i = 0; i < SPRITE_NUMBER; ++i)
-		{
-			printf("spr_pair.order: %d, spr_pair.dist: %lf\n", spr_pair[i].order, spr_pair[i].dist);
-			printf("pos.x: %lf, pos.y: %lf\n", player.pos.x, player.pos.y);
-			test_pos.x = player.pos.x;
-			test_pos.y = player.pos.y;
-		}
-	}
-#endif
 }
 
 t_vecd	get_spr_ray(t_player player, t_pair spr_pair)
@@ -79,7 +67,6 @@ t_vecd	get_spr_ray(t_player player, t_pair spr_pair)
 	double	det;
 	t_vecd	spr_dist;
 
-	// 단일 sprite에 대해서 수행
 	spr_dist.x = g_sprite[spr_pair.order].pos.x - player.pos.x;
 	spr_dist.y = g_sprite[spr_pair.order].pos.y - player.pos.y;
 	det = calc_det(player.plane, player.dir);
@@ -88,6 +75,32 @@ t_vecd	get_spr_ray(t_player player, t_pair spr_pair)
 	return (ret);
 }
 
+void	sort_spr_pair(t_pair *spr_pair)
+{
+	int		i;
+	int		j;
+	double	remember;
+	int		tmp_order;
+
+	i = 1;
+	while (i < SPRITE_NUMBER)
+	{
+		remember = spr_pair[i].dist;
+		j = i;
+		while (--j >= 0 && remember > spr_pair[j].dist)
+		{
+			spr_pair[j + 1].dist = spr_pair[j].dist;
+			spr_pair[j].dist = remember;
+			tmp_order = spr_pair[j].order;
+			spr_pair[j].order = spr_pair[j + 1].order;
+			spr_pair[j + 1].order = tmp_order;
+		}
+		++i;
+	}
+}
+
+//void	set_draw_sprite(t_draw *draw, int	spr_x_ctr)
+
 int		draw_sprite(t_disp disp, t_player player, int x, t_hit hit_point, double *z_buf)
 {
 	t_pair	spr_pair[SPRITE_NUMBER];
@@ -95,48 +108,42 @@ int		draw_sprite(t_disp disp, t_player player, int x, t_hit hit_point, double *z
 	int		spr_x_ctr;
 	t_draw	draw;
 
-	// 모든 sprite에 대한 세팅
 	set_sprite(spr_pair, player); 
-	// sort 알고리즘 수행
-	
-	// 단일 sprite에 대한 세팅
+	sort_spr_pair(spr_pair);
 	int	i;
 	i = 0;
 	while (i < SPRITE_NUMBER)
 	{
 		spr_ray_dist = get_spr_ray(player, spr_pair[i]);
-		spr_x_ctr = (int)((double)SCREEN_WIDTH / 2 + (1 + spr_ray_dist.x / spr_ray_dist.y));
+		spr_x_ctr = (int)((double)SCREEN_WIDTH / 2 * (1 + spr_ray_dist.x / spr_ray_dist.y));
 		draw.line_height = (int)fabs(SCREEN_HEIGHT / spr_ray_dist.y);	
 		draw.beg = calc_max((SCREEN_HEIGHT - draw.line_height) / 2, 0);
 		draw.end = calc_min((SCREEN_HEIGHT + draw.line_height) / 2, SCREEN_HEIGHT - 1);
 
 		int spr_width = (int)fabs(SCREEN_HEIGHT / spr_ray_dist.y);
-		int spr_height = (int)fabs(SCREEN_HEIGHT / spr_ray_dist.y);
 		int draw_xbeg = calc_max(spr_x_ctr - spr_width / 2 , 0);
 		int draw_xend = calc_min(spr_x_ctr + spr_width / 2 , SCREEN_WIDTH - 1);
 
-		t_tex tex = disp.tex[g_sprite[i].tex_nbr];
-
-		for (int sprite = draw_xbeg; sprite < draw_xend; ++sprite) {
-			int texX = (int)((256 * (sprite - (spr_x_ctr - spr_width / 2)) * tex.width / spr_width) / 256);
-			if(spr_ray_dist.y > 0 && sprite > 0 && sprite < SCREEN_WIDTH && spr_ray_dist.y < z_buf[sprite])
+		t_tex tex = disp.tex[g_sprite[spr_pair[i].order].tex_nbr];
+		draw.x = draw_xbeg;
+		while (draw.x < draw_xend)
+		{
+			draw.tx = (int)((256 * (draw.x - (spr_x_ctr - spr_width / 2)) * tex.width / spr_width) / 256);
+			if(spr_ray_dist.y > 0 && draw.x > 0 && draw.x < SCREEN_WIDTH && spr_ray_dist.y < z_buf[draw.x])
 			{
-				for(int y = draw.beg; y < draw.end; ++y)
+				for(draw.y = draw.beg; draw.y < draw.end; ++draw.y)
 				{
-					int d = y * 256 - SCREEN_HEIGHT * 128 + spr_height * 128;
-					int texY = ((d * tex.height) / spr_height) / 256;
-					int color = tex.data[tex.width * texY + texX];
-					if((color & 0x00FFFFFF) != 0) disp.img.data[y * SCREEN_WIDTH + x] = color;
+					int d = draw.y * 256 - SCREEN_HEIGHT * 128 + draw.line_height * 128;
+					draw.ty = ((d * tex.height) / draw.line_height) / 256;
+					int color = tex.data[draw.ty * tex.width + draw.tx];
+					if((color & 0x00FFFFFF) != 0)
+						disp.img.data[draw.y * SCREEN_WIDTH + draw.x] = color;
 				}
 			}
+			++draw.x;
 		}
+		++i;
 	}
-#if 0
-	for (int i = 0; i < SPRITE_NUMBER; ++i) {
-		printf("sprite-> x: %lf, y: %lf, tex: %d, order: %d, dist: %lf\n", g_sprite[i].x, g_sprite[i].y, g_sprite[i].tex_nbr, g_sprite[i].order, g_sprite[i].dist);
-	}
-#endif
-			
 	return (1);
 }
 
@@ -158,10 +165,10 @@ int main_loop(t_loop *lv)
 		hit_point.perp_wall_dist = dda_algorithm(lv->player, &hit_point);
 		z_buf[t] = hit_point.perp_wall_dist;
 		draw_tex_wall(*(lv->disp), *(lv->player), t, hit_point);
-		draw_sprite(*lv->disp, *lv->player, t, hit_point, z_buf);
 		//draw_untex_line(lv->disp->img.data, t, hit_point);
         ++t;
     } 
+	draw_sprite(*lv->disp, *lv->player, t, hit_point, z_buf);
 	mlx_put_image_to_window(lv->disp->mlx_ptr, lv->disp->win_ptr, lv->disp->img.ptr, 0, 0);
 	//clear_draw(lv->disp->img.data);
 	return (1);
