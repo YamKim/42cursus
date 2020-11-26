@@ -21,14 +21,14 @@ int		get_color(const t_hit hit_point)
 	return (ret);
 }
 
-void	set_draw_untex_wall(t_draw *draw, t_hit hit_point)
+void	set_draw_untex_wall(t_disp disp, t_draw *draw, t_hit hit_point)
 {
 	if (fabs(hit_point.perp_wall_dist - 0.0) < EPSILON)
-		draw->line_height = (int)(SCREEN_HEIGHT * 2);
+		draw->line_height = (int)(disp.height * 2);
 	else
-		draw->line_height = (int)(SCREEN_HEIGHT / hit_point.perp_wall_dist);
-	draw->beg = (int)fmax((((double)SCREEN_HEIGHT - draw->line_height) / 2), 0);
-	draw->end = (int)fmin((((double)SCREEN_HEIGHT + draw->line_height) / 2), SCREEN_HEIGHT - 1);
+		draw->line_height = (int)(disp.height / hit_point.perp_wall_dist);
+	draw->beg = (int)fmax((((double)disp.height - draw->line_height) / 2), 0);
+	draw->end = (int)fmin((((double)disp.height + draw->line_height) / 2), disp.height - 1);
 	draw->y = 0;
 }
 
@@ -45,18 +45,18 @@ void	set_draw_untex_wall(t_draw *draw, t_hit hit_point)
 ** @ warning: 
 **
 ===============================================================================*/
-void	draw_untex_wall(int *data, const int x, const t_hit hit_point)
+void	draw_untex_wall(t_disp disp, const int x, const t_hit hit_point)
 {
 	t_draw	draw;
 
-	set_draw_untex_wall(&draw, hit_point);
+	set_draw_untex_wall(disp, &draw, hit_point);
 	while (draw.y < draw.beg)
-		data[(draw.y++) * SCREEN_WIDTH + x] = COLOR_CEIL;
+		disp.img.data[(draw.y++) * disp.width + x] = COLOR_CEIL;
 	draw.y = draw.beg;
 	while (draw.y < draw.end)
-		data[(draw.y++) * SCREEN_WIDTH + x] = get_color(hit_point);
-	while (draw.y < SCREEN_HEIGHT)
-		data[(draw.y++) * SCREEN_WIDTH + x] = COLOR_FLOOR;
+		disp.img.data[(draw.y++) * disp.width + x] = get_color(hit_point);
+	while (draw.y < disp.height)
+		disp.img.data[(draw.y++) * disp.width + x] = COLOR_FLOOR;
 }
 #if 0
 /*==============================================================================

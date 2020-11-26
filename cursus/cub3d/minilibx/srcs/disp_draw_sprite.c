@@ -1,5 +1,7 @@
 #include "cub3d.h"
 
+double	*g_perp_buf;
+
 t_spr	g_sprite[SPRITE_NUMBER] =
 {
 	{20.5, 11.5, 10},
@@ -79,25 +81,24 @@ void	sort_spr_pair(t_pair *spr_pair)
 	}
 }
 
-void	set_draw_sprite(t_draw *draw, int spr_x_ctr, t_vecd spr_ray_dist)
+void	set_draw_sprite(t_disp disp, t_draw *draw, t_vecd spr_ray_dist)
 {
 	int spr_width;
 
-	draw->line_height = (int)fabs((double)SCREEN_HEIGHT / spr_ray_dist.y);	
-	draw->beg = (int)fmax((double)(SCREEN_HEIGHT - draw->line_height) / 2, 0.0);
-	draw->end = (int)fmin((double)(SCREEN_HEIGHT + draw->line_height) / 2, SCREEN_HEIGHT - 1);
+	draw->line_height = (int)fabs((double)disp.height / spr_ray_dist.y);	
+	draw->beg = (int)fmax((double)(disp.height - draw->line_height) / 2, 0.0);
+	draw->end = (int)fmin((double)(disp.height + draw->line_height) / 2, disp.height - 1);
 
 	//spr_width = (int)fabs(SCREEN_HEIGHT / spr_ray_dist.y);
 	spr_width = draw->line_height;
-	draw->xbeg = (int)fmax((double)spr_x_ctr - (double)spr_width / 2 , 0.0);
-	draw->xend = (int)fmin((double)spr_x_ctr + (double)spr_width / 2 , SCREEN_WIDTH - 1);
-	
+	draw->xbeg = (int)fmax((double)draw->xctr - (double)spr_width / 2 , 0.0);
+	draw->xend = (int)fmin((double)draw->xctr + (double)spr_width / 2 , disp.width - 1);
+
 	draw->y = draw->beg;
 	draw->x = draw->xbeg;
-
 }
 
-void	draw_sprite_part(int *data, t_tex tex, t_player player, t_draw draw, int spr_x_ctr, double *z_buf)
+void	draw_sprite_part(t_disp disp, t_tex tex, t_player player, t_draw draw)
 {
 	int	spr_width;
 	int	tmp;
@@ -106,29 +107,30 @@ void	draw_sprite_part(int *data, t_tex tex, t_player player, t_draw draw, int sp
 	spr_width = draw.line_height;
 	while (draw.x < draw.xend)
 	{
-		draw.tx = (int)((256 * (draw.x - (spr_x_ctr - spr_width / 2)) * tex.width / spr_width) / 256);
-		if(player.sray_dist.y > 0 && draw.x > 0 && draw.x < SCREEN_WIDTH && player.sray_dist.y < z_buf[draw.x])
+		draw.tx = (int)((256 * (draw.x - (draw.xctr - spr_width / 2)) * tex.width / spr_width) / 256);
+		if(player.sray_dist.y > 0 && draw.x > 0 && draw.x < disp.width && player.sray_dist.y < g_perp_buf[draw.x])
 		{
 			for(draw.y = draw.beg; draw.y < draw.end; ++draw.y)
 			{
-				tmp = draw.y * 256 - SCREEN_HEIGHT * 128 + draw.line_height * 128;
+				tmp = draw.y * 256 - disp.height * 128 + draw.line_height * 128;
 				draw.ty = ((tmp * tex.height) / draw.line_height) / 256;
 				color = tex.data[draw.ty * tex.width + draw.tx];
 				if((color & 0x00FFFFFF) != 0)
-					data[draw.y * SCREEN_WIDTH + draw.x] = color;
+					disp.img.data[draw.y * disp.width + draw.x] = color;
 			}
 		}
 		++draw.x;
 	}
 }
 
-int		draw_sprite(t_disp disp, t_player player, int x, t_hit hit_point, double *z_buf)
+int		draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *perp_buf)
 {
 	t_pair	spr_pair[SPRITE_NUMBER];
 	t_draw	draw;
-	int		spr_x_ctr;
 	int		spr_width;
+	t_tex	tex;
 
+	g_perp_buf = perp_buf;
 	set_sprite(spr_pair, player); 
 	sort_spr_pair(spr_pair);
 	int	i;
@@ -136,11 +138,11 @@ int		draw_sprite(t_disp disp, t_player player, int x, t_hit hit_point, double *z
 	while (i < SPRITE_NUMBER)
 	{
 		player.sray_dist = get_spr_ray(player, spr_pair[i]);
-		spr_x_ctr = (int)((double)SCREEN_WIDTH / 2 * (1 + player.sray_dist.x / player.sray_dist.y));
-		set_draw_sprite(&draw, spr_x_ctr, player.sray_dist); 
+		draw.xctr = (int)((double)disp.width / 2 * (1 + player.sray_dist.x / player.sray_dist.y));
+		set_draw_sprite(disp, &draw, player.sray_dist); 
 		spr_width = draw.line_height;
-		t_tex tex = disp.tex[g_sprite[spr_pair[i].order].tex_nbr];
-		draw_sprite_part(disp.img.data, tex, player, draw, spr_x_ctr, z_buf);
+		tex = disp.tex[g_sprite[spr_pair[i].order].tex_nbr];
+		draw_sprite_part(disp, tex, player, draw);
 		++i;
 	}
 	return (1);

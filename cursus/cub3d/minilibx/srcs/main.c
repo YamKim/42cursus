@@ -7,24 +7,27 @@ int main_loop(t_loop *lv)
 	t_hit	hit_point;
     int		t;
 	double	camera_t;
-	double	z_buf[SCREEN_WIDTH];
+	double	*perp_buf;
 
+	if (!(perp_buf = (double *)malloc(sizeof(double) * lv->disp->width)))
+		return (ERR_MALLOC);
     t = 0;
-    while (t < SCREEN_WIDTH)
+    while (t < lv->disp->width)
     {
 		hit_point.pos.x = (int)(lv->player->pos.x);
 		hit_point.pos.y = (int)(lv->player->pos.y);
-        camera_t = (2 * t / (double)(SCREEN_WIDTH)) - 1;
+        camera_t = (2 * t / (double)(lv->disp->width)) - 1;
         lv->player->ray_dir.x = lv->player->dir.x + lv->player->plane.x * camera_t;
         lv->player->ray_dir.y = lv->player->dir.y + lv->player->plane.y * camera_t;
 		hit_point.perp_wall_dist = dda_algorithm(lv->player, &hit_point);
-		z_buf[t] = hit_point.perp_wall_dist;
+		perp_buf[t] = hit_point.perp_wall_dist;
 		draw_tex_wall(*(lv->disp), *(lv->player), t, hit_point);
-		//draw_untex_wall(lv->disp->img.data, t, hit_point);
+		//draw_untex_wall(*(lv->disp), t, hit_point);
         ++t;
     } 
-	draw_sprite(*lv->disp, *lv->player, t, hit_point, z_buf);
+	draw_sprite(*lv->disp, *lv->player, hit_point, perp_buf);
 	mlx_put_image_to_window(lv->disp->mlx_ptr, lv->disp->win_ptr, lv->disp->img.ptr, 0, 0);
+	free(perp_buf);
 	return (1);
 }
 
@@ -41,25 +44,24 @@ void	set_player_info(t_player *player, char orient)
 	start_orient(player, orient);
 }
 
-int	cub3d_run(void)
+int	cub3d_run(t_disp *disp)
 {
 	t_player	player;
-	t_disp		disp;
 	t_loop		loop_var;
-
-	disp.mlx_ptr = mlx_init();
+	
+	disp->mlx_ptr = mlx_init();
 	set_player_info(&player, WEST);	
-	disp.win_ptr = mlx_new_window(disp.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "mlx");
-	disp.img.ptr = mlx_new_image(disp.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
-	disp.img.data = (int *)mlx_get_data_addr(disp.img.ptr, &(disp.img.bpp),
-					&(disp.img.size_l), &(disp.img.endian));
+	disp->win_ptr = mlx_new_window(disp->mlx_ptr, disp->width, disp->height, "mlx");
+	disp->img.ptr = mlx_new_image(disp->mlx_ptr, disp->width, disp->height);
+	disp->img.data = (int *)mlx_get_data_addr(disp->img.ptr, &(disp->img.bpp),
+					&(disp->img.size_l), &(disp->img.endian));
 	// texture part
-	load_tex_group(&disp);
-	loop_var.disp = &disp;
+	load_tex_group(disp);
+	loop_var.disp = disp;
 	loop_var.player = &player;
-	mlx_loop_hook(disp.mlx_ptr, &main_loop, &loop_var);
-	mlx_hook(disp.win_ptr, X_EVENT_KEY_PRESS, 0, &key_press, &player);
-	mlx_loop(disp.mlx_ptr);
+	mlx_loop_hook(disp->mlx_ptr, &main_loop, &loop_var);
+	mlx_hook(disp->win_ptr, X_EVENT_KEY_PRESS, 0, &key_press, &player);
+	mlx_loop(disp->mlx_ptr);
 
 	return (0);
 } 
@@ -85,60 +87,71 @@ int	open_file(char *fname)
 	if ((ret = open(fname, O_RDONLY)) < 0)
 	{
 		perror("The following error occurred");
-		return (ERR_FILE);
+		return (errno);
 	}
 	return (ret);
 }
 
-void	parse_resolution(char **wrord_buf)
+void	parse_resolution(t_disp *disp, char **word_buf)
 {
-
+	printf("word_buf[1]: %s\n", word_buf[1]);
+	disp->width = ft_atoi(word_buf[1]);
+	printf("DEBUG====================================\n");
+	disp->height = ft_atoi(word_buf[2]);
+	printf("disp.width: %d, height: %d\n", disp->width, disp->height);
 }
 
-int	get_info(char *fname)
+void	parse_info(t_disp *disp, char **word_buf)
+{
+	printf("word_buf[0]: %s\n", word_buf[0]);
+	if (!ft_strncmp(word_buf[0], "R", 1))
+		parse_resolution(disp, word_buf);
+}
+
+int	get_info(t_disp *disp, char *fname)
 {
 	int		fd;
 	char	buf[FILE_DATA];
-	ssize_t	read_size;
 	char	**line_buf;
 	char	**word_buf;
 	int		k;
 
 	fd = open_file(fname);
-	if ((read_size = read(fd, buf, FILE_DATA)) < 0)
+	if (read(fd, buf, FILE_DATA) < 0)
 	{
 		perror("The following error occurred");
-		return (ERR_READ);
+		return (errno);
 	}
 
 	line_buf = ft_split(buf, '\n');
 	k = 0;
 	while (line_buf[k])
 	{
-		printf("line_buf[%d]: %s\n", k, line_buf[k]);
+//		printf("line_buf[%d]: %s\n", k, line_buf[k]);
 		word_buf = ft_split(line_buf[k], ' ');
-		for (int i = 0; word_buf[i]; ++i)
-			printf("word_buf[%d]: %s\n", i, word_buf[i]);
-		
+//		for (int i = 0; word_buf[i]; ++i)
+//			printf("word_buf[%d]: %s\n", i, word_buf[i]);
+		parse_info(disp, word_buf);
 		free_split_arr(word_buf);
 		++k;
 	}
 	
 	free_split_arr(line_buf);
-	
 	return (0);
 }
 
 // *** gnl, ft_split free !!!!!!!!!!!!!
 int main(int argc, char *argv[])
 {
+	t_disp	disp;
+
 	if (argc == 2)
 	{
 		if (check_file(argv[1]))
 			return (ERR_FILE);	
-		if (get_info(argv[1]))
+		if (get_info(&disp, argv[1]))
 			return (ERR_FILE);
-		if (cub3d_run())
+		if (cub3d_run(&disp))
 			return (ERR_RUN);
 	}
 	return (0);

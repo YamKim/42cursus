@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/26 10:02:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/26 11:05:51 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define ERR_RUN 1
 # define ERR_FILE 1
 # define ERR_READ 1
+# define ERR_MALLOC 1
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -56,8 +57,6 @@
 # define MAP_HEIGHT 24
 //# define SCREEN_WIDTH 640
 //# define SCREEN_HEIGHT 480
-int	SCREEN_WIDTH = 640;
-int	SCREEN_HEIGHT = 480;
 
 # define X_EVENT_KEY_PRESS   2
 # define X_EVENT_KEY_EXIT    17
@@ -161,6 +160,8 @@ typedef struct		s_disp
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
+	int				width;
+	int				height;
 	t_img			img;
 	t_tex			tex[TEXTURE_NUMBER];
 }					t_disp;	
@@ -203,13 +204,14 @@ typedef struct		s_draw
 {
 	int				y;
 	int				x;
+	int				beg;
+	int				end;
 	int				ty;
 	int				tx;
 	int				line_height;
-	int				beg;
-	int				end;
 	int				xbeg;
 	int				xend;
+	int				xctr;
 }					t_draw;
 
 /*
@@ -242,7 +244,7 @@ double				dda_algorithm(const t_player *player, t_hit *hit_point);
 /*
 ** display drawing untex line
 */
-void				draw_untex_wall(int *data, const int x, const t_hit hit_point);
+void				draw_untex_wall(t_disp disp, int x, const t_hit hit_point);
 void				clear_draw(int *data);
 
 /*
@@ -253,7 +255,7 @@ int					draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point);
 /*
 ** display drawing sprite shape
 */
-int					draw_sprite(t_disp disp, t_player player, int x, t_hit hit_point, double *z_buf);
+int					draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *z_buf);
 
 /*
 ** load images from xpm files
@@ -281,11 +283,10 @@ char				*ft_strdup(const char *s);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 
 char				*ft_substr(char const *s, unsigned int start, size_t len);
+int					ft_atoi(char *nptr);
 /*
 ** keyboard hook from user
 */
 int					key_press(int key, t_player *player);
-
-
 
 #endif
