@@ -1,11 +1,11 @@
 #include "cub3d.h"
 
-extern int world_map[MAP_WIDTH][MAP_HEIGHT];
-
 int		get_color(const t_hit hit_point)
 {
 	int	ret;
 
+	ret = 152 << 16 | 102 << 8 | 51;
+#if 0
 	if (world_map[hit_point.pos.x][hit_point.pos.y] == 1)
 	    ret = 0xFF0000;
 	else if (world_map[hit_point.pos.x][hit_point.pos.y] == 2)
@@ -16,6 +16,7 @@ int		get_color(const t_hit hit_point)
 	    ret = 0xFFFFFF;
 	else
 	    ret = 0x123145;
+#endif
     if (hit_point.side == 1)
         ret /= 2;
 	return (ret);

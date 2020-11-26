@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/26 18:58:54 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/27 07:42:26 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@
 # define CONFIG_C 7
 
 /*
+** map
+*/
+# define MAP_ROAD '0'
+# define MAP_WALL '1'
+# define MAP_SPRITE '2'
+
+/*
 ** degree and radian
 */
 # define DEG2RAD M_PI / 180
@@ -132,6 +139,12 @@ typedef struct		s_spr
 	int				tex_nbr;
 }					t_spr;
 
+typedef struct		s_map
+{
+	int				height;
+	int				data[100][100];
+}					t_map;
+
 typedef struct		s_img
 {
 	void			*ptr;
@@ -157,11 +170,13 @@ typedef struct		s_disp
 	void			*win_ptr;
 	int				width;
 	int				height;
-	t_img			img;
-	t_tex			tex[TEXTURE_NUMBER];
 	int				config;
 	int				floor_color;
 	int				ceil_color;
+	t_img			img;
+	t_tex			tex[TEXTURE_NUMBER];
+	t_map			map;
+	t_vecd			start_pos;
 }					t_disp;	
 
 typedef struct		s_player
@@ -219,14 +234,14 @@ typedef struct		s_draw
 /*
 ** parse configuration
 */
-int					parse_config(t_disp *disp, char **line_buf);
+int					parse_config(t_disp *disp, char **line_buf, int *k);
 
 /*
 ** player motion
 */
 void				start_orient(t_player *player, char orient);
-void				move_forward(t_player *player);
-void				move_backward(t_player *player);
+void				move_forward(t_player *player, t_map map);
+void				move_backward(t_player *player, t_map map);
 void				turn_left(t_player *player);
 void				turn_right(t_player *player);
 
@@ -245,7 +260,7 @@ t_vecd				rotate_vec(t_vecd dir, double theta);
 /*
 ** calculate dda algorithm
 */
-double				dda_algorithm(const t_player *player, t_hit *hit_point);
+double				dda_algorithm(t_player *player, t_hit *hit_point, t_map map);
 
 /*
 ** display drawing untex line
@@ -293,6 +308,6 @@ int					check_is_number_arr(char **nbr_arr, int index_num);
 /*
 ** keyboard hook from user
 */
-int					key_press(int key, t_player *player);
+int					key_press(int key, t_loop *lv);
 
 #endif

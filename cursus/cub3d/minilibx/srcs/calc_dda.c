@@ -6,13 +6,13 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/24 15:14:29 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/27 07:33:59 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-extern int world_map[MAP_WIDTH][MAP_HEIGHT];
+//extern int world_map[MAP_WIDTH][MAP_HEIGHT];
 
 /*==============================================================================
 ** @ function name: get_step
@@ -115,7 +115,7 @@ t_vecd	get_side_dist(
 ** @ brief  : run algorithm accumulating ray distance until finding hit spot.
 ** @ warning: 
 ===============================================================================*/
-void	run_dda_algorithm(const t_dda dda, t_hit *hit_point)
+void	run_dda_algorithm(const t_dda dda, t_hit *hit_point, t_map map)
 {
 	int		hit_flag;
 	int		ret;
@@ -138,7 +138,7 @@ void	run_dda_algorithm(const t_dda dda, t_hit *hit_point)
 			hit_point->pos.y += dda.step.y;
 			hit_point->side = 1;
 		}
-		if (world_map[hit_point->pos.x][hit_point->pos.y] > 0)
+		if (map.data[hit_point->pos.x][hit_point->pos.y] > 0)
 			hit_flag = 1;
 	}
 }
@@ -153,7 +153,7 @@ void	run_dda_algorithm(const t_dda dda, t_hit *hit_point)
 ** @ brief  : set values and run dda algorithm to obtain hit spot and perp dist.
 ** @ warning: 
 ===============================================================================*/
-double	dda_algorithm(const t_player *player, t_hit *hit_point)
+double	dda_algorithm(t_player *player, t_hit *hit_point, t_map map)
 {
 	t_dda	dda;
 	double	ret;
@@ -162,7 +162,7 @@ double	dda_algorithm(const t_player *player, t_hit *hit_point)
 	dda.delta_dist = get_delta_dist(dda.ray_dir);
 	dda.step = get_step(dda.ray_dir);
 	dda.side_dist = get_side_dist(player, dda, *hit_point);
-	run_dda_algorithm(dda, hit_point);
+	run_dda_algorithm(dda, hit_point, map);
 	if (hit_point->side == 0)
 	{
 		ret = (hit_point->pos.x - player->pos.x + (double)(1 - dda.step.x) / 2);

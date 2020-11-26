@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-extern int world_map[MAP_WIDTH][MAP_HEIGHT];
-
 t_tex	get_wall_type(t_disp disp, t_player player, t_hit hit_point)
 {
 	t_tex	ret;

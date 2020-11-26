@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	parse_resolution(t_disp *disp, char **word_buf)
+int	get_resolution(t_disp *disp, char **word_buf)
 {
 	if (disp->config & (1 << CONFIG_R))
 		return (ERR_PARSE);
@@ -12,11 +12,10 @@ int	parse_resolution(t_disp *disp, char **word_buf)
 }
 
 // show error if repetead case occured
-int	parse_texture(t_disp *disp, char *fname, int type)
+int	get_texture(t_disp *disp, char *fname, int type)
 {
 	int	tex_load_err;
 
-	printf("fname: %s\n", fname);
 	if (disp->config & (1 << type))
 		return (ERR_PARSE);
 	disp->config |= 1 << type;
@@ -27,7 +26,7 @@ int	parse_texture(t_disp *disp, char *fname, int type)
 }
 
 
-int	parse_color(t_disp *disp, char *color_set, int type)
+int	get_fc_color(t_disp *disp, char *color_set, int type)
 {
 	int		tex_load_err;
 	char	**rgb;
@@ -48,6 +47,7 @@ int	parse_color(t_disp *disp, char *color_set, int type)
 		disp->floor_color = tot_color;
 	else
 		disp->ceil_color = tot_color;
+	printf("color parsing success\n");
 	return (0);
 }
 
@@ -57,50 +57,45 @@ int	parse_config_case(t_disp *disp, char **word_buf)
 
 	parse_err = 0;
 	if (!ft_strncmp(word_buf[0], "R", 1))
-		parse_err |= parse_resolution(disp, word_buf);
+		parse_err |= get_resolution(disp, word_buf);
 	else if (!ft_strncmp(word_buf[0], "NO", 2))
-		parse_err |= parse_texture(disp, word_buf[1], CONFIG_NO);
+		parse_err |= get_texture(disp, word_buf[1], CONFIG_NO);
 	else if (!ft_strncmp(word_buf[0], "SO", 2))
-		parse_err |= parse_texture(disp, word_buf[1], CONFIG_SO);
+		parse_err |= get_texture(disp, word_buf[1], CONFIG_SO);
 	else if (!ft_strncmp(word_buf[0], "WE", 2))
-		parse_err |= parse_texture(disp, word_buf[1], CONFIG_WE);
+		parse_err |= get_texture(disp, word_buf[1], CONFIG_WE);
 	else if (!ft_strncmp(word_buf[0], "EA", 2))
-		parse_err |= parse_texture(disp, word_buf[1], CONFIG_EA);
+		parse_err |= get_texture(disp, word_buf[1], CONFIG_EA);
 	else if (!ft_strncmp(word_buf[0], "S", 1))
-		parse_err |= parse_texture(disp, word_buf[1], CONFIG_S);
+		parse_err |= get_texture(disp, word_buf[1], CONFIG_S);
 	else if (!ft_strncmp(word_buf[0], "F", 1))
-		parse_err |= parse_color(disp, word_buf[1], CONFIG_F);
+		parse_err |= get_fc_color(disp, word_buf[1], CONFIG_F);
 	else if (!ft_strncmp(word_buf[0], "C", 1))
-		parse_err |= parse_color(disp, word_buf[1], CONFIG_C);
-	printf("parse_err: %d\n", parse_err);
+		parse_err |= get_fc_color(disp, word_buf[1], CONFIG_C);
 	return (parse_err);
 }
 
-int	parse_config(t_disp *disp, char **line_buf)
+int	parse_config(t_disp *disp, char **line_buf, int *k)
 {
-	int		k;
 	char	**word_buf;
 
-	k = 0;
-	for (int i = 0; line_buf[i]; ++i)
-		printf("line_buf[%d]: %s\n", i, line_buf[i]);
-	while (line_buf[k])
+	disp->config = 0;
+	*k = 0;
+	while (line_buf[*k])
 	{
+		printf("disp->config: %d\n", *k);
 		if (disp->config == ((1 << CONFIG_NUMBER) - 1))
 		{
 			printf("Finished parsing for elments!\n");
 			break;
 		}
-		word_buf = ft_split(line_buf[k], ' ');
+		word_buf = ft_split(line_buf[*k], ' ');
 		parse_config_case(disp, word_buf);
-		++k;
+		*k = *k + 1;
+		printf("k: %d\n", *k);
 	}
-	if (k != CONFIG_NUMBER)
-	{
-		printf("Not enough configuration!\n");
-		free_split_arr(line_buf);
+	if (*k != CONFIG_NUMBER)
 		return (ERR_PARSE_CONFIG);
-	}
 	return (0);
 }
 

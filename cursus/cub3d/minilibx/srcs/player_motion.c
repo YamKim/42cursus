@@ -58,6 +58,7 @@ int    world_map[MAP_WIDTH][MAP_HEIGHT] =
   {2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
 };
 #endif
+#if 0
 int    world_map[MAP_WIDTH][MAP_HEIGHT] =
 {
   {8,8,8,8,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -85,6 +86,7 @@ int    world_map[MAP_WIDTH][MAP_HEIGHT] =
   {1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,1,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
+#endif
 
 void	start_orient(t_player *player, char orient)
 {
@@ -114,14 +116,14 @@ void	start_orient(t_player *player, char orient)
 ** @ brief  : move player to go forward
 ** @ warning: 
 ===============================================================================*/
-void	move_forward(t_player *player)
+void	move_forward(t_player *player, t_map map)
 {
 	t_vecd	after_move;
 
 	after_move = translate_vec(player->pos, player->dir, player->trans_speed);
-    if (!world_map[(int)after_move.x][(int)(player->pos.y)])
+    if (!map.data[(int)after_move.x][(int)(player->pos.y)])
         player->pos.x = after_move.x;
-    if (!world_map[(int)(player->pos.x)][(int)after_move.y])
+    if (!map.data[(int)(player->pos.x)][(int)after_move.y])
         player->pos.y = after_move.y;
 }
 
@@ -136,14 +138,14 @@ void	move_forward(t_player *player)
 ** @ brief  : move player to go backward
 ** @ warning: 
 ===============================================================================*/
-void	move_backward(t_player *player)
+void	move_backward(t_player *player, t_map map)
 {
 	t_vecd	after_move;
 	
 	after_move = translate_vec(player->pos, player->dir, -player->trans_speed);
-    if (!world_map[(int)after_move.x][(int)(player->pos.y)])
+    if (!map.data[(int)after_move.x][(int)(player->pos.y)])
 		player->pos.x = after_move.x;
-    if (!world_map[(int)(player->pos.x)][(int)after_move.y])
+    if (!map.data[(int)(player->pos.x)][(int)after_move.y])
 		player->pos.y = after_move.y;
 }
 
