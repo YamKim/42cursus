@@ -56,7 +56,7 @@ int	cub3d_run(t_disp *disp)
 	disp->img.data = (int *)mlx_get_data_addr(disp->img.ptr, &(disp->img.bpp),
 					&(disp->img.size_l), &(disp->img.endian));
 	// texture part
-	load_tex_group(disp);
+	//load_tex_group(disp);
 	loop_var.disp = disp;
 	loop_var.player = &player;
 	mlx_loop_hook(disp->mlx_ptr, &main_loop, &loop_var);
@@ -92,29 +92,12 @@ int	open_file(char *fname)
 	return (ret);
 }
 
-void	parse_resolution(t_disp *disp, char **word_buf)
-{
-	printf("word_buf[1]: %s\n", word_buf[1]);
-	disp->width = ft_atoi(word_buf[1]);
-	printf("DEBUG====================================\n");
-	disp->height = ft_atoi(word_buf[2]);
-	printf("disp.width: %d, height: %d\n", disp->width, disp->height);
-}
-
-void	parse_info(t_disp *disp, char **word_buf)
-{
-	printf("word_buf[0]: %s\n", word_buf[0]);
-	if (!ft_strncmp(word_buf[0], "R", 1))
-		parse_resolution(disp, word_buf);
-}
-
+// over max resolution -> max resolution
 int	get_info(t_disp *disp, char *fname)
 {
 	int		fd;
 	char	buf[FILE_DATA];
 	char	**line_buf;
-	char	**word_buf;
-	int		k;
 
 	fd = open_file(fname);
 	if (read(fd, buf, FILE_DATA) < 0)
@@ -122,21 +105,16 @@ int	get_info(t_disp *disp, char *fname)
 		perror("The following error occurred");
 		return (errno);
 	}
-
 	line_buf = ft_split(buf, '\n');
-	k = 0;
-	while (line_buf[k])
+	if (parse_config(disp, line_buf))
 	{
-//		printf("line_buf[%d]: %s\n", k, line_buf[k]);
-		word_buf = ft_split(line_buf[k], ' ');
-//		for (int i = 0; word_buf[i]; ++i)
-//			printf("word_buf[%d]: %s\n", i, word_buf[i]);
-		parse_info(disp, word_buf);
-		free_split_arr(word_buf);
-		++k;
+		printf("Parsing configuration error\n");
+		free_split_arr(line_buf);
+		return (errno);
 	}
-	
+	printf("Let's parsing map!!\n");
 	free_split_arr(line_buf);
+
 	return (0);
 }
 

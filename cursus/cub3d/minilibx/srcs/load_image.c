@@ -8,7 +8,7 @@ int	load_tex(t_tex *tex, char *file_name)
 
 	mlx_ptr = mlx_init();
 	tex->ptr = mlx_xpm_file_to_image(mlx_ptr, file_name, &(tex->width), &(tex->height));
-	if (tex == NULL)
+	if (tex->ptr == NULL)
 		return (ERR_TEXTURE_CALL);
 	tex->data = (int *)mlx_get_data_addr(tex->ptr, &tmp, &tmp, &tmp);	
 	return (0);

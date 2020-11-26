@@ -11,16 +11,16 @@ t_tex	get_wall_type(t_disp disp, t_player player, t_hit hit_point)
 	if (hit_point.side == 1)
 	{
 		if (player.ray_dir.y > 0)
-			ret = disp.tex[TEXTURE_N];
+			ret = disp.tex[CONFIG_NO];
 		else
-			ret = disp.tex[TEXTURE_S];
+			ret = disp.tex[CONFIG_SO];
 	}
 	else
 	{
 		if (player.ray_dir.x > 0)
-			ret = disp.tex[TEXTURE_E];
+			ret = disp.tex[CONFIG_EA];
 		else
-			ret = disp.tex[TEXTURE_W];
+			ret = disp.tex[CONFIG_WE];
 	}
 	return (ret);
 }

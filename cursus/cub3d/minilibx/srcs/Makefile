@@ -2,6 +2,7 @@ NAME = program.out
 CC = gcc
 
 SRC = main.c \
+	parse_configuration.c \
 	player_motion.c \
 	calc_vector.c \
 	calc_dda.c \

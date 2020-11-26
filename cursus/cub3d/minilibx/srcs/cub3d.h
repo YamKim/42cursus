@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/26 11:05:51 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/26 17:47:15 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define ERR_FILE 1
 # define ERR_READ 1
 # define ERR_MALLOC 1
+# define ERR_PARSE 1
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -61,6 +62,18 @@
 # define X_EVENT_KEY_PRESS   2
 # define X_EVENT_KEY_EXIT    17
 
+/*
+** configuration
+*/
+# define CONFIG_NUMBER 8
+# define CONFIG_NO 0
+# define CONFIG_SO 1
+# define CONFIG_WE 2
+# define CONFIG_EA 3
+# define CONFIG_S 4
+# define CONFIG_R 5
+# define CONFIG_F 6
+# define CONFIG_C 7
 
 /*
 ** degree and radian
@@ -69,17 +82,13 @@
 # define RAD2DEG 180 / M_PI
 # define ROT_SPEED 15 * DEG2RAD
 # define NORTH 'N'
-# define EAST 'E'
-# define WEST 'W'
 # define SOUTH 'S'
+# define WEST 'W'
+# define EAST 'E'
 # define START_NORTH_ANGLE 270 
-# define START_EAST_ANGLE 180
-# define START_WEST_ANGLE 0
 # define START_SOUTH_ANGLE 90
-# define TEXTURE_N 0
-# define TEXTURE_E 1
-# define TEXTURE_W 2
-# define TEXTURE_S 3
+# define START_WEST_ANGLE 0
+# define START_EAST_ANGLE 180
 
 /*
 ** color code
@@ -164,6 +173,9 @@ typedef struct		s_disp
 	int				height;
 	t_img			img;
 	t_tex			tex[TEXTURE_NUMBER];
+	int				config;
+	int				floor_color;
+	int				ceil_color;
 }					t_disp;	
 
 typedef struct		s_player
@@ -216,6 +228,14 @@ typedef struct		s_draw
 
 /*
 ** FUNCTIONS ======================================
+*/
+
+/*
+** parse configuration
+*/
+int					parse_config(t_disp *disp, char **line_buf);
+
+/*
 ** player motion
 */
 void				start_orient(t_player *player, char orient);
@@ -260,6 +280,7 @@ int					draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *z_buf
 /*
 ** load images from xpm files
 */
+int					load_tex(t_tex *tex, char *file_name);
 int					load_tex_group(t_disp *disp);
 
 /*
@@ -284,6 +305,7 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_atoi(char *nptr);
+int					check_is_number_arr(char **nbr_arr);
 /*
 ** keyboard hook from user
 */

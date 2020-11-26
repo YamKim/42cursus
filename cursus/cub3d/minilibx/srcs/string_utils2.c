@@ -17,9 +17,26 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ret);
 }
 
-int	ft_isdigit(int c)
+int		check_is_number_arr(char **nbr_arr)
 {
-	return (c >= 48 && c <= 57);
+	int	k;
+	int	i;
+
+	k = 0;
+	while (nbr_arr[k])
+	{
+		i = 0;
+		while (nbr_arr[k][i])
+		{
+			if (!(nbr_arr[k][i] >= 48 && nbr_arr[k][i] <= 57))
+				return (ERR_PARSE);	
+			++i;
+		}
+		++k;
+	}
+	if (k != 3)
+		return (ERR_PARSE);
+	return (0);
 }
 
 static int	ft_isspace(char c)
@@ -45,7 +62,7 @@ int			ft_atoi(char *nptr)
 		++nptr;
 	}
 	ret = 0;
-	while (ft_isdigit(*nptr))
+	while (*nptr >= 48 && *nptr <= 57)
 		ret = ret * 10 + (unsigned int)(*(nptr++) - '0');
 	if (sign % 2 == 0)
 		return ((int)ret);

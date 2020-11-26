@@ -4,6 +4,15 @@ double	*g_perp_buf;
 
 t_spr	g_sprite[SPRITE_NUMBER] =
 {
+	{21.5, 1.5, CONFIG_S},
+	{15.5, 1.5, CONFIG_S},
+	{16.0, 1.8, CONFIG_S},
+	{16.2, 1.2, CONFIG_S},
+	{3.5, 2.5, CONFIG_S},
+	{9.5, 15.5, CONFIG_S},
+	{10.0, 15.1, CONFIG_S},
+	{10.5, 15.8, CONFIG_S}
+#if 0
 	{20.5, 11.5, 10},
 	//green lights in every room
 	{18.5, 4.5, 10},
@@ -28,6 +37,7 @@ t_spr	g_sprite[SPRITE_NUMBER] =
 	{9.5, 15.5, 8},
 	{10.0, 15.1, 8},
 	{10.5, 15.8, 8},
+#endif
 };
 
 void	set_sprite(t_pair *spr_pair, t_player player)
