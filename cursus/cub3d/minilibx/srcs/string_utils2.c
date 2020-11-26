@@ -17,7 +17,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ret);
 }
 
-int		check_is_number_arr(char **nbr_arr)
+int		check_is_number_arr(char **nbr_arr, int index_num)
 {
 	int	k;
 	int	i;
@@ -34,7 +34,7 @@ int		check_is_number_arr(char **nbr_arr)
 		}
 		++k;
 	}
-	if (k != 3)
+	if (index_num != 3)
 		return (ERR_PARSE);
 	return (0);
 }

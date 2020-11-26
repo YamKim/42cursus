@@ -1,5 +1,13 @@
 # include "cub3d.h"
 
+/*
+다음 할 것:
+MAP 유효성 검사 및 읽어서 만들기
+N/E/S/W 위치 받아와서 player 시작세팅
+정해진 size보다 큰 경우, 최대로 만들기
+map structure도 만드는게 좋을 듯. 시작 위치와 방향도
+*/
+
 extern int world_map[MAP_WIDTH][MAP_HEIGHT];
 
 int main_loop(t_loop *lv)
@@ -56,7 +64,6 @@ int	cub3d_run(t_disp *disp)
 	disp->img.data = (int *)mlx_get_data_addr(disp->img.ptr, &(disp->img.bpp),
 					&(disp->img.size_l), &(disp->img.endian));
 	// texture part
-	//load_tex_group(disp);
 	loop_var.disp = disp;
 	loop_var.player = &player;
 	mlx_loop_hook(disp->mlx_ptr, &main_loop, &loop_var);
@@ -66,30 +73,6 @@ int	cub3d_run(t_disp *disp)
 	return (0);
 } 
 
-int	check_file(char *fname)
-{
-	char	*ext;
-	size_t	fname_len;
-	int		fd;
-
-	fname_len = ft_strlen(fname);
-	ext = ft_substr(fname, fname_len - 4, fname_len);
-	if (ft_strncmp(ext, FILE_EXTENSION, 4))
-		return (ERR_FILE);
-	return (0);
-}
-
-int	open_file(char *fname)
-{
-	int	ret;
-
-	if ((ret = open(fname, O_RDONLY)) < 0)
-	{
-		perror("The following error occurred");
-		return (errno);
-	}
-	return (ret);
-}
 
 // over max resolution -> max resolution
 int	get_info(t_disp *disp, char *fname)

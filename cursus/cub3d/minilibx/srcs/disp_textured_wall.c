@@ -69,7 +69,6 @@ void	draw_tex_wall_part(t_disp disp, t_tex tex, t_draw draw, t_hit hit_point)
 		disp.img.data[(draw.y++) * disp.width + draw.x] = disp.ceil_color;
 	while (draw.y < draw.end)
 	{
-	    //draw.ty = (int)tpos & (tex.height - 1);
 		draw.ty = (int)fmin(tpos, (double)tex.height - 1); 
 	    hit_point.color = tex.data[draw.ty * tex.width + draw.tx];
 	    if (hit_point.side == 1)
@@ -90,15 +89,8 @@ int		draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point)
 	t_tex		wall_type;
 
 	draw.x = x;
-#if 0
-	tnum = world_map[hit_point.pos.x][hit_point.pos.y] - 1;
-	draw.tx = get_tex_tx(disp.tex[tnum], player, hit_point, player.ray_dir);	
-	draw_tex_wall_part(disp.img.data, disp.tex[tnum], draw, hit_point);
-#endif
-#if 1
 	wall_type = get_wall_type(disp, player, hit_point);	
 	draw.tx = get_tex_tx(wall_type, player, hit_point, player.ray_dir);	
 	draw_tex_wall_part(disp, wall_type, draw, hit_point);
-#endif
 	return (1);	
 }

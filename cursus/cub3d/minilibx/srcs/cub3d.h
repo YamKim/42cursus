@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/26 18:30:09 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/26 18:58:54 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 ** file setting
 */
 # define FILE_EXTENSION ".cub"
+# define FILE_EXTENSION_LENGTH 4
 # define FILE_DATA 4096
 
 /*
@@ -57,8 +58,6 @@
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
-//# define SCREEN_WIDTH 640
-//# define SCREEN_HEIGHT 480
 
 # define X_EVENT_KEY_PRESS   2
 # define X_EVENT_KEY_EXIT    17
@@ -92,23 +91,9 @@
 # define START_EAST_ANGLE 180
 
 /*
-** color code
-*/
-//# define COLOR_CEIL 0x0099CCFF
-//# define COLOR_FLOOR 0x00CC9900
-
-/*
 ** texture setting
 */
-# define TEXTURE_WIDTH 64
-# define TEXTURE_HEIGHT 64
-# define TEXTURE_NUMBER 11
-# define TEXTURE_TOTALSIZE 4096
-
-/*
-** get next line
-*/
-# define BUFFER_SIZE 1024
+# define TEXTURE_NUMBER 5
 
 /*
 ** calc_basic
@@ -135,17 +120,17 @@ typedef struct		s_veci
 	int				y;
 }					t_veci;
 
-typedef struct		s_spr
-{
-	t_vecd			pos;
-	int				tex_nbr;
-}					t_spr;
-
 typedef struct		s_pair
 {
 	int				order;
 	double			dist;
 }					t_pair;
+
+typedef struct		s_spr
+{
+	t_vecd			pos;
+	int				tex_nbr;
+}					t_spr;
 
 typedef struct		s_img
 {
@@ -252,7 +237,7 @@ double				calc_dist(t_vecd p1, t_vecd p2);
 double				calc_det(t_vecd v1, t_vecd v2);
 
 /*
-** calculate vector operation
+** operate vector calculation
 */
 t_vecd				translate_vec(t_vecd pos, t_vecd dir, double trans);
 t_vecd				rotate_vec(t_vecd dir, double theta);
@@ -266,7 +251,6 @@ double				dda_algorithm(const t_player *player, t_hit *hit_point);
 ** display drawing untex line
 */
 void				draw_untex_wall(t_disp disp, int x, const t_hit hit_point);
-void				clear_draw(int *data);
 
 /*
 ** display drawing tex line
@@ -281,9 +265,9 @@ int					draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *z_buf
 /*
 ** load images from xpm files
 */
+int					check_file(char *fname);
+int					open_file(char *fname);
 int					load_tex(t_tex *tex, char *file_name);
-int					load_tex_group(t_disp *disp);
-
 
 /*
 ** ft_split
@@ -303,9 +287,8 @@ size_t				ft_strlen(const char *str);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 char				*ft_strdup(const char *s);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-
 char				*ft_substr(char const *s, unsigned int start, size_t len);
-int					check_is_number_arr(char **nbr_arr);
+int					check_is_number_arr(char **nbr_arr, int index_num);
 
 /*
 ** keyboard hook from user

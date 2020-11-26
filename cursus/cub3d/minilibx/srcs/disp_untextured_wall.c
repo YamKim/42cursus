@@ -58,29 +58,3 @@ void	draw_untex_wall(t_disp disp, const int x, const t_hit hit_point)
 	while (draw.y < disp.height)
 		disp.img.data[(draw.y++) * disp.width + x] = disp.floor_color;
 }
-#if 0
-/*==============================================================================
-** @ function name: clear_draw
-** @ input parameter:
-**			1. image data
-** @ output:
-**			1. initialized image data
-** @ return :
-** @ brief  : clean buffer for image data to renew the screen
-** @ warning: 
-**
-===============================================================================*/
-void	clear_draw(int *data)
-{
-	int	y;
-	int	x;
-
-	x = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		y = 0;
-		while (y < SCREEN_HEIGHT)
-			data[(y++) * SCREEN_WIDTH + (x++)] = 0;
-	}
-}
-#endif

@@ -37,7 +37,7 @@ int	parse_color(t_disp *disp, char *color_set, int type)
 		return (ERR_PARSE);
 	disp->config |= 1 << type;
 	rgb = ft_split(color_set, ',');
-	if (check_is_number_arr(rgb))
+	if (check_is_number_arr(rgb, 3))
 	{
 		free_split_arr(rgb);
 		return (ERR_PARSE);
