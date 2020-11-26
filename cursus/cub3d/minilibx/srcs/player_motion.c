@@ -58,6 +58,24 @@ int    world_map[MAP_WIDTH][MAP_HEIGHT] =
   {2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
 };
 #endif
+
+void	start_orient(t_player *player, char orient)
+{
+	double	angle;
+
+	if (orient == NORTH)
+		angle = START_NORTH_ANGLE;
+	else if (orient == EAST)
+		angle = START_EAST_ANGLE;
+	else if (orient == WEST)
+		angle = START_WEST_ANGLE;
+	else if (orient == SOUTH)
+		angle = START_SOUTH_ANGLE;
+
+	player->dir = rotate_vec(player->dir, angle * DEG2RAD);
+	player->plane = rotate_vec(player->plane, angle * DEG2RAD);
+}
+
 /*==============================================================================
 ** @ function name: move_forward
 ** @ input parameter:
@@ -137,4 +155,3 @@ void	turn_right(t_player *player)
 	player->dir = rotate_vec(player->dir, -player->rot_speed);	
 	player->plane = rotate_vec(player->plane, -player->rot_speed);
 }
-

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/25 11:43:54 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/26 10:02:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,34 @@
 
 # include "../mlx.h"
 # include <math.h>
-# include <string.h>
+# include <string.h>//
 # include <unistd.h>
 # include <stdio.h> //
 # include <stdlib.h>
 # include <limits.h>
+# include <errno.h>
+# include <fcntl.h>
 
 /*
 ** PRECOMPILING ======================================
+*/
+
+/*
+** error code
+*/
+# define ERR_TEXTURE_CALL 1
+# define ERR_RUN 1
+# define ERR_FILE 1
+# define ERR_READ 1
+# define ERR_MESSAGE "ERROR ERROR ERROR\n"
+
+/*
+** file setting
+*/
+# define FILE_EXTENSION ".cub"
+# define FILE_DATA 4096
+
+/*
 ** keyboard codes
 */
 # define KEY_W 13
@@ -34,11 +54,33 @@
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
-# define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480
+//# define SCREEN_WIDTH 640
+//# define SCREEN_HEIGHT 480
+int	SCREEN_WIDTH = 640;
+int	SCREEN_HEIGHT = 480;
 
 # define X_EVENT_KEY_PRESS   2
 # define X_EVENT_KEY_EXIT    17
+
+
+/*
+** degree and radian
+*/
+# define DEG2RAD M_PI / 180
+# define RAD2DEG 180 / M_PI
+# define ROT_SPEED 15 * DEG2RAD
+# define NORTH 'N'
+# define EAST 'E'
+# define WEST 'W'
+# define SOUTH 'S'
+# define START_NORTH_ANGLE 270 
+# define START_EAST_ANGLE 180
+# define START_WEST_ANGLE 0
+# define START_SOUTH_ANGLE 90
+# define TEXTURE_N 0
+# define TEXTURE_E 1
+# define TEXTURE_W 2
+# define TEXTURE_S 3
 
 /*
 ** color code
@@ -53,12 +95,6 @@
 # define TEXTURE_HEIGHT 64
 # define TEXTURE_NUMBER 11
 # define TEXTURE_TOTALSIZE 4096
-
-/*
-** error code
-*/
-# define ERR_TEXTURE_CALL 1
-# define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
 ** get next line
@@ -180,6 +216,7 @@ typedef struct		s_draw
 ** FUNCTIONS ======================================
 ** player motion
 */
+void				start_orient(t_player *player, char orient);
 void				move_forward(t_player *player);
 void				move_backward(t_player *player);
 void				turn_left(t_player *player);
@@ -188,8 +225,6 @@ void				turn_right(t_player *player);
 /*
 ** calculate basic algorithm
 */
-int					calc_max(int nbr1, int nbr2);
-int					calc_min(int nbr1, int nbr2);
 double				calc_dist(t_vecd p1, t_vecd p2);
 double				calc_det(t_vecd v1, t_vecd v2);
 
@@ -216,6 +251,11 @@ void				clear_draw(int *data);
 int					draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point);
 
 /*
+** display drawing sprite shape
+*/
+int					draw_sprite(t_disp disp, t_player player, int x, t_hit hit_point, double *z_buf);
+
+/*
 ** load images from xpm files
 */
 int					load_tex_group(t_disp *disp);
@@ -226,12 +266,26 @@ int					load_tex_group(t_disp *disp);
 int					get_next_line(int fd, char **line);
 
 /*
+** ft_split
+*/
+char				**ft_split(char const *s, char c);
+void				free_split_arr(char **tab);
+
+/*
 ** utilities for string
 */
 size_t				ft_strlen(const char *str);
 char				*ft_strchr(const char *s, int c);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 char				*ft_strdup(const char *s);
+int					ft_strncmp(const char *s1, const char *s2, size_t n);
+
+char				*ft_substr(char const *s, unsigned int start, size_t len);
+/*
+** keyboard hook from user
+*/
+int					key_press(int key, t_player *player);
+
 
 
 #endif

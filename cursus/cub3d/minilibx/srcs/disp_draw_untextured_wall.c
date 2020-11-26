@@ -27,8 +27,8 @@ void	set_draw_untex_wall(t_draw *draw, t_hit hit_point)
 		draw->line_height = (int)(SCREEN_HEIGHT * 2);
 	else
 		draw->line_height = (int)(SCREEN_HEIGHT / hit_point.perp_wall_dist);
-	draw->beg = calc_max((SCREEN_HEIGHT / 2) - (draw->line_height / 2), 0);
-	draw->end = calc_min((SCREEN_HEIGHT / 2) + (draw->line_height / 2), SCREEN_HEIGHT - 1);
+	draw->beg = (int)fmax((((double)SCREEN_HEIGHT - draw->line_height) / 2), 0);
+	draw->end = (int)fmin((((double)SCREEN_HEIGHT + draw->line_height) / 2), SCREEN_HEIGHT - 1);
 	draw->y = 0;
 }
 
@@ -58,7 +58,7 @@ void	draw_untex_wall(int *data, const int x, const t_hit hit_point)
 	while (draw.y < SCREEN_HEIGHT)
 		data[(draw.y++) * SCREEN_WIDTH + x] = COLOR_FLOOR;
 }
-
+#if 0
 /*==============================================================================
 ** @ function name: clear_draw
 ** @ input parameter:
@@ -83,3 +83,4 @@ void	clear_draw(int *data)
 			data[(y++) * SCREEN_WIDTH + (x++)] = 0;
 	}
 }
+#endif

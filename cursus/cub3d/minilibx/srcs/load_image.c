@@ -33,14 +33,14 @@ int	load_tex_group(t_disp *disp)
 	int	error;
 
 	error = 0;
-    error |= load_tex(&(disp->tex[0]), "textures/eagle.xpm");
+    error |= load_tex(&(disp->tex[0]), "textures/wood.xpm");
     error |= load_tex(&(disp->tex[1]), "textures/redbrick.xpm");
     error |= load_tex(&(disp->tex[2]), "textures/purplestone.xpm");
     error |= load_tex(&(disp->tex[3]), "textures/greystone.xpm");
     error |= load_tex(&(disp->tex[4]), "textures/bluestone.xpm");
     error |= load_tex(&(disp->tex[5]), "textures/mossy.xpm");
-    error |= load_tex(&(disp->tex[6]), "textures/wood.xpm");
-    error |= load_tex(&(disp->tex[7]), "textures/colorstone.xpm");
+    error |= load_tex(&(disp->tex[6]), "textures/eagle.xpm");
+    error |= load_tex(&(disp->tex[7]), "textures/eagle.xpm");
     error |= load_tex(&(disp->tex[8]), "textures/barrel.xpm");
     error |= load_tex(&(disp->tex[9]), "textures/greenlight.xpm");
     error |= load_tex(&(disp->tex[10]), "textures/pillar.xpm");

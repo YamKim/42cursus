@@ -3,13 +3,17 @@ CC = gcc
 
 SRC = main.c \
 	player_motion.c \
-	calc_basic.c \
 	calc_vector.c \
 	calc_dda.c \
-	disp_draw_untextured.c \
-	disp_draw_textured.c \
+	disp_draw_untextured_wall.c \
+	disp_draw_textured_wall.c \
+	disp_draw_sprite.c \
 	get_next_line.c \
+	ft_split.c \
 	string_utils.c \
+	string_utils2.c \
+	input_hook.c \
+	check_config.c \
 	load_image.c
 
 OBJ = $(SRC:.c=.o)
