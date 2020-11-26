@@ -12,22 +12,6 @@ size_t	ft_strlen(const char *str)
 	return (ret);
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	size_t	idx;
-
-	if (s == NULL)
-		return (NULL);
-	idx = 0;
-	while (s[idx])
-	{
-		if (s[idx] == (unsigned char)c)
-			return ((char *)s + idx);
-		++idx;
-	}
-	return (c == 0 ? (char *)s + idx : NULL);
-}
-
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	ret;
@@ -77,3 +61,4 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (idx == n ? 0 : (int)(us1[idx] - us2[idx]));
 }
+

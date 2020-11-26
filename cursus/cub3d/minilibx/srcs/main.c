@@ -66,7 +66,6 @@ int	cub3d_run(t_disp *disp)
 	return (0);
 } 
 
-
 int	check_file(char *fname)
 {
 	char	*ext;
@@ -98,6 +97,7 @@ int	get_info(t_disp *disp, char *fname)
 	int		fd;
 	char	buf[FILE_DATA];
 	char	**line_buf;
+	int		map_beg_idx;
 
 	fd = open_file(fname);
 	if (read(fd, buf, FILE_DATA) < 0)
@@ -106,13 +106,12 @@ int	get_info(t_disp *disp, char *fname)
 		return (errno);
 	}
 	line_buf = ft_split(buf, '\n');
-	if (parse_config(disp, line_buf))
+	if ((map_beg_idx = parse_config(disp, line_buf)) == ERR_PARSE_CONFIG)
 	{
 		printf("Parsing configuration error\n");
 		free_split_arr(line_buf);
 		return (errno);
 	}
-	printf("Let's parsing map!!\n");
 	free_split_arr(line_buf);
 
 	return (0);

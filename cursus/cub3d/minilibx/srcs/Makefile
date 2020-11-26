@@ -9,8 +9,8 @@ SRC = main.c \
 	disp_draw_untextured_wall.c \
 	disp_draw_textured_wall.c \
 	disp_draw_sprite.c \
-	get_next_line.c \
 	ft_split.c \
+	ft_atoi.c \
 	string_utils.c \
 	string_utils2.c \
 	input_hook.c \

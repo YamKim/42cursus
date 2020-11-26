@@ -51,12 +51,12 @@ void	draw_untex_wall(t_disp disp, const int x, const t_hit hit_point)
 
 	set_draw_untex_wall(disp, &draw, hit_point);
 	while (draw.y < draw.beg)
-		disp.img.data[(draw.y++) * disp.width + x] = COLOR_CEIL;
+		disp.img.data[(draw.y++) * disp.width + x] = disp.ceil_color;
 	draw.y = draw.beg;
 	while (draw.y < draw.end)
 		disp.img.data[(draw.y++) * disp.width + x] = get_color(hit_point);
 	while (draw.y < disp.height)
-		disp.img.data[(draw.y++) * disp.width + x] = COLOR_FLOOR;
+		disp.img.data[(draw.y++) * disp.width + x] = disp.floor_color;
 }
 #if 0
 /*==============================================================================

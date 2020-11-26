@@ -66,7 +66,7 @@ void	draw_tex_wall_part(t_disp disp, t_tex tex, t_draw draw, t_hit hit_point)
     step_ty = 1.0 * tex.height / draw.line_height;
 	tpos = ((double)draw.beg - (double)disp.height / 2 + (double)draw.line_height / 2) * step_ty;
 	while (draw.y < draw.beg)
-		disp.img.data[(draw.y++) * disp.width + draw.x] = COLOR_CEIL;
+		disp.img.data[(draw.y++) * disp.width + draw.x] = disp.ceil_color;
 	while (draw.y < draw.end)
 	{
 	    //draw.ty = (int)tpos & (tex.height - 1);
@@ -78,7 +78,7 @@ void	draw_tex_wall_part(t_disp disp, t_tex tex, t_draw draw, t_hit hit_point)
 	    tpos += step_ty;
 	}
 	while (draw.y < disp.height)
-		disp.img.data[(draw.y++) * disp.width + draw.x] = COLOR_FLOOR;
+		disp.img.data[(draw.y++) * disp.width + draw.x] = disp.floor_color;
 }
 
 

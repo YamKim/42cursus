@@ -82,6 +82,8 @@ int	parse_config(t_disp *disp, char **line_buf)
 	char	**word_buf;
 
 	k = 0;
+	for (int i = 0; line_buf[i]; ++i)
+		printf("line_buf[%d]: %s\n", i, line_buf[i]);
 	while (line_buf[k])
 	{
 		if (disp->config == ((1 << CONFIG_NUMBER) - 1))
@@ -90,16 +92,15 @@ int	parse_config(t_disp *disp, char **line_buf)
 			break;
 		}
 		word_buf = ft_split(line_buf[k], ' ');
-		if (parse_config(disp, word_buf))
-			return (ERR_PARSE);
-		free_split_arr(word_buf);
+		parse_config_case(disp, word_buf);
 		++k;
 	}
 	if (k != CONFIG_NUMBER)
 	{
 		printf("Not enough configuration!\n");
 		free_split_arr(line_buf);
-		return (ERR_PARSE);
+		return (ERR_PARSE_CONFIG);
 	}
 	return (0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/26 17:47:15 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/26 18:30:09 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define ERR_READ 1
 # define ERR_MALLOC 1
 # define ERR_PARSE 1
+# define ERR_PARSE_CONFIG -1
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -93,8 +94,8 @@
 /*
 ** color code
 */
-# define COLOR_CEIL 0x0099CCFF
-# define COLOR_FLOOR 0x00CC9900
+//# define COLOR_CEIL 0x0099CCFF
+//# define COLOR_FLOOR 0x00CC9900
 
 /*
 ** texture setting
@@ -283,10 +284,6 @@ int					draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *z_buf
 int					load_tex(t_tex *tex, char *file_name);
 int					load_tex_group(t_disp *disp);
 
-/*
-** get nextline 
-*/
-int					get_next_line(int fd, char **line);
 
 /*
 ** ft_split
@@ -295,17 +292,21 @@ char				**ft_split(char const *s, char c);
 void				free_split_arr(char **tab);
 
 /*
+** ft_atoi
+*/
+int					ft_atoi(char *nptr);
+
+/*
 ** utilities for string
 */
 size_t				ft_strlen(const char *str);
-char				*ft_strchr(const char *s, int c);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 char				*ft_strdup(const char *s);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 
 char				*ft_substr(char const *s, unsigned int start, size_t len);
-int					ft_atoi(char *nptr);
 int					check_is_number_arr(char **nbr_arr);
+
 /*
 ** keyboard hook from user
 */
