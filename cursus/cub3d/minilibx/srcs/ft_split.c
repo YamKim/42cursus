@@ -47,23 +47,22 @@ static char		**free_all(char **tab, int k)
 	return (NULL);
 }
 
-char			**ft_split(char const *s, char c)
+char			**ft_split(char const *s, char c, int *wc)
 {
 	char	**ret;
 	char	*beg_word;
 	size_t	len_word;
-	size_t	size;
 	size_t	k;
 
 	if (s == NULL)
 		return (0);
-	size = get_size(s, c);
-	if (!(ret = (char **)malloc(sizeof(char *) * (size + 1))))
+	*wc = get_size(s, c);
+	if (!(ret = (char **)malloc(sizeof(char *) * (*wc + 1))))
 		return (NULL);
-	ret[size] = 0;
+	ret[*wc] = 0;
 	k = 0;
 	beg_word = (char *)s;
-	while (k < size)
+	while (k < *wc)
 	{
 		beg_word = get_next(&s, &len_word, c);
 		if (!(ret[k] = (char *)malloc(sizeof(char) * (len_word + 1))))

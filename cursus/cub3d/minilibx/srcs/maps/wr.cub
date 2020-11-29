@@ -1,0 +1,15 @@
+R 640 480
+NO ./textures/path_to_the_north_texture
+SO ./textures/path_to_the_south_texture
+WE ./textures/path_to_the_west_texture
+EA ./textures/path_to_the_east_texture
+
+S ./textures/path_to_the_sprite_texture
+F 102,51,0
+C 51,204,204
+
+  11111111111111
+10000000000001
+10000020200201
+10E01000202001
+11111111111111

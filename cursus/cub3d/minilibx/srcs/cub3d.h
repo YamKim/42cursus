@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/27 07:42:26 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/29 14:07:45 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define ERR_MALLOC 1
 # define ERR_PARSE 1
 # define ERR_PARSE_CONFIG -1
+# define ERR_PARSE_MAP -1
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -56,10 +57,8 @@
 
 # define KEY_ESC 53
 
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
-
 # define X_EVENT_KEY_PRESS   2
+# define X_EVENT_KEY_RELEASE 3
 # define X_EVENT_KEY_EXIT    17
 
 /*
@@ -76,26 +75,36 @@
 # define CONFIG_C 7
 
 /*
+** limit maximum number
+*/
+# define MAX_NUM_SPRITE 100
+# define MAX_NUM_MAP_WIDTH 100
+# define MAX_NUM_MAP_HEIGHT 100
+
+/*
 ** map
 */
 # define MAP_ROAD '0'
+# define MAP_ROAD_VAL 0
 # define MAP_WALL '1'
+# define MAP_WALL_VAL 1
 # define MAP_SPRITE '2'
+# define MAP_SPRITE_VAL 2
+# define MAP_BOARDER_VAL -2
 
 /*
 ** degree and radian
 */
 # define DEG2RAD M_PI / 180
 # define RAD2DEG 180 / M_PI
-# define ROT_SPEED 15 * DEG2RAD
 # define NORTH 'N'
 # define SOUTH 'S'
 # define WEST 'W'
 # define EAST 'E'
-# define START_NORTH_ANGLE 270 
-# define START_SOUTH_ANGLE 90
-# define START_WEST_ANGLE 0
-# define START_EAST_ANGLE 180
+# define START_NORTH_ANGLE 0 
+# define START_SOUTH_ANGLE 180
+# define START_WEST_ANGLE 90
+# define START_EAST_ANGLE -90
 
 /*
 ** texture setting
@@ -108,9 +117,10 @@
 # define EPSILON 0.00001
 
 /*
-** sprite setting
+** player speed setting
 */
-# define SPRITE_NUMBER 19
+# define ROT_SPEED 5 * DEG2RAD
+# define TRANS_SPEED 0.05
 
 /*
 ** structures
@@ -142,7 +152,8 @@ typedef struct		s_spr
 typedef struct		s_map
 {
 	int				height;
-	int				data[100][100];
+	int				data[MAX_NUM_MAP_WIDTH][MAX_NUM_MAP_HEIGHT];
+	int				pos_flag;
 }					t_map;
 
 typedef struct		s_img
@@ -177,6 +188,9 @@ typedef struct		s_disp
 	t_tex			tex[TEXTURE_NUMBER];
 	t_map			map;
 	t_vecd			start_pos;
+	char			start_orient;
+	int				spr_cnt;
+	t_spr			spr_buf[100];
 }					t_disp;	
 
 typedef struct		s_player
@@ -188,6 +202,11 @@ typedef struct		s_player
 	double			rot_speed;
 	t_vecd			ray_dir;
 	t_vecd			sray_dist;
+	int				key;
+	int				key_w;
+	int				key_s;
+	int				key_a;
+	int				key_d;
 }					t_player;
 
 typedef struct		s_loop
@@ -230,6 +249,11 @@ typedef struct		s_draw
 /*
 ** FUNCTIONS ======================================
 */
+
+/*
+** run cub3d program
+*/
+int					cub3d_run(t_disp *disp);
 
 /*
 ** parse configuration
@@ -287,7 +311,7 @@ int					load_tex(t_tex *tex, char *file_name);
 /*
 ** ft_split
 */
-char				**ft_split(char const *s, char c);
+char				**ft_split(char const *s, char c, int *wc);
 void				free_split_arr(char **tab);
 
 /*
@@ -303,11 +327,17 @@ size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 char				*ft_strdup(const char *s);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
-int					check_is_number_arr(char **nbr_arr, int index_num);
 
 /*
 ** keyboard hook from user
 */
 int					key_press(int key, t_loop *lv);
+int					key_release(int key, t_loop *lv);
+void				key_update(t_loop *lv);
+
+/*
+** check validity
+*/
+int					is_number_arr(char **arr, int index_num, int type);
 
 #endif

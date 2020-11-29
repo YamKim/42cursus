@@ -2,6 +2,7 @@ NAME = program.out
 CC = gcc
 
 SRC = main.c \
+	run_program.c \
 	parse_configuration.c \
 	player_motion.c \
 	calc_vector.c \
@@ -14,7 +15,8 @@ SRC = main.c \
 	string_utils.c \
 	string_utils2.c \
 	input_hook.c \
-	load_image.c
+	check_validity.c \
+	load_file.c
 
 OBJ = $(SRC:.c=.o)
 

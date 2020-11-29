@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/27 07:33:59 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/29 14:10:23 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_vecd	get_side_dist(
 	return (ret);
 }
 
-/*==============================================================================
+/*=============================================================================
 ** @ function name: run_dda_algorithm
 ** @ input parameter:
 **			1. information of dda for using side/delta distance, step
@@ -138,7 +138,7 @@ void	run_dda_algorithm(const t_dda dda, t_hit *hit_point, t_map map)
 			hit_point->pos.y += dda.step.y;
 			hit_point->side = 1;
 		}
-		if (map.data[hit_point->pos.x][hit_point->pos.y] > 0)
+		if (map.data[hit_point->pos.y][hit_point->pos.x] == MAP_WALL_VAL)
 			hit_flag = 1;
 	}
 }
