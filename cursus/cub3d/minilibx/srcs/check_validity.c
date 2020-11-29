@@ -39,4 +39,47 @@ int		is_number_arr(char **arr, int index_num, int type)
 	return (0);
 }
 
+int	check_map_range(t_map map, int y, int x)
+{
+	int	ret;
 
+	ret = 0;
+	if (map.data[y][x] == MAP_EXCEPTION_VAL)
+		ret |= 1;
+	else if (y - 1 <= 0 || y + 1 >= map.height)
+		ret |= 1;
+	else if (x - 1 <= 0 \
+		|| map.data[y][x + 1] == MAP_BOARDER_VAL)
+		ret |= 1;
+	else if (map.data[y - 1][x] == MAP_SPACE_VAL \
+		|| map.data[y + 1][x] == MAP_SPACE_VAL)
+		ret |= 1;
+	else if (map.data[y][x - 1] == MAP_SPACE_VAL\
+		|| map.data[y][x + 1] == MAP_SPACE_VAL)
+		ret |= 1;
+	return (ret);
+}
+
+int	is_map_valid(t_map map)
+{
+	int	y;
+	int	x;
+	int	ret;
+
+	y = 0;
+	ret = 0;
+	while (y < map.height)
+	{
+		x = 0;
+		while (map.data[y][x] != MAP_BOARDER_VAL)
+		{
+			if (map.data[y][x] == MAP_WALL_VAL)
+				ret = ret;
+			else
+				ret = check_map_range(map, y, x);
+			++x;
+		}
+		++y;
+	}
+	return (ret);
+}

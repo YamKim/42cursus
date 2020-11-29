@@ -16,7 +16,9 @@ SRC = main.c \
 	string_utils2.c \
 	input_hook.c \
 	check_validity.c \
-	load_file.c
+	load_file.c \
+	show_data.c
+
 
 OBJ = $(SRC:.c=.o)
 

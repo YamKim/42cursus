@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/29 14:07:45 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/29 19:34:13 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 # define ERR_READ 1
 # define ERR_MALLOC 1
 # define ERR_PARSE 1
-# define ERR_PARSE_CONFIG -1
-# define ERR_PARSE_MAP -1
+# define ERR_PARSE_CONFIG 10
+# define ERR_PARSE_MAP 1
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -90,7 +90,10 @@
 # define MAP_WALL_VAL 1
 # define MAP_SPRITE '2'
 # define MAP_SPRITE_VAL 2
+# define MAP_SPACE ' '
+# define MAP_SPACE_VAL -1
 # define MAP_BOARDER_VAL -2
+# define MAP_EXCEPTION_VAL -3
 
 /*
 ** degree and radian
@@ -323,6 +326,7 @@ int					ft_atoi(char *nptr);
 ** utilities for string
 */
 size_t				ft_strlen(const char *str);
+void				*ft_memset(void *s, int c, size_t n);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 char				*ft_strdup(const char *s);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -339,5 +343,11 @@ void				key_update(t_loop *lv);
 ** check validity
 */
 int					is_number_arr(char **arr, int index_num, int type);
+int					is_map_valid(t_map map);
+
+/*
+** show data
+*/
+void				show_map_data(t_disp disp);
 
 #endif
