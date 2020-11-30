@@ -44,19 +44,33 @@ int	check_map_range(t_map map, int y, int x)
 	int	ret;
 
 	ret = 0;
-	if (map.data[y][x] == MAP_EXCEPTION_VAL)
-		ret |= 1;
-	else if (y - 1 <= 0 || y + 1 >= map.height)
-		ret |= 1;
-	else if (x - 1 <= 0 \
+	if (y <= 0 || y >= map.height - 1)
+	{
+		printf("height range error========================\n");
+		printf("y: %d, x: %d\n", y, x);
+		ret = 1;
+	}
+	else if (x <= 0 \
 		|| map.data[y][x + 1] == MAP_BOARDER_VAL)
-		ret |= 1;
+	{
+		printf("width range error=========================\n");
+		printf("y: %d, x: %d\n", y, x);
+		ret = 1;
+	}
 	else if (map.data[y - 1][x] == MAP_SPACE_VAL \
 		|| map.data[y + 1][x] == MAP_SPACE_VAL)
-		ret |= 1;
+	{
+		printf("find up/down space val====================\n");
+		printf("y: %d, x: %d\n", y, x);
+		ret = 1;
+	}
 	else if (map.data[y][x - 1] == MAP_SPACE_VAL\
 		|| map.data[y][x + 1] == MAP_SPACE_VAL)
-		ret |= 1;
+	{
+		printf("find left/right space val=================\n");
+		printf("y: %d, x: %d\n", y, x);
+		ret = 1;
+	}
 	return (ret);
 }
 
@@ -73,10 +87,11 @@ int	is_map_valid(t_map map)
 		x = 0;
 		while (map.data[y][x] != MAP_BOARDER_VAL)
 		{
-			if (map.data[y][x] == MAP_WALL_VAL)
-				ret = ret;
-			else
-				ret = check_map_range(map, y, x);
+			if (map.data[y][x] == MAP_ROAD_VAL ||
+				map.data[y][x] == MAP_SPRITE_VAL)
+				ret |= check_map_range(map, y, x);
+			if (map.data[y][x] == MAP_EXCEPTION_VAL)
+				ret |= 1;
 			++x;
 		}
 		++y;

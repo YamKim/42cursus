@@ -85,11 +85,10 @@ int	parse_config(t_disp *disp, char **line_buf, int *k)
 	*k = 0;
 	while (line_buf[*k])
 	{
-		printf("k: %d\n", *k);
 		if (disp->config == ((1 << CONFIG_NUMBER) - 1))
 		{
 			printf("Finished parsing for elments!\n");
-			break;
+			break ;
 		}
 		word_buf = ft_split(line_buf[*k], ' ', &word_cnt);
 		if (parse_config_case(disp, word_buf, word_cnt))

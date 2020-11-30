@@ -3,6 +3,7 @@
 void	show_map_data(t_disp disp)
 {
 	char	val;
+	printf("map_height: %d\n", disp.map.height);
 	for (int j = 0; j < disp.map.height; ++j)
 	{
 		for (int i = 0; i < MAX_NUM_MAP_WIDTH; ++i)

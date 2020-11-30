@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/29 19:34:13 by yekim            ###   ########.fr       */
+/*   Updated: 2020/11/30 21:58:10 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 # define ERR_READ 1
 # define ERR_MALLOC 1
 # define ERR_PARSE 1
-# define ERR_PARSE_CONFIG 10
-# define ERR_PARSE_MAP 1
+# define ERR_PARSE_CONFIG 3
+# define ERR_PARSE_MAP 4
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -263,6 +263,10 @@ int					cub3d_run(t_disp *disp);
 */
 int					parse_config(t_disp *disp, char **line_buf, int *k);
 
+/*
+** parse map
+*/
+int					parse_map(t_disp *disp, char **map, int map_beg);
 /*
 ** player motion
 */

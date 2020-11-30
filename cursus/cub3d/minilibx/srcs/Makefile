@@ -4,6 +4,7 @@ CC = gcc
 SRC = main.c \
 	run_program.c \
 	parse_configuration.c \
+	parse_map.c \
 	player_motion.c \
 	calc_vector.c \
 	calc_dda.c \
