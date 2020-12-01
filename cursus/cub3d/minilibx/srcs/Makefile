@@ -10,6 +10,8 @@ SRC = main.c \
 	calc_dda.c \
 	disp_untextured_wall.c \
 	disp_textured_wall.c \
+	list_utils.c \
+	list_utils2.c \
 	disp_sprite.c \
 	ft_split.c \
 	ft_atoi.c \

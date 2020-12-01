@@ -23,6 +23,7 @@ int main_loop(t_loop *lv)
 
 	if (!(perp_buf = (double *)malloc(sizeof(double) * lv->disp->width)))
 		return (ERR_MALLOC);
+	draw_tex_floor(*lv->disp, *lv->player);
     t = 0;
     while (t < lv->disp->width)
     {

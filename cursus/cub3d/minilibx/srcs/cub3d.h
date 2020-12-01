@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/30 21:58:10 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/02 08:24:20 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define ERR_RUN 1
 # define ERR_FILE 1
 # define ERR_READ 1
-# define ERR_MALLOC 1
+# define ERR_MALLOC -1
 # define ERR_PARSE 1
 # define ERR_PARSE_CONFIG 3
 # define ERR_PARSE_MAP 4
@@ -89,7 +89,7 @@
 # define MAP_WALL '1'
 # define MAP_WALL_VAL 1
 # define MAP_SPRITE '2'
-# define MAP_SPRITE_VAL 2
+# define MAP_SPRITE_VAL 0
 # define MAP_SPACE ' '
 # define MAP_SPACE_VAL -1
 # define MAP_BOARDER_VAL -2
@@ -152,6 +152,12 @@ typedef struct		s_spr
 	int				tex_nbr;
 }					t_spr;
 
+typedef struct		s_lst
+{
+	t_spr			spr;
+	struct s_lst	*next;
+}					t_lst;
+
 typedef struct		s_map
 {
 	int				height;
@@ -194,6 +200,7 @@ typedef struct		s_disp
 	char			start_orient;
 	int				spr_cnt;
 	t_spr			spr_buf[100];
+	t_lst			*spr_lst;
 }					t_disp;	
 
 typedef struct		s_player
@@ -304,9 +311,14 @@ void				draw_untex_wall(t_disp disp, int x, const t_hit hit_point);
 int					draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point);
 
 /*
+** display drawing tex line
+*/
+int					draw_tex_floor(t_disp disp, t_player player);
+
+/*
 ** display drawing sprite shape
 */
-int					draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *z_buf);
+int					draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *perp_buf);
 
 /*
 ** load images from xpm files
@@ -353,5 +365,15 @@ int					is_map_valid(t_map map);
 ** show data
 */
 void				show_map_data(t_disp disp);
+void				show_lst_data(t_disp disp);
+
+/*
+** list setting
+*/
+t_lst				*lst_new(t_spr spr);
+void				lst_add_back(t_lst **lst, t_lst *new_lst);
+t_lst				*lst_get_idx(t_lst *lst, int idx);
+void				lst_del_idx(t_lst **lst, int idx);
+void				lst_clear(t_lst **lst);
 
 #endif

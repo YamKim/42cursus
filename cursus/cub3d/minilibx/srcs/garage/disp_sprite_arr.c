@@ -1,12 +1,13 @@
 #include "cub3d.h"
 
 double	*g_perp_buf;
-int		g_spr_cnt;
+t_spr	*g_spr_buf;
+double	g_spr_cnt;
 
 /*
 ** sprite setting
 */
-void	set_sprite(t_pair *spr_pair, t_player player, t_lst *spr_lst)
+void	set_sprite(t_pair *spr_pair, t_player player)
 {
 	int	i;
 
@@ -14,21 +15,19 @@ void	set_sprite(t_pair *spr_pair, t_player player, t_lst *spr_lst)
 	while (i < g_spr_cnt)
 	{
 		spr_pair[i].order = i;
-		spr_pair[i].dist = calc_dist(player.pos, spr_lst->spr.pos);
+		spr_pair[i].dist = calc_dist(player.pos, g_spr_buf[i].pos);
 		++i;
 	}	
 }
 
-t_vecd	get_spr_ray(t_player player, t_pair spr_pair, t_lst *spr_lst)
+t_vecd	get_spr_ray(t_player player, t_pair spr_pair)
 {
 	t_vecd	ret;
 	double	det;
-	t_spr	spr;
 	t_vecd	spr_dist;
 
-	spr = lst_get_idx(spr_lst, spr_pair.order)->spr;
-	spr_dist.x = spr.pos.x - player.pos.x;
-	spr_dist.y = spr.pos.y - player.pos.y;
+	spr_dist.x = g_spr_buf[spr_pair.order].pos.x - player.pos.x;
+	spr_dist.y = g_spr_buf[spr_pair.order].pos.y - player.pos.y;
 	det = calc_det(player.plane, player.dir);
 	ret.x = (player.dir.y * spr_dist.x - player.dir.x * spr_dist.y) / det;
 	ret.y = (-player.plane.y * spr_dist.x + player.plane.x * spr_dist.y) / det;
@@ -85,49 +84,45 @@ void	draw_sprite_part(t_disp disp, t_tex tex, t_player player, t_draw draw)
 	spr_width = draw.line_height;
 	while (draw.x < draw.xend)
 	{
-		draw.tx = (int)((256 * (draw.x - (draw.xctr - spr_width / 2)) \
-							* tex.width / spr_width) / 256);
-		if(player.sray_dist.y > 0 && draw.x > 0 && draw.x < disp.width \
-			&& player.sray_dist.y < g_perp_buf[draw.x])
+		draw.tx = (int)((256 * (draw.x - (draw.xctr - spr_width / 2)) * tex.width / spr_width) / 256);
+		if(player.sray_dist.y > 0 && draw.x > 0 && draw.x < disp.width && player.sray_dist.y < g_perp_buf[draw.x])
 		{
-			draw.y = draw.beg;
-			while (draw.y < draw.end)
+			for(draw.y = draw.beg; draw.y < draw.end; ++draw.y)
 			{
 				tmp = draw.y * 256 - disp.height * 128 + draw.line_height * 128;
 				draw.ty = ((tmp * tex.height) / draw.line_height) / 256;
 				color = tex.data[draw.ty * tex.width + draw.tx];
 				if((color & 0x00FFFFFF) != 0)
 					disp.img.data[draw.y * disp.width + draw.x] = color;
-				++draw.y;
 			}
-		} ++draw.x;
+		}
+		++draw.x;
 	}
 }
 
 int		draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *perp_buf)
 {
-	t_pair	*spr_pair;
+	t_pair	spr_pair[MAX_NUM_SPRITE];
 	t_draw	draw;
 	int		spr_width;
 	t_tex	tex;
 	int		i;
 
 	g_perp_buf = perp_buf;
+	g_spr_buf = disp.spr_buf;
 	g_spr_cnt = disp.spr_cnt;
-	if (!(spr_pair = (t_pair *)malloc(sizeof(t_pair) * g_spr_cnt)))
-		return (ERR_MALLOC);
-	set_sprite(spr_pair, player, disp.spr_lst);
+	set_sprite(spr_pair, player);
 	sort_spr_pair(spr_pair);
-	i = -1;
-	while (++i < disp.spr_cnt)
+	i = 0;
+	while (i < disp.spr_cnt)
 	{
-		player.sray_dist = get_spr_ray(player, spr_pair[i], disp.spr_lst);
-		draw.xctr = (int)((double)disp.width / 2 \
-							* (1 + player.sray_dist.x / player.sray_dist.y));
+		player.sray_dist = get_spr_ray(player, spr_pair[i]);
+		draw.xctr = (int)((double)disp.width / 2 * (1 + player.sray_dist.x / player.sray_dist.y));
 		set_draw_sprite(disp, &draw, player.sray_dist); 
-		tex = disp.tex[lst_get_idx(disp.spr_lst, spr_pair[i].order)->spr.tex_nbr];
+		spr_width = draw.line_height;
+		tex = disp.tex[disp.spr_buf[spr_pair[i].order].tex_nbr];
 		draw_sprite_part(disp, tex, player, draw);
+		++i;
 	}
-	free(spr_pair);
 	return (1);
 }

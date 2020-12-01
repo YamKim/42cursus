@@ -23,3 +23,17 @@ void	show_map_data(t_disp disp)
 		printf("\n");
 	}
 }
+
+void	show_lst_data(t_disp disp)
+{
+	t_lst	*itr;
+	int		idx;
+
+	itr = disp.spr_lst;
+	idx = 0;
+	while (itr)
+	{
+		printf("idx: %d, spr.pos.x: %lf, spr.pos.y: %lf\n", idx++, itr->spr.pos.x, itr->spr.pos.y);
+		itr = itr->next;
+	}
+}

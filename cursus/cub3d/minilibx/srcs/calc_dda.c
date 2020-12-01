@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/11/29 14:10:23 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/01 10:47:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,10 @@ t_vecd	get_side_dist(
 void	run_dda_algorithm(const t_dda dda, t_hit *hit_point, t_map map)
 {
 	int		hit_flag;
-	int		ret;
 	t_vecd	ray_dist;
 
 	hit_flag = 0;
-	ray_dist.x = dda.side_dist.x;
-	ray_dist.y = dda.side_dist.y;
+	ray_dist = dda.side_dist;
 	while (hit_flag == 0)
 	{
 		if (ray_dist.x < ray_dist.y)

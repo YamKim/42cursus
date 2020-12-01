@@ -21,9 +21,17 @@ void	init_map_info(t_map *map, int map_width, int map_height)
 
 void	set_map_sprite(t_disp *disp, int y, int x)
 {
-	disp->spr_buf[disp->spr_cnt].pos.y = y + 0.5;
-	disp->spr_buf[disp->spr_cnt].pos.x = x + 0.5;
-	disp->spr_buf[disp->spr_cnt].tex_nbr = CONFIG_S;
+	t_spr	spr;
+	t_lst	*tmp;
+
+	spr.pos.y = y + 0.5;
+	spr.pos.x = x + 0.5;
+	spr.tex_nbr = CONFIG_S;
+	disp->spr_buf[disp->spr_cnt] = spr;
+
+	tmp = lst_new(spr);
+	lst_add_back(&(disp->spr_lst), tmp);
+	
 	disp->spr_cnt += 1;
 }
 
@@ -78,5 +86,6 @@ int	parse_map(t_disp *disp, char **map, int map_beg)
 	}
 	if (is_map_valid(disp->map))
 		return (ERR_PARSE_MAP);
+	
 	return (0);
 }
