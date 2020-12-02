@@ -110,6 +110,7 @@ int main(int argc, char *argv[])
 	int		err_num;
 	
 	disp.spr_lst = NULL;
+	err_num = 0;
 	if (argc == 2)
 	{
 		if (check_file(argv[1]))
@@ -121,12 +122,10 @@ int main(int argc, char *argv[])
 		}
 		show_map_data(disp);
 		show_lst_data(disp);
-#if 1
-		if (cub3d_run(&disp))
+		if (err_num == 0 && cub3d_run(&disp))
 			return (ERR_RUN);
-#endif
 	}
-	//lst_clear(&disp.spr_lst);
+	lst_clear(&disp.spr_lst);
 	return (0);
 }
 #if 0

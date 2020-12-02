@@ -14,33 +14,40 @@ void	set_player_info(t_disp disp, t_player *player)
 	start_orient(player, disp.start_orient);
 }
 
-int main_loop(t_loop *lv)
+int	draw_img_data(t_disp disp, t_player player, double *perp_buf)
 {
 	t_hit	hit_point;
     int		t;
 	double	camera_t;
+
+    t = -1;
+    while (++t < disp.width)
+    {
+		hit_point.pos.x = (int)(player.pos.x);
+		hit_point.pos.y = (int)(player.pos.y);
+        camera_t = (2 * t / (double)(disp.width)) - 1;
+        player.ray_dir.x = player.dir.x + player.plane.x * camera_t;
+        player.ray_dir.y = player.dir.y + player.plane.y * camera_t;
+		hit_point.perp_wall_dist = dda_algorithm(&player, &hit_point, disp.map);
+		perp_buf[t] = hit_point.perp_wall_dist;
+		draw_tex_wall(disp, player, t, hit_point);
+		//draw_untex_wall(*(disp), t, hit_point);
+    } 
+	draw_sprite(disp, player, hit_point, perp_buf);
+	mlx_put_image_to_window(disp.mlx_ptr, disp.win_ptr, disp.img.ptr, 0, 0);
+	return (0);
+}
+
+int main_loop(t_loop *lv)
+{
 	double	*perp_buf;
 
 	if (!(perp_buf = (double *)malloc(sizeof(double) * lv->disp->width)))
 		return (ERR_MALLOC);
 	draw_tex_floor(*lv->disp, *lv->player);
-    t = 0;
-    while (t < lv->disp->width)
-    {
-		hit_point.pos.x = (int)(lv->player->pos.x);
-		hit_point.pos.y = (int)(lv->player->pos.y);
-        camera_t = (2 * t / (double)(lv->disp->width)) - 1;
-        lv->player->ray_dir.x = lv->player->dir.x + lv->player->plane.x * camera_t;
-        lv->player->ray_dir.y = lv->player->dir.y + lv->player->plane.y * camera_t;
-		hit_point.perp_wall_dist = dda_algorithm(lv->player, &hit_point, lv->disp->map);
-		perp_buf[t] = hit_point.perp_wall_dist;
-		draw_tex_wall(*(lv->disp), *(lv->player), t, hit_point);
-		//draw_untex_wall(*(lv->disp), t, hit_point);
-        ++t;
-    } 
-	draw_sprite(*lv->disp, *lv->player, hit_point, perp_buf);
-	mlx_put_image_to_window(lv->disp->mlx_ptr, lv->disp->win_ptr, lv->disp->img.ptr, 0, 0);
 	key_update(lv);
+	if (draw_img_data(*lv->disp, *lv->player, perp_buf))
+		return (ERR_DRAW_IMG);
 	free(perp_buf);
 	return (1);
 }

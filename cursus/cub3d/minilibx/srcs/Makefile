@@ -6,6 +6,7 @@ SRC = main.c \
 	parse_configuration.c \
 	parse_map.c \
 	player_motion.c \
+	player_motion2.c \
 	calc_vector.c \
 	calc_dda.c \
 	disp_untextured_wall.c \

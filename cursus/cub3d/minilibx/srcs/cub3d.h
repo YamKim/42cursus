@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/02 08:24:20 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/02 10:26:00 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define ERR_PARSE 1
 # define ERR_PARSE_CONFIG 3
 # define ERR_PARSE_MAP 4
+# define ERR_DRAW_IMG 1
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -94,6 +95,8 @@
 # define MAP_SPACE_VAL -1
 # define MAP_BOARDER_VAL -2
 # define MAP_EXCEPTION_VAL -3
+# define MAP_SECRET_DOOR '3'
+# define MAP_SECRET_DOOR_VAL 3
 
 /*
 ** degree and radian
@@ -112,7 +115,7 @@
 /*
 ** texture setting
 */
-# define TEXTURE_NUMBER 5
+# define TEXTURE_NUMBER 6
 
 /*
 ** calc_basic

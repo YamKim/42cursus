@@ -51,6 +51,8 @@ int	get_map_element(t_disp *disp, char data, int y, int x)
 		return (MAP_ROAD_VAL);
 	else if (data == MAP_WALL)
 		return (MAP_WALL_VAL);
+	else if (data == MAP_SECRET_DOOR)
+		return (MAP_SECRET_DOOR_VAL);
 	else if (data == MAP_SPRITE)
 	{
 		set_map_sprite(disp, y, x);
