@@ -1,12 +1,23 @@
 #include "cub3d.h"
 
-t_lst	*lst_new(t_spr spr)
+t_lst	*lst_new_spr(t_spr spr)
 {
 	t_lst	*ret;
 
 	if (!(ret = (t_lst *)malloc(sizeof(t_lst))))
 		return (NULL);
 	ret->spr = spr;
+	ret->next = NULL;
+	return (ret);
+}
+
+t_lst	*lst_new_itm(t_itm itm)
+{
+	t_lst	*ret;
+
+	if (!(ret = (t_lst *)malloc(sizeof(t_lst))))
+		return (NULL);
+	ret->itm = itm;
 	ret->next = NULL;
 	return (ret);
 }

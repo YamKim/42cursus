@@ -15,6 +15,8 @@ void	show_map_data(t_disp disp)
 				val = MAP_WALL;
 			if (disp.map.data[j][i] == MAP_SPACE_VAL)
 				val = MAP_SPACE;
+			if (disp.map.data[j][i] == MAP_ITEM_VAL)
+				val = MAP_ITEM;
 			if (disp.map.data[j][i] == MAP_EXCEPTION_VAL)
 				val = 'X';
 			if (disp.map.data[j][i] == MAP_BOARDER_VAL)
@@ -25,17 +27,29 @@ void	show_map_data(t_disp disp)
 	}
 }
 
-void	show_lst_data(t_disp disp)
+void	show_lst_data(t_lst *itr)
 {
-	t_lst	*itr;
 	int		idx;
 
-	itr = disp.spr_lst;
 	idx = 0;
-	printf("SPRITE DATA=====================================\n");
+	printf("LIST DATA===========================================\n");
 	while (itr)
 	{
 		printf("idx: %2d, spr.pos.x: %6.2lf, spr.pos.y: %6.2lf\n", idx++, itr->spr.pos.x, itr->spr.pos.y);
 		itr = itr->next;
+	}
+}
+
+void	show_items(t_disp disp)
+{
+	int		idx;
+
+	idx = 0;
+	printf("LIST DATA===========================================\n");
+	while (disp.itm_lst)
+	{
+		printf("idx: %2d, itm.pos.x: %6.2lf, itm.pos.y: %6.2lf\n", idx++, disp.itm_lst->itm.pos.x, disp.itm_lst->itm.pos.y);
+		printf("disp->itm_cnt: %d\n", disp.itm_cnt);
+		disp.itm_lst = disp.itm_lst->next;
 	}
 }

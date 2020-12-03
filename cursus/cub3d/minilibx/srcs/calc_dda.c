@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/01 10:47:21 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/03 15:48:23 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_veci	get_step(const t_vecd ray_dir)
 ** @ brief  : calculate delta distance for accumulating ray distance.
 ** @ warning: 
 ===============================================================================*/
-t_vecd	get_delta_dist(const t_vecd ray_dir)
+t_vecd	get_delta_dist(t_vecd ray_dir)
 {
 	t_vecd	ret;
 	if (fabs(ray_dir.y - 0.0) < EPSILON)
@@ -85,10 +85,7 @@ t_vecd	get_delta_dist(const t_vecd ray_dir)
 ** @ brief  : calculate side distance based on ray distance.
 ** @ warning: 
 ===============================================================================*/
-t_vecd	get_side_dist(
-		const t_player *player,
-		const t_dda dda,
-		const t_hit hit_point)
+t_vecd	get_side_dist(t_player *player, t_dda dda, t_hit hit_point)
 {
 	t_vecd	ret;
 
@@ -115,29 +112,26 @@ t_vecd	get_side_dist(
 ** @ brief  : run algorithm accumulating ray distance until finding hit spot.
 ** @ warning: 
 ===============================================================================*/
-void	run_dda_algorithm(const t_dda dda, t_hit *hit_point, t_map map)
+void	run_dda_algorithm(t_dda dda, t_hit *hp, t_map map)
 {
 	int		hit_flag;
-	t_vecd	ray_dist;
 
 	hit_flag = 0;
-	ray_dist = dda.side_dist;
 	while (hit_flag == 0)
 	{
-		if (ray_dist.x < ray_dist.y)
+		if (dda.side_dist.x < dda.side_dist.y)
 		{
-			ray_dist.x = ray_dist.x + dda.delta_dist.x;
-			hit_point->pos.x += dda.step.x;
-			hit_point->side = 0;
+			dda.side_dist.x = dda.side_dist.x + dda.delta_dist.x;
+			hp->pos.x += dda.step.x;
+			hp->side = HIT_SIDE_X;
 		}
 		else
 		{
-			ray_dist.y = ray_dist.y + dda.delta_dist.y;
-			hit_point->pos.y += dda.step.y;
-			hit_point->side = 1;
+			dda.side_dist.y = dda.side_dist.y + dda.delta_dist.y;
+			hp->pos.y += dda.step.y;
+			hp->side = HIT_SIDE_Y;
 		}
-		if (map.data[hit_point->pos.y][hit_point->pos.x] == MAP_WALL_VAL)
-			hit_flag = 1;
+		hit_flag = check_door_type(hp, map.data[hp->pos.y][hp->pos.x]);
 	}
 }
 
@@ -161,7 +155,7 @@ double	dda_algorithm(t_player *player, t_hit *hit_point, t_map map)
 	dda.step = get_step(dda.ray_dir);
 	dda.side_dist = get_side_dist(player, dda, *hit_point);
 	run_dda_algorithm(dda, hit_point, map);
-	if (hit_point->side == 0)
+	if (hit_point->side == HIT_SIDE_X)
 	{
 		ret = (hit_point->pos.x - player->pos.x + (double)(1 - dda.step.x) / 2);
 		ret = ret / dda.ray_dir.x;

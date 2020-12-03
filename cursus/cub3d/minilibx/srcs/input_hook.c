@@ -12,6 +12,9 @@ int		key_press(int key, t_loop *lv)
 		lv->player->key |= (1 << KEY_A);
     else if (key == KEY_D)
 		lv->player->key |= (1 << KEY_D);
+    else if (key == KEY_O)
+		lv->player->key |= (1 << KEY_O);
+
     return (0);
 }
 
@@ -27,6 +30,8 @@ int		key_release(int key, t_loop *lv)
 		lv->player->key &= ~(1 << KEY_A);
     else if (key == KEY_D)
 		lv->player->key &= ~(1 << KEY_D);
+    else if (key == KEY_O)
+		lv->player->key &= ~(1 << KEY_O);
     return (0);
 }
 

@@ -33,9 +33,9 @@ void	move_forward(t_player *player, t_map map)
 	t_vecd	after_move;
 
 	after_move = translate_vec(player->pos, player->dir, player->trans_speed);
-    if (!map.data[(int)after_move.y][(int)(player->pos.x)])
+    if (map.data[(int)after_move.y][(int)(player->pos.x)] != MAP_WALL_VAL)
         player->pos.y = after_move.y;
-    if (!map.data[(int)(player->pos.y)][(int)after_move.x])
+    if (map.data[(int)(player->pos.y)][(int)after_move.x] != MAP_WALL_VAL)
         player->pos.x = after_move.x;
 }
 
@@ -55,9 +55,9 @@ void	move_backward(t_player *player, t_map map)
 	t_vecd	after_move;
 	
 	after_move = translate_vec(player->pos, player->dir, -player->trans_speed);
-    if (!map.data[(int)after_move.y][(int)(player->pos.x)])
+    if (map.data[(int)after_move.y][(int)(player->pos.x)] != MAP_WALL_VAL)
 		player->pos.y = after_move.y;
-    if (!map.data[(int)(player->pos.y)][(int)after_move.x])
+    if (map.data[(int)(player->pos.y)][(int)after_move.x] != MAP_WALL_VAL)
 		player->pos.x = after_move.x;
 }
 

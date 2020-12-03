@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/02 10:26:00 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/03 15:56:45 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define ERR_PARSE_CONFIG 3
 # define ERR_PARSE_MAP 4
 # define ERR_DRAW_IMG 1
+# define ERR_BONUS_CONFIG 5
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -55,6 +56,7 @@
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
+# define KEY_O 31
 
 # define KEY_ESC 53
 
@@ -95,8 +97,18 @@
 # define MAP_SPACE_VAL -1
 # define MAP_BOARDER_VAL -2
 # define MAP_EXCEPTION_VAL -3
-# define MAP_SECRET_DOOR '3'
-# define MAP_SECRET_DOOR_VAL 3
+
+/*
+** bonus
+*/
+# define MAP_ITEM '3'
+# define MAP_ITEM_VAL 3
+# define MAP_SECRET '4'
+# define MAP_SECRET_VAL 4
+# define MAP_OPDOOR '5'
+# define MAP_OPDOOR_VAL 5
+# define MAP_CLDOOR '6'
+# define MAP_CLDOOR_VAL 6
 
 /*
 ** degree and radian
@@ -115,7 +127,19 @@
 /*
 ** texture setting
 */
-# define TEXTURE_NUMBER 6
+# define TEXTURE_NUMBER 8
+
+/*
+** bonus
+*/
+# define CONFIG_ITEM 5
+# define TEXTURE_ITEM_FILE "./textures/red.xpm"
+# define CONFIG_SECRET 6
+# define TEXTURE_SECRET_FILE "./textures/eagle.xpm"
+# define CONFIG_OPDOOR 7
+# define TEXTURE_OPDOOR_FILE "./textures/question2.xpm"
+# define CONFIG_CLDOOR 8
+# define TEXTURE_CLDOOR_FILE "./textures/question2.xpm"
 
 /*
 ** calc_basic
@@ -125,8 +149,22 @@
 /*
 ** player speed setting
 */
-# define ROT_SPEED 5 * DEG2RAD
-# define TRANS_SPEED 0.05
+# define ROT_SPEED 1.5 * DEG2RAD
+# define TRANS_SPEED 0.03
+
+/*
+** hit side
+*/
+# define HIT_SIDE_X 0
+# define HIT_SIDE_Y 1
+
+/*
+** hit side
+*/
+# define ITEM_VDIV 1.5
+# define ITEM_UDIV 1.5
+# define ITEM_MOVE 200
+# define ITEM_APPROACH_DIST 1.0
 
 /*
 ** structures
@@ -145,7 +183,7 @@ typedef struct		s_veci
 
 typedef struct		s_pair
 {
-	int				order;
+	int				ord;
 	double			dist;
 }					t_pair;
 
@@ -155,9 +193,16 @@ typedef struct		s_spr
 	int				tex_nbr;
 }					t_spr;
 
+typedef struct		s_itm
+{
+	t_vecd			pos;
+	int				tex_nbr;
+}					t_itm;
+
 typedef struct		s_lst
 {
 	t_spr			spr;
+	t_itm			itm;
 	struct s_lst	*next;
 }					t_lst;
 
@@ -172,8 +217,8 @@ typedef struct		s_img
 {
 	void			*ptr;
 	int				*data;
-	int				width;
-	int				height;
+	int				w;
+	int				h;
 	int				size_l;
 	int				bpp;
 	int				endian;
@@ -183,16 +228,16 @@ typedef struct		s_tex
 {
 	void			*ptr;
 	int				*data;
-	int				width;
-	int				height;
+	int				w;
+	int				h;
 }					t_tex;
 
 typedef struct		s_disp
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
-	int				width;
-	int				height;
+	int				w;
+	int				h;
 	int				config;
 	int				floor_color;
 	int				ceil_color;
@@ -202,8 +247,9 @@ typedef struct		s_disp
 	t_vecd			start_pos;
 	char			start_orient;
 	int				spr_cnt;
-	t_spr			spr_buf[100];
 	t_lst			*spr_lst;
+	int				itm_cnt;
+	t_lst			*itm_lst;
 }					t_disp;	
 
 typedef struct		s_player
@@ -214,7 +260,7 @@ typedef struct		s_player
 	double			trans_speed;
 	double			rot_speed;
 	t_vecd			ray_dir;
-	t_vecd			sray_dist;
+	t_vecd			coef;
 	int				key;
 	int				key_w;
 	int				key_s;
@@ -234,7 +280,6 @@ typedef struct		s_dda
 	t_vecd			side_dist;
 	t_vecd			delta_dist;
 	t_veci			step;
-	int				hit;
 }					t_dda;
 
 typedef struct		s_hit
@@ -243,6 +288,7 @@ typedef struct		s_hit
 	int				side;
 	int				color;
 	double			perp_wall_dist;
+	int				door_type;
 }					t_hit;
 
 typedef struct		s_draw
@@ -253,10 +299,11 @@ typedef struct		s_draw
 	int				end;
 	int				ty;
 	int				tx;
-	int				line_height;
+	int				lh;
 	int				xbeg;
 	int				xend;
 	int				xctr;
+	int				bias;
 }					t_draw;
 
 /*
@@ -316,12 +363,17 @@ int					draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point);
 /*
 ** display drawing tex line
 */
-int					draw_tex_floor(t_disp disp, t_player player);
+int					draw_tex_background(t_disp disp, t_player player);
 
 /*
 ** display drawing sprite shape
 */
-int					draw_sprite(t_disp disp, t_player player, t_hit hit_point, double *perp_buf);
+int					draw_sprite(t_disp disp, t_player p, t_hit hit_point, double *perp_buf);
+
+/*
+** display drawing secret door
+*/
+int					draw_item(t_disp *disp, t_player p, t_hit hit_point, double *perp_buf);
 
 /*
 ** load images from xpm files
@@ -363,20 +415,35 @@ void				key_update(t_loop *lv);
 */
 int					is_number_arr(char **arr, int index_num, int type);
 int					is_map_valid(t_map map);
+int					is_secret(int map_data, t_hit *hit_point, int *hit_flag);
 
 /*
 ** show data
 */
 void				show_map_data(t_disp disp);
-void				show_lst_data(t_disp disp);
+void				show_lst_data(t_lst *itr);
+void				show_items(t_disp disp);
 
 /*
 ** list setting
 */
-t_lst				*lst_new(t_spr spr);
+t_lst				*lst_new_spr(t_spr spr);
+t_lst				*lst_new_itm(t_itm itm);
 void				lst_add_back(t_lst **lst, t_lst *new_lst);
 t_lst				*lst_get_idx(t_lst *lst, int idx);
 void				lst_del_idx(t_lst **lst, int idx);
 void				lst_clear(t_lst **lst);
+
+/*
+** bonus setting
+*/
+/*
+** door
+*/
+int					check_door_type(t_hit *hit_point, int map_data);
+/*
+** item
+*/
+void				get_close_item(t_disp *disp, t_player *p);
 
 #endif
