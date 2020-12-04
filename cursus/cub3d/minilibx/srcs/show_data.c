@@ -4,8 +4,9 @@ void	show_map_data(t_disp disp)
 {
 	char	val;
 	printf("MAP DATA========================================\n");
-	printf("map_height: %d\n", disp.map.height);
-	for (int j = 0; j < disp.map.height; ++j)
+	printf("max_width: %d\n", disp.map.max_w);
+	printf("height: %d\n", disp.map.h);
+	for (int j = 0; j < disp.map.h; ++j)
 	{
 		for (int i = 0; disp.map.data[j][i] != MAP_BOARDER_VAL; ++i)
 		{

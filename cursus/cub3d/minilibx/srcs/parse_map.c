@@ -12,7 +12,7 @@ void	init_map_info(t_disp *disp, int map_width, int map_height)
 	{
 		i = -1;
 		while (++i < map_width)
-			disp->map.data[j][i] = 0;
+			disp->map.data[j][i] = MAP_UNUSED_VAL;
 	}
 }
 
@@ -116,13 +116,15 @@ int	parse_map(t_disp *disp, char **map, int map_beg)
 
 	init_map_info(disp, MAX_NUM_MAP_WIDTH, MAX_NUM_MAP_HEIGHT);
 	init_bonus_info(disp);
-	r = map_beg + disp->map.height - 1;
+	r = map_beg + disp->map.h - 1;
 	y = -1;
-	while (++y < disp->map.height)
+	while (++y < disp->map.h)
 	{
 		x = -1;
 		while (map[r][++x])
 			disp->map.data[y][x] = get_map_element(disp, map[r][x], y, x);
+		if (x >= disp->map.max_w)
+			disp->map.max_w = x;
 		disp->map.data[y][x] = MAP_BOARDER_VAL;
 		--r;
 	}

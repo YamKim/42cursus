@@ -102,7 +102,7 @@ void	draw_item_part(t_disp *disp, t_tex *tex, t_player *player, t_draw *draw)
 	}
 }
 
-int		draw_item(t_disp *disp, t_player p, t_hit hit_point, double *perp_buf)
+int		draw_item(t_disp *disp, t_player *p, t_hit hit_point, double *perp_buf)
 {
 	t_pair	*itm_pair;
 	t_draw	draw;
@@ -110,19 +110,19 @@ int		draw_item(t_disp *disp, t_player p, t_hit hit_point, double *perp_buf)
 	int		i;
 
 	g_perp_buf = perp_buf;
-	get_close_item(disp, &p);
+	get_close_item(disp, p);
 	if (!(itm_pair = (t_pair *)malloc(sizeof(t_pair) * disp->itm_cnt)))
 		return (ERR_MALLOC);
-	set_item(disp, itm_pair, &p);
+	set_item(disp, itm_pair, p);
 	sort_item_pair(itm_pair, disp->itm_cnt);
 	i = -1;
 	while (++i < disp->itm_cnt)
 	{
-		p.coef = get_coef_item(&p, &(itm_pair[i]), disp->itm_lst);
-		draw.xctr = (int)((double)disp->w/ 2 * (1 + p.coef.x / p.coef.y));
-		set_draw_item(*disp, &draw, p.coef.y); 
+		p->coef = get_coef_item(p, &(itm_pair[i]), disp->itm_lst);
+		draw.xctr = (int)((double)disp->w/ 2 * (1 + p->coef.x / p->coef.y));
+		set_draw_item(*disp, &draw, p->coef.y); 
 		tex_nbr = lst_get_idx(disp->itm_lst, itm_pair[i].ord)->itm.tex_nbr;
-		draw_item_part(disp, &(disp->tex[tex_nbr]), &p, &draw);
+		draw_item_part(disp, &(disp->tex[tex_nbr]), p, &draw);
 	}
 	free(itm_pair);
 	return (1);

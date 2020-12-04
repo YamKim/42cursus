@@ -20,7 +20,8 @@ int	get_info(t_disp *disp, char *fname)
 	line_buf = ft_split(buf, '\n', &end);
 	if (err_num == 0)
 		err_num = parse_config(disp, line_buf, &beg);
-	disp->map.height = end - beg;
+	disp->map.h = end - beg;
+	disp->map.max_w = -2;
 	if (err_num == 0)
 		 err_num = parse_map(disp, line_buf, beg);
 	if (err_num == ERR_PARSE_CONFIG)

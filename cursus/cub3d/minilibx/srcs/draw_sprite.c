@@ -104,7 +104,7 @@ void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *player, t_draw *draw)
 	}
 }
 
-int		draw_sprite(t_disp disp, t_player p, t_hit hit_point, double *perp_buf)
+int		draw_sprite(t_disp disp, t_player *p, t_hit hit_point, double *perp_buf)
 {
 	t_pair	*spr_pair;
 	t_draw	draw;
@@ -114,16 +114,16 @@ int		draw_sprite(t_disp disp, t_player p, t_hit hit_point, double *perp_buf)
 	g_perp_buf = perp_buf;
 	if (!(spr_pair = (t_pair *)malloc(sizeof(t_pair) * disp.spr_cnt)))
 		return (ERR_MALLOC);
-	set_sprite(&disp, spr_pair, &p);
+	set_sprite(&disp, spr_pair, p);
 	sort_spr_pair(spr_pair, disp.spr_cnt);
 	i = -1;
 	while (++i < disp.spr_cnt)
 	{
-		p.coef = get_coef_spr(&p, &(spr_pair[i]), disp.spr_lst);
-		draw.xctr = (int)((double)disp.w / 2 * (1 + p.coef.x / p.coef.y));
-		set_draw_sprite(disp, &draw, p.coef.y); 
+		p->coef = get_coef_spr(p, &(spr_pair[i]), disp.spr_lst);
+		draw.xctr = (int)((double)disp.w / 2 * (1 + p->coef.x / p->coef.y));
+		set_draw_sprite(disp, &draw, p->coef.y); 
 		tex_nbr = lst_get_idx(disp.spr_lst, spr_pair[i].ord)->spr.tex_nbr;
-		draw_sprite_part(&disp, &(disp.tex[tex_nbr]), &p, &draw);
+		draw_sprite_part(&disp, &(disp.tex[tex_nbr]), p, &draw);
 	}
 	free(spr_pair);
 	return (1);

@@ -44,7 +44,7 @@ int	check_map_range(t_map map, int y, int x)
 	int	ret;
 
 	ret = 0;
-	if (y <= 0 || y >= map.height - 1)
+	if (y <= 0 || y >= map.h - 1)
 	{
 		printf("height range error========================\n");
 		printf("y: %d, x: %d\n", y, x);
@@ -82,7 +82,7 @@ int	is_map_valid(t_map map)
 
 	y = 0;
 	ret = 0;
-	while (y < map.height)
+	while (y < map.h)
 	{
 		x = 0;
 		while (map.data[y][x] != MAP_BOARDER_VAL)

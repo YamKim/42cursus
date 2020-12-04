@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/03 15:56:45 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/04 13:55:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@
 # define MAP_SPACE_VAL -1
 # define MAP_BOARDER_VAL -2
 # define MAP_EXCEPTION_VAL -3
+# define MAP_UNUSED_VAL -4
 
 /*
 ** bonus
@@ -159,12 +160,24 @@
 # define HIT_SIDE_Y 1
 
 /*
-** hit side
+** item scale
 */
 # define ITEM_VDIV 1.5
 # define ITEM_UDIV 1.5
 # define ITEM_MOVE 200
 # define ITEM_APPROACH_DIST 1.0
+
+/*
+** skybox
+*/
+# define DISP2SKY 3 / 7
+
+/*
+** color set
+*/
+# define COLOR_TR 128
+# define COLOR_BLACK 0
+
 
 /*
 ** structures
@@ -208,7 +221,8 @@ typedef struct		s_lst
 
 typedef struct		s_map
 {
-	int				height;
+	int				max_w;
+	int				h;
 	int				data[MAX_NUM_MAP_WIDTH][MAX_NUM_MAP_HEIGHT];
 	int				pos_flag;
 }					t_map;
@@ -368,12 +382,12 @@ int					draw_tex_background(t_disp disp, t_player player);
 /*
 ** display drawing sprite shape
 */
-int					draw_sprite(t_disp disp, t_player p, t_hit hit_point, double *perp_buf);
+int					draw_sprite(t_disp disp, t_player *p, t_hit hit_point, double *perp_buf);
 
 /*
 ** display drawing secret door
 */
-int					draw_item(t_disp *disp, t_player p, t_hit hit_point, double *perp_buf);
+int					draw_item(t_disp *disp, t_player *p, t_hit hit_point, double *perp_buf);
 
 /*
 ** load images from xpm files
@@ -446,4 +460,8 @@ int					check_door_type(t_hit *hit_point, int map_data);
 */
 void				get_close_item(t_disp *disp, t_player *p);
 
+/*
+** skybox
+*/
+int					set_color(int t, int r, int g, int b);
 #endif

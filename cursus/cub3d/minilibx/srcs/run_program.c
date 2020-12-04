@@ -13,7 +13,7 @@ void	set_player_info(t_disp disp, t_player *player)
 	start_orient(player, disp.start_orient);
 }
 
-int	draw_img_data(t_disp *disp, t_player player, double *perp_buf)
+int	draw_img_data(t_disp *disp, t_player *player, double *perp_buf)
 {
 	t_hit	hit_point;
     int		t;
@@ -22,19 +22,66 @@ int	draw_img_data(t_disp *disp, t_player player, double *perp_buf)
     t = -1;
     while (++t < disp->w)
     {
-		hit_point.pos.x = (int)(player.pos.x);
-		hit_point.pos.y = (int)(player.pos.y);
+		hit_point.pos.x = (int)(player->pos.x);
+		hit_point.pos.y = (int)(player->pos.y);
         camera_t = (2 * t / (double)(disp->w)) - 1;
-        player.ray_dir.x = player.dir.x + player.plane.x * camera_t;
-        player.ray_dir.y = player.dir.y + player.plane.y * camera_t;
-		hit_point.perp_wall_dist = dda_algorithm(&player, &hit_point, disp->map);
-		draw_tex_wall(*disp, player, t, hit_point);
+        player->ray_dir.x = player->dir.x + player->plane.x * camera_t;
+        player->ray_dir.y = player->dir.y + player->plane.y * camera_t;
+		hit_point.perp_wall_dist = dda_algorithm(player, &hit_point, disp->map);
+		draw_tex_wall(*disp, *player, t, hit_point);
 		//draw_untex_wall(*(disp), t, hit_point);
 		perp_buf[t] = hit_point.perp_wall_dist;
     } 
 	draw_sprite(*disp, player, hit_point, perp_buf);
 	draw_item(disp, player, hit_point, perp_buf);
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.ptr, 0, 0);
+	return (0);
+}
+
+int	set_color(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+int	get_skybox_color(t_map *map, t_veci idx, t_veci step)
+{
+	int	ret;
+
+	ret = set_color(255, 0, 0, 0);
+	if (map->data[idx.y / step.y][idx.x / step.x] == MAP_WALL_VAL)
+		ret = set_color(100, 120, 120, 120);
+	else if (map->data[idx.y / step.y][idx.x / step.x] == MAP_ROAD_VAL)
+		ret = set_color(100, 200, 200, 200);
+	else if (map->data[idx.y / step.y][idx.x / step.x] == MAP_ITEM_VAL)
+		ret = set_color(100, 230, 30, 30);
+	else if (map->data[idx.y / step.y][idx.x / step.x] == MAP_SECRET_VAL)
+		ret = set_color(100, 218, 165, 32);
+	return (ret);
+}
+
+int	draw_skybox(t_disp *disp, t_player player)
+{
+	t_img	skybox;
+	t_veci	idx;
+	t_veci	step;
+	int		col;
+
+	skybox.w = disp->w * DISP2SKY;
+	skybox.h = disp->h * DISP2SKY;
+	skybox.ptr = mlx_new_image(disp->mlx_ptr, skybox.w, skybox.h);
+	skybox.data = (int *)mlx_get_data_addr(skybox.ptr, &(skybox.bpp),
+				&(skybox.size_l), &(skybox.endian));
+	step.x = skybox.w / disp->map.max_w;
+	step.y = skybox.h / disp->map.h;
+	for (int x = 0; x < skybox.w; ++x) {
+		for (int y = 0; y < skybox.h; ++y) {
+			idx.x = x;
+			idx.y = y;
+			skybox.data[(skybox.h - 1 - y) * skybox.w + x] = \
+				get_skybox_color(&(disp->map), idx, step);
+		}
+	}
+	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, skybox.ptr, 0, 0);
 	return (0);
 }
 
@@ -46,7 +93,9 @@ int main_loop(t_loop *lv)
 		return (ERR_MALLOC);
 	if (draw_tex_background(*lv->disp, *lv->player))
 		return (ERR_DRAW_IMG);
-	if (draw_img_data(lv->disp, *lv->player, perp_buf))
+	if (draw_img_data(lv->disp, lv->player, perp_buf))
+		return (ERR_DRAW_IMG);
+	if (draw_skybox(lv->disp, *lv->player))
 		return (ERR_DRAW_IMG);
 	key_update(lv);
 	free(perp_buf);
