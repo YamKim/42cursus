@@ -87,7 +87,7 @@ void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *player, t_draw *draw)
 	{
 		draw->tx = (int)((256 * (draw->x - draw->xctr + draw->lh / 2) \
 							* tex->w / draw->lh) / 256);
-		if(player->coef.y > 0 && draw->x > 0 && draw->x < disp->w\
+		if(player->coef.y > 0 && draw->x > 0 && draw->x < disp->w \
 			&& player->coef.y < g_perp_buf[draw->x])
 		{
 			draw->y = draw->beg - 1;

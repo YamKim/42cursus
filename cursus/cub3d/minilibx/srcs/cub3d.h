@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/04 13:55:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/05 10:20:19 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_O 31
+# define KEY_J 31
+# define KEY_H 4
+# define KEY_G 5
 
 # define KEY_ESC 53
 
@@ -92,7 +95,7 @@
 # define MAP_WALL '1'
 # define MAP_WALL_VAL 1
 # define MAP_SPRITE '2'
-# define MAP_SPRITE_VAL 0
+# define MAP_SPRITE_VAL 2
 # define MAP_SPACE ' '
 # define MAP_SPACE_VAL -1
 # define MAP_BOARDER_VAL -2
@@ -170,12 +173,18 @@
 /*
 ** skybox
 */
-# define DISP2SKY 3 / 7
+# define DISP2SKYW 3 / 7
+# define DISP2SKYH 2 / 7
 
 /*
 ** color set
 */
-# define COLOR_TR 128
+# define COLOR_SKY_TRANSPARENCY 100 << 24
+# define COLOR_SKY_WALL 1644825 
+# define COLOR_SKY_ROAD 13158600 
+# define COLOR_SKY_ITEM 15080990
+# define COLOR_SKY_SECRET 14329120
+# define COLOR_SKY_SPRITE 52224
 # define COLOR_BLACK 0
 
 
@@ -252,6 +261,7 @@ typedef struct		s_disp
 	void			*win_ptr;
 	int				w;
 	int				h;
+	int				hctr_bias;
 	int				config;
 	int				floor_color;
 	int				ceil_color;
@@ -346,6 +356,7 @@ void				move_forward(t_player *player, t_map map);
 void				move_backward(t_player *player, t_map map);
 void				turn_left(t_player *player);
 void				turn_right(t_player *player);
+void				set_zaxis_motion(t_disp *disp, t_player *player);
 
 /*
 ** calculate basic algorithm
@@ -377,7 +388,7 @@ int					draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point);
 /*
 ** display drawing tex line
 */
-int					draw_tex_background(t_disp disp, t_player player);
+int					draw_tex_background(t_disp *disp, t_player player);
 
 /*
 ** display drawing sprite shape
@@ -388,6 +399,11 @@ int					draw_sprite(t_disp disp, t_player *p, t_hit hit_point, double *perp_buf)
 ** display drawing secret door
 */
 int					draw_item(t_disp *disp, t_player *p, t_hit hit_point, double *perp_buf);
+
+/*
+** display skybox
+*/
+int					draw_skybox(t_disp *disp, t_player player);
 
 /*
 ** load images from xpm files

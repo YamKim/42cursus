@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
 		show_map_data(disp);
 //		show_lst_data(disp.spr_lst);
 //		show_lst_data(disp.itm_lst);
+		printf("color: %d\n", set_color(0, 0, 204, 0));
 #if 1
 		if (err_num == 0 && cub3d_run(&disp))
 			return (ERR_RUN);

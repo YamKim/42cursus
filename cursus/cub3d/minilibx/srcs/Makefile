@@ -14,6 +14,7 @@ SRC = main.c \
 	draw_tex_background.c \
 	draw_sprite.c \
 	draw_item.c \
+	draw_skybox.c \
 	list_utils.c \
 	list_utils2.c \
 	ft_split.c \

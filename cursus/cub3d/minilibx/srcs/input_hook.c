@@ -14,6 +14,10 @@ int		key_press(int key, t_loop *lv)
 		lv->player->key |= (1 << KEY_D);
     else if (key == KEY_O)
 		lv->player->key |= (1 << KEY_O);
+    else if (key == KEY_H)
+		lv->player->key |= (1 << KEY_H);
+    else if (key == KEY_G)
+		lv->player->key |= (1 << KEY_G);
 
     return (0);
 }
@@ -32,6 +36,10 @@ int		key_release(int key, t_loop *lv)
 		lv->player->key &= ~(1 << KEY_D);
     else if (key == KEY_O)
 		lv->player->key &= ~(1 << KEY_O);
+    else if (key == KEY_H)
+		lv->player->key &= ~(1 << KEY_H);
+    else if (key == KEY_G)
+		lv->player->key &= ~(1 << KEY_G);
     return (0);
 }
 
@@ -45,4 +53,5 @@ void	key_update(t_loop *lv)
 		turn_left(lv->player);
 	if (lv->player->key & (1 << KEY_D))
 		turn_right(lv->player);
+	set_zaxis_motion(lv->disp, lv->player);
 }

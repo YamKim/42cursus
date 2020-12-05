@@ -43,13 +43,16 @@ int		get_tex_tx(t_tex tex, t_player player, t_hit hit_point,	t_vecd ray_dir)
 
 void	set_draw_tex_wall(t_disp disp, t_draw *draw, t_hit hit_point)
 {
+	double	hctr;
+
+	hctr = (double)disp.h / 2 + disp.hctr_bias;
 	if (fabs(hit_point.perp_wall_dist - 0.0) < EPSILON)
 		draw->lh = (int)(disp.h * 2);
 	else
 		draw->lh = (int)(disp.h / hit_point.perp_wall_dist);
-	draw->beg = (int)fmax(((double)disp.h - draw->lh) / 2, 0);
-	draw->end = (int)fmin(((double)disp.h + draw->lh) / 2, disp.h - 1);
-	draw->y = 0;
+	draw->beg = (int)fmax(hctr - ((double)draw->lh) / 2, 0);
+	draw->end = (int)fmin(hctr + ((double)draw->lh) / 2, disp.h - 1);
+	draw->y = draw->beg - 1;
 	draw->ty = 0;
 }
 
@@ -57,19 +60,20 @@ void	draw_tex_wall_part(t_disp disp, t_tex tex, t_draw draw, t_hit hit_point)
 {
 	double tpos;
 	double step_ty;
+	double hctr;
 
+	hctr = (double)disp.h / 2 + disp.hctr_bias;
 	set_draw_tex_wall(disp, &draw, hit_point);
     step_ty = 1.0 * tex.h / draw.lh;
-	tpos = (double)draw.beg - (double)(disp.h - draw.lh) / 2;
+	tpos = (double)draw.beg - (hctr - (double)draw.lh / 2);
 	tpos *= step_ty;
-	draw.y = draw.beg;
-	while (draw.y < draw.end)
+	while (++(draw.y) < draw.end)
 	{
 		draw.ty = (int)fmin(tpos, (double)tex.h - 1); 
 	    hit_point.color = tex.data[draw.ty * tex.w + draw.tx];
 	    if (hit_point.side == HIT_SIDE_Y)
 	        hit_point.color = (hit_point.color >> 1) & 8355711;
-	    disp.img.data[(draw.y++) * disp.w + draw.x] = hit_point.color;
+	    disp.img.data[draw.y * disp.w + draw.x] = hit_point.color;
 	    tpos += step_ty;
 	}
 }
