@@ -55,54 +55,56 @@ void	sort_item_pair(t_pair *itm_pair, int itm_cnt)
 	}
 }
 
-void	set_draw_item(t_disp disp, t_draw *draw, double y_dist)
+void	set_draw_item(t_disp *disp, t_draw *draw, double y_dist)
 {
-	int	h;
-	int	w;
-	int itm_w;
-	int	itm_h;
+	int		h;
+	int		w;
+	int		itm_w;
+	int		itm_h;
 
-	draw->bias = (int)(ITEM_MOVE / y_dist);
-	h = disp.h;
-	w = disp.w;
+	h = disp->h;
+	w = disp->w;
+	draw->bias = (int)(ITEM_MOVE/ y_dist);
+	draw->yctr = (double)disp->h / 2 + draw->bias + disp->hctr_bias;
 	itm_h = (int)(fabs((double)h / y_dist));
 	draw->lh = itm_h / ITEM_VDIV;
-	draw->beg = (int)fmax((double)(h - draw->lh) / 2 + draw->bias, 0.0);
-	draw->end = (int)fmin((double)(h + draw->lh) / 2 + draw->bias, h - 1);
+	draw->beg = (int)fmax(draw->yctr - (double)draw->lh / 2, 0.0);
+	draw->end = (int)fmin(draw->yctr + (double)draw->lh / 2, h - 1);
 	itm_w = itm_h / ITEM_UDIV;
-	draw->xbeg = (int)fmax((double)draw->xctr - (double)itm_w / 2, 0.0);
-	draw->xend = (int)fmin((double)draw->xctr + (double)itm_w / 2, w - 1);
+	draw->xbeg = (int)fmax(draw->xctr - (double)itm_w / 2, 0.0);
+	draw->xend = (int)fmin(draw->xctr + (double)itm_w / 2, w - 1);
 	draw->y = draw->beg;
 	draw->x = draw->xbeg;
 }
 
 void	draw_item_part(t_disp *disp, t_tex *tex, t_player *player, t_draw *draw)
 {
-	int	tmp;
-	int	color;
+	int		color;
+	double	tmp_ypos;
+	double	tmp_xpos;
 
 	while (draw->x < draw->xend)
 	{
-		draw->tx = (int)((256 * (draw->x - draw->xctr + draw->lh / 2) \
-							* tex->w / draw->lh) / 256);
+		tmp_xpos = draw->x - draw->xctr + (double)draw->lh / 2;
+		draw->tx = (int)fmin((tmp_xpos * tex->w / draw->lh), tex->w - 1);
 		if(player->coef.y > 0 && draw->x > 0 && draw->x < disp->w \
 			&& player->coef.y < g_perp_buf[draw->x])
 		{
 			draw->y = draw->beg - 1;
 			while (++(draw->y) < draw->end)
 			{
-				tmp = ((draw->y - draw->bias) * 2 - disp->h+ draw->lh) * 128;
-				draw->ty = ((tmp * tex->h) / draw->lh) / 256;
+				tmp_ypos = draw->y - draw->yctr + (double)draw->lh / 2;
+				draw->ty = (int)fmin(tmp_ypos * tex->h / draw->lh, tex->h - 1);
 				color = tex->data[draw->ty * tex->w + draw->tx];
 				if((color & 0x00FFFFFF) != 0)
-					disp->img.data[draw->y * disp->w+ draw->x] = color;
+					disp->img.data[draw->y * disp->w + draw->x] = color;
 			}
 		}
 		++(draw->x);
 	}
 }
 
-int		draw_item(t_disp *disp, t_player *p, t_hit hit_point, double *perp_buf)
+int		draw_item(t_disp *disp, t_player *p, double *perp_buf)
 {
 	t_pair	*itm_pair;
 	t_draw	draw;
@@ -119,8 +121,8 @@ int		draw_item(t_disp *disp, t_player *p, t_hit hit_point, double *perp_buf)
 	while (++i < disp->itm_cnt)
 	{
 		p->coef = get_coef_item(p, &(itm_pair[i]), disp->itm_lst);
-		draw.xctr = (int)((double)disp->w/ 2 * (1 + p->coef.x / p->coef.y));
-		set_draw_item(*disp, &draw, p->coef.y); 
+		draw.xctr = (int)((double)disp->w / 2 * (1 + p->coef.x / p->coef.y));
+		set_draw_item(disp, &draw, p->coef.y); 
 		tex_nbr = lst_get_idx(disp->itm_lst, itm_pair[i].ord)->itm.tex_nbr;
 		draw_item_part(disp, &(disp->tex[tex_nbr]), p, &draw);
 	}

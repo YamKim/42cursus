@@ -4,7 +4,6 @@ int	check_file(char *fname)
 {
 	char	*ext;
 	size_t	fname_len;
-	int		fd;
 
 	fname_len = ft_strlen(fname);
 	ext = ft_substr(fname, fname_len - FILE_EXTENSION_LENGTH, fname_len);
@@ -28,7 +27,6 @@ int	open_file(char *fname)
 int	load_tex(t_tex *tex, char *file_name)
 {
 	void		*mlx_ptr;
-	void		*win_ptr;
 	int			tmp;
 
 	mlx_ptr = mlx_init();

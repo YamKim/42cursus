@@ -1,5 +1,6 @@
 NAME = program.out
 CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c \
 	run_program.c \
@@ -34,7 +35,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(CC) -L../ -lmlx -framework OpenGL -framework Appkit -o $(NAME) $^
+	$(CC) $(CFLAGS) -L../ -lmlx -framework OpenGL -framework Appkit -o $(NAME) $^
 
 clean:
 	rm -rf $(OBJ)

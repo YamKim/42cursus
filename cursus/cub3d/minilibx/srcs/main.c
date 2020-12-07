@@ -18,6 +18,7 @@ int	get_info(t_disp *disp, char *fname)
 		return (errno);
 	}
 	line_buf = ft_split(buf, '\n', &end);
+	beg = 0;
 	if (err_num == 0)
 		err_num = parse_config(disp, line_buf, &beg);
 	disp->map.h = end - beg;

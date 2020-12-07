@@ -52,7 +52,7 @@ char			**ft_split(char const *s, char c, int *wc)
 	char	**ret;
 	char	*beg_word;
 	size_t	len_word;
-	size_t	k;
+	int		k;
 
 	if (s == NULL)
 		return (0);

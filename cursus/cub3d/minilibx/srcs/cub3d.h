@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/05 10:20:19 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/07 19:32:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@
 */
 # define ITEM_VDIV 1.5
 # define ITEM_UDIV 1.5
-# define ITEM_MOVE 200
+# define ITEM_MOVE 200.0
 # define ITEM_APPROACH_DIST 1.0
 
 /*
@@ -327,6 +327,7 @@ typedef struct		s_draw
 	int				xbeg;
 	int				xend;
 	int				xctr;
+	int				yctr;
 	int				bias;
 }					t_draw;
 
@@ -359,17 +360,16 @@ void				turn_right(t_player *player);
 void				set_zaxis_motion(t_disp *disp, t_player *player);
 
 /*
-** calculate basic algorithm
-*/
-double				calc_dist(t_vecd p1, t_vecd p2);
-double				calc_det(t_vecd v1, t_vecd v2);
-
-/*
 ** operate vector calculation
 */
 t_vecd				translate_vec(t_vecd pos, t_vecd dir, double trans);
 t_vecd				rotate_vec(t_vecd dir, double theta);
 
+/*
+** calculate basic algorithm
+*/
+double				calc_dist(t_vecd p1, t_vecd p2);
+double				calc_det(t_vecd v1, t_vecd v2);
 /*
 ** calculate dda algorithm
 */
@@ -393,12 +393,12 @@ int					draw_tex_background(t_disp *disp, t_player player);
 /*
 ** display drawing sprite shape
 */
-int					draw_sprite(t_disp disp, t_player *p, t_hit hit_point, double *perp_buf);
+int					draw_sprite(t_disp disp, t_player *p, double *perp_buf);
 
 /*
 ** display drawing secret door
 */
-int					draw_item(t_disp *disp, t_player *p, t_hit hit_point, double *perp_buf);
+int					draw_item(t_disp *disp, t_player *p, double *perp_buf);
 
 /*
 ** display skybox

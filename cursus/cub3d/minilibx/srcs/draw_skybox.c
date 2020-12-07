@@ -28,8 +28,8 @@ int	draw_skybox(t_disp *disp, t_player player)
 	t_img	skybox;
 	t_veci	idx;
 	t_veci	step;
-	int		col;
 
+	(void)player;
 	skybox.w = disp->w * DISP2SKYW;
 	skybox.h = disp->h * DISP2SKYH;
 	skybox.ptr = mlx_new_image(disp->mlx_ptr, skybox.w, skybox.h);

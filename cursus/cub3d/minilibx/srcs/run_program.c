@@ -32,8 +32,8 @@ int	draw_img_data(t_disp *disp, t_player *player, double *perp_buf)
 		//draw_untex_wall(*(disp), t, hit_point);
 		perp_buf[t] = hit_point.perp_wall_dist;
     } 
-	draw_sprite(*disp, player, hit_point, perp_buf);
-	draw_item(disp, player, hit_point, perp_buf);
+	draw_sprite(*disp, player, perp_buf);
+	draw_item(disp, player, perp_buf);
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.ptr, 0, 0);
 	return (0);
 }
