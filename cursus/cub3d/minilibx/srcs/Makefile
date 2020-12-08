@@ -6,6 +6,7 @@ SRC = main.c \
 	run_program.c \
 	parse_config.c \
 	parse_map.c \
+	parse_map2.c \
 	player_motion.c \
 	player_motion2.c \
 	calc_vector.c \
@@ -14,7 +15,7 @@ SRC = main.c \
 	draw_tex_wall.c \
 	draw_tex_background.c \
 	draw_sprite.c \
-	draw_item.c \
+	draw_sprite_util.c \
 	draw_skybox.c \
 	list_utils.c \
 	list_utils2.c \

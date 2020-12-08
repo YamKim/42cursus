@@ -32,50 +32,23 @@ t_vecd	get_coef_spr(t_player *p, t_pair *spr_pair, t_lst *spr_lst)
 	return (ret);
 }
 
-void	sort_spr_pair(t_pair *spr_pair, int spr_cnt)
+t_draw	set_draw_sprite(t_disp *disp, t_vecd coef, int tex_nbr)
 {
-	int		i;
-	int		j;
-	double	tmp_dist;
-	int		tmp_ord;
-
-	i = 1;
-	while (i < spr_cnt)
-	{
-		tmp_dist = spr_pair[i].dist;
-		j = i;
-		while (--j >= 0 && tmp_dist > spr_pair[j].dist)
-		{
-			spr_pair[j + 1].dist = spr_pair[j].dist;
-			spr_pair[j].dist = tmp_dist;
-			tmp_ord = spr_pair[j].ord;
-			spr_pair[j].ord = spr_pair[j + 1].ord;
-			spr_pair[j + 1].ord = tmp_ord;
-		}
-		++i;
-	}
-}
-
-t_draw	set_draw_sprite(t_disp *disp, t_vecd coef)
-{
-	int		h;
-	int		w;
 	int		spr_w;
 	int		spr_h;
+	t_vecd	scale;
 	t_draw	ret;
 
-	h = disp->h;
-	w = disp->w;
-	ret.bias = 0;
+	scale = set_sprite_scale(&ret, coef, tex_nbr);
 	ret.xctr = (int)((double)disp->w / 2 * (1 + coef.x / coef.y));
 	ret.yctr = (double)disp->h / 2 + ret.bias + disp->hctr_bias;
-	spr_h = (int)fabs((double)h / coef.y);
-	ret.lh = spr_h;
+	spr_h = (int)fabs((double)disp->h / coef.y);
+	ret.lh = spr_h / scale.x;
 	ret.beg = (int)fmax(ret.yctr - (double)ret.lh / 2, 0.0);
-	ret.end = (int)fmin(ret.yctr + (double)ret.lh / 2, h - 1);
-	spr_w = spr_h;
+	ret.end = (int)fmin(ret.yctr + (double)ret.lh / 2, disp->h - 1);
+	spr_w = spr_h / scale.y;
 	ret.xbeg = (int)fmax(ret.xctr - (double)spr_w / 2 , 0.0);
-	ret.xend = (int)fmin(ret.xctr + (double)spr_w / 2 , w - 1);
+	ret.xend = (int)fmin(ret.xctr + (double)spr_w / 2 , disp->w - 1);
 	ret.y = ret.beg;
 	ret.x = ret.xbeg;
 	return (ret);
@@ -108,7 +81,7 @@ void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *player, t_draw *draw)
 	}
 }
 
-int		draw_sprite(t_disp disp, t_player *p, double *perp_buf)
+int		draw_sprite(t_disp *disp, t_player *p, double *perp_buf)
 {
 	t_pair	*spr_pair;
 	t_draw	draw;
@@ -116,17 +89,18 @@ int		draw_sprite(t_disp disp, t_player *p, double *perp_buf)
 	int		i;
 
 	g_perp_buf = perp_buf;
-	if (!(spr_pair = (t_pair *)malloc(sizeof(t_pair) * disp.spr_cnt)))
+	get_close_sprite(disp, p);
+	if (!(spr_pair = (t_pair *)malloc(sizeof(t_pair) * disp->spr_cnt)))
 		return (ERR_MALLOC);
-	set_sprite(&disp, spr_pair, p);
-	sort_spr_pair(spr_pair, disp.spr_cnt);
+	set_sprite(disp, spr_pair, p);
+	sort_spr_pair(spr_pair, disp->spr_cnt);
 	i = -1;
-	while (++i < disp.spr_cnt)
+	while (++i < disp->spr_cnt)
 	{
-		p->coef = get_coef_spr(p, &(spr_pair[i]), disp.spr_lst);
-		draw = set_draw_sprite(&disp, p->coef); 
-		tex_nbr = lst_get_idx(disp.spr_lst, spr_pair[i].ord)->spr.tex_nbr;
-		draw_sprite_part(&disp, &(disp.tex[tex_nbr]), p, &draw);
+		p->coef = get_coef_spr(p, &(spr_pair[i]), disp->spr_lst);
+		tex_nbr = lst_get_idx(disp->spr_lst, spr_pair[i].ord)->spr.tex_nbr;
+		draw = set_draw_sprite(disp, p->coef, tex_nbr); 
+		draw_sprite_part(disp, &(disp->tex[tex_nbr]), p, &draw);
 	}
 	free(spr_pair);
 	return (1);

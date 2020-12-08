@@ -16,31 +16,22 @@ void	init_map_info(t_disp *disp, int map_width, int map_height)
 	}
 }
 
-void	set_map_sprite(t_disp *disp, int y, int x)
+void	set_map_sprite(t_disp *disp, int y, int x, char data)
 {
 	t_spr	spr;
 	t_lst	*tmp;
 
 	spr.pos.y = y + 0.5;
 	spr.pos.x = x + 0.5;
-	spr.tex_nbr = CONFIG_S;
+	if (data == MAP_SPRITE)
+		spr.tex_nbr = CONFIG_S;
+	else if (data == MAP_ITEM)
+		spr.tex_nbr = CONFIG_ITEM;
 	tmp = lst_new_spr(spr);
 	lst_add_back(&(disp->spr_lst), tmp);
 	disp->spr_cnt += 1;
 }
 
-void	set_map_item(t_disp *disp, int y, int x)
-{
-	t_itm	itm;
-	t_lst	*tmp;
-
-	itm.pos.y = y + 0.5;
-	itm.pos.x = x + 0.5;
-	itm.tex_nbr = CONFIG_ITEM;
-	tmp = lst_new_itm(itm);
-	lst_add_back(&(disp->itm_lst), tmp);
-	disp->itm_cnt += 1;
-}
 
 void	set_map_player_pos(t_disp *disp, char orient, int y, int x)
 {
@@ -58,7 +49,8 @@ int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
 		return (MAP_OPDOOR_VAL);
 	else if (data == MAP_ITEM)
 	{
-		set_map_item(disp, y, x);
+		//set_map_item(disp, y, x);
+		set_map_sprite(disp, y, x, data);
 		return (MAP_ITEM_VAL);
 	}
 	return (MAP_EXCEPTION_VAL);
@@ -74,7 +66,7 @@ int	get_map_element(t_disp *disp, char data, int y, int x)
 		return (MAP_WALL_VAL);
 	else if (data == MAP_SPRITE)
 	{
-		set_map_sprite(disp, y, x);
+		set_map_sprite(disp, y, x, data);
 		return (MAP_SPRITE_VAL);
 	}
 	else if (data == NORTH || data == SOUTH || data == WEST || data == EAST)
@@ -85,27 +77,6 @@ int	get_map_element(t_disp *disp, char data, int y, int x)
 		return (0);
 	}
 	return (get_map_element_bonus(disp, data, y, x));
-}
-
-int	bonus_config(t_disp *disp)
-{
-	if (load_tex(&(disp->tex[CONFIG_ITEM]), TEXTURE_ITEM_FILE) != 0)
-		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_SECRET]), TEXTURE_SECRET_FILE) != 0)
-		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_OPDOOR]), TEXTURE_OPDOOR_FILE) != 0)
-		return (ERR_TEXTURE_CALL);
-	return (0);
-}
-
-int	init_bonus_info(t_disp *disp)
-{
-	disp->itm_cnt = 0;
-	disp->itm_lst = NULL;
-
-	if (bonus_config(disp))
-		return (ERR_BONUS_CONFIG);
-	return (0);
 }
 
 int	parse_map(t_disp *disp, char **map, int map_beg)

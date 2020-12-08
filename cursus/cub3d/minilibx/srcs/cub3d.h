@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/08 17:18:06 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/08 18:54:24 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@
 # define MAP_CLDOOR '6'
 # define MAP_CLDOOR_VAL 6
 
+
 /*
 ** degree and radian
 */
@@ -127,6 +128,9 @@
 # define START_SOUTH_ANGLE 180
 # define START_WEST_ANGLE 90
 # define START_EAST_ANGLE -90
+
+# define PLAYER_JUMP 80
+# define PLAYER_CROUCH -80
 
 /*
 ** texture setting
@@ -165,6 +169,9 @@
 /*
 ** item scale
 */
+# define SPRITE_VDIV 1.0
+# define SPRITE_UDIV 1.0
+# define SPRITE_MOVE 100.0
 # define ITEM_VDIV 1.5
 # define ITEM_UDIV 1.5
 # define ITEM_MOVE 200.0
@@ -354,6 +361,8 @@ int					parse_config(t_disp *disp, char **line_buf, int *k);
 ** parse map
 */
 int					parse_map(t_disp *disp, char **map, int map_beg);
+int					init_bonus_info(t_disp *disp);
+int					bonus_config(t_disp *disp);
 /*
 ** player motion
 */
@@ -398,7 +407,10 @@ int					draw_tex_background(t_disp *disp, t_player player);
 /*
 ** display drawing sprite shape
 */
-int					draw_sprite(t_disp disp, t_player *p, double *perp_buf);
+int					draw_sprite(t_disp *disp, t_player *p, double *perp_buf);
+void				sort_spr_pair(t_pair *spr_pair, int spr_cnt);
+void				get_close_sprite(t_disp *disp, t_player *p);
+t_vecd				set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr);
 
 /*
 ** display drawing secret door

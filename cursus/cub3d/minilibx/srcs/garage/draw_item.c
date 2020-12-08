@@ -66,7 +66,7 @@ t_draw	set_draw_item(t_disp *disp, t_vecd coef)
 
 	h = disp->h;
 	w = disp->w;
-	ret.bias = (int)(ITEM_MOVE/ coef.y);
+	ret.bias = (int)(ITEM_MOVE / coef.y);
 	ret.xctr = (int)((double)disp->w / 2 * (1 + coef.x / coef.y));
 	ret.yctr = (double)disp->h / 2 + ret.bias + disp->hctr_bias;
 	itm_h = (int)(fabs((double)h / coef.y));
