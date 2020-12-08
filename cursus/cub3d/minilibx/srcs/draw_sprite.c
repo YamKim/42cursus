@@ -7,13 +7,12 @@ void	set_sprite(t_disp *disp, t_pair *spr_pair, t_player *p)
 	int		i;
 	t_spr	spr;
 
-	i = 0;
-	while (i < disp->spr_cnt)
+	i = -1;
+	while (++i < disp->spr_cnt)
 	{
 		spr = lst_get_idx(disp->spr_lst, i)->spr;
 		spr_pair[i].ord = i;
 		spr_pair[i].dist = calc_dist(p->pos, spr.pos);
-		++i;
 	}	
 }
 
@@ -57,26 +56,29 @@ void	sort_spr_pair(t_pair *spr_pair, int spr_cnt)
 	}
 }
 
-void	set_draw_sprite(t_disp *disp, t_draw *draw, double y_dist)
+t_draw	set_draw_sprite(t_disp *disp, t_vecd coef)
 {
-	int	h;
-	int	w;
-	int spr_w;
-	int	spr_h;
+	int		h;
+	int		w;
+	int		spr_w;
+	int		spr_h;
+	t_draw	ret;
 
 	h = disp->h;
 	w = disp->w;
-	draw->bias = 0;
-	draw->yctr = (double)disp->h / 2 + draw->bias + disp->hctr_bias;
-	spr_h = (int)fabs((double)h / y_dist);
-	draw->lh = spr_h;
-	draw->beg = (int)fmax(draw->yctr - (double)draw->lh / 2, 0.0);
-	draw->end = (int)fmin(draw->yctr + (double)draw->lh / 2, h - 1);
+	ret.bias = 0;
+	ret.xctr = (int)((double)disp->w / 2 * (1 + coef.x / coef.y));
+	ret.yctr = (double)disp->h / 2 + ret.bias + disp->hctr_bias;
+	spr_h = (int)fabs((double)h / coef.y);
+	ret.lh = spr_h;
+	ret.beg = (int)fmax(ret.yctr - (double)ret.lh / 2, 0.0);
+	ret.end = (int)fmin(ret.yctr + (double)ret.lh / 2, h - 1);
 	spr_w = spr_h;
-	draw->xbeg = (int)fmax(draw->xctr - (double)spr_w / 2 , 0.0);
-	draw->xend = (int)fmin(draw->xctr + (double)spr_w / 2 , w - 1);
-	draw->y = draw->beg;
-	draw->x = draw->xbeg;
+	ret.xbeg = (int)fmax(ret.xctr - (double)spr_w / 2 , 0.0);
+	ret.xend = (int)fmin(ret.xctr + (double)spr_w / 2 , w - 1);
+	ret.y = ret.beg;
+	ret.x = ret.xbeg;
+	return (ret);
 }
 
 void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *player, t_draw *draw)
@@ -122,8 +124,7 @@ int		draw_sprite(t_disp disp, t_player *p, double *perp_buf)
 	while (++i < disp.spr_cnt)
 	{
 		p->coef = get_coef_spr(p, &(spr_pair[i]), disp.spr_lst);
-		draw.xctr = (int)((double)disp.w / 2 * (1 + p->coef.x / p->coef.y));
-		set_draw_sprite(&disp, &draw, p->coef.y); 
+		draw = set_draw_sprite(&disp, p->coef); 
 		tex_nbr = lst_get_idx(disp.spr_lst, spr_pair[i].ord)->spr.tex_nbr;
 		draw_sprite_part(&disp, &(disp.tex[tex_nbr]), p, &draw);
 	}

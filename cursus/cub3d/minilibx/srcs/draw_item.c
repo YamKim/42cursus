@@ -47,7 +47,8 @@ void	sort_item_pair(t_pair *itm_pair, int itm_cnt)
 		while (--j >= 0 && tmp_dist > itm_pair[j].dist)
 		{
 			itm_pair[j + 1].dist = itm_pair[j].dist;
-			itm_pair[j].dist = tmp_dist; tmp_ord = itm_pair[j].ord;
+			itm_pair[j].dist = tmp_dist;
+			tmp_ord = itm_pair[j].ord;
 			itm_pair[j].ord = itm_pair[j + 1].ord;
 			itm_pair[j + 1].ord = tmp_ord;
 		}
@@ -55,26 +56,29 @@ void	sort_item_pair(t_pair *itm_pair, int itm_cnt)
 	}
 }
 
-void	set_draw_item(t_disp *disp, t_draw *draw, double y_dist)
+t_draw	set_draw_item(t_disp *disp, t_vecd coef)
 {
 	int		h;
 	int		w;
 	int		itm_w;
 	int		itm_h;
+	t_draw	ret;
 
 	h = disp->h;
 	w = disp->w;
-	draw->bias = (int)(ITEM_MOVE/ y_dist);
-	draw->yctr = (double)disp->h / 2 + draw->bias + disp->hctr_bias;
-	itm_h = (int)(fabs((double)h / y_dist));
-	draw->lh = itm_h / ITEM_VDIV;
-	draw->beg = (int)fmax(draw->yctr - (double)draw->lh / 2, 0.0);
-	draw->end = (int)fmin(draw->yctr + (double)draw->lh / 2, h - 1);
+	ret.bias = (int)(ITEM_MOVE/ coef.y);
+	ret.xctr = (int)((double)disp->w / 2 * (1 + coef.x / coef.y));
+	ret.yctr = (double)disp->h / 2 + ret.bias + disp->hctr_bias;
+	itm_h = (int)(fabs((double)h / coef.y));
+	ret.lh = itm_h / ITEM_VDIV;
+	ret.beg = (int)fmax(ret.yctr - (double)ret.lh / 2, 0.0);
+	ret.end = (int)fmin(ret.yctr + (double)ret.lh / 2, h - 1);
 	itm_w = itm_h / ITEM_UDIV;
-	draw->xbeg = (int)fmax(draw->xctr - (double)itm_w / 2, 0.0);
-	draw->xend = (int)fmin(draw->xctr + (double)itm_w / 2, w - 1);
-	draw->y = draw->beg;
-	draw->x = draw->xbeg;
+	ret.xbeg = (int)fmax(ret.xctr - (double)itm_w / 2, 0.0);
+	ret.xend = (int)fmin(ret.xctr + (double)itm_w / 2, w - 1);
+	ret.y = ret.beg;
+	ret.x = ret.xbeg;
+	return (ret);
 }
 
 void	draw_item_part(t_disp *disp, t_tex *tex, t_player *player, t_draw *draw)
@@ -121,8 +125,7 @@ int		draw_item(t_disp *disp, t_player *p, double *perp_buf)
 	while (++i < disp->itm_cnt)
 	{
 		p->coef = get_coef_item(p, &(itm_pair[i]), disp->itm_lst);
-		draw.xctr = (int)((double)disp->w / 2 * (1 + p->coef.x / p->coef.y));
-		set_draw_item(disp, &draw, p->coef.y); 
+		draw = set_draw_item(disp, p->coef); 
 		tex_nbr = lst_get_idx(disp->itm_lst, itm_pair[i].ord)->itm.tex_nbr;
 		draw_item_part(disp, &(disp->tex[tex_nbr]), p, &draw);
 	}
