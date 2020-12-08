@@ -36,7 +36,7 @@ int	draw_tex_background(t_disp *disp, t_player player)
 	draw.yctr = (int)(0.5 * disp->h) + disp->hctr_bias;
 	for(int y = 0; y < draw.yctr; ++y)
 	{
-		double row_dist = draw.yctr / (draw.yctr - y);
+		double row_dist = (double)draw.yctr / (draw.yctr - y);
 		ceil_step.x = row_dist * (ray_dir1.x - ray_dir0.x) / disp->w;
 		ceil_step.y = row_dist * (ray_dir1.y - ray_dir0.y) / disp->w;
 		ceil.x = player.pos.x + row_dist * ray_dir0.x;

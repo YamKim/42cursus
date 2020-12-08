@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/07 19:32:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/08 14:21:53 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,13 +179,18 @@
 /*
 ** color set
 */
-# define COLOR_SKY_TRANSPARENCY 100 << 24
+# define COLOR_SKY_BACKBACKGROUND 0xFF000000
+# define COLOR_SKY_BACKGROUND 0x5F000000
 # define COLOR_SKY_WALL 1644825 
 # define COLOR_SKY_ROAD 13158600 
 # define COLOR_SKY_ITEM 15080990
 # define COLOR_SKY_SECRET 14329120
 # define COLOR_SKY_SPRITE 52224
-# define COLOR_BLACK 0
+# define COLOR_SKY_PLAYER 0xFF8C8C
+# define COLOR_SKY_DIR 0x32708D
+# define COLOR_SKY_RAY_DIR 0x0FFFDB1
+# define SIZE_SKY_RAY 1
+# define SIZE_SKY_PLAYER 5
 
 
 /*
@@ -383,7 +388,7 @@ void				draw_untex_wall(t_disp disp, int x, const t_hit hit_point);
 /*
 ** display drawing tex line
 */
-int					draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point);
+int					draw_tex_wall(t_disp *disp, t_player *player, int x, t_hit hit_point);
 
 /*
 ** display drawing tex line
@@ -403,7 +408,7 @@ int					draw_item(t_disp *disp, t_player *p, double *perp_buf);
 /*
 ** display skybox
 */
-int					draw_skybox(t_disp *disp, t_player player);
+int					draw_skybox(t_disp *disp, t_player *player);
 
 /*
 ** load images from xpm files
@@ -476,8 +481,4 @@ int					check_door_type(t_hit *hit_point, int map_data);
 */
 void				get_close_item(t_disp *disp, t_player *p);
 
-/*
-** skybox
-*/
-int					set_color(int t, int r, int g, int b);
 #endif

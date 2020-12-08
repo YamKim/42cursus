@@ -1,37 +1,37 @@
 #include "cub3d.h"
 
-t_tex	get_wall_type(t_disp disp, t_player player, t_hit hit_point)
+t_tex	get_wall_type(t_disp *disp, t_player *player, t_hit hit_point)
 {
 	if (hit_point.door_type == MAP_SECRET_VAL)
-		return (disp.tex[CONFIG_SECRET]);
+		return (disp->tex[CONFIG_SECRET]);
 	if (hit_point.door_type == MAP_OPDOOR_VAL)
-		return (disp.tex[CONFIG_OPDOOR]);
+		return (disp->tex[CONFIG_OPDOOR]);
 	if (hit_point.side == HIT_SIDE_Y)
 	{
-		if (player.ray_dir.y > 0)
-			return (disp.tex[CONFIG_NO]);
+		if (player->ray_dir.y > 0)
+			return (disp->tex[CONFIG_NO]);
 		else
-			return (disp.tex[CONFIG_SO]);
+			return (disp->tex[CONFIG_SO]);
 	}
 	else
 	{
-		if (player.ray_dir.x > 0)
-			return (disp.tex[CONFIG_EA]);
+		if (player->ray_dir.x > 0)
+			return (disp->tex[CONFIG_EA]);
 		else
-			return (disp.tex[CONFIG_WE]);
+			return (disp->tex[CONFIG_WE]);
 	}
-	return (disp.tex[CONFIG_NO]);
+	return (disp->tex[CONFIG_NO]);
 }
 
-int		get_tex_tx(t_tex tex, t_player player, t_hit hit_point,	t_vecd ray_dir)
+int		get_tex_tx(t_tex tex, t_player *player, t_hit hit_point, t_vecd ray_dir)
 {
 	int		ret;
 	double	wall_t;
 
 	if (hit_point.side == HIT_SIDE_X)
-		wall_t = player.pos.y + hit_point.perp_wall_dist * ray_dir.y;
+		wall_t = player->pos.y + hit_point.perp_wall_dist * ray_dir.y;
 	else
-		wall_t = player.pos.x + hit_point.perp_wall_dist * ray_dir.x;
+		wall_t = player->pos.x + hit_point.perp_wall_dist * ray_dir.x;
 	wall_t -= floor(wall_t);
 	ret = (int)(wall_t * (double)(tex.w));
 	if(hit_point.side == HIT_SIDE_X && ray_dir.x > 0)
@@ -41,47 +41,50 @@ int		get_tex_tx(t_tex tex, t_player player, t_hit hit_point,	t_vecd ray_dir)
 	return (ret);
 }
 
-void	set_draw_tex_wall(t_disp disp, t_draw *draw, t_hit hit_point)
+t_draw	set_tex_wall_draw(t_disp *disp, t_hit hit_point)
 {
-	draw->yctr = (double)disp.h / 2 + disp.hctr_bias;
+	t_draw	ret;
+
+	ret.yctr = (double)disp->h / 2 + disp->hctr_bias;
 	if (fabs(hit_point.perp_wall_dist - 0.0) < EPSILON)
-		draw->lh = (int)(disp.h * 2);
+		ret.lh = (int)(disp->h * 2);
 	else
-		draw->lh = (int)(disp.h / hit_point.perp_wall_dist);
-	draw->beg = (int)fmax(draw->yctr - ((double)draw->lh) / 2, 0);
-	draw->end = (int)fmin(draw->yctr + ((double)draw->lh) / 2, disp.h - 1);
-	draw->y = draw->beg - 1;
-	draw->ty = 0;
+		ret.lh = (int)(disp->h / hit_point.perp_wall_dist);
+	ret.beg = (int)fmax(ret.yctr - ((double)ret.lh) / 2, 0);
+	ret.end = (int)fmin(ret.yctr + ((double)ret.lh) / 2, disp->h - 1);
+	ret.y = ret.beg - 1;
+	ret.ty = 0;
+	return (ret);
 }
 
-void	draw_tex_wall_part(t_disp disp, t_tex tex, t_draw draw, t_hit hit_point)
+void	draw_tex_wall_part(t_disp *disp, t_draw *draw, t_tex tex, t_hit hit_point)
 {
-	double tpos;
-	double step_ty;
+	double	tpos;
+	double	step_ty;
 
-	set_draw_tex_wall(disp, &draw, hit_point);
-    step_ty = 1.0 * tex.h / draw.lh;
-	tpos = draw.beg - draw.yctr + (double)draw.lh / 2;
+    step_ty = 1.0 * tex.h / draw->lh;
+	tpos = draw->beg - draw->yctr + (double)draw->lh / 2;
 	tpos *= step_ty;
-	while (++(draw.y) < draw.end)
+	while (++(draw->y) < draw->end)
 	{
-		draw.ty = (int)fmin(tpos, (double)tex.h - 1); 
-	    hit_point.color = tex.data[draw.ty * tex.w + draw.tx];
+		draw->ty = (int)fmin(tpos, (double)tex.h - 1); 
+	    hit_point.color = tex.data[draw->ty * tex.w + draw->tx];
 	    if (hit_point.side == HIT_SIDE_Y)
 	        hit_point.color = (hit_point.color >> 1) & 8355711;
-	    disp.img.data[draw.y * disp.w + draw.x] = hit_point.color;
+	    disp->img.data[draw->y * disp->w + draw->x] = hit_point.color;
 	    tpos += step_ty;
 	}
 }
 
-int		draw_tex_wall(t_disp disp, t_player player, int x, t_hit hit_point)
+int		draw_tex_wall(t_disp *disp, t_player *player, int x, t_hit hit_point)
 {
-	t_draw		draw;
 	t_tex		wall_type;
+	t_draw		draw;
 
+	draw = set_tex_wall_draw(disp, hit_point);
 	draw.x = x;
 	wall_type = get_wall_type(disp, player, hit_point);	
-	draw.tx = get_tex_tx(wall_type, player, hit_point, player.ray_dir);	
-	draw_tex_wall_part(disp, wall_type, draw, hit_point);
+	draw.tx = get_tex_tx(wall_type, player, hit_point, player->ray_dir);	
+	draw_tex_wall_part(disp, &draw, wall_type, hit_point);
 	return (1);	
 }

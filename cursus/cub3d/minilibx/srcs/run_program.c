@@ -28,7 +28,7 @@ int	draw_img_data(t_disp *disp, t_player *player, double *perp_buf)
         player->ray_dir.x = player->dir.x + player->plane.x * camera_t;
         player->ray_dir.y = player->dir.y + player->plane.y * camera_t;
 		hit_point.perp_wall_dist = dda_algorithm(player, &hit_point, disp->map);
-		draw_tex_wall(*disp, *player, t, hit_point);
+		draw_tex_wall(disp, player, t, hit_point);
 		//draw_untex_wall(*(disp), t, hit_point);
 		perp_buf[t] = hit_point.perp_wall_dist;
     } 
@@ -48,7 +48,7 @@ int main_loop(t_loop *lv)
 		return (ERR_DRAW_IMG);
 	if (draw_img_data(lv->disp, lv->player, perp_buf))
 		return (ERR_DRAW_IMG);
-	if (draw_skybox(lv->disp, *lv->player))
+	if (draw_skybox(lv->disp, lv->player))
 		return (ERR_DRAW_IMG);
 	key_update(lv);
 	free(perp_buf);

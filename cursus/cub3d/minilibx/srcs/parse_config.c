@@ -40,7 +40,7 @@ int	get_background(t_disp *disp, char *color_set, int type, int wc)
 		free_split_arr(rgb);
 		return (ERR_PARSE);
 	}
-	tot_color = set_color(0, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+	tot_color = ft_atoi(rgb[0]) << 16 | ft_atoi(rgb[1]) << 8 | ft_atoi(rgb[2]);
 	free_split_arr(rgb);
 	if (type == CONFIG_F)
 		disp->floor_color = tot_color;
