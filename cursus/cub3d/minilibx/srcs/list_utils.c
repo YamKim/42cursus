@@ -11,17 +11,6 @@ t_lst	*lst_new_spr(t_spr spr)
 	return (ret);
 }
 
-t_lst	*lst_new_itm(t_itm itm)
-{
-	t_lst	*ret;
-
-	if (!(ret = (t_lst *)malloc(sizeof(t_lst))))
-		return (NULL);
-	ret->itm = itm;
-	ret->next = NULL;
-	return (ret);
-}
-
 t_lst	*lst_last(t_lst *lst)
 {
 	if (lst == NULL)

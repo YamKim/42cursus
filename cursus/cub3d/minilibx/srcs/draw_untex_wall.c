@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int		get_color(const t_hit hit_point)
+int		get_untex_wall_color(const t_hit hit_point)
 {
 	int	ret;
 
@@ -28,8 +28,8 @@ void	set_draw_untex_wall(t_disp disp, t_draw *draw, t_hit hit_point)
 		draw->lh = (int)(disp.h* 2);
 	else
 		draw->lh = (int)(disp.h/ hit_point.perp_wall_dist);
-	draw->beg = (int)fmax((((double)disp.h - draw->lh) / 2), 0);
-	draw->end = (int)fmin((((double)disp.h + draw->lh) / 2), disp.h- 1);
+	draw->ybeg = (int)fmax((((double)disp.h - draw->lh) / 2), 0);
+	draw->yend = (int)fmin((((double)disp.h + draw->lh) / 2), disp.h- 1);
 	draw->y = 0;
 }
 
@@ -51,11 +51,11 @@ void	draw_untex_wall(t_disp disp, const int x, const t_hit hit_point)
 	t_draw	draw;
 
 	set_draw_untex_wall(disp, &draw, hit_point);
-	while (draw.y < draw.beg)
+	while (draw.y < draw.ybeg)
 		disp.img.data[(draw.y++) * disp.w+ x] = disp.ceil_color;
-	draw.y = draw.beg;
-	while (draw.y < draw.end)
-		disp.img.data[(draw.y++) * disp.w+ x] = get_color(hit_point);
+	draw.y = draw.ybeg;
+	while (draw.y < draw.yend)
+		disp.img.data[(draw.y++) * disp.w+ x] = get_untex_wall_color(hit_point);
 	while (draw.y < disp.h)
 		disp.img.data[(draw.y++) * disp.w+ x] = disp.floor_color;
 }

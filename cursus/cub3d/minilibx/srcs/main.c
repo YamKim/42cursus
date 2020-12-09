@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
 	int		err_num;
 	
 	disp.spr_lst = NULL;
-	disp.itm_lst = NULL;
 	err_num = 0;
 	if (argc == 2)
 	{
@@ -62,7 +61,6 @@ int main(int argc, char *argv[])
 #endif
 	}
 	lst_clear(&disp.spr_lst);
-	lst_clear(&disp.itm_lst);
 	return (0);
 }
 #if 0

@@ -17,6 +17,7 @@ SRC = main.c \
 	draw_sprite.c \
 	draw_sprite_util.c \
 	draw_skybox.c \
+	draw_hud.c \
 	list_utils.c \
 	list_utils2.c \
 	ft_split.c \
@@ -27,8 +28,7 @@ SRC = main.c \
 	check_validity.c \
 	load_file.c \
 	show_data.c \
-	bonus_door.c \
-	bonus_item.c
+	bonus_door.c
 
 
 OBJ = $(SRC:.c=.o)

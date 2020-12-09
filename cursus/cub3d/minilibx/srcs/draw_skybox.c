@@ -3,12 +3,12 @@
 t_img	set_skybox_img(t_disp *disp)
 {
 	t_img	ret;
+	int		tmp;
 
 	ret.w = disp->w * DISP2SKYW;
 	ret.h = disp->h * DISP2SKYH;
 	ret.ptr = mlx_new_image(disp->mlx_ptr, ret.w, ret.h);
-	ret.data = (int *)mlx_get_data_addr(ret.ptr, &(ret.bpp),
-				&(ret.size_l), &(ret.endian));
+	ret.data = (int *)mlx_get_data_addr(ret.ptr, &tmp, &tmp, &tmp);
 	return (ret);
 }
 
@@ -69,7 +69,6 @@ int	draw_skybox(t_disp *disp, t_player *player)
 	t_veci	idx;
 	t_veci	step;
 
-	(void)player;
 	skybox = set_skybox_img(disp);
 	step.x = skybox.w / disp->map.max_w;
 	step.y = skybox.h / disp->map.h;

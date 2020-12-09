@@ -41,43 +41,44 @@ t_draw	set_draw_sprite(t_disp *disp, t_vecd coef, int tex_nbr)
 
 	scale = set_sprite_scale(&ret, coef, tex_nbr);
 	ret.xctr = (int)((double)disp->w / 2 * (1 + coef.x / coef.y));
-	ret.yctr = (double)disp->h / 2 + ret.bias + disp->hctr_bias;
+	ret.yctr = (int)((double)disp->h / 2 + ret.bias + disp->hctr_bias);
 	spr_h = (int)fabs((double)disp->h / coef.y);
 	ret.lh = spr_h / scale.x;
-	ret.beg = (int)fmax(ret.yctr - (double)ret.lh / 2, 0.0);
-	ret.end = (int)fmin(ret.yctr + (double)ret.lh / 2, disp->h - 1);
+	ret.ybeg = (int)fmax(ret.yctr - (double)ret.lh / 2, 0.0);
+	ret.yend = (int)fmin(ret.yctr + (double)ret.lh / 2, disp->h - 1);
 	spr_w = spr_h / scale.y;
 	ret.xbeg = (int)fmax(ret.xctr - (double)spr_w / 2 , 0.0);
 	ret.xend = (int)fmin(ret.xctr + (double)spr_w / 2 , disp->w - 1);
-	ret.y = ret.beg;
 	ret.x = ret.xbeg;
 	return (ret);
 }
 
-void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *player, t_draw *draw)
+void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *p, t_draw *draw)
 {
-	int	color;
-	double	tmp_ypos;
-	double	tmp_xpos;
+	t_vecd	tpos;
+	t_vecd	step;
 
-	while (draw->x < draw->xend)
+	step.x = (double)tex->w / draw->lh;
+	step.y = (double)tex->h / draw->lh;
+	
+	draw->x = draw->xbeg - 1;
+	while (++(draw->x) < draw->xend)
 	{
-		tmp_xpos = draw->x - draw->xctr + (double)draw->lh / 2;
-		draw->tx = (int)fmin((tmp_xpos * tex->w / draw->lh), tex->w - 1);
-		if(player->coef.y > 0 && draw->x > 0 && draw->x < disp->w \
-			&& player->coef.y < g_perp_buf[draw->x])
+		tpos.x = draw->x - draw->xctr + (double)draw->lh / 2;
+		draw->tx = (int)fmin(tpos.x * step.x, tex->w - 1);
+		if(p->coef.y > 0 && draw->x > 0 && draw->x < disp->w \
+			&& p->coef.y < g_perp_buf[draw->x])
 		{
-			draw->y = draw->beg - 1;
-			while (++(draw->y) < draw->end)
+			draw->y = draw->ybeg;
+			while (++(draw->y) < draw->yend)
 			{
-				tmp_ypos = draw->y - draw->yctr + (double)draw->lh / 2;
-				draw->ty = (int)fmin(tmp_ypos * tex->h / draw->lh, tex->h - 1);
-				color = tex->data[draw->ty * tex->w + draw->tx];
-				if((color & 0x00FFFFFF) != 0)
-					disp->img.data[draw->y * disp->w+ draw->x] = color;
+				tpos.y = draw->y - draw->yctr + (double)draw->lh / 2;
+				draw->ty = (int)fmin(tpos.y * step.y, tex->h - 1);
+				draw->color = tex->data[draw->ty * tex->w + draw->tx];
+				if((draw->color & 0x00FFFFFF) != 0)
+					disp->img.data[draw->y * disp->w + draw->x] = draw->color;
 			}
 		}
-		++(draw->x);
 	}
 }
 

@@ -16,7 +16,6 @@ int	draw_tex_background(t_disp *disp, t_player player)
 {
 	t_vecd	ray_dir0;
 	t_vecd	ray_dir1;
-	t_hit	hit_point;
 	t_veci	cell;
 
 	ray_dir0.x = player.dir.x - player.plane.x;
@@ -47,8 +46,8 @@ int	draw_tex_background(t_disp *disp, t_player player)
 			cell.y = (int)ceil.y;
 			draw.tx = (int)fmin(tex_ceil.w * (ceil.x - cell.x), tex_ceil.w - 1);
 			draw.ty = (int)fmin(tex_ceil.h * (ceil.y - cell.y), tex_ceil.h - 1);
-			hit_point.color = tex_ceil.data[draw.ty * tex_ceil.w + draw.tx];
-			hit_point.color = (hit_point.color >> 1) & 8355711; // make a bit darker
+			draw.color = tex_ceil.data[draw.ty * tex_ceil.w + draw.tx];
+			draw.color = (draw.color >> 1) & 8355711; // make a bit darker
 			disp->img.data[y * disp->w + x] =disp->ceil_color;
 			//disp->img.data[y * disp->w + x] = hit_point.color;	
 			ceil.x += ceil_step.x;
@@ -70,8 +69,8 @@ int	draw_tex_background(t_disp *disp, t_player player)
 			cell.y = (int)floor.y;
 			draw.tx = (int)fmin(tex_floor.w * (floor.x - cell.x), tex_floor.w - 1);
 			draw.ty = (int)fmin(tex_floor.h * (floor.y - cell.y), tex_floor.h - 1);
-			hit_point.color = tex_floor.data[draw.ty * tex_floor.w + draw.tx];
-			hit_point.color = (hit_point.color >> 1) & 8355711; // make a bit darker
+			draw.color = tex_floor.data[draw.ty * tex_floor.w + draw.tx];
+			draw.color = (draw.color >> 1) & 8355711; // make a bit darker
 			disp->img.data[y * disp->w + x] = disp->floor_color;
 			//disp->img.data[y * disp->w + x] = hit_point.color;
 			floor.x += floor_step.x;

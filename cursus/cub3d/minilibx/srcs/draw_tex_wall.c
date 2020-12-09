@@ -4,8 +4,6 @@ t_tex	get_wall_type(t_disp *disp, t_player *player, t_hit hit_point)
 {
 	if (hit_point.door_type == MAP_SECRET_VAL)
 		return (disp->tex[CONFIG_SECRET]);
-	if (hit_point.door_type == MAP_OPDOOR_VAL)
-		return (disp->tex[CONFIG_OPDOOR]);
 	if (hit_point.side == HIT_SIDE_Y)
 	{
 		if (player->ray_dir.y > 0)
@@ -50,9 +48,9 @@ t_draw	set_tex_wall_draw(t_disp *disp, t_hit hit_point)
 		ret.lh = (int)(disp->h * 2);
 	else
 		ret.lh = (int)(disp->h / hit_point.perp_wall_dist);
-	ret.beg = (int)fmax(ret.yctr - ((double)ret.lh) / 2, 0);
-	ret.end = (int)fmin(ret.yctr + ((double)ret.lh) / 2, disp->h - 1);
-	ret.y = ret.beg - 1;
+	ret.ybeg = (int)fmax(ret.yctr - ((double)ret.lh) / 2, 0);
+	ret.yend = (int)fmin(ret.yctr + ((double)ret.lh) / 2, disp->h - 1);
+	ret.y = ret.ybeg - 1;
 	ret.ty = 0;
 	return (ret);
 }
@@ -62,16 +60,16 @@ void	draw_tex_wall_part(t_disp *disp, t_draw *draw, t_tex tex, t_hit hit_point)
 	double	tpos;
 	double	step_ty;
 
-    step_ty = 1.0 * tex.h / draw->lh;
-	tpos = draw->beg - draw->yctr + (double)draw->lh / 2;
+    step_ty = (double)tex.h / draw->lh;
+	tpos = draw->ybeg - draw->yctr + (double)draw->lh / 2;
 	tpos *= step_ty;
-	while (++(draw->y) < draw->end)
+	while (++(draw->y) < draw->yend)
 	{
 		draw->ty = (int)fmin(tpos, (double)tex.h - 1); 
-	    hit_point.color = tex.data[draw->ty * tex.w + draw->tx];
+	    draw->color = tex.data[draw->ty * tex.w + draw->tx];
 	    if (hit_point.side == HIT_SIDE_Y)
-	        hit_point.color = (hit_point.color >> 1) & 8355711;
-	    disp->img.data[draw->y * disp->w + draw->x] = hit_point.color;
+	        draw->color = (draw->color >> 1) & 8355711;
+	    disp->img.data[draw->y * disp->w + draw->x] = draw->color;
 	    tpos += step_ty;
 	}
 }
@@ -86,5 +84,5 @@ int		draw_tex_wall(t_disp *disp, t_player *player, int x, t_hit hit_point)
 	wall_type = get_wall_type(disp, player, hit_point);	
 	draw.tx = get_tex_tx(wall_type, player, hit_point, player->ray_dir);	
 	draw_tex_wall_part(disp, &draw, wall_type, hit_point);
-	return (1);	
+	return (0);	
 }

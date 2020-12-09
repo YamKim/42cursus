@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/08 18:54:24 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/09 17:22:34 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@
 /*
 ** texture setting
 */
-# define TEXTURE_NUMBER 8
+# define TEXTURE_NUMBER 10
 
 /*
 ** bonus
@@ -143,11 +143,13 @@
 # define CONFIG_ITEM 5
 # define TEXTURE_ITEM_FILE "./textures/red.xpm"
 # define CONFIG_SECRET 6
-# define TEXTURE_SECRET_FILE "./textures/eagle.xpm"
+# define TEXTURE_SECRET_FILE "./textures/question2.xpm"
 # define CONFIG_OPDOOR 7
 # define TEXTURE_OPDOOR_FILE "./textures/question2.xpm"
 # define CONFIG_CLDOOR 8
 # define TEXTURE_CLDOOR_FILE "./textures/question2.xpm"
+# define CONFIG_HUD 9
+# define TEXTURE_HUD_FILE "./textures/logo.xpm"
 
 /*
 ** calc_basic
@@ -174,7 +176,7 @@
 # define SPRITE_MOVE 100.0
 # define ITEM_VDIV 1.5
 # define ITEM_UDIV 1.5
-# define ITEM_MOVE 200.0
+# define ITEM_MOVE 100.0
 # define ITEM_APPROACH_DIST 1.0
 
 /*
@@ -182,6 +184,12 @@
 */
 # define DISP2SKYW 3 / 7
 # define DISP2SKYH 2 / 7
+
+/*
+** skybox
+*/
+# define DISP2HUDW 1 / 7
+# define DISP2HUDH 1 / 7
 
 /*
 ** color set
@@ -227,16 +235,9 @@ typedef struct		s_spr
 	int				tex_nbr;
 }					t_spr;
 
-typedef struct		s_itm
-{
-	t_vecd			pos;
-	int				tex_nbr;
-}					t_itm;
-
 typedef struct		s_lst
 {
 	t_spr			spr;
-	t_itm			itm;
 	struct s_lst	*next;
 }					t_lst;
 
@@ -284,8 +285,6 @@ typedef struct		s_disp
 	char			start_orient;
 	int				spr_cnt;
 	t_lst			*spr_lst;
-	int				itm_cnt;
-	t_lst			*itm_lst;
 }					t_disp;	
 
 typedef struct		s_player
@@ -322,17 +321,17 @@ typedef struct		s_hit
 {
 	t_veci			pos;
 	int				side;
-	int				color;
 	double			perp_wall_dist;
 	int				door_type;
+	int				secret_door;
 }					t_hit;
 
 typedef struct		s_draw
 {
 	int				y;
 	int				x;
-	int				beg;
-	int				end;
+	int				ybeg;
+	int				yend;
 	int				ty;
 	int				tx;
 	int				lh;
@@ -341,6 +340,7 @@ typedef struct		s_draw
 	int				xctr;
 	int				yctr;
 	int				bias;
+	int				color;
 }					t_draw;
 
 /*
@@ -413,14 +413,14 @@ void				get_close_sprite(t_disp *disp, t_player *p);
 t_vecd				set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr);
 
 /*
-** display drawing secret door
-*/
-int					draw_item(t_disp *disp, t_player *p, double *perp_buf);
-
-/*
 ** display skybox
 */
 int					draw_skybox(t_disp *disp, t_player *player);
+
+/*
+** display hud
+*/
+int					draw_hud(t_disp *disp, t_player *player);
 
 /*
 ** load images from xpm files
@@ -469,13 +469,11 @@ int					is_secret(int map_data, t_hit *hit_point, int *hit_flag);
 */
 void				show_map_data(t_disp disp);
 void				show_lst_data(t_lst *itr);
-void				show_items(t_disp disp);
 
 /*
 ** list setting
 */
 t_lst				*lst_new_spr(t_spr spr);
-t_lst				*lst_new_itm(t_itm itm);
 void				lst_add_back(t_lst **lst, t_lst *new_lst);
 t_lst				*lst_get_idx(t_lst *lst, int idx);
 void				lst_del_idx(t_lst **lst, int idx);
@@ -488,9 +486,5 @@ void				lst_clear(t_lst **lst);
 ** door
 */
 int					check_door_type(t_hit *hit_point, int map_data);
-/*
-** item
-*/
-void				get_close_item(t_disp *disp, t_player *p);
 
 #endif
