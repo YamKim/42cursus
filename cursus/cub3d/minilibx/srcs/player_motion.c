@@ -1,20 +1,14 @@
 #include "cub3d.h"
 
-void	start_orient(t_player *player, char orient)
+int		check_gostop(int after_map_data)
 {
-	double	angle;
-
-	angle = 0.0;
-	if (orient == NORTH)
-		angle = START_NORTH_ANGLE;
-	else if (orient == EAST)
-		angle = START_EAST_ANGLE;
-	else if (orient == WEST)
-		angle = START_WEST_ANGLE;
-	else if (orient == SOUTH)
-		angle = START_SOUTH_ANGLE;
-	player->dir = rotate_vec(player->dir, angle * DEG2RAD);
-	player->plane = rotate_vec(player->plane, angle * DEG2RAD);
+	if (after_map_data == MAP_WALL_VAL)
+		return (0);
+	else if (after_map_data == MAP_CLDOOR_VAL)
+		return (0);
+	else if (after_map_data == MAP_OPDOOR_VAL)
+		return (1);
+	return (1);
 }
 
 /*==============================================================================
@@ -31,11 +25,14 @@ void	start_orient(t_player *player, char orient)
 void	move_forward(t_player *player, t_map map)
 {
 	t_vecd	after_move;
+	t_veci	after_map_data;
 
 	after_move = translate_vec(player->pos, player->dir, player->trans_speed);
-    if (map.data[(int)after_move.y][(int)(player->pos.x)] != MAP_WALL_VAL)
+	after_map_data.y = map.data[(int)after_move.y][(int)(player->pos.x)];
+	after_map_data.x = map.data[(int)(player->pos.y)][(int)after_move.x];
+    if (check_gostop(after_map_data.y))
         player->pos.y = after_move.y;
-    if (map.data[(int)(player->pos.y)][(int)after_move.x] != MAP_WALL_VAL)
+    if (check_gostop(after_map_data.x))
         player->pos.x = after_move.x;
 }
 
@@ -53,11 +50,14 @@ void	move_forward(t_player *player, t_map map)
 void	move_backward(t_player *player, t_map map)
 {
 	t_vecd	after_move;
+	t_veci	after_map_data;
 	
 	after_move = translate_vec(player->pos, player->dir, -player->trans_speed);
-    if (map.data[(int)after_move.y][(int)(player->pos.x)] != MAP_WALL_VAL)
+	after_map_data.y = map.data[(int)after_move.y][(int)(player->pos.x)];
+	after_map_data.x = map.data[(int)(player->pos.y)][(int)after_move.x];
+    if (check_gostop(after_map_data.y))
 		player->pos.y = after_move.y;
-    if (map.data[(int)(player->pos.y)][(int)after_move.x] != MAP_WALL_VAL)
+    if (check_gostop(after_map_data.x))
 		player->pos.x = after_move.x;
 }
 

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/09 17:22:34 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/10 17:54:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
-# define KEY_O 31
+# define KEY_F 3
 # define KEY_J 31
 # define KEY_H 4
 # define KEY_G 5
@@ -109,10 +109,10 @@
 # define MAP_ITEM_VAL 3
 # define MAP_SECRET '4'
 # define MAP_SECRET_VAL 4
-# define MAP_OPDOOR '5'
-# define MAP_OPDOOR_VAL 5
-# define MAP_CLDOOR '6'
-# define MAP_CLDOOR_VAL 6
+# define MAP_CLDOOR '5'
+# define MAP_CLDOOR_VAL 5
+# define MAP_OPDOOR '6'
+# define MAP_OPDOOR_VAL 6
 
 
 /*
@@ -143,11 +143,11 @@
 # define CONFIG_ITEM 5
 # define TEXTURE_ITEM_FILE "./textures/red.xpm"
 # define CONFIG_SECRET 6
-# define TEXTURE_SECRET_FILE "./textures/question2.xpm"
-# define CONFIG_OPDOOR 7
+# define TEXTURE_SECRET_FILE "./textures/eagle.xpm"
+# define CONFIG_CLDOOR 7
+# define TEXTURE_CLDOOR_FILE "./textures/question.xpm"
+# define CONFIG_OPDOOR 8
 # define TEXTURE_OPDOOR_FILE "./textures/question2.xpm"
-# define CONFIG_CLDOOR 8
-# define TEXTURE_CLDOOR_FILE "./textures/question2.xpm"
 # define CONFIG_HUD 9
 # define TEXTURE_HUD_FILE "./textures/logo.xpm"
 
@@ -372,6 +372,7 @@ void				move_backward(t_player *player, t_map map);
 void				turn_left(t_player *player);
 void				turn_right(t_player *player);
 void				set_zaxis_motion(t_disp *disp, t_player *player);
+void				open_door_trigger(t_disp *disp, t_player *player);
 
 /*
 ** operate vector calculation

@@ -6,7 +6,7 @@ void	show_map_data(t_disp disp)
 	printf("MAP DATA========================================\n");
 	printf("max_width: %d\n", disp.map.max_w);
 	printf("height: %d\n", disp.map.h);
-	for (int j = 0; j < disp.map.h; ++j)
+	for (int j = disp.map.h - 1; j >= 0; --j)
 	{
 		for (int i = 0; disp.map.data[j][i] != MAP_BOARDER_VAL; ++i)
 		{
@@ -18,6 +18,12 @@ void	show_map_data(t_disp disp)
 				val = MAP_SPACE;
 			if (disp.map.data[j][i] == MAP_ITEM_VAL)
 				val = MAP_ITEM;
+			if (disp.map.data[j][i] == MAP_SECRET_VAL)
+				val = MAP_SECRET;
+			if (disp.map.data[j][i] == MAP_CLDOOR_VAL)
+				val = MAP_CLDOOR;
+			if (disp.map.data[j][i] == MAP_OPDOOR_VAL)
+				val = MAP_OPDOOR;
 			if (disp.map.data[j][i] == MAP_EXCEPTION_VAL)
 				val = 'X';
 			if (disp.map.data[j][i] == MAP_BOARDER_VAL)

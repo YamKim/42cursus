@@ -45,6 +45,8 @@ int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
 {
 	if (data == MAP_SECRET)
 		return (MAP_SECRET_VAL);
+	else if (data == MAP_CLDOOR)
+		return (MAP_CLDOOR_VAL);
 	else if (data == MAP_OPDOOR)
 		return (MAP_OPDOOR_VAL);
 	else if (data == MAP_ITEM)

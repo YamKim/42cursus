@@ -54,7 +54,8 @@ int	draw_secret_door(t_disp *disp, t_player *player)
         player->ray_dir.x = player->dir.x + player->plane.x * camera_t;
         player->ray_dir.y = player->dir.y + player->plane.y * camera_t;
 		hit_point.perp_wall_dist = dda_algorithm(player, &hit_point, disp->map);
-		if (hit_point.door_type == MAP_SECRET_VAL)
+		if (hit_point.door_type == MAP_SECRET_VAL \
+			|| hit_point.door_type == MAP_OPDOOR_VAL)
 			draw_tex_wall(disp, player, t, hit_point);
     } 
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.ptr, 0, 0);

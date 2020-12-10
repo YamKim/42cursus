@@ -9,6 +9,10 @@ int	case_secret_door(int map_data)
 		ret = MAP_WALL_VAL;
 	else if (map_data == MAP_SECRET_VAL)
 		ret = MAP_SECRET_VAL;
+	else if (map_data == MAP_CLDOOR_VAL)
+		ret = MAP_CLDOOR_VAL;
+	else if (map_data == MAP_OPDOOR_VAL)
+		ret = MAP_OPDOOR_VAL;
 	return (ret);
 }
 
@@ -20,6 +24,10 @@ int	case_general_wall(int map_data)
 	if (map_data == MAP_WALL_VAL)
 		ret = MAP_WALL_VAL;
 	else if (map_data == MAP_SECRET_VAL)
+		ret = MAP_ROAD_VAL;
+	else if (map_data == MAP_CLDOOR_VAL)
+		ret = MAP_CLDOOR_VAL;
+	else if (map_data == MAP_OPDOOR_VAL)
 		ret = MAP_ROAD_VAL;
 	return (ret);
 }

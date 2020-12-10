@@ -1,5 +1,4 @@
 #include "cub3d.h"
-
 // over max resolution -> max resolution
 int	get_info(t_disp *disp, char *fname)
 {

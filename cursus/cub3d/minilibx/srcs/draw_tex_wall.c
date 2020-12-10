@@ -4,6 +4,10 @@ t_tex	get_wall_type(t_disp *disp, t_player *player, t_hit hit_point)
 {
 	if (hit_point.door_type == MAP_SECRET_VAL)
 		return (disp->tex[CONFIG_SECRET]);
+	if (hit_point.door_type == MAP_CLDOOR_VAL)
+		return (disp->tex[CONFIG_CLDOOR]);
+	if (hit_point.door_type == MAP_OPDOOR_VAL)
+		return (disp->tex[CONFIG_OPDOOR]);
 	if (hit_point.side == HIT_SIDE_Y)
 	{
 		if (player->ray_dir.y > 0)
