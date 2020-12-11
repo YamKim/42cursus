@@ -21,6 +21,7 @@ SRC = main.c \
 	get_close_sprite.c \
 	draw_skybox.c \
 	draw_hud.c \
+	draw_hud_series.c \
 	list_utils.c \
 	list_utils2.c \
 	ft_split.c \

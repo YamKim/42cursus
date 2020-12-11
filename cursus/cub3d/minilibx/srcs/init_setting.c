@@ -28,6 +28,9 @@ void init_player_setting(t_disp *disp, t_player *player)
 	player->trans_speed = TRANS_SPEED;
 	player->rot_speed = ROT_SPEED;
 	start_orient(player, disp->start_orient);
+	player->life = LIFE_DEFAULT;
+	player->tic.beg = 0;
+	player->tic.end = 0;
 }
 
 void	init_disp_setting(t_disp *disp)

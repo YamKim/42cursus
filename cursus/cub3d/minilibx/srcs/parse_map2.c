@@ -18,7 +18,9 @@ int	bonus_config(t_disp *disp)
 		return (ERR_TEXTURE_CALL);
 	if (load_tex(&(disp->tex[CONFIG_OPDOOR]), TEXTURE_OPDOOR_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_HUD]), TEXTURE_HUD_FILE) != 0)
+	if (load_tex(&(disp->tex[CONFIG_LOGO]), TEXTURE_HUD_FILE) != 0)
+		return (ERR_TEXTURE_CALL);
+	if (load_tex(&(disp->tex[CONFIG_UP]), TEXTURE_UP_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
 	return (0);
 }

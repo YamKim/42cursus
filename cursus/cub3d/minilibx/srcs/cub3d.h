@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/11 14:32:58 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/11 23:20:01 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <limits.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <time.h>
 
 /*
 ** PRECOMPILING ======================================
@@ -135,7 +136,7 @@
 /*
 ** texture setting
 */
-# define TEXTURE_NUMBER 10
+# define TEXTURE_NUMBER 11
 
 /*
 ** bonus
@@ -148,8 +149,10 @@
 # define TEXTURE_CLDOOR_FILE "./textures/question.xpm"
 # define CONFIG_OPDOOR 8
 # define TEXTURE_OPDOOR_FILE "./textures/question2.xpm"
-# define CONFIG_HUD 9
+# define CONFIG_LOGO 9
 # define TEXTURE_HUD_FILE "./textures/logo.xpm"
+# define CONFIG_UP 10
+# define TEXTURE_UP_FILE "./textures/upgrade.xpm"
 
 /*
 ** calc_basic
@@ -178,7 +181,7 @@
 # define ITEM_UDIV 1.5
 # define ITEM_MOVE 100.0
 # define ITEM_APPROACH_DIST 1.0
-# define ATTACK_APPROACH_DIST 0.3
+# define ATTACK_APPROACH_DIST 0.4
 
 /*
 ** skybox
@@ -187,10 +190,11 @@
 # define DISP2SKYH 2 / 7
 
 /*
-** skybox
+** hud
 */
-# define DISP2HUDW 1 / 7
-# define DISP2HUDH 1 / 7
+# define GET_ITEM 1
+# define DISP2HUD_ITEM_W (double)3 / 7
+# define DISP2HUD_ITEM_H (double)3 / 7
 
 /*
 ** color set
@@ -208,6 +212,11 @@
 # define SIZE_SKY_RAY 1
 # define SIZE_SKY_PLAYER 5
 
+/*
+** life bar
+*/
+# define ATTACK_PUSH_BACK 20
+# define LIFE_DEFAULT 5
 
 /*
 ** structures
@@ -288,6 +297,12 @@ typedef struct		s_disp
 	t_lst			*spr_lst;
 }					t_disp;	
 
+typedef struct		s_tic
+{
+	time_t			beg;
+	time_t			end;
+}					t_tic;
+
 typedef struct		s_player
 {
 	t_vecd			pos;
@@ -299,6 +314,7 @@ typedef struct		s_player
 	t_vecd			coef;
 	int				key;
 	int				life;
+	t_tic			tic;
 }					t_player;
 
 typedef struct		s_loop
@@ -424,7 +440,8 @@ int					draw_skybox(t_disp *disp, t_player *player);
 /*
 ** display hud
 */
-int					draw_hud(t_disp *disp, t_player *player, t_tex tex, t_veci bias);
+int					draw_hud(t_disp *disp, t_tex tex, t_vecd scale, t_veci bias);
+int					draw_hud_series(t_disp *disp, t_player *player);
 
 /*
 ** load images from xpm files

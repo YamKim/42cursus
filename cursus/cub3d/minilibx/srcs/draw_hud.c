@@ -2,8 +2,8 @@
 
 void	init_hud_img(t_img *hud)
 {
-	int	x;
 	int	y;
+	int	x;
 
 	x = -1;
 	while (++x < hud->w)
@@ -20,7 +20,6 @@ t_draw	set_hud_draw(t_img *hud)
 	
 	ret.xctr = (int)((double)hud->w / 2);
 	ret.yctr = (int)((double)hud->h / 2);
-
 	ret.lh = hud->h;
 	ret.xbeg = (int)fmax(ret.xctr - (double)hud->w / 2, 0);
 	ret.xend = (int)fmin(ret.xctr + (double)hud->w / 2, hud->w - 1);
@@ -29,16 +28,15 @@ t_draw	set_hud_draw(t_img *hud)
 	return (ret);
 }
 
-t_img	set_hud_img(t_disp *disp)
+t_img	set_hud_img(t_disp *disp, t_vecd scale)
 {
 	t_img	ret;
 	int		tmp;
 
-	ret.w =	(int)disp->w * DISP2HUDW;
-	ret.h =	(int)disp->h * DISP2HUDH;
+	ret.w =	(int)disp->w * scale.x;
+	ret.h =	(int)disp->h * scale.y;
 	ret.ptr = mlx_new_image(disp->mlx_ptr, ret.w, ret.h);
 	ret.data = (int *)mlx_get_data_addr(ret.ptr, &tmp, &tmp, &tmp);
-
 	return (ret);
 }
 
@@ -63,20 +61,20 @@ void	draw_hud_part(t_img *hud, t_draw *draw, t_tex tex)
 			hud->data[draw->y * hud->w + draw->x] = draw->color;
 		}
 	}
-
 }
 
-int	draw_hud(t_disp *disp, t_player *player, t_tex tex, t_veci b)
+int	draw_hud(t_disp *disp, t_tex tex, t_vecd scale, t_veci bias)
 {
 	t_img	hud;
 	t_draw	draw;
 
-	(void)player;
-	hud = set_hud_img(disp);
+	hud = set_hud_img(disp, scale);
 	init_hud_img(&hud);
 	draw = set_hud_draw(&hud);
 	draw_hud_part(&hud, &draw, tex);
-	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, hud.ptr, b.x, b.y);
-
+	bias.y -= (int)((double)hud.h / 2);
+	bias.x -= (int)((double)hud.w / 2);
+	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, \
+							hud.ptr, bias.x, bias.y);
 	return (0);
 }

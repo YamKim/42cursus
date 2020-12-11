@@ -27,15 +27,12 @@ int	draw_img_data(t_disp *disp, t_player *player, double *perp_buf, int secret)
 int	bonus_loop(t_loop *lv)
 {
 	int		ret;
-	t_veci	bias;
 
 	ret = 0;
 	if (draw_skybox(lv->disp, lv->player))
 		ret |= ERR_DRAW_IMG;
-	bias.y = (double)lv->disp->h / 2;
-	bias.x = (double)lv->disp->w / 2;
-	if (draw_hud(lv->disp, lv->player, lv->disp->tex[CONFIG_HUD], bias))
-		ret |= ERR_DRAW_IMG;
+	if (draw_hud_series(lv->disp, lv->player))
+		ret |= ERR_DRAW_IMG;	
 	return (ret);
 }
 

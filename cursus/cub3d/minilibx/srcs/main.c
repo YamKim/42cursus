@@ -54,11 +54,8 @@ int main(int argc, char *argv[])
 		}
 		show_map_data(disp);
 		init_player_setting(&disp, &player);
-#if 1
 		if (err_num == 0 && cub3d_run(&disp, &player))
 			return (ERR_RUN);
-#endif
 	}
-	lst_clear(&disp.spr_lst);
 	return (0);
 }

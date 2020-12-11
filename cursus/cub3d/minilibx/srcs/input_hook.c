@@ -1,9 +1,16 @@
 #include "cub3d.h"
 
+void	finish_program(t_loop *lv)
+{
+	lst_clear(&(lv->disp->spr_lst));
+	printf("PROGRAM FINISHED======================================\n");
+	exit(0);
+}
+
 int		key_press(int key, t_loop *lv)
 {
     if (key == KEY_ESC)
-        exit(0);
+        finish_program(lv);
     else if (key == KEY_W)
 		lv->player->key |= (1 << KEY_W);
     else if (key == KEY_S)
@@ -24,7 +31,7 @@ int		key_press(int key, t_loop *lv)
 int		key_release(int key, t_loop *lv)
 {
     if (key == KEY_ESC)
-        exit(0);
+        finish_program(lv);
     else if (key == KEY_W)
 		lv->player->key &= ~(1 << KEY_W);
     else if (key == KEY_S)
