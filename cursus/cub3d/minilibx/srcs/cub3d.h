@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/11 12:58:48 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/11 14:32:58 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@
 # define ITEM_UDIV 1.5
 # define ITEM_MOVE 100.0
 # define ITEM_APPROACH_DIST 1.0
+# define ATTACK_APPROACH_DIST 0.3
 
 /*
 ** skybox
@@ -297,10 +298,7 @@ typedef struct		s_player
 	t_vecd			ray_dir;
 	t_vecd			coef;
 	int				key;
-	int				key_w;
-	int				key_s;
-	int				key_a;
-	int				key_d;
+	int				life;
 }					t_player;
 
 typedef struct		s_loop
@@ -348,9 +346,14 @@ typedef struct		s_draw
 */
 
 /*
+** initialize disp and player
+*/
+void				init_disp_setting(t_disp *disp);
+void				init_player_setting(t_disp *disp, t_player *player);
+/*
 ** run cub3d program
 */
-int					cub3d_run(t_disp *disp);
+int					cub3d_run(t_disp *disp, t_player *player);
 
 /*
 ** parse configuration
@@ -403,15 +406,15 @@ int					draw_tex_wall(t_disp *disp, t_player *player, int x, t_hit hit_point);
 /*
 ** display drawing tex line
 */
-int					draw_tex_background(t_disp *disp, t_player player);
+int					draw_tex_background(t_disp *disp, t_player *player);
 
 /*
 ** display drawing sprite shape
 */
 int					draw_sprite(t_disp *disp, t_player *p, double *perp_buf);
 void				sort_spr_pair(t_pair *spr_pair, int spr_cnt);
-void				get_close_sprite(t_disp *disp, t_player *p);
 t_vecd				set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr);
+void				get_close_sprite(t_disp *disp, t_player *p);
 
 /*
 ** display skybox

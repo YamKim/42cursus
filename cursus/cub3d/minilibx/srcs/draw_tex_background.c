@@ -12,16 +12,16 @@ int	draw_tex_floor()
 }
 #endif
 
-int	draw_tex_background(t_disp *disp, t_player player)
+int	draw_tex_background(t_disp *disp, t_player *player)
 {
 	t_vecd	ray_dir0;
 	t_vecd	ray_dir1;
 	t_veci	cell;
 
-	ray_dir0.x = player.dir.x - player.plane.x;
-	ray_dir0.y = player.dir.y - player.plane.y;
-	ray_dir1.x = player.dir.x + player.plane.x;
-	ray_dir1.y = player.dir.y + player.plane.y;
+	ray_dir0.x = player->dir.x - player->plane.x;
+	ray_dir0.y = player->dir.y - player->plane.y;
+	ray_dir1.x = player->dir.x + player->plane.x;
+	ray_dir1.y = player->dir.y + player->plane.y;
 
 
 	t_draw	draw;
@@ -38,8 +38,8 @@ int	draw_tex_background(t_disp *disp, t_player player)
 		double row_dist = (double)draw.yctr / (draw.yctr - y);
 		ceil_step.x = row_dist * (ray_dir1.x - ray_dir0.x) / disp->w;
 		ceil_step.y = row_dist * (ray_dir1.y - ray_dir0.y) / disp->w;
-		ceil.x = player.pos.x + row_dist * ray_dir0.x;
-		ceil.y = player.pos.y + row_dist * ray_dir0.y;
+		ceil.x = player->pos.x + row_dist * ray_dir0.x;
+		ceil.y = player->pos.y + row_dist * ray_dir0.y;
 		for(int x = 0; x < disp->w; ++x)
 		{
 			cell.x = (int)ceil.x;
@@ -61,8 +61,8 @@ int	draw_tex_background(t_disp *disp, t_player player)
 		double row_dist = (double)draw.yctr / (y - draw.yctr);
 		floor_step.x = row_dist * (ray_dir1.x - ray_dir0.x) / disp->w;
 		floor_step.y = row_dist * (ray_dir1.y - ray_dir0.y) / disp->w;
-		floor.x = player.pos.x + row_dist * ray_dir0.x;
-		floor.y = player.pos.y + row_dist * ray_dir0.y;
+		floor.x = player->pos.x + row_dist * ray_dir0.x;
+		floor.y = player->pos.y + row_dist * ray_dir0.y;
 		for(int x = 0; x < disp->w; ++x)
 		{
 			cell.x = (int)floor.x;

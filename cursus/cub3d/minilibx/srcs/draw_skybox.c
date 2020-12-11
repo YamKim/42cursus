@@ -41,21 +41,21 @@ void	draw_player_on_skybox(t_disp *disp, t_img *skybox, t_player *player)
 {
 	int		i;
 	t_vecd	p;
-	t_vecd	d[12];
-	t_vecd	ray_l[12];
-	t_vecd	ray_r[12];
+	t_vecd	d[5];
+	t_vecd	ray_l[5];
+	t_vecd	ray_r[5];
 
 	p.x = (double)player->pos.x * skybox->w / disp->map.max_w;
 	p.y = (double)player->pos.y * skybox->h / disp->map.h;
 	i = -1;
-	while (++i < 12)
+	while (++i < 5)
 	{
-		d[i].x = p.x + 1.5 * i * player->dir.x;
-		d[i].y = p.y + 1.5 * i * player->dir.y;
-		ray_l[i].y = p.y + 2 * i * (player->dir.y + player->plane.y);
-		ray_l[i].x = p.x + 2 * i * (player->dir.x + player->plane.x);
-		ray_r[i].y = p.y + 2 * i * (player->dir.y - player->plane.y);
-		ray_r[i].x = p.x + 2 * i * (player->dir.x - player->plane.x);
+		d[i].x = p.x + 3 * i * player->dir.x;
+		d[i].y = p.y + 3 * i * player->dir.y;
+		ray_l[i].y = p.y + 3 * i * (player->dir.y + player->plane.y);
+		ray_l[i].x = p.x + 3 * i * (player->dir.x + player->plane.x);
+		ray_r[i].y = p.y + 3 * i * (player->dir.y - player->plane.y);
+		ray_r[i].x = p.x + 3 * i * (player->dir.x - player->plane.x);
 		draw_skybox_point(skybox, d[i], COLOR_SKY_DIR, 1);
 		draw_skybox_point(skybox, ray_l[i], COLOR_SKY_RAY_DIR, 1);
 		draw_skybox_point(skybox, ray_r[i], COLOR_SKY_RAY_DIR, 1);
@@ -72,12 +72,13 @@ int	draw_skybox(t_disp *disp, t_player *player)
 	skybox = set_skybox_img(disp);
 	step.x = skybox.w / disp->map.max_w;
 	step.y = skybox.h / disp->map.h;
-	
-	for (int x = 0; x < skybox.w; ++x) {
-		for (int y = 0; y < skybox.h; ++y) {
-			idx.x = x;
-			idx.y = y;
-			skybox.data[(skybox.h - 1 - y) * skybox.w + x] = \
+	idx.x = -1;
+	while (++(idx.x) < skybox.w)
+	{
+		idx.y = -1;
+		while (++(idx.y) < skybox.h)
+		{
+			skybox.data[(skybox.h - 1 - idx.y) * skybox.w + idx.x] = \
 				get_skybox_color(&(disp->map), idx, step);
 		}
 	}

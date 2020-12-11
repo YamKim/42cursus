@@ -36,11 +36,12 @@ int	get_info(t_disp *disp, char *fname)
 // *** gnl, ft_split, lst free!!!!!!!!!!!!!
 int main(int argc, char *argv[])
 {
-	t_disp	disp;
-	int		err_num;
+	t_disp		disp;
+	t_player	player;
+	int			err_num;
 	
-	disp.spr_lst = NULL;
 	err_num = 0;
+	init_disp_setting(&disp);
 	if (argc == 2)
 	{
 		if (check_file(argv[1]))
@@ -52,30 +53,12 @@ int main(int argc, char *argv[])
 			return (ERR_FILE);
 		}
 		show_map_data(disp);
-//		show_lst_data(disp.spr_lst);
-//		show_lst_data(disp.itm_lst);
+		init_player_setting(&disp, &player);
 #if 1
-		if (err_num == 0 && cub3d_run(&disp))
+		if (err_num == 0 && cub3d_run(&disp, &player))
 			return (ERR_RUN);
 #endif
 	}
 	lst_clear(&disp.spr_lst);
 	return (0);
 }
-#if 0
-		printf("%d spr: pos.x: %lf, pos.y: %lf\n", idx, tmp->spr.pos.x, tmp->spr.pos.y);
-		int del_idx = 0;
-		printf("after del %d node=======================\n", del_idx);
-		lst_del_idx(&(disp.spr_lst), del_idx);
-		printf("after del %d node=======================\n", del_idx);
-		lst_del_idx(&(disp.spr_lst), del_idx);
-		printf("after del %d node=======================\n", del_idx);
-		lst_del_idx(&(disp.spr_lst), del_idx);
-		printf("after del %d node=======================\n", del_idx);
-		lst_del_idx(&(disp.spr_lst), del_idx);
-		printf("after del %d node=======================\n", del_idx);
-		lst_del_idx(&(disp.spr_lst), del_idx);
-		printf("after del %d node=======================\n", del_idx);
-		lst_del_idx(&(disp.spr_lst), del_idx);
-		show_lst_data(disp);
-#endif

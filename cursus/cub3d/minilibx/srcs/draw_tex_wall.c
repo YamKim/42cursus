@@ -80,8 +80,8 @@ void	draw_tex_wall_part(t_disp *disp, t_draw *draw, t_tex tex, t_hit hit_point)
 
 int		draw_tex_wall(t_disp *disp, t_player *player, int x, t_hit hit_point)
 {
-	t_tex		wall_type;
-	t_draw		draw;
+	t_tex	wall_type;
+	t_draw	draw;
 
 	draw = set_tex_wall_draw(disp, hit_point);
 	draw.x = x;

@@ -4,6 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c \
 	run_program.c \
+	init_setting.c \
 	parse_config.c \
 	parse_map.c \
 	parse_map2.c \
@@ -11,11 +12,13 @@ SRC = main.c \
 	player_motion2.c \
 	calc_vector.c \
 	calc_dda.c \
+	check_door_type.c \
 	draw_untex_wall.c \
 	draw_tex_wall.c \
 	draw_tex_background.c \
 	draw_sprite.c \
 	draw_sprite_util.c \
+	get_close_sprite.c \
 	draw_skybox.c \
 	draw_hud.c \
 	list_utils.c \
@@ -28,7 +31,6 @@ SRC = main.c \
 	check_validity.c \
 	load_file.c \
 	show_data.c \
-	bonus_door.c
 
 
 OBJ = $(SRC:.c=.o)

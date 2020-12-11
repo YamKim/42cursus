@@ -1,18 +1,5 @@
 #include "cub3d.h"
 
-void	set_player_info(t_disp disp, t_player *player)
-{
-	player->pos = disp.start_pos;
-	player->dir.x = 0;
-	player->dir.y = 1;
-	player->plane.x = 0.66;
-	player->plane.y = 0;
-	player->key = 0;
-	player->trans_speed = TRANS_SPEED;
-	player->rot_speed = ROT_SPEED;
-	start_orient(player, disp.start_orient);
-}
-
 int	draw_img_data(t_disp *disp, t_player *player, double *perp_buf, int secret)
 {
 	t_hit	hp;
@@ -60,11 +47,10 @@ int main_loop(t_loop *lv)
 	ret = 0;
 	if (!(perp_buf = (double *)malloc(sizeof(double) * lv->disp->w)))
 		return (ERR_MALLOC);
-	if (draw_tex_background(lv->disp, *lv->player))
+	if (draw_tex_background(lv->disp, lv->player))
 		ret |= ERR_DRAW_IMG;
 	if (draw_img_data(lv->disp, lv->player, perp_buf, 0))
 		ret |= ERR_DRAW_IMG;
-//	if (draw_secret_door(lv->disp, lv->player, perp_buf))
 	if (draw_img_data(lv->disp, lv->player, perp_buf, 1))
 		ret |= ERR_DRAW_IMG;
 	ret |= bonus_loop(lv);	
@@ -73,19 +59,17 @@ int main_loop(t_loop *lv)
 	return (ret);
 }
 
-int	cub3d_run(t_disp *disp)
+int	cub3d_run(t_disp *disp, t_player *player)
 {
-	t_player	player;
 	t_loop		loop_var;
 	
 	disp->mlx_ptr = mlx_init();
-	set_player_info(*disp, &player);	
 	disp->win_ptr = mlx_new_window(disp->mlx_ptr, disp->w, disp->h, "mlx");
 	disp->img.ptr = mlx_new_image(disp->mlx_ptr, disp->w, disp->h);
 	disp->img.data = (int *)mlx_get_data_addr(disp->img.ptr, &(disp->img.bpp),\
 					&(disp->img.size_l), &(disp->img.endian));
 	loop_var.disp = disp;
-	loop_var.player = &player;
+	loop_var.player = player;
 	mlx_loop_hook(disp->mlx_ptr, &main_loop, &loop_var);
 	mlx_hook(disp->win_ptr, X_EVENT_KEY_PRESS, 0, &key_press, &loop_var);
 	mlx_hook(disp->win_ptr, X_EVENT_KEY_RELEASE, 0, &key_release, &loop_var);

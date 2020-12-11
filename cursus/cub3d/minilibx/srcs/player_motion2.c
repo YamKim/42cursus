@@ -1,22 +1,5 @@
 #include "cub3d.h"
 
-void	start_orient(t_player *player, char orient)
-{
-	double	angle;
-
-	angle = 0.0;
-	if (orient == NORTH)
-		angle = START_NORTH_ANGLE;
-	else if (orient == EAST)
-		angle = START_EAST_ANGLE;
-	else if (orient == WEST)
-		angle = START_WEST_ANGLE;
-	else if (orient == SOUTH)
-		angle = START_SOUTH_ANGLE;
-	player->dir = rotate_vec(player->dir, angle * DEG2RAD);
-	player->plane = rotate_vec(player->plane, angle * DEG2RAD);
-}
-
 void	set_zaxis_motion(t_disp *disp, t_player *player)
 {
 	if (player->key & (1 << KEY_H))
