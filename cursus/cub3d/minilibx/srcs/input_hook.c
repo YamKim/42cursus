@@ -3,6 +3,9 @@
 void	finish_program(t_loop *lv)
 {
 	lst_clear(&(lv->disp->spr_lst));
+	if (lv->player->life == MIN_LIFE)
+		printf("GAME OVER=========================================\n");
+	
 	printf("PROGRAM FINISHED======================================\n");
 	exit(0);
 }

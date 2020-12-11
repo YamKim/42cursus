@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/11 23:20:01 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/12 07:16:11 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@
 /*
 ** texture setting
 */
-# define TEXTURE_NUMBER 11
+# define TEXTURE_NUMBER 20
 
 /*
 ** bonus
@@ -153,6 +153,19 @@
 # define TEXTURE_HUD_FILE "./textures/logo.xpm"
 # define CONFIG_UP 10
 # define TEXTURE_UP_FILE "./textures/upgrade.xpm"
+
+# define CONFIG_L0 11
+# define TEXTURE_L0_FILE "./textures/life/life0.xpm"
+# define CONFIG_L1 12
+# define TEXTURE_L1_FILE "./textures/life/life1.xpm"
+# define CONFIG_L2 13
+# define TEXTURE_L2_FILE "./textures/life/life2.xpm"
+# define CONFIG_L3 14
+# define TEXTURE_L3_FILE "./textures/life/life3.xpm"
+# define CONFIG_L4 15
+# define TEXTURE_L4_FILE "./textures/life/life4.xpm"
+# define CONFIG_L5 16
+# define TEXTURE_L5_FILE "./textures/life/life5.xpm"
 
 /*
 ** calc_basic
@@ -192,9 +205,13 @@
 /*
 ** hud
 */
-# define GET_ITEM 1
+# define MAX_LIFE 5
+# define MIN_LIFE 0
 # define DISP2HUD_ITEM_W (double)3 / 7
 # define DISP2HUD_ITEM_H (double)3 / 7
+
+# define DISP2HUD_LIFE_W (double)1 / 6
+# define DISP2HUD_LIFE_H (double)1 / 12
 
 /*
 ** color set
@@ -216,7 +233,7 @@
 ** life bar
 */
 # define ATTACK_PUSH_BACK 20
-# define LIFE_DEFAULT 5
+# define LIFE_DEFAULT 1
 
 /*
 ** structures
@@ -370,6 +387,11 @@ void				init_player_setting(t_disp *disp, t_player *player);
 ** run cub3d program
 */
 int					cub3d_run(t_disp *disp, t_player *player);
+
+/*
+** run cub3d program
+*/
+void				finish_program(t_loop *lv);
 
 /*
 ** parse configuration

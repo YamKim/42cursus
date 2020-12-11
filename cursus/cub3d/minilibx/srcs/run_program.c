@@ -53,6 +53,8 @@ int main_loop(t_loop *lv)
 	ret |= bonus_loop(lv);	
 	key_update(lv);
 	free(perp_buf);
+	if (lv->player->life == MIN_LIFE)
+		finish_program(lv);
 	return (ret);
 }
 
