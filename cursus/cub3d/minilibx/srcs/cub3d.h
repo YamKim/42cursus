@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/10 17:54:16 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/11 12:58:48 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,7 +421,7 @@ int					draw_skybox(t_disp *disp, t_player *player);
 /*
 ** display hud
 */
-int					draw_hud(t_disp *disp, t_player *player);
+int					draw_hud(t_disp *disp, t_player *player, t_tex tex, t_veci bias);
 
 /*
 ** load images from xpm files

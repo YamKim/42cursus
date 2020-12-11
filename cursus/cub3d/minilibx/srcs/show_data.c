@@ -16,6 +16,8 @@ void	show_map_data(t_disp disp)
 				val = MAP_WALL;
 			if (disp.map.data[j][i] == MAP_SPACE_VAL)
 				val = MAP_SPACE;
+			if (disp.map.data[j][i] == MAP_SPRITE_VAL)
+				val = MAP_SPRITE;
 			if (disp.map.data[j][i] == MAP_ITEM_VAL)
 				val = MAP_ITEM;
 			if (disp.map.data[j][i] == MAP_SECRET_VAL)

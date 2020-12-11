@@ -13,74 +13,64 @@ void	set_player_info(t_disp disp, t_player *player)
 	start_orient(player, disp.start_orient);
 }
 
-int	draw_img_data(t_disp *disp, t_player *player, double *perp_buf)
+int	draw_img_data(t_disp *disp, t_player *player, double *perp_buf, int secret)
 {
-	t_hit	hit_point;
+	t_hit	hp;
     int		t;
 	double	camera_t;
 
     t = -1;
-	hit_point.secret_door = 0;
+	hp.secret_door = secret;
     while (++t < disp->w)
     {
-		hit_point.pos.x = (int)(player->pos.x);
-		hit_point.pos.y = (int)(player->pos.y);
+		hp.pos.x = (int)(player->pos.x);
+		hp.pos.y = (int)(player->pos.y);
         camera_t = (2 * t / (double)(disp->w)) - 1;
         player->ray_dir.x = player->dir.x + player->plane.x * camera_t;
         player->ray_dir.y = player->dir.y + player->plane.y * camera_t;
-		hit_point.perp_wall_dist = dda_algorithm(player, &hit_point, disp->map);
-		draw_tex_wall(disp, player, t, hit_point);
-		//draw_untex_wall(*(disp), t, hit_point);
-		perp_buf[t] = hit_point.perp_wall_dist;
+		hp.perp_wall_dist = dda_algorithm(player, &hp, disp->map);
+		draw_tex_wall(disp, player, t, hp);
+		perp_buf[t] = hp.perp_wall_dist;
     } 
 	draw_sprite(disp, player, perp_buf);
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.ptr, 0, 0);
 	return (0);
 }
 
-int	draw_secret_door(t_disp *disp, t_player *player)
+int	bonus_loop(t_loop *lv)
 {
-	t_hit	hit_point;
-    int		t;
-	double	camera_t;
+	int		ret;
+	t_veci	bias;
 
-    t = -1;
-	hit_point.secret_door = 1;
-    while (++t < disp->w)
-    {
-		hit_point.pos.x = (int)(player->pos.x);
-		hit_point.pos.y = (int)(player->pos.y);
-        camera_t = (2 * t / (double)(disp->w)) - 1;
-        player->ray_dir.x = player->dir.x + player->plane.x * camera_t;
-        player->ray_dir.y = player->dir.y + player->plane.y * camera_t;
-		hit_point.perp_wall_dist = dda_algorithm(player, &hit_point, disp->map);
-		if (hit_point.door_type == MAP_SECRET_VAL \
-			|| hit_point.door_type == MAP_OPDOOR_VAL)
-			draw_tex_wall(disp, player, t, hit_point);
-    } 
-	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.ptr, 0, 0);
-	return (0);
+	ret = 0;
+	if (draw_skybox(lv->disp, lv->player))
+		ret |= ERR_DRAW_IMG;
+	bias.y = (double)lv->disp->h / 2;
+	bias.x = (double)lv->disp->w / 2;
+	if (draw_hud(lv->disp, lv->player, lv->disp->tex[CONFIG_HUD], bias))
+		ret |= ERR_DRAW_IMG;
+	return (ret);
 }
 
 int main_loop(t_loop *lv)
 {
 	double	*perp_buf;
+	int		ret;
 
+	ret = 0;
 	if (!(perp_buf = (double *)malloc(sizeof(double) * lv->disp->w)))
 		return (ERR_MALLOC);
 	if (draw_tex_background(lv->disp, *lv->player))
-		return (ERR_DRAW_IMG);
-	if (draw_img_data(lv->disp, lv->player, perp_buf))
-		return (ERR_DRAW_IMG);
-	if (draw_secret_door(lv->disp, lv->player))
-		return (ERR_DRAW_IMG);
-	if (draw_skybox(lv->disp, lv->player))
-		return (ERR_DRAW_IMG);
-	if (draw_hud(lv->disp, lv->player))
-		return (ERR_DRAW_IMG);
+		ret |= ERR_DRAW_IMG;
+	if (draw_img_data(lv->disp, lv->player, perp_buf, 0))
+		ret |= ERR_DRAW_IMG;
+//	if (draw_secret_door(lv->disp, lv->player, perp_buf))
+	if (draw_img_data(lv->disp, lv->player, perp_buf, 1))
+		ret |= ERR_DRAW_IMG;
+	ret |= bonus_loop(lv);	
 	key_update(lv);
 	free(perp_buf);
-	return (1);
+	return (ret);
 }
 
 int	cub3d_run(t_disp *disp)

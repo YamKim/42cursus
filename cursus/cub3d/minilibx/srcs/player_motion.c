@@ -6,6 +6,8 @@ int		check_gostop(int after_map_data)
 		return (0);
 	else if (after_map_data == MAP_CLDOOR_VAL)
 		return (0);
+	else if (after_map_data == MAP_SPRITE_VAL)
+		return (0);
 	else if (after_map_data == MAP_OPDOOR_VAL)
 		return (1);
 	return (1);
