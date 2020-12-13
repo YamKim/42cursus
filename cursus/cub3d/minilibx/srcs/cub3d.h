@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/13 08:43:51 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/13 17:22:22 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,10 +284,34 @@ typedef struct		s_pair
 	double			dist;
 }					t_pair;
 
+typedef struct		s_tex
+{
+	void			*ptr;
+	int				*data;
+	int				w;
+	int				h;
+}					t_tex;
+
+typedef struct		s_ani
+{
+	int				upflag;
+	int				idx;
+	t_tex			tex[TEXTURE_ANI_NUMBER];
+}					t_ani;
+
+typedef struct		s_tic
+{
+	time_t			beg;
+	time_t			end;
+}					t_tic;
+
 typedef struct		s_spr
 {
 	t_vecd			pos;
 	int				tex_nbr;
+	t_tic			tic;
+	t_tex			*tex;
+	t_ani			ani;
 }					t_spr;
 
 typedef struct		s_lst
@@ -315,21 +339,6 @@ typedef struct		s_img
 	int				endian;
 }					t_img;
 
-typedef struct		s_tex
-{
-	void			*ptr;
-	int				*data;
-	int				w;
-	int				h;
-}					t_tex;
-
-typedef struct		s_ani
-{
-	int				upflag;
-	int				idx;
-	t_tex			tex[TEXTURE_ANI_NUMBER];
-}					t_ani;
-
 typedef struct		s_disp
 {
 	void			*mlx_ptr;
@@ -342,19 +351,14 @@ typedef struct		s_disp
 	int				ceil_color;
 	t_img			img;
 	t_tex			tex[TEXTURE_NUMBER];
-	t_ani			ani;			
+//	t_tex			ani_tex[TEXTURE_ANI_NUMBER];
+	t_ani			ani;
 	t_map			map;
 	t_vecd			start_pos;
 	char			start_orient;
 	int				spr_cnt;
 	t_lst			*spr_lst;
-}					t_disp;	
-
-typedef struct		s_tic
-{
-	time_t			beg;
-	time_t			end;
-}					t_tic;
+}					t_disp;
 
 typedef struct		s_player
 {
@@ -489,7 +493,7 @@ int					draw_sprite(t_disp *disp, t_player *p, double *perp_buf);
 void				sort_spr_pair(t_pair *spr_pair, int spr_cnt);
 t_vecd				set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr);
 void				get_close_sprite(t_disp *disp, t_player *p);
-void				animate_sprite(t_disp *disp, int tex_nbr, t_player *player);
+void				animate_sprite(t_spr *spr, t_disp *disp, int tex_nbr);
 
 /*
 ** display skybox

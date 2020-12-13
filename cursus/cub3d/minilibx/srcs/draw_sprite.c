@@ -86,8 +86,8 @@ int		draw_sprite(t_disp *disp, t_player *p, double *perp_buf)
 {
 	t_pair	*spr_pair;
 	t_draw	draw;
-	int		tex_nbr;
 	int		i;
+	t_spr	*spr;
 
 	g_perp_buf = perp_buf;
 	get_close_sprite(disp, p);
@@ -99,10 +99,10 @@ int		draw_sprite(t_disp *disp, t_player *p, double *perp_buf)
 	while (++i < disp->spr_cnt)
 	{
 		p->coef = get_coef_spr(p, &(spr_pair[i]), disp->spr_lst);
-		tex_nbr = lst_get_idx(disp->spr_lst, spr_pair[i].ord)->spr.tex_nbr;
-		draw = set_draw_sprite(disp, p->coef, tex_nbr); 
-		draw_sprite_part(disp, &(disp->tex[tex_nbr]), p, &draw);
-		animate_sprite(disp, tex_nbr, p);
+		spr = &(lst_get_idx(disp->spr_lst, spr_pair[i].ord)->spr);
+		draw = set_draw_sprite(disp, p->coef, spr->tex_nbr); 
+		draw_sprite_part(disp, spr->tex, p, &draw);
+		animate_sprite(spr, disp, spr->tex_nbr);
 	}
 	free(spr_pair);
 	return (1);

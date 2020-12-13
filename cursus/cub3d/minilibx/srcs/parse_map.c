@@ -16,24 +16,41 @@ void	init_map_info(t_disp *disp, int map_width, int map_height)
 	}
 }
 
-void	set_map_sprite(t_disp *disp, int y, int x, char data)
+void	set_animated_sprite(t_disp *disp, t_spr *spr, int type)
 {
+	int	idx;
+
+	(void)disp;
+	spr->tex_nbr = type;
+	spr->ani.upflag = 1;
+	spr->ani.idx = 0;
+	idx = -1;
+	spr->tex = &(disp->tex[type]);
+	time(&(spr->tic.beg));
+	spr->tic.end = spr->tic.beg;
+#if 0
+	while (++idx < TEXTURE_ANI_NUMBER)
+		spr->ani.tex[idx] = disp->ani_tex[idx];
+#endif
+}
+
+void	set_map_sprite(t_disp *disp, int y, int x, char data)
+{ 
 	t_spr	spr;
 	t_lst	*tmp;
 
 	spr.pos.y = y + 0.5;
 	spr.pos.x = x + 0.5;
 	if (data == MAP_SPRITE)
-		spr.tex_nbr = CONFIG_S;
+		set_animated_sprite(disp, &spr, CONFIG_S);
 	else if (data == MAP_ITEM)
-		spr.tex_nbr = CONFIG_ITEM;
+		set_animated_sprite(disp, &spr, CONFIG_ITEM);
 	else if (data == MAP_ATTACK)
-		spr.tex_nbr = CONFIG_ATTACK;
+		set_animated_sprite(disp, &spr, CONFIG_ATTACK);
 	tmp = lst_new_spr(spr);
 	lst_add_back(&(disp->spr_lst), tmp);
 	disp->spr_cnt += 1;
 }
-
 
 void	set_map_player_pos(t_disp *disp, char orient, int y, int x)
 {

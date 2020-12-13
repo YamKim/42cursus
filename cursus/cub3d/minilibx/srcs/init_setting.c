@@ -42,7 +42,7 @@ void init_player_setting(t_disp *disp, t_player *player)
 
 void	init_disp_setting(t_disp *disp)
 {
-	disp->ani.upflag = 1;
-	disp->ani.idx = 0;
+//	disp->ani.upflag = 1;
+//	disp->ani.idx = 0;
 	disp->spr_lst = NULL;
 }
