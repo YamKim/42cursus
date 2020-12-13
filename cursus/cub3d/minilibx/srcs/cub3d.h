@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/12 07:16:11 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/13 08:43:51 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,16 @@
 /*
 ** bonus
 */
-# define MAP_ITEM '3'
-# define MAP_ITEM_VAL 3
-# define MAP_SECRET '4'
-# define MAP_SECRET_VAL 4
-# define MAP_CLDOOR '5'
-# define MAP_CLDOOR_VAL 5
-# define MAP_OPDOOR '6'
-# define MAP_OPDOOR_VAL 6
-
+# define MAP_SECRET '3'
+# define MAP_SECRET_VAL 3
+# define MAP_CLDOOR '4'
+# define MAP_CLDOOR_VAL 4
+# define MAP_OPDOOR '5'
+# define MAP_OPDOOR_VAL 5
+# define MAP_ITEM '6'
+# define MAP_ITEM_VAL 6
+# define MAP_ATTACK '7'
+# define MAP_ATTACK_VAL 7
 
 /*
 ** degree and radian
@@ -137,35 +138,59 @@
 ** texture setting
 */
 # define TEXTURE_NUMBER 20
+# define TEXTURE_ANI_NUMBER 5
+
+/*
+** texture setting
+*/
+# define TIC_NUMBER 3
+# define TIC_LIFE 0
+# define TIC_ANI 1
 
 /*
 ** bonus
 */
-# define CONFIG_ITEM 5
-# define TEXTURE_ITEM_FILE "./textures/red.xpm"
-# define CONFIG_SECRET 6
+# define CONFIG_SECRET 5
 # define TEXTURE_SECRET_FILE "./textures/eagle.xpm"
-# define CONFIG_CLDOOR 7
+# define CONFIG_CLDOOR 6
 # define TEXTURE_CLDOOR_FILE "./textures/question.xpm"
-# define CONFIG_OPDOOR 8
+# define CONFIG_OPDOOR 7
 # define TEXTURE_OPDOOR_FILE "./textures/question2.xpm"
-# define CONFIG_LOGO 9
-# define TEXTURE_HUD_FILE "./textures/logo.xpm"
-# define CONFIG_UP 10
+# define CONFIG_ITEM 8
+# define TEXTURE_ITEM_FILE "./textures/red.xpm"
+# define CONFIG_ATTACK 9
+# define TEXTURE_ATTACK_FILE "./textures/attack/A0.xpm"
+
+# define CONFIG_L0 10
+# define TEXTURE_L0_FILE "./textures/life/life0.xpm"
+# define CONFIG_L1 11
+# define TEXTURE_L1_FILE "./textures/life/life1.xpm"
+# define CONFIG_L2 12
+# define TEXTURE_L2_FILE "./textures/life/life2.xpm"
+# define CONFIG_L3 13
+# define TEXTURE_L3_FILE "./textures/life/life3.xpm"
+# define CONFIG_L4 14
+# define TEXTURE_L4_FILE "./textures/life/life4.xpm"
+# define CONFIG_L5 15
+# define TEXTURE_L5_FILE "./textures/life/life5.xpm"
+# define CONFIG_UP 16
 # define TEXTURE_UP_FILE "./textures/upgrade.xpm"
 
-# define CONFIG_L0 11
-# define TEXTURE_L0_FILE "./textures/life/life0.xpm"
-# define CONFIG_L1 12
-# define TEXTURE_L1_FILE "./textures/life/life1.xpm"
-# define CONFIG_L2 13
-# define TEXTURE_L2_FILE "./textures/life/life2.xpm"
-# define CONFIG_L3 14
-# define TEXTURE_L3_FILE "./textures/life/life3.xpm"
-# define CONFIG_L4 15
-# define TEXTURE_L4_FILE "./textures/life/life4.xpm"
-# define CONFIG_L5 16
-# define TEXTURE_L5_FILE "./textures/life/life5.xpm"
+/*
+** animation
+*/
+# define MAX_ANI_IDX 4
+# define MIN_ANI_IDX 0
+# define CONFIG_A0 0
+# define TEXTURE_A0_FILE "./textures/attack/A0.xpm"
+# define CONFIG_A1 1
+# define TEXTURE_A1_FILE "./textures/attack/A1.xpm"
+# define CONFIG_A2 2
+# define TEXTURE_A2_FILE "./textures/attack/A2.xpm"
+# define CONFIG_A3 3
+# define TEXTURE_A3_FILE "./textures/attack/A3.xpm"
+# define CONFIG_A4 4
+# define TEXTURE_A4_FILE "./textures/attack/A4.xpm"
 
 /*
 ** calc_basic
@@ -189,10 +214,13 @@
 */
 # define SPRITE_VDIV 1.0
 # define SPRITE_UDIV 1.0
-# define SPRITE_MOVE 100.0
+# define SPRITE_MOVE 200.0
 # define ITEM_VDIV 1.5
 # define ITEM_UDIV 1.5
-# define ITEM_MOVE 100.0
+# define ITEM_MOVE 200.0
+# define ATTACK_VDIV 1.0
+# define ATTACK_UDIV 1.0
+# define ATTACK_MOVE 150.0
 # define ITEM_APPROACH_DIST 1.0
 # define ATTACK_APPROACH_DIST 0.4
 
@@ -295,6 +323,13 @@ typedef struct		s_tex
 	int				h;
 }					t_tex;
 
+typedef struct		s_ani
+{
+	int				upflag;
+	int				idx;
+	t_tex			tex[TEXTURE_ANI_NUMBER];
+}					t_ani;
+
 typedef struct		s_disp
 {
 	void			*mlx_ptr;
@@ -307,6 +342,7 @@ typedef struct		s_disp
 	int				ceil_color;
 	t_img			img;
 	t_tex			tex[TEXTURE_NUMBER];
+	t_ani			ani;			
 	t_map			map;
 	t_vecd			start_pos;
 	char			start_orient;
@@ -331,7 +367,7 @@ typedef struct		s_player
 	t_vecd			coef;
 	int				key;
 	int				life;
-	t_tic			tic;
+	t_tic			tic[TIC_NUMBER];
 }					t_player;
 
 typedef struct		s_loop
@@ -453,6 +489,7 @@ int					draw_sprite(t_disp *disp, t_player *p, double *perp_buf);
 void				sort_spr_pair(t_pair *spr_pair, int spr_cnt);
 t_vecd				set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr);
 void				get_close_sprite(t_disp *disp, t_player *p);
+void				animate_sprite(t_disp *disp, int tex_nbr, t_player *player);
 
 /*
 ** display skybox

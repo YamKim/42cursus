@@ -37,6 +37,12 @@ t_vecd	set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr)
 		ret.y = ITEM_VDIV;
 		ret.x = ITEM_UDIV;
 	}
+	if (tex_nbr >= CONFIG_A0 && tex_nbr <= CONFIG_A4)
+	{
+		draw->bias = (int)(ATTACK_MOVE / coef.y);
+		ret.y = ATTACK_VDIV;
+		ret.x = ATTACK_UDIV;
+	}
 	return (ret);
 }
 

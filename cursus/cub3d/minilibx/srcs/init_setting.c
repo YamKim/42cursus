@@ -17,6 +17,14 @@ void	start_orient(t_player *player, char orient)
 	player->plane = rotate_vec(player->plane, angle * DEG2RAD);
 }
 
+void	init_tic(t_player *player)
+{
+	player->tic[TIC_LIFE].beg = 0;
+	player->tic[TIC_LIFE].end = 0;
+	time(&(player->tic[TIC_ANI].beg));
+	time(&(player->tic[TIC_ANI].end)); 
+}
+
 void init_player_setting(t_disp *disp, t_player *player)
 {
 	player->pos = disp->start_pos;
@@ -29,11 +37,12 @@ void init_player_setting(t_disp *disp, t_player *player)
 	player->rot_speed = ROT_SPEED;
 	start_orient(player, disp->start_orient);
 	player->life = LIFE_DEFAULT;
-	player->tic.beg = 0;
-	player->tic.end = 0;
+	init_tic(player);
 }
 
 void	init_disp_setting(t_disp *disp)
 {
+	disp->ani.upflag = 1;
+	disp->ani.idx = 0;
 	disp->spr_lst = NULL;
 }

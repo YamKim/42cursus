@@ -102,6 +102,7 @@ int		draw_sprite(t_disp *disp, t_player *p, double *perp_buf)
 		tex_nbr = lst_get_idx(disp->spr_lst, spr_pair[i].ord)->spr.tex_nbr;
 		draw = set_draw_sprite(disp, p->coef, tex_nbr); 
 		draw_sprite_part(disp, &(disp->tex[tex_nbr]), p, &draw);
+		animate_sprite(disp, tex_nbr, p);
 	}
 	free(spr_pair);
 	return (1);

@@ -7,7 +7,7 @@ int	init_bonus_info(t_disp *disp)
 	return (0);
 }
 
-int	bonus_life_bar(t_disp *disp)
+int	get_lifebar_tex(t_disp *disp)
 {
 	int	ret;
 
@@ -27,24 +27,54 @@ int	bonus_life_bar(t_disp *disp)
 	return (ret);
 }
 
+int	get_animation_tex(t_disp *disp)
+{
+	int	ret;
+
+	ret = 0;
+	if (load_tex(&(disp->ani.tex[CONFIG_A0]), TEXTURE_A0_FILE) != 0)
+		return (ERR_TEXTURE_CALL);
+	if (load_tex(&(disp->ani.tex[CONFIG_A1]), TEXTURE_A1_FILE) != 0)
+		return (ERR_TEXTURE_CALL);
+	if (load_tex(&(disp->ani.tex[CONFIG_A2]), TEXTURE_A2_FILE) != 0)
+		return (ERR_TEXTURE_CALL);
+	if (load_tex(&(disp->ani.tex[CONFIG_A3]), TEXTURE_A3_FILE) != 0)
+		return (ERR_TEXTURE_CALL);
+	if (load_tex(&(disp->ani.tex[CONFIG_A4]), TEXTURE_A4_FILE) != 0)
+		return (ERR_TEXTURE_CALL);
+	return (ret);
+}
+
+int	bonus_sprite(t_disp *disp)
+{
+	int	ret;
+
+	ret = 0;
+	if (load_tex(&(disp->tex[CONFIG_ITEM]), TEXTURE_ITEM_FILE) != 0)
+		ret = ERR_TEXTURE_CALL;
+	if (load_tex(&(disp->tex[CONFIG_ATTACK]), TEXTURE_ATTACK_FILE) != 0)
+		ret = ERR_TEXTURE_CALL;
+	if (get_animation_tex(disp))
+		ret = ERR_TEXTURE_CALL;
+	return (ret);
+}
+
 int	bonus_config(t_disp *disp)
 {
 	int	ret;
 
 	ret = 0; 
-	if (load_tex(&(disp->tex[CONFIG_ITEM]), TEXTURE_ITEM_FILE) != 0)
-		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[CONFIG_SECRET]), TEXTURE_SECRET_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[CONFIG_CLDOOR]), TEXTURE_CLDOOR_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[CONFIG_OPDOOR]), TEXTURE_OPDOOR_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
-	if (load_tex(&(disp->tex[CONFIG_LOGO]), TEXTURE_HUD_FILE) != 0)
-		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[CONFIG_UP]), TEXTURE_UP_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
-	if (bonus_life_bar(disp))
+	if (get_lifebar_tex(disp))
+		ret = ERR_TEXTURE_CALL;
+	if (bonus_sprite(disp))
 		ret = ERR_TEXTURE_CALL;
 	return (ret);
 }

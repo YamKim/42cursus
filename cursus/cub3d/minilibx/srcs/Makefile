@@ -18,6 +18,7 @@ SRC = main.c \
 	draw_tex_background.c \
 	draw_sprite.c \
 	draw_sprite_util.c \
+	draw_sprite_animated.c \
 	get_close_sprite.c \
 	draw_skybox.c \
 	draw_hud.c \

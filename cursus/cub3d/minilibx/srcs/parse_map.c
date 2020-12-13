@@ -27,6 +27,8 @@ void	set_map_sprite(t_disp *disp, int y, int x, char data)
 		spr.tex_nbr = CONFIG_S;
 	else if (data == MAP_ITEM)
 		spr.tex_nbr = CONFIG_ITEM;
+	else if (data == MAP_ATTACK)
+		spr.tex_nbr = CONFIG_ATTACK;
 	tmp = lst_new_spr(spr);
 	lst_add_back(&(disp->spr_lst), tmp);
 	disp->spr_cnt += 1;
@@ -51,9 +53,13 @@ int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
 		return (MAP_OPDOOR_VAL);
 	else if (data == MAP_ITEM)
 	{
-		//set_map_item(disp, y, x);
 		set_map_sprite(disp, y, x, data);
 		return (MAP_ITEM_VAL);
+	}
+	else if (data == MAP_ATTACK)
+	{
+		set_map_sprite(disp, y, x, data);
+		return (MAP_ATTACK_VAL);
 	}
 	return (MAP_EXCEPTION_VAL);
 }

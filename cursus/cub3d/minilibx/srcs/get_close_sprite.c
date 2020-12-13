@@ -18,9 +18,8 @@ int		get_close_item(t_disp *disp, t_player *player, t_spr spr, int idx)
 	lst_del_idx(&disp->spr_lst, ret);
 	disp->spr_cnt = disp->spr_cnt - 1;
 	ret -= 1;
-	//draw_hud_series(disp, player, GET_ITEM);
-	time(&player->tic.beg);	
-	player->tic.end = player->tic.beg;
+	time(&player->tic[TIC_LIFE].beg);	
+	player->tic[TIC_LIFE].end = player->tic[TIC_LIFE].beg;
 	printf("You got an item!\n");
 	player->life += 1;
 	printf("life: %d\n", player->life);
@@ -56,7 +55,7 @@ void	get_close_sprite(t_disp *disp, t_player *p)
 			if (spr.tex_nbr == CONFIG_ITEM)
 				i = get_close_item(disp, p, spr, i);
 		if (fabs(calc_dist(p->pos, spr.pos)) < ATTACK_APPROACH_DIST)
-			if (spr.tex_nbr == CONFIG_S)
+			if (spr.tex_nbr == CONFIG_ATTACK)
 				i = get_close_attack(disp, p, i);
 	}	
 }
