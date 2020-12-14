@@ -23,6 +23,9 @@ void	init_tic(t_player *player)
 	player->tic[TIC_LIFE].end = 0;
 	time(&(player->tic[TIC_ANI].beg));
 	time(&(player->tic[TIC_ANI].end)); 
+
+	player->clk[TIC_LIFE].beg = clock();
+	player->clk[TIC_LIFE].end = player->clk[TIC_LIFE].beg;
 }
 
 void init_player_setting(t_disp *disp, t_player *player)
@@ -42,7 +45,19 @@ void init_player_setting(t_disp *disp, t_player *player)
 
 void	init_disp_setting(t_disp *disp)
 {
+	int	j;
+	int	i;
 //	disp->ani.upflag = 1;
 //	disp->ani.idx = 0;
 	disp->spr_lst = NULL;
+	disp->spr_cnt = 0;
+	disp->start_pos.y = -1;
+	disp->start_pos.x = -1;
+	j = -1;
+	while (++j < MAX_NUM_MAP_HEIGHT)
+	{
+		i = -1;
+		while (++i < MAX_NUM_MAP_HEIGHT)
+			disp->map.data[j][i] = MAP_UNUSED_VAL;
+	}
 }

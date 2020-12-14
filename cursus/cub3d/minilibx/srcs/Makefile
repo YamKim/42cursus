@@ -7,7 +7,8 @@ SRC = main.c \
 	init_setting.c \
 	parse_config.c \
 	parse_map.c \
-	parse_map2.c \
+	get_bonus_texture.c \
+	set_animation.c \
 	player_motion.c \
 	player_motion2.c \
 	calc_vector.c \
@@ -18,7 +19,7 @@ SRC = main.c \
 	draw_tex_background.c \
 	draw_sprite.c \
 	draw_sprite_util.c \
-	draw_sprite_animated.c \
+	animate_sprite.c \
 	get_close_sprite.c \
 	draw_skybox.c \
 	draw_hud.c \

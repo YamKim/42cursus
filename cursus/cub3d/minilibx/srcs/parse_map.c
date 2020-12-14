@@ -1,63 +1,26 @@
 #include "cub3d.h"
 
-void	init_map_info(t_disp *disp, int map_width, int map_height)
-{
-	int	j;
-	int	i;
-
-	disp->spr_cnt = 0;
-	disp->map.pos_flag = 0;
-	j = -1;
-	while (++j < map_height)
-	{
-		i = -1;
-		while (++i < map_width)
-			disp->map.data[j][i] = MAP_UNUSED_VAL;
-	}
-}
-
-void	set_animated_sprite(t_disp *disp, t_spr *spr, int type)
-{
-	int	idx;
-
-	(void)disp;
-	spr->tex_nbr = type;
-	spr->ani.upflag = 1;
-	spr->ani.idx = 0;
-	idx = -1;
-	spr->tex = &(disp->tex[type]);
-	time(&(spr->tic.beg));
-	spr->tic.end = spr->tic.beg;
-#if 0
-	while (++idx < TEXTURE_ANI_NUMBER)
-		spr->ani.tex[idx] = disp->ani_tex[idx];
-#endif
-}
-
-void	set_map_sprite(t_disp *disp, int y, int x, char data)
+int	set_map_sprite(t_disp *disp, int y, int x, char data)
 { 
 	t_spr	spr;
 	t_lst	*tmp;
+	int		ret;
 
 	spr.pos.y = y + 0.5;
 	spr.pos.x = x + 0.5;
-	if (data == MAP_SPRITE)
-		set_animated_sprite(disp, &spr, CONFIG_S);
-	else if (data == MAP_ITEM)
-		set_animated_sprite(disp, &spr, CONFIG_ITEM);
-	else if (data == MAP_ATTACK)
-		set_animated_sprite(disp, &spr, CONFIG_ATTACK);
+	ret = set_animation(disp, &spr, data);
 	tmp = lst_new_spr(spr);
 	lst_add_back(&(disp->spr_lst), tmp);
 	disp->spr_cnt += 1;
+	return (ret);
 }
 
-void	set_map_player_pos(t_disp *disp, char orient, int y, int x)
+int	set_map_player(t_disp *disp, char orient, int y, int x)
 {
-	disp->map.pos_flag = 1; 
 	disp->start_pos.y = y + 0.5;
 	disp->start_pos.x = x + 0.5;
 	disp->start_orient = orient;
+	return (MAP_ROAD_VAL);
 }
 
 int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
@@ -68,16 +31,8 @@ int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
 		return (MAP_CLDOOR_VAL);
 	else if (data == MAP_OPDOOR)
 		return (MAP_OPDOOR_VAL);
-	else if (data == MAP_ITEM)
-	{
-		set_map_sprite(disp, y, x, data);
-		return (MAP_ITEM_VAL);
-	}
-	else if (data == MAP_ATTACK)
-	{
-		set_map_sprite(disp, y, x, data);
-		return (MAP_ATTACK_VAL);
-	}
+	else if (data == MAP_ITEM || data == MAP_ATTACK)
+		return (set_map_sprite(disp, y, x, data));
 	return (MAP_EXCEPTION_VAL);
 }
 
@@ -90,16 +45,12 @@ int	get_map_element(t_disp *disp, char data, int y, int x)
 	else if (data == MAP_WALL)
 		return (MAP_WALL_VAL);
 	else if (data == MAP_SPRITE)
-	{
-		set_map_sprite(disp, y, x, data);
-		return (MAP_SPRITE_VAL);
-	}
+		return (set_map_sprite(disp, y, x, data));
 	else if (data == NORTH || data == SOUTH || data == WEST || data == EAST)
 	{
-		if (disp->map.pos_flag)
+		if (disp->start_pos.x >= 0 && disp->start_pos.y >= 0)
 			return (MAP_EXCEPTION_VAL);
-		set_map_player_pos(disp, data, y, x);
-		return (0);
+		return (set_map_player(disp, data, y, x));
 	}
 	return (get_map_element_bonus(disp, data, y, x));
 }
@@ -110,8 +61,7 @@ int	parse_map(t_disp *disp, char **map, int map_beg)
 	int r;
 	int	x;
 
-	init_map_info(disp, MAX_NUM_MAP_WIDTH, MAX_NUM_MAP_HEIGHT);
-	init_bonus_info(disp);
+	get_bonus_texture(disp);
 	r = map_beg + disp->map.h - 1;
 	y = -1;
 	while (++y < disp->map.h)

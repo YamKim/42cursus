@@ -51,11 +51,11 @@ void	get_close_sprite(t_disp *disp, t_player *p)
 	while (++i < disp->spr_cnt)
 	{
 		spr = lst_get_idx(disp->spr_lst, i)->spr;
-		if (fabs(calc_dist(p->pos, spr.pos)) < ITEM_APPROACH_DIST)
-			if (spr.tex_nbr == CONFIG_ITEM)
+		if (fabs(calc_dist(p->pos, spr.pos)) < APPROACH_ITEM_DIST)
+			if (spr.tex_nbr == TEXTURE_ITEM)
 				i = get_close_item(disp, p, spr, i);
-		if (fabs(calc_dist(p->pos, spr.pos)) < ATTACK_APPROACH_DIST)
-			if (spr.tex_nbr == CONFIG_ATTACK)
+		if (fabs(calc_dist(p->pos, spr.pos)) < APPROACH_ATTACK_DIST)
+			if (spr.tex_nbr == TEXTURE_ATTACK)
 				i = get_close_attack(disp, p, i);
 	}	
 }

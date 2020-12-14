@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/13 17:22:22 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/14 11:16:02 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,50 @@
 # define CONFIG_R 5
 # define CONFIG_F 6
 # define CONFIG_C 7
+/*
+** bonus
+*/
+# define TEXTURE_SECRET 5
+# define TEXTURE_SECRET_FILE "./textures/eagle.xpm"
+# define TEXTURE_CLDOOR 6
+# define TEXTURE_CLDOOR_FILE "./textures/question.xpm"
+# define TEXTURE_OPDOOR 7
+# define TEXTURE_OPDOOR_FILE "./textures/question2.xpm"
+# define TEXTURE_ITEM 8
+# define TEXTURE_ITEM_FILE "./textures/red.xpm"
+# define TEXTURE_ATTACK 9
+# define TEXTURE_ATTACK_FILE "./textures/attack/A0.xpm"
+
+# define CONFIG_L0 10
+# define TEXTURE_L0_FILE "./textures/life/life0.xpm"
+# define CONFIG_L1 11
+# define TEXTURE_L1_FILE "./textures/life/life1.xpm"
+# define CONFIG_L2 12
+# define TEXTURE_L2_FILE "./textures/life/life2.xpm"
+# define CONFIG_L3 13
+# define TEXTURE_L3_FILE "./textures/life/life3.xpm"
+# define CONFIG_L4 14
+# define TEXTURE_L4_FILE "./textures/life/life4.xpm"
+# define CONFIG_L5 15
+# define TEXTURE_L5_FILE "./textures/life/life5.xpm"
+# define CONFIG_UP 16
+# define TEXTURE_UP_FILE "./textures/upgrade.xpm"
+
+/*
+** animation
+*/
+# define MAX_ANI_IDX 4
+# define MIN_ANI_IDX 0
+# define CONFIG_A0 0
+# define TEXTURE_A0_FILE "./textures/attack/A0.xpm"
+# define CONFIG_A1 1
+# define TEXTURE_A1_FILE "./textures/attack/A1.xpm"
+# define CONFIG_A2 2
+# define TEXTURE_A2_FILE "./textures/attack/A2.xpm"
+# define CONFIG_A3 3
+# define TEXTURE_A3_FILE "./textures/attack/A3.xpm"
+# define CONFIG_A4 4
+# define TEXTURE_A4_FILE "./textures/attack/A4.xpm"
 
 /*
 ** limit maximum number
@@ -102,7 +146,6 @@
 # define MAP_BOARDER_VAL -2
 # define MAP_EXCEPTION_VAL -3
 # define MAP_UNUSED_VAL -4
-
 /*
 ** bonus
 */
@@ -147,50 +190,6 @@
 # define TIC_LIFE 0
 # define TIC_ANI 1
 
-/*
-** bonus
-*/
-# define CONFIG_SECRET 5
-# define TEXTURE_SECRET_FILE "./textures/eagle.xpm"
-# define CONFIG_CLDOOR 6
-# define TEXTURE_CLDOOR_FILE "./textures/question.xpm"
-# define CONFIG_OPDOOR 7
-# define TEXTURE_OPDOOR_FILE "./textures/question2.xpm"
-# define CONFIG_ITEM 8
-# define TEXTURE_ITEM_FILE "./textures/red.xpm"
-# define CONFIG_ATTACK 9
-# define TEXTURE_ATTACK_FILE "./textures/attack/A0.xpm"
-
-# define CONFIG_L0 10
-# define TEXTURE_L0_FILE "./textures/life/life0.xpm"
-# define CONFIG_L1 11
-# define TEXTURE_L1_FILE "./textures/life/life1.xpm"
-# define CONFIG_L2 12
-# define TEXTURE_L2_FILE "./textures/life/life2.xpm"
-# define CONFIG_L3 13
-# define TEXTURE_L3_FILE "./textures/life/life3.xpm"
-# define CONFIG_L4 14
-# define TEXTURE_L4_FILE "./textures/life/life4.xpm"
-# define CONFIG_L5 15
-# define TEXTURE_L5_FILE "./textures/life/life5.xpm"
-# define CONFIG_UP 16
-# define TEXTURE_UP_FILE "./textures/upgrade.xpm"
-
-/*
-** animation
-*/
-# define MAX_ANI_IDX 4
-# define MIN_ANI_IDX 0
-# define CONFIG_A0 0
-# define TEXTURE_A0_FILE "./textures/attack/A0.xpm"
-# define CONFIG_A1 1
-# define TEXTURE_A1_FILE "./textures/attack/A1.xpm"
-# define CONFIG_A2 2
-# define TEXTURE_A2_FILE "./textures/attack/A2.xpm"
-# define CONFIG_A3 3
-# define TEXTURE_A3_FILE "./textures/attack/A3.xpm"
-# define CONFIG_A4 4
-# define TEXTURE_A4_FILE "./textures/attack/A4.xpm"
 
 /*
 ** calc_basic
@@ -212,17 +211,17 @@
 /*
 ** item scale
 */
-# define SPRITE_VDIV 1.0
-# define SPRITE_UDIV 1.0
-# define SPRITE_MOVE 200.0
-# define ITEM_VDIV 1.5
-# define ITEM_UDIV 1.5
-# define ITEM_MOVE 200.0
-# define ATTACK_VDIV 1.0
-# define ATTACK_UDIV 1.0
-# define ATTACK_MOVE 150.0
-# define ITEM_APPROACH_DIST 1.0
-# define ATTACK_APPROACH_DIST 0.4
+# define SCALE_HDIV_SPRITE 1.0
+# define SCALE_WDIV_SPRITE 1.0
+# define SCALE_MOVE_SPRITE 200.0
+# define SCALE_HDIV_ITEM 0.6
+# define SCALE_WDIV_ITEM 0.6
+# define SCALE_MOVE_ITEM 300.0
+# define SCALE_HDIV_ATTACK 1.6
+# define SCALE_WDIV_ATTACK 1.6
+# define SCALE_MOVE_ATTACK 150.0
+# define APPROACH_ITEM_DIST 1.0
+# define APPROACH_ATTACK_DIST 0.4
 
 /*
 ** skybox
@@ -248,9 +247,11 @@
 # define COLOR_SKY_BACKGROUND 0x5F000000
 # define COLOR_SKY_WALL 1644825 
 # define COLOR_SKY_ROAD 13158600 
-# define COLOR_SKY_ITEM 15080990
-# define COLOR_SKY_SECRET 14329120
-# define COLOR_SKY_SPRITE 52224
+# define COLOR_SKY_SPRITE 0x0AA344
+# define COLOR_SKY_ITEM 0xF47983
+# define COLOR_SKY_ATTACK 0xF20C00
+# define COLOR_SKY_SECRET 1644825
+# define COLOR_SKY_OPCLDOOR 0xFFF143
 # define COLOR_SKY_PLAYER 0xFF8C8C
 # define COLOR_SKY_DIR 0x32708D
 # define COLOR_SKY_RAY_DIR 0x0FFFDB1
@@ -305,11 +306,18 @@ typedef struct		s_tic
 	time_t			end;
 }					t_tic;
 
+typedef struct		s_clk
+{
+	clock_t			beg;
+	clock_t			end;
+}					t_clk;
+
 typedef struct		s_spr
 {
 	t_vecd			pos;
 	int				tex_nbr;
 	t_tic			tic;
+	t_clk			clk;
 	t_tex			*tex;
 	t_ani			ani;
 }					t_spr;
@@ -325,7 +333,6 @@ typedef struct		s_map
 	int				max_w;
 	int				h;
 	int				data[MAX_NUM_MAP_WIDTH][MAX_NUM_MAP_HEIGHT];
-	int				pos_flag;
 }					t_map;
 
 typedef struct		s_img
@@ -372,6 +379,7 @@ typedef struct		s_player
 	int				key;
 	int				life;
 	t_tic			tic[TIC_NUMBER];
+	t_clk			clk[TIC_NUMBER];
 }					t_player;
 
 typedef struct		s_loop
@@ -437,13 +445,14 @@ void				finish_program(t_loop *lv);
 ** parse configuration
 */
 int					parse_config(t_disp *disp, char **line_buf, int *k);
+int					get_bonus_texture(t_disp *disp);
 
 /*
 ** parse map
 */
 int					parse_map(t_disp *disp, char **map, int map_beg);
-int					init_bonus_info(t_disp *disp);
-int					bonus_config(t_disp *disp);
+int					set_animation(t_disp *disp, t_spr *spr, char data);
+
 /*
 ** player motion
 */
@@ -493,7 +502,8 @@ int					draw_sprite(t_disp *disp, t_player *p, double *perp_buf);
 void				sort_spr_pair(t_pair *spr_pair, int spr_cnt);
 t_vecd				set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr);
 void				get_close_sprite(t_disp *disp, t_player *p);
-void				animate_sprite(t_spr *spr, t_disp *disp, int tex_nbr);
+void				animate_sprite(t_spr *spr);
+int					check_sprite_order(t_disp *disp, t_player *p, t_draw *draw, double *buf);
 
 /*
 ** display skybox

@@ -28,21 +28,29 @@ t_vecd	set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr)
 {
 	t_vecd	ret;
 	
-	draw->bias = (int)(SPRITE_MOVE / coef.y);
-	ret.y = SPRITE_VDIV;
-	ret.x = SPRITE_UDIV;
-	if (tex_nbr == CONFIG_ITEM)
+	draw->bias = (int)(SCALE_MOVE_SPRITE / coef.y);
+	ret.y = SCALE_HDIV_SPRITE;
+	ret.x = SCALE_WDIV_SPRITE;
+	if (tex_nbr == TEXTURE_ITEM)
 	{
-		draw->bias = (int)(ITEM_MOVE / coef.y);
-		ret.y = ITEM_VDIV;
-		ret.x = ITEM_UDIV;
+		draw->bias = (int)(SCALE_MOVE_ITEM / coef.y);
+		ret.y = SCALE_HDIV_ITEM;
+		ret.x = SCALE_WDIV_ITEM;
 	}
-	if (tex_nbr >= CONFIG_A0 && tex_nbr <= CONFIG_A4)
+	if (tex_nbr == TEXTURE_ATTACK)
 	{
-		draw->bias = (int)(ATTACK_MOVE / coef.y);
-		ret.y = ATTACK_VDIV;
-		ret.x = ATTACK_UDIV;
+		draw->bias = (int)(SCALE_MOVE_ATTACK / coef.y);
+		ret.y = SCALE_HDIV_ATTACK;
+		ret.x = SCALE_WDIV_ATTACK;
 	}
 	return (ret);
 }
 
+int		check_sprite_order(t_disp *disp, t_player *p, t_draw *draw, double *buf)
+{
+	int	ret;
+
+	ret = p->coef.y > 0 && draw->x > 0 && draw->x < disp->w;
+	ret &= p->coef.y < buf[draw->x];
+	return (ret);
+}

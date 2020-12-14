@@ -1,17 +1,12 @@
 #include "cub3d.h"
 
-int	init_bonus_info(t_disp *disp)
-{
-	if (bonus_config(disp))
-		return (ERR_BONUS_CONFIG);
-	return (0);
-}
-
 int	get_lifebar_tex(t_disp *disp)
 {
 	int	ret;
+	int	idx;
 
 	ret = 0;
+	idx = -1;
 	if (load_tex(&(disp->tex[CONFIG_L0]), TEXTURE_L0_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
 	if (load_tex(&(disp->tex[CONFIG_L1]), TEXTURE_L1_FILE) != 0)
@@ -27,7 +22,7 @@ int	get_lifebar_tex(t_disp *disp)
 	return (ret);
 }
 
-int	get_animation_tex(t_disp *disp)
+int	get_attack_ani_tex(t_disp *disp)
 {
 	int	ret;
 
@@ -50,31 +45,31 @@ int	bonus_sprite(t_disp *disp)
 	int	ret;
 
 	ret = 0;
-	if (load_tex(&(disp->tex[CONFIG_ITEM]), TEXTURE_ITEM_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_ITEM]), TEXTURE_ITEM_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
-	if (load_tex(&(disp->tex[CONFIG_ATTACK]), TEXTURE_ATTACK_FILE) != 0)
-		ret = ERR_TEXTURE_CALL;
-	if (get_animation_tex(disp))
+	if (load_tex(&(disp->tex[TEXTURE_ATTACK]), TEXTURE_ATTACK_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	return (ret);
 }
 
-int	bonus_config(t_disp *disp)
+int	get_bonus_texture(t_disp *disp)
 {
 	int	ret;
 
 	ret = 0; 
-	if (load_tex(&(disp->tex[CONFIG_SECRET]), TEXTURE_SECRET_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_SECRET]), TEXTURE_SECRET_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
-	if (load_tex(&(disp->tex[CONFIG_CLDOOR]), TEXTURE_CLDOOR_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_CLDOOR]), TEXTURE_CLDOOR_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
-	if (load_tex(&(disp->tex[CONFIG_OPDOOR]), TEXTURE_OPDOOR_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_OPDOOR]), TEXTURE_OPDOOR_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[CONFIG_UP]), TEXTURE_UP_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
+	if (bonus_sprite(disp))
+		ret = ERR_TEXTURE_CALL;
 	if (get_lifebar_tex(disp))
 		ret = ERR_TEXTURE_CALL;
-	if (bonus_sprite(disp))
+	if (get_attack_ani_tex(disp))
 		ret = ERR_TEXTURE_CALL;
 	return (ret);
 }

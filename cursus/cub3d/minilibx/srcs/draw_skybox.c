@@ -27,6 +27,11 @@ int	get_skybox_color(t_map *map, t_veci idx, t_veci step)
 		ret = COLOR_SKY_BACKGROUND | COLOR_SKY_SECRET;
 	else if (map->data[idx.y / step.y][idx.x / step.x] == MAP_SPRITE_VAL)
 		ret = COLOR_SKY_BACKGROUND | COLOR_SKY_SPRITE;
+	else if (map->data[idx.y / step.y][idx.x / step.x] == MAP_ATTACK_VAL)
+		ret = COLOR_SKY_BACKGROUND | COLOR_SKY_ATTACK;
+	else if (map->data[idx.y / step.y][idx.x / step.x] == MAP_OPDOOR_VAL
+			|| map->data[idx.y / step.y][idx.x / step.x] == MAP_CLDOOR_VAL)
+		ret = COLOR_SKY_BACKGROUND | COLOR_SKY_OPCLDOOR;
 	return (ret);
 }
 
@@ -37,7 +42,7 @@ void	draw_skybox_point(t_img *skybox, t_vecd pos, int color, int size)
 			skybox->data[(skybox->h - 1 - y) * skybox->w + x] = color;
 }
 
-void	draw_player_on_skybox(t_disp *disp, t_img *skybox, t_player *player)
+void	draw_skybox_player(t_disp *disp, t_img *skybox, t_player *player)
 {
 	int		i;
 	t_vecd	p;
@@ -82,7 +87,7 @@ int	draw_skybox(t_disp *disp, t_player *player)
 				get_skybox_color(&(disp->map), idx, step);
 		}
 	}
-	draw_player_on_skybox(disp, &skybox, player);
+	draw_skybox_player(disp, &skybox, player);
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, skybox.ptr, 0, 0);
 	return (0);
 }

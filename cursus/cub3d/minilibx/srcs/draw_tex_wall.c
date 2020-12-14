@@ -3,11 +3,11 @@
 t_tex	get_wall_type(t_disp *disp, t_player *player, t_hit hit_point)
 {
 	if (hit_point.door_type == MAP_SECRET_VAL)
-		return (disp->tex[CONFIG_SECRET]);
+		return (disp->tex[TEXTURE_SECRET]);
 	if (hit_point.door_type == MAP_CLDOOR_VAL)
-		return (disp->tex[CONFIG_CLDOOR]);
+		return (disp->tex[TEXTURE_CLDOOR]);
 	if (hit_point.door_type == MAP_OPDOOR_VAL)
-		return (disp->tex[CONFIG_OPDOOR]);
+		return (disp->tex[TEXTURE_OPDOOR]);
 	if (hit_point.side == HIT_SIDE_Y)
 	{
 		if (player->ray_dir.y > 0)
@@ -86,7 +86,7 @@ int		draw_tex_wall(t_disp *disp, t_player *player, int x, t_hit hit_point)
 	draw = set_tex_wall_draw(disp, hit_point);
 	draw.x = x;
 	wall_type = get_wall_type(disp, player, hit_point);	
-	draw.tx = get_tex_tx(wall_type, player, hit_point, player->ray_dir);	
+	draw.tx = get_tex_tx(wall_type, player, hit_point, player->ray_dir);
 	draw_tex_wall_part(disp, &draw, wall_type, hit_point);
 	return (0);	
 }
