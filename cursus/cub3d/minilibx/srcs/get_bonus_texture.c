@@ -19,6 +19,10 @@ int	get_lifebar_tex(t_disp *disp)
 		return (ERR_TEXTURE_CALL);
 	if (load_tex(&(disp->tex[CONFIG_L5]), TEXTURE_L5_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
+	if (load_tex(&(disp->tex[CONFIG_LUP]), TEXTURE_LUP_FILE) != 0)
+		return (ERR_TEXTURE_CALL);
+	if (load_tex(&(disp->tex[CONFIG_LDW]), TEXTURE_LDW_FILE) != 0)
+		return (ERR_TEXTURE_CALL);
 	return (ret);
 }
 
@@ -27,15 +31,15 @@ int	get_attack_ani_tex(t_disp *disp)
 	int	ret;
 
 	ret = 0;
-	if (load_tex(&(disp->ani.tex[CONFIG_A0]), TEXTURE_A0_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[CONFIG_A0]), TEXTURE_A0_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->ani.tex[CONFIG_A1]), TEXTURE_A1_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[CONFIG_A1]), TEXTURE_A1_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->ani.tex[CONFIG_A2]), TEXTURE_A2_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[CONFIG_A2]), TEXTURE_A2_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->ani.tex[CONFIG_A3]), TEXTURE_A3_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[CONFIG_A3]), TEXTURE_A3_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->ani.tex[CONFIG_A4]), TEXTURE_A4_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[CONFIG_A4]), TEXTURE_A4_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
 	return (ret);
 }
@@ -62,8 +66,6 @@ int	get_bonus_texture(t_disp *disp)
 	if (load_tex(&(disp->tex[TEXTURE_CLDOOR]), TEXTURE_CLDOOR_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[TEXTURE_OPDOOR]), TEXTURE_OPDOOR_FILE) != 0)
-		ret = ERR_TEXTURE_CALL;
-	if (load_tex(&(disp->tex[CONFIG_UP]), TEXTURE_UP_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	if (bonus_sprite(disp))
 		ret = ERR_TEXTURE_CALL;

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/14 11:16:02 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/14 15:23:09 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,10 @@
 # define TEXTURE_L4_FILE "./textures/life/life4.xpm"
 # define CONFIG_L5 15
 # define TEXTURE_L5_FILE "./textures/life/life5.xpm"
-# define CONFIG_UP 16
-# define TEXTURE_UP_FILE "./textures/upgrade.xpm"
+# define CONFIG_LUP 16
+# define TEXTURE_LUP_FILE "./textures/up.xpm"
+# define CONFIG_LDW 17
+# define TEXTURE_LDW_FILE "./textures/down.xpm"
 
 /*
 ** animation
@@ -187,8 +189,8 @@
 ** texture setting
 */
 # define TIC_NUMBER 3
-# define TIC_LIFE 0
-# define TIC_ANI 1
+# define TIC_ITEM 0
+# define TIC_ATTACK 1
 
 
 /*
@@ -199,8 +201,8 @@
 /*
 ** player speed setting
 */
-# define ROT_SPEED 1.5 * DEG2RAD
-# define TRANS_SPEED 0.03
+# define ROT_SPEED 2.0 * DEG2RAD
+# define TRANS_SPEED 0.04
 
 /*
 ** hit side
@@ -213,13 +215,13 @@
 */
 # define SCALE_HDIV_SPRITE 1.0
 # define SCALE_WDIV_SPRITE 1.0
-# define SCALE_MOVE_SPRITE 200.0
+# define SCALE_MOVE_SPRITE 200
 # define SCALE_HDIV_ITEM 0.6
 # define SCALE_WDIV_ITEM 0.6
-# define SCALE_MOVE_ITEM 300.0
-# define SCALE_HDIV_ATTACK 1.6
-# define SCALE_WDIV_ATTACK 1.6
-# define SCALE_MOVE_ATTACK 150.0
+# define SCALE_MOVE_ITEM 300
+# define SCALE_HDIV_ATTACK 1.0
+# define SCALE_WDIV_ATTACK 1.0
+# define SCALE_MOVE_ATTACK 200
 # define APPROACH_ITEM_DIST 1.0
 # define APPROACH_ATTACK_DIST 0.4
 
@@ -358,8 +360,8 @@ typedef struct		s_disp
 	int				ceil_color;
 	t_img			img;
 	t_tex			tex[TEXTURE_NUMBER];
-//	t_tex			ani_tex[TEXTURE_ANI_NUMBER];
-	t_ani			ani;
+	t_tex			ani_tex[TEXTURE_ANI_NUMBER];
+	t_clk			clk[TEXTURE_NUMBER];
 	t_map			map;
 	t_vecd			start_pos;
 	char			start_orient;

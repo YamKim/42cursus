@@ -14,7 +14,7 @@ int	set_attack_animation(t_disp *disp, t_spr *spr, int tex_nbr)
 	spr->clk.end = spr->clk.beg;
 	idx = -1;
 	while (++idx < TEXTURE_ANI_NUMBER)
-		spr->ani.tex[idx] = disp->ani.tex[idx];
+		spr->ani.tex[idx] = disp->ani_tex[idx];
 	return (MAP_ATTACK_VAL);
 }
 

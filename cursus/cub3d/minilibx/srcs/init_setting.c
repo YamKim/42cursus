@@ -19,13 +19,10 @@ void	start_orient(t_player *player, char orient)
 
 void	init_tic(t_player *player)
 {
-	player->tic[TIC_LIFE].beg = 0;
-	player->tic[TIC_LIFE].end = 0;
-	time(&(player->tic[TIC_ANI].beg));
-	time(&(player->tic[TIC_ANI].end)); 
-
-	player->clk[TIC_LIFE].beg = clock();
-	player->clk[TIC_LIFE].end = player->clk[TIC_LIFE].beg;
+	player->clk[TIC_ITEM].beg = clock();
+	player->clk[TIC_ITEM].end = player->clk[TIC_ITEM].beg;
+	player->clk[TIC_ATTACK].beg = clock();
+	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
 }
 
 void init_player_setting(t_disp *disp, t_player *player)
@@ -47,8 +44,6 @@ void	init_disp_setting(t_disp *disp)
 {
 	int	j;
 	int	i;
-//	disp->ani.upflag = 1;
-//	disp->ani.idx = 0;
 	disp->spr_lst = NULL;
 	disp->spr_cnt = 0;
 	disp->start_pos.y = -1;
