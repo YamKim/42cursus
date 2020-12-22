@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_utils2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 09:26:53 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 09:27:40 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	lst_del_idx(t_lst **lst, int idx)
@@ -9,17 +21,17 @@ void	lst_del_idx(t_lst **lst, int idx)
 		return ;
 	if (idx == 0)
 	{
-		free(*lst);	
+		free(*lst);
 		*lst = (*lst)->next;
 	}
 	itr = *lst;
 	while (itr && itr->next)
 	{
-		del = itr->next; 
+		del = itr->next;
 		if (--idx == 0)
 		{
 			itr->next = del->next;
-			free(del);	
+			free(del);
 			return ;
 		}
 		itr = itr->next;

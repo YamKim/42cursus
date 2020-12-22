@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_setting.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 09:19:46 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 09:20:15 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	start_orient(t_player *player, char orient)
@@ -25,7 +37,7 @@ void	init_tic(t_player *player)
 	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
 }
 
-void init_player_setting(t_disp *disp, t_player *player)
+void	init_player_setting(t_disp *disp, t_player *player)
 {
 	player->pos = disp->start_pos;
 	player->dir.x = 0;
@@ -44,6 +56,7 @@ void	init_disp_setting(t_disp *disp)
 {
 	int	j;
 	int	i;
+
 	disp->spr_lst = NULL;
 	disp->spr_cnt = 0;
 	disp->start_pos.y = -1;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_close_sprite.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 11:55:52 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 11:57:07 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	del_on_map_spr(t_map *map, t_spr *spr)
@@ -7,7 +19,7 @@ void	del_on_map_spr(t_map *map, t_spr *spr)
 	idx.y = (int)spr->pos.y;
 	idx.x = (int)spr->pos.x;
 	map->data[idx.y][idx.x] = MAP_ROAD_VAL;
-} 
+}
 
 int		get_close_item(t_disp *disp, t_player *player, t_spr *spr, int idx)
 {
@@ -41,7 +53,6 @@ int		get_close_attack(t_disp *disp, t_player *player, int idx)
 	return (ret);
 }
 
-
 void	get_close_sprite(t_disp *disp, t_player *p)
 {
 	int		i;
@@ -57,6 +68,5 @@ void	get_close_sprite(t_disp *disp, t_player *p)
 		if (fabs(calc_dist(p->pos, spr->pos)) < APPROACH_ATTACK_DIST)
 			if (spr->tex_nbr == TEXTURE_ATTACK)
 				i = get_close_attack(disp, p, i);
-	}	
+	}
 }
-

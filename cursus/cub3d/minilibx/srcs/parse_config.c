@@ -13,7 +13,6 @@ int	get_resolution(t_disp *disp, char **word_buf, int wc)
 	return (0);
 }
 
-// show error if repetead case occured
 int	get_texture(t_disp *disp, char *fname, int type, int wc)
 {
 	printf("%d type parsing[%s] start\n", type, fname);

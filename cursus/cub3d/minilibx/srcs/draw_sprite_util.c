@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_sprite_util.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 09:18:44 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 12:14:22 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	sort_spr_pair(t_pair *spr_pair, int spr_cnt)
@@ -27,7 +39,7 @@ void	sort_spr_pair(t_pair *spr_pair, int spr_cnt)
 t_vecd	set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr)
 {
 	t_vecd	ret;
-	
+
 	draw->bias = (int)(SCALE_MOVE_SPRITE / coef.y);
 	ret.y = SCALE_HDIV_SPRITE;
 	ret.x = SCALE_WDIV_SPRITE;
@@ -46,11 +58,11 @@ t_vecd	set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr)
 	return (ret);
 }
 
-int		check_sprite_order(t_disp *disp, t_player *p, t_draw *draw, double *buf)
+int		check_order(t_disp *dp, t_player *p, t_draw *dr, double *b)
 {
 	int	ret;
 
-	ret = p->coef.y > 0 && draw->x > 0 && draw->x < disp->w;
-	ret &= p->coef.y < buf[draw->x];
+	ret = p->coef.y > 0 && dr->x > 0 && dr->x < dp->w;
+	ret &= p->coef.y < b[dr->x];
 	return (ret);
 }

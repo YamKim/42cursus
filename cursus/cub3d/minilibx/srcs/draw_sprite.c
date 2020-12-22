@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_sprite.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 11:48:52 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 12:11:46 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 double	*g_perp_buf;
@@ -13,7 +25,7 @@ void	set_spr_pair(t_disp *disp, t_pair *spr_pair, t_player *p)
 		spr = lst_get_idx(disp->spr_lst, i)->spr;
 		spr_pair[i].ord = i;
 		spr_pair[i].dist = calc_dist(p->pos, spr.pos);
-	}	
+	}
 }
 
 t_vecd	get_coef_spr(t_player *p, t_pair *spr_pair, t_lst *spr_lst)
@@ -47,8 +59,8 @@ t_draw	set_sprite_draw(t_disp *disp, t_vecd coef, int tex_nbr)
 	ret.ybeg = (int)fmax(ret.yctr - (double)ret.lh / 2, 0.0);
 	ret.yend = (int)fmin(ret.yctr + (double)ret.lh / 2, disp->h - 1);
 	spr_w = spr_h * scale.y;
-	ret.xbeg = (int)fmax(ret.xctr - (double)spr_w / 2 , 0.0);
-	ret.xend = (int)fmin(ret.xctr + (double)spr_w / 2 , disp->w - 1);
+	ret.xbeg = (int)fmax(ret.xctr - (double)spr_w / 2, 0.0);
+	ret.xend = (int)fmin(ret.xctr + (double)spr_w / 2, disp->w - 1);
 	ret.x = ret.xbeg;
 	return (ret);
 }
@@ -65,7 +77,7 @@ void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *p, t_draw *draw)
 	{
 		tpos.x = draw->x - draw->xctr + (double)draw->lh / 2;
 		draw->tx = (int)fmin(tpos.x * step.x, tex->w - 1);
-		if (check_sprite_order(disp, p, draw, g_perp_buf))
+		if (check_order(disp, p, draw, g_perp_buf))
 		{
 			draw->y = draw->ybeg;
 			while (++(draw->y) < draw->yend)
@@ -73,7 +85,7 @@ void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *p, t_draw *draw)
 				tpos.y = draw->y - draw->yctr + (double)draw->lh / 2;
 				draw->ty = (int)fmin(tpos.y * step.y, tex->h - 1);
 				draw->color = tex->data[draw->ty * tex->w + draw->tx];
-				if((draw->color & 0x00FFFFFF) != 0)
+				if ((draw->color & 0x00FFFFFF) != 0)
 					disp->img.data[draw->y * disp->w + draw->x] = draw->color;
 			}
 		}
@@ -98,7 +110,7 @@ int		draw_sprite(t_disp *disp, t_player *p, double *perp_buf)
 	{
 		p->coef = get_coef_spr(p, &(spr_pair[i]), disp->spr_lst);
 		spr = &(lst_get_idx(disp->spr_lst, spr_pair[i].ord)->spr);
-		draw = set_sprite_draw(disp, p->coef, spr->tex_nbr); 
+		draw = set_sprite_draw(disp, p->coef, spr->tex_nbr);
 		draw_sprite_part(disp, spr->tex, p, &draw);
 		animate_sprite(spr);
 	}

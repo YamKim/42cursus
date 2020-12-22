@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_skybox.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 11:51:50 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/22 13:35:02 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 t_img	set_skybox_img(t_disp *disp)
@@ -12,7 +24,7 @@ t_img	set_skybox_img(t_disp *disp)
 	return (ret);
 }
 
-int	get_skybox_color(t_map *map, t_veci idx, t_veci step)
+int		get_skybox_color(t_map *map, t_veci idx, t_veci step)
 {
 	int	ret;
 
@@ -37,8 +49,13 @@ int	get_skybox_color(t_map *map, t_veci idx, t_veci step)
 
 void	draw_skybox_point(t_img *skybox, t_vecd pos, int color, int size)
 {
-	for (int x = pos.x - size; x <= pos.x + size; ++x)
-		for (int y = pos.y - size; y <= pos.y + size; ++y)
+	int	x;
+	int	y;
+
+	x = pos.x - size - 1;
+	y = pos.y - size - 1;
+	while (++x <= pos.x + size)
+		while (++y <= pos.y + size)
 			skybox->data[(skybox->h - 1 - y) * skybox->w + x] = color;
 }
 
@@ -68,7 +85,7 @@ void	draw_skybox_player(t_disp *disp, t_img *skybox, t_player *player)
 	draw_skybox_point(skybox, p, COLOR_SKY_PLAYER, SIZE_SKY_PLAYER);
 }
 
-int	draw_skybox(t_disp *disp, t_player *player)
+int		draw_skybox(t_disp *disp, t_player *player)
 {
 	t_img	skybox;
 	t_veci	idx;

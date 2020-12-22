@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_bonus_texture.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 11:55:14 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 11:55:31 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	get_lifebar_tex(t_disp *disp)
@@ -60,7 +72,7 @@ int	get_bonus_texture(t_disp *disp)
 {
 	int	ret;
 
-	ret = 0; 
+	ret = 0;
 	if (load_tex(&(disp->tex[TEXTURE_SECRET]), TEXTURE_SECRET_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[TEXTURE_CLDOOR]), TEXTURE_CLDOOR_FILE) != 0)

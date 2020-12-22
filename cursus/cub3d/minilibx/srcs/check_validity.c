@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_validity.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 09:46:20 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 09:55:15 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	check_color_range(int r, int g, int b)
@@ -14,27 +26,24 @@ int	check_color_range(int r, int g, int b)
 	return (ret);
 }
 
-int		is_number_arr(char **arr, int index_num, int type)
+int	is_number_arr(char **arr, int index_num, int type)
 {
 	int	k;
 	int	i;
 
-	k = 0;
-	while (arr[k])
+	k = -1;
+	while (arr[++k])
 	{
-		i = 0;
-		while (arr[k][i])
-		{
+		i = -1;
+		while (arr[k][++i])
 			if (!(arr[k][i] >= 48 && arr[k][i] <= 57))
-				return (ERR_PARSE);	
-			++i;
-		}
-		++k;
+				return (ERR_PARSE);
 	}
 	if (index_num != k)
 		return (ERR_PARSE);
 	if (type == CONFIG_F || type == CONFIG_C)
-		if(check_color_range(ft_atoi(arr[0]), ft_atoi(arr[1]), ft_atoi(arr[2])))
+		if (check_color_range(ft_atoi(arr[0]), ft_atoi(arr[1]),\
+							ft_atoi(arr[2])))
 			return (ERR_PARSE);
 	return (0);
 }

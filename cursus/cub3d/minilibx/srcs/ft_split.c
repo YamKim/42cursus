@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 11:50:17 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 11:50:36 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static size_t	get_size(const char *s, char c)
@@ -73,7 +85,7 @@ char			**ft_split(char const *s, char c, int *wc)
 	return (ret);
 }
 
-void	free_split_arr(char **tab)
+void			free_split_arr(char **tab)
 {
 	int	idx;
 

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/14 15:23:09 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/22 18:56:00 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 
 # include "../mlx.h"
 # include <math.h>
-# include <string.h>//
 # include <unistd.h>
-# include <stdio.h> //
 # include <stdlib.h>
 # include <limits.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <time.h>
+# include <stdio.h>
 
 /*
 ** PRECOMPILING ======================================
@@ -80,6 +79,7 @@
 # define CONFIG_R 5
 # define CONFIG_F 6
 # define CONFIG_C 7
+
 /*
 ** bonus
 */
@@ -148,6 +148,7 @@
 # define MAP_BOARDER_VAL -2
 # define MAP_EXCEPTION_VAL -3
 # define MAP_UNUSED_VAL -4
+
 /*
 ** bonus
 */
@@ -165,13 +166,13 @@
 /*
 ** degree and radian
 */
-# define DEG2RAD M_PI / 180
-# define RAD2DEG 180 / M_PI
+# define DEG2RAD 0.017453
+# define RAD2DEG 57.29578
 # define NORTH 'N'
 # define SOUTH 'S'
 # define WEST 'W'
 # define EAST 'E'
-# define START_NORTH_ANGLE 0 
+# define START_NORTH_ANGLE 0
 # define START_SOUTH_ANGLE 180
 # define START_WEST_ANGLE 90
 # define START_EAST_ANGLE -90
@@ -192,7 +193,6 @@
 # define TIC_ITEM 0
 # define TIC_ATTACK 1
 
-
 /*
 ** calc_basic
 */
@@ -200,8 +200,9 @@
 
 /*
 ** player speed setting
+** ROT_SPEED = 2.0 * DEG2RAD
 */
-# define ROT_SPEED 2.0 * DEG2RAD
+# define ROT_SPEED 0.034906
 # define TRANS_SPEED 0.04
 
 /*
@@ -227,28 +228,33 @@
 
 /*
 ** skybox
+** DISP2SKYW: 3 / 7
+** DISP2SKYH: 2 / 7
 */
-# define DISP2SKYW 3 / 7
-# define DISP2SKYH 2 / 7
+# define DISP2SKYW 0.4285714286
+# define DISP2SKYH 0.2857142857
 
 /*
 ** hud
+** DISP2HUD_ITEM_W: 3 / 7
+** DISP2HUD_ITEM_H: 3 / 7
+** DISP2HUD_LIFE_W: 1 / 6
+** DISP2HUD_LIFE_H: 1 / 12
 */
 # define MAX_LIFE 5
 # define MIN_LIFE 0
-# define DISP2HUD_ITEM_W (double)3 / 7
-# define DISP2HUD_ITEM_H (double)3 / 7
-
-# define DISP2HUD_LIFE_W (double)1 / 6
-# define DISP2HUD_LIFE_H (double)1 / 12
+# define DISP2HUD_ITEM_W 0.4285714286
+# define DISP2HUD_ITEM_H 0.4285714286
+# define DISP2HUD_LIFE_W 0.1666666667
+# define DISP2HUD_LIFE_H 0.0833333333
 
 /*
 ** color set
 */
 # define COLOR_SKY_BACKBACKGROUND 0xFF000000
 # define COLOR_SKY_BACKGROUND 0x5F000000
-# define COLOR_SKY_WALL 1644825 
-# define COLOR_SKY_ROAD 13158600 
+# define COLOR_SKY_WALL 1644825
+# define COLOR_SKY_ROAD 13158600
 # define COLOR_SKY_SPRITE 0x0AA344
 # define COLOR_SKY_ITEM 0xF47983
 # define COLOR_SKY_ATTACK 0xF20C00
@@ -424,6 +430,25 @@ typedef struct		s_draw
 	int				color;
 }					t_draw;
 
+typedef struct		s_bmp
+{
+	char			id[2];
+	int				file_size;
+	int				unused;
+	int				offset;
+	int				dib;
+	int				width;
+	int				height;
+	char			plane[2];
+	char			bpp[2];
+	int				compression;
+	int				raw_bitmap_size;
+	int				resx;
+	int				resy;
+	int				number_of_colors;
+	int				important_colors;
+}					t_bmp;
+
 /*
 ** FUNCTIONS ======================================
 */
@@ -436,7 +461,7 @@ void				init_player_setting(t_disp *disp, t_player *player);
 /*
 ** run cub3d program
 */
-int					cub3d_run(t_disp *disp, t_player *player);
+int					cub3d_run(t_disp *disp, t_player *player, int capture_flag);
 
 /*
 ** run cub3d program
@@ -480,7 +505,7 @@ double				calc_det(t_vecd v1, t_vecd v2);
 /*
 ** calculate dda algorithm
 */
-double				dda_algorithm(t_player *player, t_hit *hit_point, t_map map);
+double				dda_algorithm(t_player *player, t_hit *hp, t_map map);
 
 /*
 ** display drawing untex line
@@ -490,7 +515,7 @@ void				draw_untex_wall(t_disp disp, int x, const t_hit hit_point);
 /*
 ** display drawing tex line
 */
-int					draw_tex_wall(t_disp *disp, t_player *player, int x, t_hit hit_point);
+int					draw_tex_wall(t_disp *disp, t_player *p, int x, t_hit *hp);
 
 /*
 ** display drawing tex line
@@ -505,7 +530,7 @@ void				sort_spr_pair(t_pair *spr_pair, int spr_cnt);
 t_vecd				set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr);
 void				get_close_sprite(t_disp *disp, t_player *p);
 void				animate_sprite(t_spr *spr);
-int					check_sprite_order(t_disp *disp, t_player *p, t_draw *draw, double *buf);
+int					check_order(t_disp *dp, t_player *p, t_draw *dr, double *b);
 
 /*
 ** display skybox
@@ -515,7 +540,7 @@ int					draw_skybox(t_disp *disp, t_player *player);
 /*
 ** display hud
 */
-int					draw_hud(t_disp *disp, t_tex tex, t_vecd scale, t_veci bias);
+int					draw_hud(t_disp *dp, t_tex tex, t_vecd scale, t_veci bias);
 int					draw_hud_series(t_disp *disp, t_player *player);
 
 /*
@@ -545,6 +570,8 @@ size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 char				*ft_strdup(const char *s);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
+void				ft_bzero(void *s, size_t n);
+void				*ft_memcpy(void *dest, const void *src, size_t n);
 
 /*
 ** keyboard hook from user
@@ -582,5 +609,8 @@ void				lst_clear(t_lst **lst);
 ** door
 */
 int					check_door_type(t_hit *hit_point, int map_data);
+
+int					main_loop(t_loop *lv);
+int					save_bmp_image(t_loop lv, t_disp *disp);
 
 #endif

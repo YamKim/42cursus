@@ -34,6 +34,7 @@ SRC = main.c \
 	check_validity.c \
 	load_file.c \
 	show_data.c \
+	save_bmp_image.c
 
 
 OBJ = $(SRC:.c=.o)

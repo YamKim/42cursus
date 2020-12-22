@@ -1,16 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_tex_background.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 09:22:40 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 09:22:53 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-
-
-#if 0
-int	draw_tex_floor(t_disp *disp, t_player pl)
-{
-	//double row_dist = hctr / (y - hctr);
-}
-
-int	draw_tex_floor()
-{
-}
-#endif
 
 int	draw_tex_background(t_disp *disp, t_player *player)
 {

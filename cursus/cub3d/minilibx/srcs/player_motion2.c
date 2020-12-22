@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_motion2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 09:20:41 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 09:21:17 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	set_zaxis_motion(t_disp *disp, t_player *player)
@@ -12,7 +24,6 @@ void	set_zaxis_motion(t_disp *disp, t_player *player)
 
 void	open_door_trigger(t_disp *disp, t_player *player)
 {
-	(void)disp;
 	t_vecd	door_dir;
 	int		map_type;
 

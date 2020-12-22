@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_door_type.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 09:39:48 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/21 09:40:22 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	case_secret_door(int map_data)
@@ -38,7 +50,7 @@ int	check_door_type(t_hit *hit_point, int map_data)
 
 	ret = 0;
 	if (hit_point->secret_door)
-		hit_point->door_type = case_secret_door(map_data);	
+		hit_point->door_type = case_secret_door(map_data);
 	else
 		hit_point->door_type = case_general_wall(map_data);
 	if (hit_point->door_type >= 1)
