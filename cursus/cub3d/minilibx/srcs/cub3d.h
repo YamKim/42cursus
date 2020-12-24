@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/24 10:40:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/25 00:15:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -441,6 +441,16 @@ typedef struct		s_draw
 	int				bias;
 	int				color;
 }					t_draw;
+
+typedef struct		s_bg
+{
+	t_vecd			ray_dir0;
+	t_vecd			ray_dir1;
+	double			row_dist;
+	t_vecd			step;
+	t_draw			draw;
+
+}					t_bg;
 
 typedef struct		s_bmp_file_header
 {
