@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:39:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:39:31 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/23 20:26:24 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	set_attack_animation(t_disp *disp, t_spr *spr, int tex_nbr)
+static int	set_attack_animation(t_disp *disp, t_spr *spr, int tex_nbr)
 {
 	int	idx;
 
@@ -30,7 +30,7 @@ int	set_attack_animation(t_disp *disp, t_spr *spr, int tex_nbr)
 	return (MAP_ATTACK_VAL);
 }
 
-int	set_no_animation(t_disp *disp, t_spr *spr, int tex_nbr)
+static int	set_no_animation(t_disp *disp, t_spr *spr, int tex_nbr)
 {
 	spr->tex_nbr = tex_nbr;
 	spr->tex = &(disp->tex[spr->tex_nbr]);
@@ -41,7 +41,7 @@ int	set_no_animation(t_disp *disp, t_spr *spr, int tex_nbr)
 	return (0);
 }
 
-int	set_animation(t_disp *disp, t_spr *spr, char data)
+int			set_animation(t_disp *disp, t_spr *spr, char data)
 {
 	int	ret;
 

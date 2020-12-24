@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/22 18:56:00 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 10:40:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <time.h>
 # include <stdio.h>
+# include <limits.h>
 
 /*
 ** PRECOMPILING ======================================
@@ -30,16 +31,19 @@
 /*
 ** error code
 */
+# define ERR_GET_INFO 3
+# define ERR_CHECK_FILE 4
+# define ERR_PARSE_CONFIG 5
 # define ERR_TEXTURE_CALL 1
 # define ERR_RUN 1
 # define ERR_FILE 1
 # define ERR_READ 1
 # define ERR_MALLOC -1
 # define ERR_PARSE 1
-# define ERR_PARSE_CONFIG 3
 # define ERR_PARSE_MAP 4
 # define ERR_DRAW_IMG 1
 # define ERR_BONUS_CONFIG 5
+# define ERR_SAVE_BMP 5
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
 
 /*
@@ -48,6 +52,7 @@
 # define FILE_EXTENSION ".cub"
 # define FILE_EXTENSION_LENGTH 4
 # define FILE_DATA 4096
+# define FILE_NAME_BMP "save.bmp"
 
 /*
 ** keyboard codes
@@ -273,6 +278,13 @@
 # define LIFE_DEFAULT 1
 
 /*
+** life bar
+*/
+# define BMP_HEADER_SIZE 54
+# define BMP_PIXEL_SIZE 3
+# define BMP_PIXEL_ALIGN 4
+
+/*
 ** structures
 */
 typedef struct		s_vecd
@@ -430,24 +442,35 @@ typedef struct		s_draw
 	int				color;
 }					t_draw;
 
-typedef struct		s_bmp
+typedef struct		s_bmp_file_header
 {
-	char			id[2];
-	int				file_size;
-	int				unused;
-	int				offset;
-	int				dib;
-	int				width;
-	int				height;
-	char			plane[2];
-	char			bpp[2];
-	int				compression;
-	int				raw_bitmap_size;
-	int				resx;
-	int				resy;
-	int				number_of_colors;
-	int				important_colors;
-}					t_bmp;
+	unsigned short	bf_type;
+	unsigned int	bf_size;
+	unsigned short	bf_reserved1;
+	unsigned short	bf_reserved2;
+	unsigned int	bf_off_bits;
+}					t_bmp_file_header;
+
+typedef struct		s_bmp_info_header
+{
+	unsigned int	bi_size;
+	int				bi_width;
+	unsigned short	bi_planes;
+	unsigned short	bi_bit_count;
+	unsigned int	bi_compression;
+	unsigned int	bi_size_image;
+	int				bi_x_pels_per_meter;
+	int				bi_y_pels_per_meter;
+	unsigned int	bi_clr_used;
+	unsigned int	bi_clr_important;
+}					t_bmp_info_header;
+
+typedef struct		s_rgb
+{
+	unsigned char	rgb_blue;
+	unsigned char	rgb_green;
+	unsigned char	rgb_red;
+}					t_rgb;
 
 /*
 ** FUNCTIONS ======================================
@@ -462,6 +485,7 @@ void				init_player_setting(t_disp *disp, t_player *player);
 ** run cub3d program
 */
 int					cub3d_run(t_disp *disp, t_player *player, int capture_flag);
+int					run_raycasting(t_loop *lv);
 
 /*
 ** run cub3d program
@@ -483,7 +507,6 @@ int					set_animation(t_disp *disp, t_spr *spr, char data);
 /*
 ** player motion
 */
-void				start_orient(t_player *player, char orient);
 void				move_forward(t_player *player, t_map map);
 void				move_backward(t_player *player, t_map map);
 void				turn_left(t_player *player);
@@ -515,22 +538,40 @@ void				draw_untex_wall(t_disp disp, int x, const t_hit hit_point);
 /*
 ** display drawing tex line
 */
-int					draw_tex_wall(t_disp *disp, t_player *p, int x, t_hit *hp);
+int					draw_tex_wall(
+									t_disp *disp,
+									t_player *player,
+									int x,
+									t_hit *hit_point);
 
 /*
 ** display drawing tex line
 */
-int					draw_tex_background(t_disp *disp, t_player *player);
+int					draw_background(t_disp *disp, t_player *player);
 
 /*
 ** display drawing sprite shape
 */
-int					draw_sprite(t_disp *disp, t_player *p, double *perp_buf);
-void				sort_spr_pair(t_pair *spr_pair, int spr_cnt);
-t_vecd				set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr);
-void				get_close_sprite(t_disp *disp, t_player *p);
+int					draw_sprite(
+									t_disp *disp,
+									t_player *player,
+									double *perp_buf);
+void				sort_spr_pair(
+									t_pair *spr_pair,
+									int spr_cnt);
+t_vecd				set_sprite_scale(
+										t_draw *draw,
+										t_vecd coef,
+										int tex_nbr);
+void				get_close_sprite(
+										t_disp *disp,
+										t_player *p);
+int					check_order(
+									t_disp *disp,
+									t_player *player,
+									t_draw *draw,
+									double *purp_buf);
 void				animate_sprite(t_spr *spr);
-int					check_order(t_disp *dp, t_player *p, t_draw *dr, double *b);
 
 /*
 ** display skybox
@@ -540,7 +581,7 @@ int					draw_skybox(t_disp *disp, t_player *player);
 /*
 ** display hud
 */
-int					draw_hud(t_disp *dp, t_tex tex, t_vecd scale, t_veci bias);
+int					draw_hud(t_disp *disp, t_tex *tex, t_vecd scale, t_veci bias);
 int					draw_hud_series(t_disp *disp, t_player *player);
 
 /*
@@ -559,7 +600,7 @@ void				free_split_arr(char **tab);
 /*
 ** ft_atoi
 */
-int					ft_atoi(char *nptr);
+int					ft_atoi(const char *nptr);
 
 /*
 ** utilities for string
@@ -610,7 +651,6 @@ void				lst_clear(t_lst **lst);
 */
 int					check_door_type(t_hit *hit_point, int map_data);
 
-int					main_loop(t_loop *lv);
-int					save_bmp_image(t_loop lv, t_disp *disp);
+int					save_bmp_image(t_loop *lv);
 
 #endif

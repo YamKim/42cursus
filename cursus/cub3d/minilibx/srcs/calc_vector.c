@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:31:17 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:32:08 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 10:04:05 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@
 ** @ warning:
 */
 
-t_vecd	translate_vec(t_vecd pos, t_vecd dir, double trans)
+t_vecd	translate_vec(
+		const t_vecd pos,
+		const t_vecd dir,
+		const double trans)
 {
 	t_vecd	ret;
 
@@ -43,7 +46,9 @@ t_vecd	translate_vec(t_vecd pos, t_vecd dir, double trans)
 ** @ warning:
 */
 
-t_vecd	rotate_vec(t_vecd dir, double theta)
+t_vecd	rotate_vec(
+		const t_vecd dir,
+		const double theta)
 {
 	t_vecd	ret;
 
@@ -52,7 +57,9 @@ t_vecd	rotate_vec(t_vecd dir, double theta)
 	return (ret);
 }
 
-double	calc_dist(t_vecd v1, t_vecd v2)
+double	calc_dist(
+		const t_vecd v1,
+		const t_vecd v2)
 {
 	t_vecd	ret;
 
@@ -61,7 +68,9 @@ double	calc_dist(t_vecd v1, t_vecd v2)
 	return (ret.x + ret.y);
 }
 
-double	calc_det(t_vecd v1, t_vecd v2)
+double	calc_det(
+		const t_vecd v1,
+		const t_vecd v2)
 {
 	return (v1.x * v2.y - v2.x * v1.y);
 }

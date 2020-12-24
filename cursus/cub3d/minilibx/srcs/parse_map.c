@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:01:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 12:01:37 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/23 18:39:34 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	set_map_sprite(t_disp *disp, int y, int x, char data)
+static int	set_map_sprite(t_disp *disp, int y, int x, char data)
 {
 	t_spr	spr;
 	t_lst	*tmp;
@@ -27,7 +27,7 @@ int	set_map_sprite(t_disp *disp, int y, int x, char data)
 	return (ret);
 }
 
-int	set_map_player(t_disp *disp, char orient, int y, int x)
+static int	set_map_player(t_disp *disp, char orient, int y, int x)
 {
 	disp->start_pos.y = y + 0.5;
 	disp->start_pos.x = x + 0.5;
@@ -35,7 +35,7 @@ int	set_map_player(t_disp *disp, char orient, int y, int x)
 	return (MAP_ROAD_VAL);
 }
 
-int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
+static int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
 {
 	if (data == MAP_SECRET)
 		return (MAP_SECRET_VAL);
@@ -48,7 +48,7 @@ int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
 	return (MAP_EXCEPTION_VAL);
 }
 
-int	get_map_element(t_disp *disp, char data, int y, int x)
+static int	get_map_element(t_disp *disp, char data, int y, int x)
 {
 	if (data == MAP_SPACE)
 		return (MAP_SPACE_VAL);
@@ -67,7 +67,7 @@ int	get_map_element(t_disp *disp, char data, int y, int x)
 	return (get_map_element_bonus(disp, data, y, x));
 }
 
-int	parse_map(t_disp *disp, char **map, int map_beg)
+int			parse_map(t_disp *disp, char **map, int map_beg)
 {
 	int	y;
 	int r;
@@ -81,7 +81,7 @@ int	parse_map(t_disp *disp, char **map, int map_beg)
 		x = -1;
 		while (map[r][++x])
 			disp->map.data[y][x] = get_map_element(disp, map[r][x], y, x);
-		if (x >= disp->map.max_w)
+		if (x == 0 || x >= disp->map.max_w)
 			disp->map.max_w = x;
 		disp->map.data[y][x] = MAP_BOARDER_VAL;
 		--r;

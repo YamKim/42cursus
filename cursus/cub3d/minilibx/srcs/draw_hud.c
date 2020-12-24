@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:44:59 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/22 13:36:24 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 09:58:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_hud_img(t_img *hud)
+static void		init_hud_img(t_img *hud)
 {
 	int	y;
 	int	x;
@@ -26,7 +26,7 @@ void	init_hud_img(t_img *hud)
 	}
 }
 
-t_draw	set_hud_draw(t_img *hud)
+static t_draw	set_hud_draw(t_img *hud)
 {
 	t_draw	ret;
 
@@ -40,7 +40,9 @@ t_draw	set_hud_draw(t_img *hud)
 	return (ret);
 }
 
-t_img	set_hud_img(t_disp *disp, t_vecd scale)
+static t_img	set_hud_img(
+				const t_disp *disp,
+				const t_vecd scale)
 {
 	t_img	ret;
 	int		tmp;
@@ -52,41 +54,48 @@ t_img	set_hud_img(t_disp *disp, t_vecd scale)
 	return (ret);
 }
 
-void	draw_hud_part(t_img *hud, t_draw *draw, t_tex tex)
+static void		draw_hud_part(
+				t_img *hud,
+				t_draw *draw,
+				const t_tex *tex)
 {
 	t_vecd	tpos;
 	t_vecd	step;
 
-	step.x = (double)tex.w / hud->w;
-	step.y = (double)tex.h / hud->h;
+	step.x = (double)tex->w / hud->w;
+	step.y = (double)tex->h / hud->h;
 	draw->x = draw->xbeg - 1;
 	while (++(draw->x) < draw->xend)
 	{
 		tpos.x = draw->x - draw->xctr + (double)hud->w / 2;
-		draw->tx = (int)fmin(tpos.x * step.x, tex.w - 1);
+		draw->tx = (int)fmin(tpos.x * step.x, tex->w - 1);
 		draw->y = draw->ybeg - 1;
 		while (++(draw->y) < draw->yend)
 		{
 			tpos.y = draw->y - draw->yctr + (double)hud->h / 2;
-			draw->ty = (int)fmin(tpos.y * step.y, tex.h - 1);
-			draw->color = tex.data[draw->ty * tex.w + draw->tx];
+			draw->ty = (int)fmin(tpos.y * step.y, tex->h - 1);
+			draw->color = tex->data[draw->ty * tex->w + draw->tx];
 			hud->data[draw->y * hud->w + draw->x] = draw->color;
 		}
 	}
 }
 
-int		draw_hud(t_disp *dp, t_tex tex, t_vecd scale, t_veci bias)
+int				draw_hud(
+				t_disp *disp,
+				t_tex *tex,
+				t_vecd scale,
+				t_veci bias)
 {
 	t_img	hud;
 	t_draw	draw;
 
-	hud = set_hud_img(dp, scale);
+	hud = set_hud_img(disp, scale);
 	init_hud_img(&hud);
 	draw = set_hud_draw(&hud);
 	draw_hud_part(&hud, &draw, tex);
 	bias.y -= (int)((double)hud.h / 2);
 	bias.x -= (int)((double)hud.w / 2);
-	mlx_put_image_to_window(dp->mlx_ptr, dp->win_ptr, \
+	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr,\
 							hud.ptr, bias.x, bias.y);
 	return (0);
 }

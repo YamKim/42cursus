@@ -6,13 +6,15 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:48:20 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 11:48:22 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 09:58:18 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	hud_get_item(t_disp *disp, t_player *player)
+static int		hud_get_item(
+				t_disp *disp,
+				t_player *player)
 {
 	t_vecd	scale;
 	t_veci	bias;
@@ -23,11 +25,13 @@ int	hud_get_item(t_disp *disp, t_player *player)
 	scale.x = DISP2HUD_ITEM_W;
 	player->clk[TIC_ITEM].end = clock();
 	if (player->clk[TIC_ITEM].end - player->clk[TIC_ITEM].beg <= 1000000)
-		draw_hud(disp, disp->tex[CONFIG_LUP], scale, bias);
+		draw_hud(disp, &(disp->tex[CONFIG_LUP]), scale, bias);
 	return (0);
 }
 
-int	hud_get_attack(t_disp *disp, t_player *player)
+static int		hud_get_attack(
+				t_disp *disp,
+				t_player *player)
 {
 	t_vecd	scale;
 	t_veci	bias;
@@ -38,11 +42,13 @@ int	hud_get_attack(t_disp *disp, t_player *player)
 	scale.x = DISP2HUD_ITEM_W;
 	player->clk[TIC_ATTACK].end = clock();
 	if (player->clk[TIC_ATTACK].end - player->clk[TIC_ATTACK].beg <= 1000000)
-		draw_hud(disp, disp->tex[CONFIG_LDW], scale, bias);
+		draw_hud(disp, &(disp->tex[CONFIG_LDW]), scale, bias);
 	return (0);
 }
 
-int	hud_life_bar(t_disp *disp, t_player *player)
+static int		hud_life_bar(
+				t_disp *disp,
+				t_player *player)
 {
 	t_vecd	scale;
 	t_veci	bias;
@@ -53,11 +59,13 @@ int	hud_life_bar(t_disp *disp, t_player *player)
 	scale.x = DISP2HUD_LIFE_W;
 	player->life = (int)fmin(player->life, MAX_LIFE);
 	player->life = (int)fmax(player->life, MIN_LIFE);
-	draw_hud(disp, disp->tex[(int)(CONFIG_L0 + player->life)], scale, bias);
+	draw_hud(disp, &(disp->tex[(int)(CONFIG_L0 + player->life)]), scale, bias);
 	return (0);
 }
 
-int	draw_hud_series(t_disp *disp, t_player *player)
+int				draw_hud_series(
+				t_disp *disp,
+				t_player *player)
 {
 	int		ret;
 

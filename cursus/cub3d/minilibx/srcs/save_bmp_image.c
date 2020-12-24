@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void	int_to_char(int n, unsigned char *src)
+static void	type_conversion(unsigned char *src, int n)
 {
 	src[0] = (unsigned char)n;
 	src[1] = (unsigned char)(n >> 8);
@@ -8,83 +8,72 @@ static void	int_to_char(int n, unsigned char *src)
 	src[3] = (unsigned char)(n >> 24);
 }
 
-static int	write_bmp_header(int fd, int file_size, t_disp *disp)
+static int	put_bmp_info(int fd, int file_size, t_disp *disp)
 {
-	int				ret;
-	unsigned char	bmp_header[54];
+	unsigned char	bmp_header[BMP_HEADER_SIZE];
 
-	ft_bzero(bmp_header, 54);
-	ft_memcpy(bmp_header, "BM", sizeof(char) * 2);
-	int_to_char(file_size, bmp_header + 2);
+	ft_bzero(bmp_header, BMP_HEADER_SIZE);
+	bmp_header[0] = 'B';
+	bmp_header[1] = 'M';
+	type_conversion(&bmp_header[2], file_size);
 	bmp_header[10] = (unsigned char)54;
 	bmp_header[14] = (unsigned char)40;
-	int_to_char(disp->w, bmp_header + 18);
-	int_to_char(disp->h, bmp_header + 22);
+	type_conversion(&bmp_header[18], disp->w);
+	type_conversion(&bmp_header[22], disp->h);
 	bmp_header[26] = (unsigned char)1;
-	bmp_header[28] = (unsigned char)24;
-	ret = write(fd, bmp_header, 54);
-	return (ret);
+	bmp_header[28] = (unsigned char)(8 * BMP_PIXEL_SIZE);
+	if (write(fd, bmp_header, BMP_HEADER_SIZE) < 0)
+		return (ERR_SAVE_BMP);
+	return (0);
 }
 
-int			my_mlx_pixel_get(t_img *img, int x, int y)
+static int	put_bmp_color(int fd, int pad, t_disp *disp)
 {
-	char	*dst;
-
-	dst = (char *)img->data + (y * img->size_l + x * (img->bpp / 8));
-	return (*(unsigned int*)dst);
-}
-
-int	get_color(t_disp *disp, int x, int y)
-{
-	int			color;
-	int			rgb;
-
-	color = my_mlx_pixel_get(&disp->img, x, y);
-	rgb = (color & 0xFF0000) | (color & 0x00FF00) | (color & 0x0000FF);
-	return (rgb);
-}
-
-static int	write_bmp_data(int fd, int pad, t_disp *disp)
-{
-	int				i;
-	int				j;
+	int				y;
+	int				x;
 	int				color;
-	unsigned char	zero[3];
+	unsigned char	zero[BMP_PIXEL_SIZE];
+	int				ret;
 
-	i = -1;
-	while (++i < 3)
-		zero[i] = 0;
-	i = disp->h + 1;
-	while (--i > 0)
+	ret = 0;
+	ft_bzero(zero, BMP_PIXEL_SIZE);
+	y = disp->h;
+	while (--y >= 0)
 	{
-		j = -1;
-		while (++j < disp->w)
+		x = -1;
+		while (++x < disp->w)
 		{
-			color = get_color(disp, j, i);
-			if (write(fd, &color, 3) < 0)
-				return (0);
-			if (pad > 0 && write(fd, &zero, pad) < 0)
-				return (0);
+			color = disp->img.data[y * disp->w + x];
+			if ((ret = write(fd, &color, BMP_PIXEL_SIZE)) < 0)
+				return (ERR_SAVE_BMP);
+			if ((ret = write(fd, zero, pad)) < 0)
+				return (ERR_SAVE_BMP);
 		}
 	}
-	return (1);
+	return (0);
 }
 
-int			save_bmp_image(t_loop lv, t_disp *disp)
+int			save_bmp_image(t_loop *lv)
 {
-	int		fd;
-	int		file_size;
-	int		pixel_bytes_per_row;
-	int		pad;
+	int	fd;
+	int	file_size;
+	int	row_pixel_size;
+	int	tmp_pad;
+	int	pad;
+	int	ret;
 
-	main_loop(&lv);
-	pixel_bytes_per_row = disp->w * 3;
-	pad = (4 - pixel_bytes_per_row % 4) % 4;
-	file_size = 14 + 40 + 3 * (disp->w + pad) * disp->h;
-	if ((fd = open("screenshot.bmp", O_RDWR | O_CREAT | O_TRUNC, 0644)) < 0)
-		return (0);
-	if (!(write_bmp_header(fd, file_size, disp)) || !(write_bmp_data(fd, pad, disp)))
-		return (0);
+	ret = 0;
+	run_raycasting(lv);
+	row_pixel_size = (lv->disp->w * BMP_PIXEL_SIZE) % BMP_PIXEL_ALIGN;
+	tmp_pad = row_pixel_size % BMP_PIXEL_ALIGN;
+	pad = (BMP_PIXEL_ALIGN - tmp_pad) % BMP_PIXEL_ALIGN;
+	file_size = 14 + 40 + BMP_PIXEL_SIZE * (lv->disp->w + pad) * lv->disp->h;
+	if ((fd = open(FILE_NAME_BMP, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
+		ret = ERR_SAVE_BMP;
+	if (ret == 0)
+		ret = put_bmp_info(fd, file_size, lv->disp);
+	if (ret == 0)
+		ret = put_bmp_color(fd, pad, lv->disp);
 	close(fd);
-	return (1);
+	return (ret);
 }

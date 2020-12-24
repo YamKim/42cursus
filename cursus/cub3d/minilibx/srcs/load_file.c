@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:44:58 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:45:12 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/23 18:13:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,9 @@ int	check_file(char *fname)
 
 	fname_len = ft_strlen(fname);
 	ext = ft_substr(fname, fname_len - FILE_EXTENSION_LENGTH, fname_len);
-	if (ft_strncmp(ext, FILE_EXTENSION, 4))
-		return (ERR_FILE);
+	if (ft_strncmp(ext, FILE_EXTENSION, FILE_EXTENSION_LENGTH))
+		return (ERR_CHECK_FILE);
 	return (0);
-}
-
-int	open_file(char *fname)
-{
-	int	ret;
-
-	if ((ret = open(fname, O_RDONLY)) < 0)
-	{
-		perror("The following error occurred");
-		return (errno);
-	}
-	return (ret);
 }
 
 int	load_tex(t_tex *tex, char *file_name)

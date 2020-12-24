@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:50:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 11:50:01 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 10:05:46 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	ft_isspace(char c)
+static int	ft_isspace(const char c)
 {
 	if (c == '\f' || c == '\n' || c == '\r'
 			|| c == '\t' || c == '\v' || c == ' ')
@@ -20,7 +20,7 @@ static int	ft_isspace(char c)
 	return (0);
 }
 
-int			ft_atoi(char *nptr)
+int			ft_atoi(const char *nptr)
 {
 	unsigned int	ret;
 	int				sign;

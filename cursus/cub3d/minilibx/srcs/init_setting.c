@@ -6,13 +6,21 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:19:46 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:20:15 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/23 19:05:34 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	start_orient(t_player *player, char orient)
+static void		init_tic(t_player *player)
+{
+	player->clk[TIC_ITEM].beg = clock() + 10000000;
+	player->clk[TIC_ITEM].end = player->clk[TIC_ITEM].beg;
+	player->clk[TIC_ATTACK].beg = clock() + 10000000;
+	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
+}
+
+static void		init_player_orient(t_player *player, char orient)
 {
 	double	angle;
 
@@ -29,15 +37,7 @@ void	start_orient(t_player *player, char orient)
 	player->plane = rotate_vec(player->plane, angle * DEG2RAD);
 }
 
-void	init_tic(t_player *player)
-{
-	player->clk[TIC_ITEM].beg = clock();
-	player->clk[TIC_ITEM].end = player->clk[TIC_ITEM].beg;
-	player->clk[TIC_ATTACK].beg = clock();
-	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
-}
-
-void	init_player_setting(t_disp *disp, t_player *player)
+void			init_player_setting(t_disp *disp, t_player *player)
 {
 	player->pos = disp->start_pos;
 	player->dir.x = 0;
@@ -47,25 +47,25 @@ void	init_player_setting(t_disp *disp, t_player *player)
 	player->key = 0;
 	player->trans_speed = TRANS_SPEED;
 	player->rot_speed = ROT_SPEED;
-	start_orient(player, disp->start_orient);
+	init_player_orient(player, disp->start_orient);
 	player->life = LIFE_DEFAULT;
 	init_tic(player);
 }
 
-void	init_disp_setting(t_disp *disp)
+void			init_disp_setting(t_disp *disp)
 {
-	int	j;
-	int	i;
+	int	y;
+	int	x;
 
 	disp->spr_lst = NULL;
 	disp->spr_cnt = 0;
 	disp->start_pos.y = -1;
 	disp->start_pos.x = -1;
-	j = -1;
-	while (++j < MAX_NUM_MAP_HEIGHT)
+	y = -1;
+	while (++y < MAX_NUM_MAP_HEIGHT)
 	{
-		i = -1;
-		while (++i < MAX_NUM_MAP_HEIGHT)
-			disp->map.data[j][i] = MAP_UNUSED_VAL;
+		x = -1;
+		while (++x < MAX_NUM_MAP_HEIGHT)
+			disp->map.data[y][x] = MAP_UNUSED_VAL;
 	}
 }

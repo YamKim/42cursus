@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 07:13:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 12:09:17 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 10:03:07 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** @ warning:
 */
 
-t_veci	get_step(const t_vecd ray_dir)
+static t_veci	get_step(const t_vecd ray_dir)
 {
 	t_veci	ret;
 
@@ -48,7 +48,7 @@ t_veci	get_step(const t_vecd ray_dir)
 ** @ warning:
 */
 
-t_vecd	get_delta_dist(t_vecd ray_dir)
+static t_vecd	get_delta_dist(const t_vecd ray_dir)
 {
 	t_vecd	ret;
 
@@ -85,7 +85,10 @@ t_vecd	get_delta_dist(t_vecd ray_dir)
 ** @ warning:
 */
 
-t_vecd	get_side_dist(t_player *player, t_dda dda, t_hit hit_point)
+static t_vecd	get_side_dist(
+				const t_player *player,
+				const t_dda dda,
+				const t_hit hit_point)
 {
 	t_vecd	ret;
 
@@ -113,7 +116,10 @@ t_vecd	get_side_dist(t_player *player, t_dda dda, t_hit hit_point)
 ** @ warning:
 */
 
-void	run_dda_algorithm(t_dda dda, t_hit *hp, t_map map)
+static void		run_dda_algorithm(
+				t_dda dda,
+				t_hit *hp,
+				const t_map map)
 {
 	int		hit_flag;
 
@@ -147,7 +153,10 @@ void	run_dda_algorithm(t_dda dda, t_hit *hp, t_map map)
 ** @ warning:
 */
 
-double	dda_algorithm(t_player *player, t_hit *hp, t_map map)
+double			dda_algorithm(
+				t_player *player,
+				t_hit *hp,
+				t_map map)
 {
 	t_dda	dda;
 	double	ret;

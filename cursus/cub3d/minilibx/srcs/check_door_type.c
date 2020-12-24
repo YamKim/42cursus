@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:39:48 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:40:22 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 10:04:49 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	case_secret_door(int map_data)
+static int	case_secret_door(const int map_data)
 {
 	int	ret;
 
@@ -28,7 +28,7 @@ int	case_secret_door(int map_data)
 	return (ret);
 }
 
-int	case_general_wall(int map_data)
+static int	case_general_wall(const int map_data)
 {
 	int	ret;
 
@@ -44,7 +44,9 @@ int	case_general_wall(int map_data)
 	return (ret);
 }
 
-int	check_door_type(t_hit *hit_point, int map_data)
+int			check_door_type(
+			t_hit *hit_point,
+			const int map_data)
 {
 	int	ret;
 

@@ -3,9 +3,9 @@
 int	get_resolution(t_disp *disp, char **word_buf, int wc)
 {
 	if ((disp->config & (1 << CONFIG_R)) || wc != 3)
-		return (ERR_PARSE);
+		return (ERR_PARSE_CONFIG);
 	if (is_number_arr(word_buf + 1, 2, CONFIG_R))
-		return (ERR_PARSE);
+		return (ERR_PARSE_CONFIG);
 	disp->config |= 1 << CONFIG_R;
 	disp->w = ft_atoi(word_buf[1]);
 	disp->h = ft_atoi(word_buf[2]);
@@ -15,12 +15,11 @@ int	get_resolution(t_disp *disp, char **word_buf, int wc)
 
 int	get_texture(t_disp *disp, char *fname, int type, int wc)
 {
-	printf("%d type parsing[%s] start\n", type, fname);
 	if ((disp->config & (1 << type)) || wc != 2)
-		return (ERR_PARSE);
+		return (ERR_PARSE_CONFIG);
 	disp->config |= 1 << type;
 	if (load_tex(&(disp->tex[type]), fname) != 0)
-		return (ERR_TEXTURE_CALL);
+		return (ERR_PARSE_CONFIG);
 	printf("%d type parsing[%s] success\n", type, fname);
 	return (0);
 }
@@ -31,13 +30,13 @@ int	get_background(t_disp *disp, char *color_set, int type, int wc)
 	int		tot_color;
 
 	if ((disp->config & (1 << type)) || wc != 2)
-		return (ERR_PARSE);
+		return (ERR_PARSE_CONFIG);
 	disp->config |= 1 << type;
 	rgb = ft_split(color_set, ',', &tot_color);
 	if (is_number_arr(rgb, 3, type))
 	{
 		free_split_arr(rgb);
-		return (ERR_PARSE);
+		return (ERR_PARSE_CONFIG);
 	}
 	tot_color = ft_atoi(rgb[0]) << 16 | ft_atoi(rgb[1]) << 8 | ft_atoi(rgb[2]);
 	free_split_arr(rgb);

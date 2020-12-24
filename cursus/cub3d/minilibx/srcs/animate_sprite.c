@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:08:12 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:08:14 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 10:05:23 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		is_animate_tex_range(int tex_nbr)
+int		is_animate_tex_range(const int tex_nbr)
 {
 	return (tex_nbr >= CONFIG_A0 && tex_nbr <= CONFIG_A4);
 }

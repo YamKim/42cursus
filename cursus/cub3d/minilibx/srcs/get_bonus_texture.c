@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:14 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 11:55:31 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/23 20:00:44 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_lifebar_tex(t_disp *disp)
+static int	get_lifebar_tex(t_disp *disp)
 {
 	int	ret;
 	int	idx;
@@ -38,7 +38,7 @@ int	get_lifebar_tex(t_disp *disp)
 	return (ret);
 }
 
-int	get_attack_ani_tex(t_disp *disp)
+static int	get_attack_ani_tex(t_disp *disp)
 {
 	int	ret;
 
@@ -56,7 +56,7 @@ int	get_attack_ani_tex(t_disp *disp)
 	return (ret);
 }
 
-int	bonus_sprite(t_disp *disp)
+static int	bonus_sprite(t_disp *disp)
 {
 	int	ret;
 
@@ -68,7 +68,7 @@ int	bonus_sprite(t_disp *disp)
 	return (ret);
 }
 
-int	get_bonus_texture(t_disp *disp)
+int			get_bonus_texture(t_disp *disp)
 {
 	int	ret;
 

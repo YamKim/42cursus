@@ -6,13 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:51:50 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/22 13:35:02 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 10:08:44 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_img	set_skybox_img(t_disp *disp)
+static t_img	set_skybox_img(const t_disp *disp)
 {
 	t_img	ret;
 	int		tmp;
@@ -24,7 +24,10 @@ t_img	set_skybox_img(t_disp *disp)
 	return (ret);
 }
 
-int		get_skybox_color(t_map *map, t_veci idx, t_veci step)
+static int		get_skybox_color(
+				const t_map *map,
+				const t_veci idx,
+				const t_veci step)
 {
 	int	ret;
 
@@ -47,45 +50,54 @@ int		get_skybox_color(t_map *map, t_veci idx, t_veci step)
 	return (ret);
 }
 
-void	draw_skybox_point(t_img *skybox, t_vecd pos, int color, int size)
+static void		draw_skybox_point(
+				t_img *skybox,
+				const t_vecd p,
+				const int color,
+				const int size)
 {
 	int	x;
 	int	y;
 
-	x = pos.x - size - 1;
-	y = pos.y - size - 1;
-	while (++x <= pos.x + size)
-		while (++y <= pos.y + size)
+	x = p.x - size - 1;
+	y = p.y - size - 1;
+	while (++x <= p.x + size)
+		while (++y <= p.y + size)
 			skybox->data[(skybox->h - 1 - y) * skybox->w + x] = color;
 }
 
-void	draw_skybox_player(t_disp *disp, t_img *skybox, t_player *player)
+static void		draw_skybox_player(
+				const t_disp *disp,
+				t_img *skybox,
+				const t_player *p)
 {
 	int		i;
-	t_vecd	p;
+	t_vecd	point;
 	t_vecd	d[5];
 	t_vecd	ray_l[5];
 	t_vecd	ray_r[5];
 
-	p.x = (double)player->pos.x * skybox->w / disp->map.max_w;
-	p.y = (double)player->pos.y * skybox->h / disp->map.h;
+	point.x = (double)p->pos.x * skybox->w / disp->map.max_w;
+	point.y = (double)p->pos.y * skybox->h / disp->map.h;
 	i = -1;
 	while (++i < 5)
 	{
-		d[i].x = p.x + 3 * i * player->dir.x;
-		d[i].y = p.y + 3 * i * player->dir.y;
-		ray_l[i].y = p.y + 3 * i * (player->dir.y + player->plane.y);
-		ray_l[i].x = p.x + 3 * i * (player->dir.x + player->plane.x);
-		ray_r[i].y = p.y + 3 * i * (player->dir.y - player->plane.y);
-		ray_r[i].x = p.x + 3 * i * (player->dir.x - player->plane.x);
+		d[i].x = point.x + 3 * i * p->dir.x;
+		d[i].y = point.y + 3 * i * p->dir.y;
+		ray_l[i].y = point.y + 3 * i * (p->dir.y + p->plane.y);
+		ray_l[i].x = point.x + 3 * i * (p->dir.x + p->plane.x);
+		ray_r[i].y = point.y + 3 * i * (p->dir.y - p->plane.y);
+		ray_r[i].x = point.x + 3 * i * (p->dir.x - p->plane.x);
 		draw_skybox_point(skybox, d[i], COLOR_SKY_DIR, 1);
 		draw_skybox_point(skybox, ray_l[i], COLOR_SKY_RAY_DIR, 1);
 		draw_skybox_point(skybox, ray_r[i], COLOR_SKY_RAY_DIR, 1);
 	}
-	draw_skybox_point(skybox, p, COLOR_SKY_PLAYER, SIZE_SKY_PLAYER);
+	draw_skybox_point(skybox, point, COLOR_SKY_PLAYER, SIZE_SKY_PLAYER);
 }
 
-int		draw_skybox(t_disp *disp, t_player *player)
+int				draw_skybox(
+				t_disp *disp,
+				t_player *player)
 {
 	t_img	skybox;
 	t_veci	idx;

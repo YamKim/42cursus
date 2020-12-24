@@ -10,13 +10,13 @@ SRC = main.c \
 	get_bonus_texture.c \
 	set_animation.c \
 	player_motion.c \
-	player_motion2.c \
+	player_action.c \
 	calc_vector.c \
 	calc_dda.c \
 	check_door_type.c \
 	draw_untex_wall.c \
 	draw_tex_wall.c \
-	draw_tex_background.c \
+	draw_background.c \
 	draw_sprite.c \
 	draw_sprite_util.c \
 	animate_sprite.c \

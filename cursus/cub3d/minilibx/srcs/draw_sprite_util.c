@@ -6,13 +6,15 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:18:44 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 12:14:22 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 09:59:38 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	sort_spr_pair(t_pair *spr_pair, int spr_cnt)
+void	sort_spr_pair(
+		t_pair *spr_pair,
+		const int spr_cnt)
 {
 	int		i;
 	int		j;
@@ -36,7 +38,10 @@ void	sort_spr_pair(t_pair *spr_pair, int spr_cnt)
 	}
 }
 
-t_vecd	set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr)
+t_vecd	set_sprite_scale(
+		t_draw *draw,
+		const t_vecd coef,
+		const int tex_nbr)
 {
 	t_vecd	ret;
 
@@ -58,11 +63,15 @@ t_vecd	set_sprite_scale(t_draw *draw, t_vecd coef, int tex_nbr)
 	return (ret);
 }
 
-int		check_order(t_disp *dp, t_player *p, t_draw *dr, double *b)
+int		check_order(
+		t_disp *disp,
+		t_player *player,
+		t_draw *draw,
+		double *purp_buf)
 {
 	int	ret;
 
-	ret = p->coef.y > 0 && dr->x > 0 && dr->x < dp->w;
-	ret &= p->coef.y < b[dr->x];
+	ret = player->coef.y > 0 && draw->x > 0 && draw->x < disp->w;
+	ret &= player->coef.y < purp_buf[draw->x];
 	return (ret);
 }

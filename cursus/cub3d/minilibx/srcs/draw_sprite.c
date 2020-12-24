@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:48:52 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 12:11:46 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/24 10:00:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,27 @@
 
 double	*g_perp_buf;
 
-void	set_spr_pair(t_disp *disp, t_pair *spr_pair, t_player *p)
+static void		set_spr_pair(
+				const t_disp *disp,
+				t_pair *spr_pair,
+				const t_player *player)
 {
-	int		i;
+	int		idx;
 	t_spr	spr;
 
-	i = -1;
-	while (++i < disp->spr_cnt)
+	idx = -1;
+	while (++idx < disp->spr_cnt)
 	{
-		spr = lst_get_idx(disp->spr_lst, i)->spr;
-		spr_pair[i].ord = i;
-		spr_pair[i].dist = calc_dist(p->pos, spr.pos);
+		spr = lst_get_idx(disp->spr_lst, idx)->spr;
+		spr_pair[idx].ord = idx;
+		spr_pair[idx].dist = calc_dist(player->pos, spr.pos);
 	}
 }
 
-t_vecd	get_coef_spr(t_player *p, t_pair *spr_pair, t_lst *spr_lst)
+static t_vecd	get_coef_spr(
+				const t_player *player,
+				const t_pair *spr_pair,
+				t_lst *spr_lst)
 {
 	t_vecd	ret;
 	double	det;
@@ -36,15 +42,20 @@ t_vecd	get_coef_spr(t_player *p, t_pair *spr_pair, t_lst *spr_lst)
 	t_vecd	spr_dist;
 
 	spr = lst_get_idx(spr_lst, spr_pair->ord)->spr;
-	spr_dist.x = spr.pos.x - p->pos.x;
-	spr_dist.y = spr.pos.y - p->pos.y;
-	det = calc_det(p->plane, p->dir);
-	ret.x = (p->dir.y * spr_dist.x - p->dir.x * spr_dist.y) / det;
-	ret.y = (-p->plane.y * spr_dist.x + p->plane.x * spr_dist.y) / det;
+	spr_dist.x = spr.pos.x - player->pos.x;
+	spr_dist.y = spr.pos.y - player->pos.y;
+	det = calc_det(player->plane, player->dir);
+	ret.x = player->dir.y * spr_dist.x - player->dir.x * spr_dist.y;
+	ret.x /= det;
+	ret.y = -player->plane.y * spr_dist.x + player->plane.x * spr_dist.y;
+	ret.y /= det;
 	return (ret);
 }
 
-t_draw	set_sprite_draw(t_disp *disp, t_vecd coef, int tex_nbr)
+static t_draw	set_sprite_draw(
+				const t_disp *disp,
+				const t_vecd coef,
+				const int tex_nbr)
 {
 	int		spr_w;
 	int		spr_h;
@@ -65,7 +76,11 @@ t_draw	set_sprite_draw(t_disp *disp, t_vecd coef, int tex_nbr)
 	return (ret);
 }
 
-void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *p, t_draw *draw)
+static void		draw_sprite_part(
+				t_disp *disp,
+				t_tex *tex,
+				t_player *player,
+				t_draw *draw)
 {
 	t_vecd	tpos;
 	t_vecd	step;
@@ -77,7 +92,7 @@ void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *p, t_draw *draw)
 	{
 		tpos.x = draw->x - draw->xctr + (double)draw->lh / 2;
 		draw->tx = (int)fmin(tpos.x * step.x, tex->w - 1);
-		if (check_order(disp, p, draw, g_perp_buf))
+		if (check_order(disp, player, draw, g_perp_buf))
 		{
 			draw->y = draw->ybeg;
 			while (++(draw->y) < draw->yend)
@@ -92,7 +107,10 @@ void	draw_sprite_part(t_disp *disp, t_tex *tex, t_player *p, t_draw *draw)
 	}
 }
 
-int		draw_sprite(t_disp *disp, t_player *p, double *perp_buf)
+int				draw_sprite(
+				t_disp *disp,
+				t_player *player,
+				double *perp_buf)
 {
 	t_pair	*spr_pair;
 	t_draw	draw;
@@ -100,18 +118,18 @@ int		draw_sprite(t_disp *disp, t_player *p, double *perp_buf)
 	t_spr	*spr;
 
 	g_perp_buf = perp_buf;
-	get_close_sprite(disp, p);
+	get_close_sprite(disp, player);
 	if (!(spr_pair = (t_pair *)malloc(sizeof(t_pair) * disp->spr_cnt)))
 		return (ERR_MALLOC);
-	set_spr_pair(disp, spr_pair, p);
+	set_spr_pair(disp, spr_pair, player);
 	sort_spr_pair(spr_pair, disp->spr_cnt);
 	i = -1;
 	while (++i < disp->spr_cnt)
 	{
-		p->coef = get_coef_spr(p, &(spr_pair[i]), disp->spr_lst);
+		player->coef = get_coef_spr(player, &(spr_pair[i]), disp->spr_lst);
 		spr = &(lst_get_idx(disp->spr_lst, spr_pair[i].ord)->spr);
-		draw = set_sprite_draw(disp, p->coef, spr->tex_nbr);
-		draw_sprite_part(disp, spr->tex, p, &draw);
+		draw = set_sprite_draw(disp, player->coef, spr->tex_nbr);
+		draw_sprite_part(disp, spr->tex, player, &draw);
 		animate_sprite(spr);
 	}
 	free(spr_pair);

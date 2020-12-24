@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:46:20 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:55:15 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/23 20:39:53 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,15 @@ int	check_map_range(t_map map, int y, int x)
 
 	ret = 0;
 	if (y <= 0 || y >= map.h - 1)
-	{
-		printf("height range error========================\n");
-		printf("y: %d, x: %d\n", y, x);
 		ret = 1;
-	}
-	else if (x <= 0 \
-		|| map.data[y][x + 1] == MAP_BOARDER_VAL)
-	{
-		printf("width range error=========================\n");
-		printf("y: %d, x: %d\n", y, x);
+	else if (x <= 0 || map.data[y][x + 1] == MAP_BOARDER_VAL)
 		ret = 1;
-	}
 	else if (map.data[y - 1][x] == MAP_SPACE_VAL \
-		|| map.data[y + 1][x] == MAP_SPACE_VAL)
-	{
-		printf("find up/down space val====================\n");
-		printf("y: %d, x: %d\n", y, x);
+			|| map.data[y + 1][x] == MAP_SPACE_VAL)
 		ret = 1;
-	}
 	else if (map.data[y][x - 1] == MAP_SPACE_VAL\
-		|| map.data[y][x + 1] == MAP_SPACE_VAL)
-	{
-		printf("find left/right space val=================\n");
-		printf("y: %d, x: %d\n", y, x);
+			|| map.data[y][x + 1] == MAP_SPACE_VAL)
 		ret = 1;
-	}
 	return (ret);
 }
 
