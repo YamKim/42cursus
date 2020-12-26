@@ -6,19 +6,11 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:19:46 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/23 19:05:34 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:23:23 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static void		init_tic(t_player *player)
-{
-	player->clk[TIC_ITEM].beg = clock() + 10000000;
-	player->clk[TIC_ITEM].end = player->clk[TIC_ITEM].beg;
-	player->clk[TIC_ATTACK].beg = clock() + 10000000;
-	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
-}
 
 static void		init_player_orient(t_player *player, char orient)
 {
@@ -49,7 +41,10 @@ void			init_player_setting(t_disp *disp, t_player *player)
 	player->rot_speed = ROT_SPEED;
 	init_player_orient(player, disp->start_orient);
 	player->life = LIFE_DEFAULT;
-	init_tic(player);
+	player->clk[TIC_ITEM].beg = clock() - INT_MAX;
+	player->clk[TIC_ITEM].end = player->clk[TIC_ITEM].beg;
+	player->clk[TIC_ATTACK].beg = clock() - INT_MAX;
+	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
 }
 
 void			init_disp_setting(t_disp *disp)
@@ -69,3 +64,22 @@ void			init_disp_setting(t_disp *disp)
 			disp->map.data[y][x] = MAP_UNUSED_VAL;
 	}
 }
+
+t_loop			set_loop_val(
+				t_disp *dp,
+				t_player *player)
+{
+	t_loop	ret;
+
+	dp->mlx_ptr = mlx_init();
+	dp->win_ptr = mlx_new_window(dp->mlx_ptr, dp->w, dp->h, "mlx");
+	dp->img.ptr = mlx_new_image(dp->mlx_ptr, dp->w, dp->h);
+	dp->img.data = (int *)mlx_get_data_addr(dp->img.ptr,\
+						&(dp->img.bpp), &(dp->img.size_l), &(dp->img.endian));
+	dp->img.w = dp->w;
+	dp->img.h = dp->h;
+	ret.disp = dp;
+	ret.player = player;
+	return (ret);
+}
+

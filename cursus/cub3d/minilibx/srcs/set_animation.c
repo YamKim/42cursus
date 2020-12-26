@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:39:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/23 20:26:24 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 12:38:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static int	set_attack_animation(t_disp *disp, t_spr *spr, int tex_nbr)
 	spr->tex = &(disp->tex[spr->tex_nbr]);
 	spr->ani.upflag = 1;
 	spr->ani.idx = 0;
-	time(&(spr->tic.beg));
-	spr->tic.end = spr->tic.beg;
 	spr->clk.beg = clock();
 	spr->clk.end = spr->clk.beg;
 	idx = -1;

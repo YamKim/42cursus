@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_motion2.c                                   :+:      :+:    :+:   */
+/*   player_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:20:41 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:21:17 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:20:43 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	open_door_trigger(t_disp *disp, t_player *player)
 	{
 		disp->map.data[(int)door_dir.y][(int)door_dir.x] = MAP_OPDOOR_VAL;
 		printf("door is opened\n");
+		disp->sound.beg = system("afplay -v 0.30 ./sound/sound_break.mp3\
+								&>/dev/null &");
 	}
 	if (map_type == MAP_OPDOOR_VAL)
 	{

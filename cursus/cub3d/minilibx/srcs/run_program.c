@@ -6,13 +6,17 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:28:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/24 10:41:02 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:25:59 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	draw_main(t_disp *disp, t_player *player, double *perp_buf, int secret)
+static int		draw_main(
+				t_disp *disp,
+				t_player *player,
+				double *perp_buf,
+				int secret)
 {
 	t_hit	hp;
 	int		t;
@@ -36,7 +40,7 @@ int	draw_main(t_disp *disp, t_player *player, double *perp_buf, int secret)
 	return (0);
 }
 
-int	run_raycasting(t_loop *lv)
+int				run_raycasting(t_loop *lv)
 {
 	double	*perp_buf;
 	int		ret;
@@ -61,23 +65,39 @@ int	run_raycasting(t_loop *lv)
 	return (ret);
 }
 
-int	cub3d_run(t_disp *disp, t_player *player, int capture_flag)
+static int		play_music(t_disp *disp)
+{
+	(void)disp;
+	system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
+#if 0
+	long	clk_tck;
+	clock_t	actual_time;
+
+	actual_time = clock();
+	clk_tck = CLOCKS_PER_SEC;
+	if ((double)(actual_time - disp->sound.beg) / clk_tck >= 30)
+	{
+		system("killall afplay");
+		system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
+		disp->sound.beg = actual_time;
+	}
+#endif
+	return (0);
+}
+
+int				cub3d_run(t_disp *disp, t_player *player, int capture_flag)
 {
 	t_loop	loop_var;
 
-	disp->mlx_ptr = mlx_init();
-	disp->win_ptr = mlx_new_window(disp->mlx_ptr, disp->w, disp->h, "mlx");
-	disp->img.ptr = mlx_new_image(disp->mlx_ptr, disp->w, disp->h);
-	disp->img.data = (int *)mlx_get_data_addr(disp->img.ptr, &(disp->img.bpp),\
-					&(disp->img.size_l), &(disp->img.endian));
-	disp->img.w = disp->w;
-	disp->img.h = disp->h;
-	loop_var.disp = disp;
-	loop_var.player = player;
-	if (capture_flag) {
+	init_player_setting(disp, player);
+	loop_var = set_loop_val(disp, player);
+	if (capture_flag)
+	{
 		printf("What error?: %d\n", save_bmp_image(&loop_var));
 		return (0);
 	}
+	if (play_music(disp))
+		return (ERR_PLAY_MUSIC);
 	mlx_loop_hook(disp->mlx_ptr, &run_raycasting, &loop_var);
 	mlx_hook(disp->win_ptr, X_EVENT_KEY_PRESS, 0, &key_press, &loop_var);
 	mlx_hook(disp->win_ptr, X_EVENT_KEY_RELEASE, 0, &key_release, &loop_var);

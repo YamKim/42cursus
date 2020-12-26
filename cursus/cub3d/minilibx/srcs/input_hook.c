@@ -6,20 +6,11 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:23:35 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:26:05 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 18:40:48 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	finish_program(t_loop *lv)
-{
-	lst_clear(&(lv->disp->spr_lst));
-	if (lv->player->life == MIN_LIFE)
-		printf("GAME OVER=========================================\n");
-	printf("PROGRAM FINISHED======================================\n");
-	exit(0);
-}
 
 int		key_press(int key, t_loop *lv)
 {

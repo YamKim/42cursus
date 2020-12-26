@@ -6,18 +6,13 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:08:12 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/24 10:05:23 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 12:08:12 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		is_animate_tex_range(const int tex_nbr)
-{
-	return (tex_nbr >= CONFIG_A0 && tex_nbr <= CONFIG_A4);
-}
-
-void	control_animation_idx(t_spr *spr)
+static void		control_animation_idx(t_spr *spr)
 {
 	if (spr->ani.upflag)
 	{
@@ -41,7 +36,7 @@ void	control_animation_idx(t_spr *spr)
 	}
 }
 
-void	animate_sprite(t_spr *spr)
+void			animate_sprite(t_spr *spr)
 {
 	if (spr->tex_nbr != TEXTURE_ATTACK)
 		return ;

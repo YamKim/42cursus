@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/25 00:15:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 19:23:46 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define ERR_GET_INFO 3
 # define ERR_CHECK_FILE 4
 # define ERR_PARSE_CONFIG 5
+# define ERR_PLAY_MUSIC 6
 # define ERR_TEXTURE_CALL 1
 # define ERR_RUN 1
 # define ERR_FILE 1
@@ -53,6 +54,8 @@
 # define FILE_EXTENSION_LENGTH 4
 # define FILE_DATA 4096
 # define FILE_NAME_BMP "save.bmp"
+# define RESOLUTION_WIDTH_MAX 1920
+# define RESOLUTION_HEIGHT_MAX 1024
 
 /*
 ** keyboard codes
@@ -99,21 +102,21 @@
 # define TEXTURE_ATTACK 9
 # define TEXTURE_ATTACK_FILE "./textures/attack/A0.xpm"
 
-# define CONFIG_L0 10
+# define TEXTURE_L0 10
 # define TEXTURE_L0_FILE "./textures/life/life0.xpm"
-# define CONFIG_L1 11
+# define TEXTURE_L1 11
 # define TEXTURE_L1_FILE "./textures/life/life1.xpm"
-# define CONFIG_L2 12
+# define TEXTURE_L2 12
 # define TEXTURE_L2_FILE "./textures/life/life2.xpm"
-# define CONFIG_L3 13
+# define TEXTURE_L3 13
 # define TEXTURE_L3_FILE "./textures/life/life3.xpm"
-# define CONFIG_L4 14
+# define TEXTURE_L4 14
 # define TEXTURE_L4_FILE "./textures/life/life4.xpm"
-# define CONFIG_L5 15
+# define TEXTURE_L5 15
 # define TEXTURE_L5_FILE "./textures/life/life5.xpm"
-# define CONFIG_LUP 16
+# define TEXTURE_LUP 16
 # define TEXTURE_LUP_FILE "./textures/up.xpm"
-# define CONFIG_LDW 17
+# define TEXTURE_LDW 17
 # define TEXTURE_LDW_FILE "./textures/down.xpm"
 
 /*
@@ -121,15 +124,15 @@
 */
 # define MAX_ANI_IDX 4
 # define MIN_ANI_IDX 0
-# define CONFIG_A0 0
+# define TEXTURE_A0 0
 # define TEXTURE_A0_FILE "./textures/attack/A0.xpm"
-# define CONFIG_A1 1
+# define TEXTURE_A1 1
 # define TEXTURE_A1_FILE "./textures/attack/A1.xpm"
-# define CONFIG_A2 2
+# define TEXTURE_A2 2
 # define TEXTURE_A2_FILE "./textures/attack/A2.xpm"
-# define CONFIG_A3 3
+# define TEXTURE_A3 3
 # define TEXTURE_A3_FILE "./textures/attack/A3.xpm"
-# define CONFIG_A4 4
+# define TEXTURE_A4 4
 # define TEXTURE_A4_FILE "./textures/attack/A4.xpm"
 
 /*
@@ -336,7 +339,6 @@ typedef struct		s_spr
 {
 	t_vecd			pos;
 	int				tex_nbr;
-	t_tic			tic;
 	t_clk			clk;
 	t_tex			*tex;
 	t_ani			ani;
@@ -380,6 +382,7 @@ typedef struct		s_disp
 	t_tex			tex[TEXTURE_NUMBER];
 	t_tex			ani_tex[TEXTURE_ANI_NUMBER];
 	t_clk			clk[TEXTURE_NUMBER];
+	t_clk			sound;
 	t_map			map;
 	t_vecd			start_pos;
 	char			start_orient;
@@ -491,6 +494,9 @@ typedef struct		s_rgb
 */
 void				init_disp_setting(t_disp *disp);
 void				init_player_setting(t_disp *disp, t_player *player);
+t_loop				set_loop_val(
+					t_disp *dp,
+					t_player *player);
 /*
 ** run cub3d program
 */
@@ -543,7 +549,11 @@ double				dda_algorithm(t_player *player, t_hit *hp, t_map map);
 /*
 ** display drawing untex line
 */
-void				draw_untex_wall(t_disp disp, int x, const t_hit hit_point);
+void				draw_untex_wall(
+					t_disp *disp,
+					t_player *player,
+					int x,
+					const t_hit *hit_point);
 
 /*
 ** display drawing tex line

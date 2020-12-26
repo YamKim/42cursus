@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   save_bmp_image.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/26 12:30:18 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/26 12:30:19 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	type_conversion(unsigned char *src, int n)
@@ -58,15 +70,14 @@ int			save_bmp_image(t_loop *lv)
 	int	fd;
 	int	file_size;
 	int	row_pixel_size;
-	int	tmp_pad;
 	int	pad;
 	int	ret;
 
 	ret = 0;
 	run_raycasting(lv);
 	row_pixel_size = (lv->disp->w * BMP_PIXEL_SIZE) % BMP_PIXEL_ALIGN;
-	tmp_pad = row_pixel_size % BMP_PIXEL_ALIGN;
-	pad = (BMP_PIXEL_ALIGN - tmp_pad) % BMP_PIXEL_ALIGN;
+	pad = row_pixel_size % BMP_PIXEL_ALIGN;
+	pad = (BMP_PIXEL_ALIGN - pad) % BMP_PIXEL_ALIGN;
 	file_size = 14 + 40 + BMP_PIXEL_SIZE * (lv->disp->w + pad) * lv->disp->h;
 	if ((fd = open(FILE_NAME_BMP, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 		ret = ERR_SAVE_BMP;

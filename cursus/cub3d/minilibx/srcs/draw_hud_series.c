@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:48:20 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/24 09:58:18 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 12:12:37 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int		hud_get_item(
 	scale.x = DISP2HUD_ITEM_W;
 	player->clk[TIC_ITEM].end = clock();
 	if (player->clk[TIC_ITEM].end - player->clk[TIC_ITEM].beg <= 1000000)
-		draw_hud(disp, &(disp->tex[CONFIG_LUP]), scale, bias);
+		draw_hud(disp, &(disp->tex[TEXTURE_LUP]), scale, bias);
 	return (0);
 }
 
@@ -42,7 +42,7 @@ static int		hud_get_attack(
 	scale.x = DISP2HUD_ITEM_W;
 	player->clk[TIC_ATTACK].end = clock();
 	if (player->clk[TIC_ATTACK].end - player->clk[TIC_ATTACK].beg <= 1000000)
-		draw_hud(disp, &(disp->tex[CONFIG_LDW]), scale, bias);
+		draw_hud(disp, &(disp->tex[TEXTURE_LDW]), scale, bias);
 	return (0);
 }
 
@@ -59,7 +59,7 @@ static int		hud_life_bar(
 	scale.x = DISP2HUD_LIFE_W;
 	player->life = (int)fmin(player->life, MAX_LIFE);
 	player->life = (int)fmax(player->life, MIN_LIFE);
-	draw_hud(disp, &(disp->tex[(int)(CONFIG_L0 + player->life)]), scale, bias);
+	draw_hud(disp, &(disp->tex[(int)(TEXTURE_L0 + player->life)]), scale, bias);
 	return (0);
 }
 

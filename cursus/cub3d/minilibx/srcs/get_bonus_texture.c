@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:14 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/23 20:00:44 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/26 12:10:54 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ static int	get_lifebar_tex(t_disp *disp)
 
 	ret = 0;
 	idx = -1;
-	if (load_tex(&(disp->tex[CONFIG_L0]), TEXTURE_L0_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_L0]), TEXTURE_L0_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_L1]), TEXTURE_L1_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_L1]), TEXTURE_L1_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_L2]), TEXTURE_L2_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_L2]), TEXTURE_L2_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_L3]), TEXTURE_L3_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_L3]), TEXTURE_L3_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_L4]), TEXTURE_L4_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_L4]), TEXTURE_L4_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_L5]), TEXTURE_L5_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_L5]), TEXTURE_L5_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_LUP]), TEXTURE_LUP_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_LUP]), TEXTURE_LUP_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->tex[CONFIG_LDW]), TEXTURE_LDW_FILE) != 0)
+	if (load_tex(&(disp->tex[TEXTURE_LDW]), TEXTURE_LDW_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
 	return (ret);
 }
@@ -43,15 +43,15 @@ static int	get_attack_ani_tex(t_disp *disp)
 	int	ret;
 
 	ret = 0;
-	if (load_tex(&(disp->ani_tex[CONFIG_A0]), TEXTURE_A0_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[TEXTURE_A0]), TEXTURE_A0_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->ani_tex[CONFIG_A1]), TEXTURE_A1_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[TEXTURE_A1]), TEXTURE_A1_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->ani_tex[CONFIG_A2]), TEXTURE_A2_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[TEXTURE_A2]), TEXTURE_A2_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->ani_tex[CONFIG_A3]), TEXTURE_A3_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[TEXTURE_A3]), TEXTURE_A3_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
-	if (load_tex(&(disp->ani_tex[CONFIG_A4]), TEXTURE_A4_FILE) != 0)
+	if (load_tex(&(disp->ani_tex[TEXTURE_A4]), TEXTURE_A4_FILE) != 0)
 		return (ERR_TEXTURE_CALL);
 	return (ret);
 }
