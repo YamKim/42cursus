@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:19:46 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 19:23:23 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/27 08:13:39 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void			init_player_setting(t_disp *disp, t_player *player)
 	player->clk[TIC_ITEM].end = player->clk[TIC_ITEM].beg;
 	player->clk[TIC_ATTACK].beg = clock() - INT_MAX;
 	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
+	player->sound = clock();
+	system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
 }
 
 void			init_disp_setting(t_disp *disp)

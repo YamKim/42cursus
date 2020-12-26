@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:28:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 19:25:59 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/27 08:21:40 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ static int		draw_main(
 	return (0);
 }
 
+static int		repeat_bgm(t_player *player)
+{
+	long	cps;
+	clock_t	cur_time;
+
+	cur_time = clock();
+	cps = CLOCKS_PER_SEC;
+	if ((double)(cur_time - player->sound) / cps >= 120)
+	{
+		system("killall afplay");
+		system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
+		player->sound = cur_time;
+	} 
+	return (0);
+}
+
 int				run_raycasting(t_loop *lv)
 {
 	double	*perp_buf;
@@ -48,6 +64,8 @@ int				run_raycasting(t_loop *lv)
 	ret = 0;
 	if (!(perp_buf = (double *)malloc(sizeof(double) * lv->disp->w)))
 		return (ERR_MALLOC);
+	if (repeat_bgm(lv->player))
+		return (ERR_PLAY_MUSIC);
 	if (draw_background(lv->disp, lv->player))
 		ret |= ERR_DRAW_IMG;
 	if (draw_main(lv->disp, lv->player, perp_buf, 0))
@@ -65,26 +83,6 @@ int				run_raycasting(t_loop *lv)
 	return (ret);
 }
 
-static int		play_music(t_disp *disp)
-{
-	(void)disp;
-	system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
-#if 0
-	long	clk_tck;
-	clock_t	actual_time;
-
-	actual_time = clock();
-	clk_tck = CLOCKS_PER_SEC;
-	if ((double)(actual_time - disp->sound.beg) / clk_tck >= 30)
-	{
-		system("killall afplay");
-		system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
-		disp->sound.beg = actual_time;
-	}
-#endif
-	return (0);
-}
-
 int				cub3d_run(t_disp *disp, t_player *player, int capture_flag)
 {
 	t_loop	loop_var;
@@ -96,8 +94,6 @@ int				cub3d_run(t_disp *disp, t_player *player, int capture_flag)
 		printf("What error?: %d\n", save_bmp_image(&loop_var));
 		return (0);
 	}
-	if (play_music(disp))
-		return (ERR_PLAY_MUSIC);
 	mlx_loop_hook(disp->mlx_ptr, &run_raycasting, &loop_var);
 	mlx_hook(disp->win_ptr, X_EVENT_KEY_PRESS, 0, &key_press, &loop_var);
 	mlx_hook(disp->win_ptr, X_EVENT_KEY_RELEASE, 0, &key_release, &loop_var);

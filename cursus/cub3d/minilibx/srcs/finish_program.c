@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 19:19:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 19:20:04 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/27 08:12:12 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	finish_program(t_loop *lv)
 	system("killall afplay");
 	if (lv->player->life == MIN_LIFE)
 		printf("GAME OVER=========================================\n");
-	lv->disp->sound.beg = system("afplay -v 0.30 ./sound/sound_endgame.mp3\
+	lv->player->sound = system("afplay -v 0.30 ./sound/sound_endgame.mp3\
 								&>/dev/null &");
 	mlx_destroy_window(lv->disp->mlx_ptr, lv->disp->win_ptr);
 	printf("PROGRAM FINISHED======================================\n");

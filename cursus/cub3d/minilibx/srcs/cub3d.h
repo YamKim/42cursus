@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 19:23:46 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/27 08:10:52 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,7 +382,6 @@ typedef struct		s_disp
 	t_tex			tex[TEXTURE_NUMBER];
 	t_tex			ani_tex[TEXTURE_ANI_NUMBER];
 	t_clk			clk[TEXTURE_NUMBER];
-	t_clk			sound;
 	t_map			map;
 	t_vecd			start_pos;
 	char			start_orient;
@@ -401,8 +400,8 @@ typedef struct		s_player
 	t_vecd			coef;
 	int				key;
 	int				life;
-	t_tic			tic[TIC_NUMBER];
 	t_clk			clk[TIC_NUMBER];
+	clock_t			sound;
 }					t_player;
 
 typedef struct		s_loop

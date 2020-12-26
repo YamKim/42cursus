@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:02:53 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 18:28:53 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/27 07:51:53 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static int	get_info(
 	return (ret);
 }
 
-int			main(int argc, char *argv[])
+int			main(
+			int argc,
+			char *argv[])
 {
 	t_disp		disp;
 	t_player	player;
