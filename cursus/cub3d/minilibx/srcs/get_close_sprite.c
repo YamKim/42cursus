@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_close_sprite.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:52 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 15:49:10 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:11 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 void	del_on_map_spr(t_map *map, t_spr *spr)
 {

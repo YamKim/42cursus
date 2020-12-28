@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:48:52 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/24 10:00:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:06 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 double	*g_perp_buf;
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:47:49 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/22 11:04:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:23 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

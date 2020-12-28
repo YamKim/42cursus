@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_animation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:39:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 12:38:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 static int	set_attack_animation(t_disp *disp, t_spr *spr, int tex_nbr)
 {

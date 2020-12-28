@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_bonus_texture.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:14 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 15:24:49 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:11 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 static int	get_lifebar_tex(t_disp *disp)
 {

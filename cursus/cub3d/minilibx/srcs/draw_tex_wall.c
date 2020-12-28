@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_tex_wall.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:32:34 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/24 09:47:29 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:08 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 static t_tex	get_wall_type(
 				t_disp *disp,

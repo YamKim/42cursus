@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_mouse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:44:33 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 14:47:03 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:13 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 int	mouse_press(int button, int x, int y, t_loop *lv)
 {

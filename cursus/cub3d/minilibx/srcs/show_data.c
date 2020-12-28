@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   show_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:45:29 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/21 09:45:30 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:22 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 void	show_map_data(t_disp disp)
 {

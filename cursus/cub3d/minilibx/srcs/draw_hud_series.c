@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_hud_series.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:48:20 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 15:03:23 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:05 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 static int		hud_get_item(
 				t_disp *disp,

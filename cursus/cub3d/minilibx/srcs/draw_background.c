@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_background.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:22:40 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 15:26:26 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:04 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 static t_draw	set_background_draw(t_disp *disp, int flag)
 {

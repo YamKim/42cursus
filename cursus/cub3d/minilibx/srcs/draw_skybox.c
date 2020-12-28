@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_skybox.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:51:50 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/24 10:08:44 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:06 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 static t_img	set_skybox_img(const t_disp *disp)
 {

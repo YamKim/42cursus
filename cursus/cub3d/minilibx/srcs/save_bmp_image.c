@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   save_bmp_image.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 12:30:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 10:35:28 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:20 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 static void	type_conversion(unsigned char *src, int n)
 {

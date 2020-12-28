@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_keyboard.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:23:35 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 15:58:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 06:07:13 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "./include/cub3d.h"
 
 int		key_press(int key, t_loop *lv)
 {
@@ -54,13 +54,13 @@ int		key_release(int key, t_loop *lv)
 
 void	key_update(t_loop *lv)
 {
-	if (lv->player->key & (1 << KEY_W))
+	if (lv->player->key & (1 << MOVE_W))
 		move_forward(lv->player, lv->disp->map);
-	if (lv->player->key & (1 << KEY_S))
+	if (lv->player->key & (1 << MOVE_S))
 		move_backward(lv->player, lv->disp->map);
-	if (lv->player->key & (1 << KEY_A))
+	if (lv->player->key & (1 << MOVE_A))
 		turn_left(lv->player);
-	if (lv->player->key & (1 << KEY_D))
+	if (lv->player->key & (1 << MOVE_D))
 		turn_right(lv->player);
 	set_zaxis_motion(lv->disp, lv->player);
 }

@@ -1,14 +1,13 @@
 NAME = program.out
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+MLXFLAGS = -L../ -lmlx -framework OpenGL -framework Appkit
 
 SRC = main.c \
 	run_program.c \
 	init_setting.c \
 	parse_config.c \
 	parse_map.c \
-	get_bonus_texture.c \
-	set_animation.c \
 	player_motion.c \
 	player_action.c \
 	calc_vector.c \
@@ -16,35 +15,40 @@ SRC = main.c \
 	check_door_type.c \
 	draw_untex_wall.c \
 	draw_tex_wall.c \
-	draw_background.c \
 	draw_sprite.c \
 	draw_sprite_util.c \
+	input_keyboard.c \
+	check_validity.c \
+	load_file.c \
+	show_data.c \
+	finish_program.c \
+	save_bmp_image.c \
+	get_bonus_texture.c \
+	draw_background.c \
 	animate_sprite.c \
-	get_close_sprite.c \
-	draw_skybox.c \
 	draw_hud.c \
 	draw_hud_series.c \
+	draw_skybox.c \
+	get_close_sprite.c \
+	input_mouse.c \
+	set_animation.c \
 	list_utils.c \
 	list_utils2.c \
 	ft_split.c \
 	ft_atoi.c \
 	string_utils.c \
-	string_utils2.c \
-	input_keyboard.c \
-	input_mouse.c \
-	check_validity.c \
-	load_file.c \
-	show_data.c \
-	finish_program.c \
-	save_bmp_image.c
-
+	string_utils2.c 
 
 OBJ = $(SRC:.c=.o)
+INC = -I./include
 
 all: $(NAME)
 
+$(OBJ): $(SRC)
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+
 $(NAME): $(SRC)
-	$(CC) $(CFLAGS) -L../ -lmlx -framework OpenGL -framework Appkit -o $(NAME) $^
+	$(CC) $(CFLAGS) $(INC) $(MLXFLAGS) -o $(NAME) $^
 
 clean:
 	rm -rf $(OBJ)

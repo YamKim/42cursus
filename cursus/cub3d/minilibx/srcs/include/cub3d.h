@@ -6,14 +6,14 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 16:00:16 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 21:41:34 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _CUB3D_H
 # define _CUB3D_H
 
-# include "../mlx.h"
+# include "../../mlx.h"
 # include <math.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -21,8 +21,8 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <time.h>
-# include <stdio.h>
 # include <limits.h>
+# include <stdio.h>
 
 /*
 ** PRECOMPILING ======================================
@@ -199,8 +199,8 @@
 # define START_WEST_ANGLE 90
 # define START_EAST_ANGLE -90
 
-# define PLAYER_JUMP 80
-# define PLAYER_CROUCH -80
+# define PLAYER_UP 80
+# define PLAYER_DOWN -80
 
 /*
 ** texture setting
