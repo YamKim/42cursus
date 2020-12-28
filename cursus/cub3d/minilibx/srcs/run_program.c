@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:28:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/27 08:21:40 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 15:51:48 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ static int		repeat_bgm(t_player *player)
 	cps = CLOCKS_PER_SEC;
 	if ((double)(cur_time - player->sound) / cps >= 120)
 	{
-		system("killall afplay");
 		system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
 		player->sound = cur_time;
-	} 
+	}
 	return (0);
 }
 
@@ -83,20 +82,20 @@ int				run_raycasting(t_loop *lv)
 	return (ret);
 }
 
-int				cub3d_run(t_disp *disp, t_player *player, int capture_flag)
+int				run_program(t_disp *disp, t_player *player, int capture_flag)
 {
 	t_loop	loop_var;
 
 	init_player_setting(disp, player);
 	loop_var = set_loop_val(disp, player);
 	if (capture_flag)
-	{
-		printf("What error?: %d\n", save_bmp_image(&loop_var));
-		return (0);
-	}
+		return (save_bmp_image(&loop_var));
 	mlx_loop_hook(disp->mlx_ptr, &run_raycasting, &loop_var);
-	mlx_hook(disp->win_ptr, X_EVENT_KEY_PRESS, 0, &key_press, &loop_var);
-	mlx_hook(disp->win_ptr, X_EVENT_KEY_RELEASE, 0, &key_release, &loop_var);
+	mlx_hook(disp->win_ptr, EVENT_KEY_PRESS, 0, &key_press, &loop_var);
+	mlx_hook(disp->win_ptr, EVENT_KEY_RELEASE, 0, &key_release, &loop_var);
+	mlx_hook(disp->win_ptr, EVENT_MOUSE_PRESS, 0, &mouse_press, &loop_var);
+	mlx_hook(disp->win_ptr, EVENT_MOUSE_RELEASE, 0, &mouse_release, &loop_var);
+	mlx_hook(disp->win_ptr, EVENT_MOUSE_MOVE, 0, &mouse_move, &loop_var);
 	mlx_loop(disp->mlx_ptr);
 	return (0);
 }

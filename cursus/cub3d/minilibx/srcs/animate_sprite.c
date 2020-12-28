@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:08:12 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 12:08:12 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 14:58:46 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ static void		control_animation_idx(t_spr *spr)
 	}
 }
 
-void			animate_sprite(t_spr *spr)
+static void		animate_attack(t_spr *spr)
 {
-	if (spr->tex_nbr != TEXTURE_ATTACK)
-		return ;
 	spr->clk.end = clock();
 	if (spr->clk.end - spr->clk.beg >= 500000)
 	{
@@ -47,4 +45,12 @@ void			animate_sprite(t_spr *spr)
 		spr->tex = &(spr->ani.tex[spr->ani.idx]);
 		spr->clk.beg = spr->clk.end;
 	}
+}
+
+void			animate_sprite(t_spr *spr)
+{
+	if (spr->tex_nbr != TEXTURE_ATTACK)
+		return ;
+	if (spr->tex_nbr == TEXTURE_ATTACK)
+		animate_attack(spr);
 }

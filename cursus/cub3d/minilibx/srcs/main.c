@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:02:53 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/27 07:51:53 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 15:36:59 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,19 @@ int			main(
 
 	err_num = 0;
 	init_disp_setting(&disp);
-	if (argc == 2)
+	if (argc == 2 || argc == 3)
 	{
 		if (check_file(argv[1]))
-			return (ERR_CHECK_FILE);
-		if ((err_num = get_info(&disp, argv[1])) < 0)
-			printf("ERROR_NUMBER: %d\n", err_num);
+			err_num = ERR_CHECK_FILE;
+		if (err_num == 0)
+			err_num = get_info(&disp, argv[1]);
 		show_map_data(disp);
-		if (err_num == 0 && cub3d_run(&disp, &player, 0))
-			return (ERR_RUN);
+		if (err_num == 0 && argc == 3 && !ft_strncmp(argv[2], "--save", 6))
+			return (run_program(&disp, &player, 1));
+		if (err_num == 0)
+			err_num = run_program(&disp, &player, 0);
 	}
+	if (err_num != 0)
+		printf("error number: %d\n", err_num);
 	return (0);
 }

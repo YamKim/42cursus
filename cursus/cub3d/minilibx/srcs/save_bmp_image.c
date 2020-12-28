@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 12:30:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 12:30:19 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 10:35:28 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			save_bmp_image(t_loop *lv)
 	int	pad;
 	int	ret;
 
+	printf("START CAPTURE================================\n");
 	ret = 0;
 	run_raycasting(lv);
 	row_pixel_size = (lv->disp->w * BMP_PIXEL_SIZE) % BMP_PIXEL_ALIGN;
@@ -86,5 +87,7 @@ int			save_bmp_image(t_loop *lv)
 	if (ret == 0)
 		ret = put_bmp_color(fd, pad, lv->disp);
 	close(fd);
+	finish_program(lv);
+	printf("FINISH CAPTURE================================\n");
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:22:40 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 12:14:12 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 15:26:26 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int				draw_background(t_disp *disp, t_player *player)
 	bg.ray_dir0.y = player->dir.y - player->plane.y;
 	bg.ray_dir1.x = player->dir.x + player->plane.x;
 	bg.ray_dir1.y = player->dir.y + player->plane.y;
-	draw_floor(disp, player, &bg, &disp->tex[CONFIG_NO]);
+	draw_floor(disp, player, &bg, &disp->tex[TEXTURE_FLOOR]);
 	draw_ceil(disp, player, &bg, &disp->tex[CONFIG_SO]);
 	return (0);
 }

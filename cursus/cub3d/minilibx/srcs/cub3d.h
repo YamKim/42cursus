@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/27 08:10:52 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 16:00:16 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define ERR_CHECK_FILE 4
 # define ERR_PARSE_CONFIG 5
 # define ERR_PLAY_MUSIC 6
+# define ERR_RUN_PROGRAM 7
 # define ERR_TEXTURE_CALL 1
 # define ERR_RUN 1
 # define ERR_FILE 1
@@ -69,11 +70,21 @@
 # define KEY_H 4
 # define KEY_G 5
 
+# define MOVE_W 0
+# define MOVE_A 1
+# define MOVE_S 2
+# define MOVE_D 3
+# define MOVE_H 4
+# define MOVE_G 5
+
 # define KEY_ESC 53
 
-# define X_EVENT_KEY_PRESS   2
-# define X_EVENT_KEY_RELEASE 3
-# define X_EVENT_KEY_EXIT    17
+# define EVENT_KEY_PRESS   2
+# define EVENT_KEY_RELEASE 3
+# define EVENT_MOUSE_PRESS 4
+# define EVENT_MOUSE_RELEASE 5
+# define EVENT_MOUSE_MOVE 6
+# define EVENT_KEY_EXIT 17
 
 /*
 ** configuration
@@ -118,6 +129,9 @@
 # define TEXTURE_LUP_FILE "./textures/up.xpm"
 # define TEXTURE_LDW 17
 # define TEXTURE_LDW_FILE "./textures/down.xpm"
+
+# define TEXTURE_FLOOR 20 
+# define TEXTURE_FLOOR_FILE "./textures/grass.xpm"
 
 /*
 ** animation
@@ -191,7 +205,7 @@
 /*
 ** texture setting
 */
-# define TEXTURE_NUMBER 20
+# define TEXTURE_NUMBER 30
 # define TEXTURE_ANI_NUMBER 5
 
 /*
@@ -268,11 +282,11 @@
 # define COLOR_SKY_ATTACK 0xF20C00
 # define COLOR_SKY_SECRET 1644825
 # define COLOR_SKY_OPCLDOOR 0xFFF143
-# define COLOR_SKY_PLAYER 0xFF8C8C
+# define COLOR_SKY_PLAYER 0x000000
 # define COLOR_SKY_DIR 0x32708D
 # define COLOR_SKY_RAY_DIR 0x0FFFDB1
 # define SIZE_SKY_RAY 1
-# define SIZE_SKY_PLAYER 5
+# define SIZE_SKY_PLAYER 1
 
 /*
 ** life bar
@@ -399,6 +413,7 @@ typedef struct		s_player
 	t_vecd			ray_dir;
 	t_vecd			coef;
 	int				key;
+	int				mouse;
 	int				life;
 	t_clk			clk[TIC_NUMBER];
 	clock_t			sound;
@@ -499,7 +514,7 @@ t_loop				set_loop_val(
 /*
 ** run cub3d program
 */
-int					cub3d_run(t_disp *disp, t_player *player, int capture_flag);
+int					run_program(t_disp *disp, t_player *player, int capture_flag);
 int					run_raycasting(t_loop *lv);
 
 /*
@@ -639,6 +654,13 @@ void				*ft_memcpy(void *dest, const void *src, size_t n);
 int					key_press(int key, t_loop *lv);
 int					key_release(int key, t_loop *lv);
 void				key_update(t_loop *lv);
+
+/*
+** mouse hook from user
+*/
+int					mouse_press(int button, int x, int y, t_loop *lv);
+int					mouse_release(int button, int x, int y, t_loop *lv);
+int					mouse_move(int x, int y, t_loop *lv);
 
 /*
 ** check validity

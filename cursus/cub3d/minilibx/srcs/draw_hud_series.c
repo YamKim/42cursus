@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:48:20 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/26 12:12:37 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 15:03:23 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		hud_get_item(
 	scale.y = DISP2HUD_ITEM_H;
 	scale.x = DISP2HUD_ITEM_W;
 	player->clk[TIC_ITEM].end = clock();
-	if (player->clk[TIC_ITEM].end - player->clk[TIC_ITEM].beg <= 1000000)
+	if (player->clk[TIC_ITEM].end - player->clk[TIC_ITEM].beg <= 750000)
 		draw_hud(disp, &(disp->tex[TEXTURE_LUP]), scale, bias);
 	return (0);
 }
@@ -41,7 +41,7 @@ static int		hud_get_attack(
 	scale.y = DISP2HUD_ITEM_H;
 	scale.x = DISP2HUD_ITEM_W;
 	player->clk[TIC_ATTACK].end = clock();
-	if (player->clk[TIC_ATTACK].end - player->clk[TIC_ATTACK].beg <= 1000000)
+	if (player->clk[TIC_ATTACK].end - player->clk[TIC_ATTACK].beg <= 750000)
 		draw_hud(disp, &(disp->tex[TEXTURE_LDW]), scale, bias);
 	return (0);
 }

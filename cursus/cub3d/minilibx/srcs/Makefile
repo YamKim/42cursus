@@ -30,7 +30,8 @@ SRC = main.c \
 	ft_atoi.c \
 	string_utils.c \
 	string_utils2.c \
-	input_hook.c \
+	input_keyboard.c \
+	input_mouse.c \
 	check_validity.c \
 	load_file.c \
 	show_data.c \

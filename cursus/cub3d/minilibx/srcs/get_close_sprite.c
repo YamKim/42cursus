@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:52 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/27 08:12:03 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 15:49:10 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int		get_close_item(t_disp *disp, t_player *player, t_spr *spr, int idx)
 	printf("You got an item!\n");
 	player->life += 1;
 	printf("life: %d\n", player->life);
-	player->sound = system("afplay -v 0.30 ./sound/sound_item.mp3\
-							&>/dev/null &");
+	system("afplay -v 0.30 ./sound/sound_item.mp3 &>/dev/null &");
 	return (ret);
 }
 
@@ -52,8 +51,7 @@ int		get_close_attack(t_disp *disp, t_player *player, int idx)
 		move_backward(player, disp->map);
 	player->life -= 1;
 	printf("life: %d\n", player->life);
-	player->sound = system("afplay -v 0.30 ./sound/sound_attack.mp3\
-							&>/dev/null &");
+	system("afplay -v 0.30 ./sound/sound_attack.mp3 &>/dev/null &");
 	return (ret);
 }
 

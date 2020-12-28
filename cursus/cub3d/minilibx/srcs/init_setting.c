@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:19:46 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/27 08:13:39 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/28 14:23:53 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void			init_player_setting(t_disp *disp, t_player *player)
 	player->plane.x = 0.66;
 	player->plane.y = 0;
 	player->key = 0;
+	player->mouse = 0;
 	player->trans_speed = TRANS_SPEED;
 	player->rot_speed = ROT_SPEED;
 	init_player_orient(player, disp->start_orient);
