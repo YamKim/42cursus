@@ -2,6 +2,7 @@ NAME = program.out
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 MLXFLAGS = -L../ -lmlx -framework OpenGL -framework Appkit
+LIBFT = -L./libft/ -lft
 
 SRC = main.c \
 	run_program.c \
@@ -34,10 +35,6 @@ SRC = main.c \
 	set_animation.c \
 	list_utils.c \
 	list_utils2.c \
-	ft_split.c \
-	ft_atoi.c \
-	string_utils.c \
-	string_utils2.c 
 
 OBJ = $(SRC:.c=.o)
 INC = -I./include
@@ -48,7 +45,7 @@ $(OBJ): $(SRC)
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(NAME): $(SRC)
-	$(CC) $(CFLAGS) $(INC) $(MLXFLAGS) -o $(NAME) $^
+	$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLXFLAGS) -o $(NAME) $^
 
 clean:
 	rm -rf $(OBJ)

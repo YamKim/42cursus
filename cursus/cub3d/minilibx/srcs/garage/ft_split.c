@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:50:17 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:10 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:18:37 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,4 @@ char			**ft_split(char const *s, char c, int *wc)
 		++k;
 	}
 	return (ret);
-}
-
-void			free_split_arr(char **tab)
-{
-	int	idx;
-
-	idx = 0;
-	while (tab[idx])
-	{
-		free(tab[idx]);
-		++idx;
-	}
-	free(tab);
 }

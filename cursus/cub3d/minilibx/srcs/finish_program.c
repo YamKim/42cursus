@@ -6,11 +6,24 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 19:19:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:09 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:19:28 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/cub3d.h"
+
+void			free_split_arr(char **tab)
+{
+	int	idx;
+
+	idx = 0;
+	while (tab[idx])
+	{
+		free(tab[idx]);
+		++idx;
+	}
+	free(tab);
+}
 
 void	finish_program(t_loop *lv)
 {
