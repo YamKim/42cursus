@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:52 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:11 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:40 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 void	del_on_map_spr(t_map *map, t_spr *spr)
 {

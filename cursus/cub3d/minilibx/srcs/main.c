@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:02:53 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:16 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:44 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 static int	get_info(
 			t_disp *disp,

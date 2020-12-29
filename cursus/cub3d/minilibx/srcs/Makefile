@@ -34,15 +34,21 @@ SRC = main.c \
 	input_mouse.c \
 	set_animation.c \
 
-OBJ = $(SRC:.c=.o)
+SRCDIR = ./bonus
+OBJDIR = ./objs
+
 INC = -I./include
+
+SRCS = $(addprefix $(SRCDIR)/, $(SRC))
+OBJS = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 all: $(NAME)
 
-$(OBJ): $(SRC)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	mkdir $(OBJDIR) 2> /cev/null || true
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
-$(NAME): $(SRC)
+$(NAME): $(SRCS)
 	$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLXFLAGS) -o $(NAME) $^
 
 clean:

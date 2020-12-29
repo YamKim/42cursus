@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:31:17 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:06:52 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:34 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 /*
 ** @ function name: translate_vec

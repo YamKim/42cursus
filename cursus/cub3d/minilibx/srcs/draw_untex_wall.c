@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:40:46 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:08 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:38 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 static int		get_untex_wall_color(const t_hit *hit_point)
 {

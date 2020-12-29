@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:20:41 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:18 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:48 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 void	set_zaxis_motion(t_disp *disp, t_player *player)
 {

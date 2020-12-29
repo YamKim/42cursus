@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:51:50 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:06 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 static t_img	set_skybox_img(const t_disp *disp)
 {

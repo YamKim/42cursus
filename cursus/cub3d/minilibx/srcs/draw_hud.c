@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:44:59 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:04 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 static void		init_hud_img(t_img *hud)
 {

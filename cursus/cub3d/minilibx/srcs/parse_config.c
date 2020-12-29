@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 12:26:42 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:17 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:46 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 int	get_resolution(t_disp *disp, char **word_buf, int wc)
 {

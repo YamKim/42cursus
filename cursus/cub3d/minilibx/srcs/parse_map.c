@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:01:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:17 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:47 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 static int	set_map_sprite(t_disp *disp, int y, int x, char data)
 {

@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:23:35 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:13 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:41 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 int		key_press(int key, t_loop *lv)
 {

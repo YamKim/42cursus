@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:58:17 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:19 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:49 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 int		check_gostop(int after_map_data)
 {

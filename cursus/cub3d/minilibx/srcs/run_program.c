@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:28:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:20 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:50 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 static int		draw_main(
 				t_disp *disp,

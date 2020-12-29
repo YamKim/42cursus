@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:18:44 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:07 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:37 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 void	sort_spr_pair(
 		t_pair *spr_pair,

@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:19:46 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:07:12 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 13:40:40 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/cub3d.h"
+#include "../include/cub3d.h"
 
 static void		init_player_orient(t_player *player, char orient)
 {
