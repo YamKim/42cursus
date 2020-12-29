@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:50:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:54:40 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:40:49 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 static int	ft_isspace(const char c)
 {

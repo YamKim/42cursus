@@ -6,11 +6,11 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 06:50:45 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:50:52 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:40:55 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {

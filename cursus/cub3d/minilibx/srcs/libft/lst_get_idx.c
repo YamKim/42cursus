@@ -6,11 +6,11 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 07:28:16 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 07:28:22 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:40:59 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 t_lst	*lst_get_idx(t_lst *lst, int idx)
 {

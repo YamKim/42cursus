@@ -6,11 +6,11 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 06:51:06 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:51:13 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:40:55 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 char	*ft_strdup(const char *s)
 {

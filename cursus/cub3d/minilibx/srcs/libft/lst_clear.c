@@ -6,11 +6,11 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 07:26:24 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 07:26:38 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:40:58 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 void	lst_clear(t_lst **lst)
 {

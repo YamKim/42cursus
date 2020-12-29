@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/28 21:41:34 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:33:08 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define _CUB3D_H
 
 # include "../../mlx.h"
+# include "./utils.h"
 # include <math.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -304,11 +305,13 @@
 /*
 ** structures
 */
+#if 0
 typedef struct		s_vecd
 {
 	double			x;
 	double			y;
 }					t_vecd;
+#endif
 
 typedef struct		s_veci
 {
@@ -322,6 +325,7 @@ typedef struct		s_pair
 	double			dist;
 }					t_pair;
 
+#if 0
 typedef struct		s_tex
 {
 	void			*ptr;
@@ -363,6 +367,7 @@ typedef struct		s_lst
 	t_spr			spr;
 	struct s_lst	*next;
 }					t_lst;
+#endif
 
 typedef struct		s_map
 {

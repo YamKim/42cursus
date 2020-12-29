@@ -6,11 +6,11 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 07:25:04 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 07:25:17 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:40:59 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 void	lst_del_idx(t_lst **lst, int idx)
 {

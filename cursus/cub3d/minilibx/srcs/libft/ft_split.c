@@ -6,11 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:50:17 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 06:55:47 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 10:40:55 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
 
 static size_t	get_size(const char *s, char c)
 {

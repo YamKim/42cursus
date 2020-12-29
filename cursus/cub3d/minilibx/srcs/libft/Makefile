@@ -14,12 +14,19 @@ FUNCS = ft_memset \
 		ft_strdup \
 		ft_substr \
 		ft_split \
+		lst_new_spr \
+		lst_last \
+		lst_add_back \
+		lst_get_idx \
+		lst_del_idx \
+		lst_clear
 
 SRCS = $(addsuffix .c, $(FUNCS))
 OBJS = $(SRCS:.c=.o)
+INCS = -I ../include/
 
 .c.o :
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 $(NAME) : $(OBJS)
 	@$(AR) $(ARFLAGS) $@ $^

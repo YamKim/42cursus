@@ -33,8 +33,6 @@ SRC = main.c \
 	get_close_sprite.c \
 	input_mouse.c \
 	set_animation.c \
-	list_utils.c \
-	list_utils2.c \
 
 OBJ = $(SRC:.c=.o)
 INC = -I./include
