@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:44:59 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 16:53:47 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 08:37:04 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ int				draw_hud(
 	bias.x -= (int)((double)hud.w / 2);
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr,\
 							hud.ptr, bias.x, bias.y);
+	free(hud.ptr);
+	free(hud.data);
 	return (0);
 }

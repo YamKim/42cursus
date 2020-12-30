@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:51:50 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:36 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 08:53:17 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,7 @@ int				draw_skybox(
 	}
 	draw_skybox_player(disp, &skybox, player);
 	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, skybox.ptr, 0, 0);
+	free(skybox.ptr);
+	free(skybox.data);
 	return (0);
 }

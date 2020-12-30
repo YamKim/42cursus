@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 12:26:42 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 14:26:14 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 18:02:56 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	get_texture(t_disp *disp, char *fname, int type, int wc)
 	if ((disp->config & (1 << type)) || wc != 2)
 		return (ERR_PARSE_CONFIG);
 	disp->config |= 1 << type;
-	if (load_tex(&(disp->tex[type]), fname) != 0)
+	if (load_texture(&(disp->tex[type]), fname) != 0)
 		return (ERR_PARSE_CONFIG);
 	printf("%d type parsing[%s] success\n", type, fname);
 	return (0);

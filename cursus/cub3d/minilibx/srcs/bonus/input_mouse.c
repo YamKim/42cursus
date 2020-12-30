@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:44:33 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:42 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 18:22:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	mouse_press(int button, int x, int y, t_loop *lv)
 	(void)y;
 	if (button)
 		lv->player->mouse = 1;
-	printf("mouse on\n");
 	return (0);
 }
 

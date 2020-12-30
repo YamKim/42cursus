@@ -14,6 +14,9 @@ FUNCS = ft_memset \
 		ft_strdup \
 		ft_substr \
 		ft_split \
+		ft_putnbr \
+		ft_putstr \
+		ft_putchar \
 		lst_new_spr \
 		lst_last \
 		lst_add_back \

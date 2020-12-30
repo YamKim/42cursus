@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:52 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:40 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 18:22:05 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ int		get_close_item(t_disp *disp, t_player *player, t_spr *spr, int idx)
 	disp->spr_cnt = disp->spr_cnt - 1;
 	ret -= 1;
 	player->clk[TIC_ITEM].beg = clock();
-	printf("You got an item!\n");
+	ft_putstr("YOU GOT AN ITEM!\n");
 	player->life += 1;
-	printf("life: %d\n", player->life);
 	system("afplay -v 0.30 ./sound/sound_item.mp3 &>/dev/null &");
 	return (ret);
 }
@@ -45,12 +44,11 @@ int		get_close_attack(t_disp *disp, t_player *player, int idx)
 
 	ret = idx;
 	player->clk[TIC_ATTACK].beg = clock();
-	printf("You got an attack!\n");
+	ft_putstr("YOU GOT AN ATTACK!\n");
 	i = -1;
 	while (++i < ATTACK_PUSH_BACK)
 		move_backward(player, disp->map);
 	player->life -= 1;
-	printf("life: %d\n", player->life);
 	system("afplay -v 0.30 ./sound/sound_attack.mp3 &>/dev/null &");
 	return (ret);
 }

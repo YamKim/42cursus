@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:20:41 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:48 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 18:37:31 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,8 @@ void	open_door_trigger(t_disp *disp, t_player *player)
 	if (map_type == MAP_CLDOOR_VAL)
 	{
 		disp->map.data[(int)door_dir.y][(int)door_dir.x] = MAP_OPDOOR_VAL;
-		printf("door is opened\n");
 		system("afplay -v 0.30 ./sound/sound_break.mp3 &>/dev/null &");
 	}
 	if (map_type == MAP_OPDOOR_VAL)
-	{
 		disp->map.data[(int)door_dir.y][(int)door_dir.x] = MAP_CLDOOR_VAL;
-		printf("door is closed\n");
-	}
 }
