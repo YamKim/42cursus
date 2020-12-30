@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 13:30:03 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 18:02:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define ERR_READ 1
 # define ERR_MALLOC -1
 # define ERR_PARSE 1
-# define ERR_PARSE_MAP 4
+# define ERR_PARSE_MAP 8
 # define ERR_DRAW_IMG 1
 # define ERR_SAVE_BMP 5
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
@@ -269,8 +269,7 @@ void				animate_sprite(t_spr *spr);
 ** load images from xpm files
 */
 int					check_file(char *fname);
-int					open_file(char *fname);
-int					load_tex(t_tex *tex, char *file_name);
+int					load_texture(t_tex *tex, char *file_name);
 
 /*
 ** ft_split
@@ -311,7 +310,6 @@ void				show_lst_data(t_lst *itr);
 ** door
 */
 int					check_door_type(t_hit *hit_point, int map_data);
-
 int					save_bmp_image(t_loop *lv);
 
 #endif

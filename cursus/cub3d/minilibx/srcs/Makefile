@@ -39,6 +39,7 @@ SRC_BONUS = main.c \
 	init_setting.c \
 	parse_config.c \
 	parse_map.c \
+	check_file.c \
 	player_motion.c \
 	player_direction.c \
 	player_action.c \
@@ -51,7 +52,7 @@ SRC_BONUS = main.c \
 	draw_sprite_util.c \
 	input_keyboard.c \
 	check_validity.c \
-	load_file.c \
+	load_texture.c \
 	finish_program.c \
 	save_bmp_image.c \
 	get_bonus_texture.c \

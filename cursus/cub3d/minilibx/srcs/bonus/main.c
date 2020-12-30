@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:02:53 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 13:59:13 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 17:57:46 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ int			main(
 	init_disp_setting(&disp);
 	if (argc == 2 || argc == 3)
 	{
-		if (check_file(argv[1]))
-			err_num = ERR_CHECK_FILE;
+		err_num = check_file(argv[1]);
 		if (err_num == 0)
 			err_num = get_info(&disp, argv[1]);
 		if (err_num == 0 && argc == 3 && !ft_strncmp(argv[2], "--save", 6))
