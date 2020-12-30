@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:23:35 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:41 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 10:31:07 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,14 @@ void	key_update(t_loop *lv)
 	if (lv->player->key & (1 << MOVE_S))
 		move_backward(lv->player, lv->disp->map);
 	if (lv->player->key & (1 << MOVE_A))
+		move_left(lv->player, lv->disp->map);
+	if (lv->player->key & (1 << MOVE_D))
+		move_right(lv->player, lv->disp->map);
+#if 0
+	if (lv->player->key & (1 << MOVE_A))
 		turn_left(lv->player);
 	if (lv->player->key & (1 << MOVE_D))
 		turn_right(lv->player);
+#endif
 	set_zaxis_motion(lv->disp, lv->player);
 }

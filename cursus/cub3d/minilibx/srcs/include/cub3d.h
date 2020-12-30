@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 14:49:34 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 10:32:54 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,8 @@ int					parse_map(t_disp *disp, char **map, int map_beg);
 */
 void				move_forward(t_player *player, t_map map);
 void				move_backward(t_player *player, t_map map);
+void				move_left(t_player *player, t_map map);
+void				move_right(t_player *player, t_map map);
 void				turn_left(t_player *player);
 void				turn_right(t_player *player);
 

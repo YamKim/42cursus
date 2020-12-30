@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 13:58:21 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 19:25:29 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 09:14:25 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@
 ** SECRET/OPEN/CLOSE DOOR, SPRITE TEXTURE
 */
 # define TEXTURE_SECRET 5
-# define TEXTURE_SECRET_FILE "./textures/brown_bricks.xpm"
+# define TEXTURE_SECRET_FILE "./textures/door/brown_bricks.xpm"
 # define TEXTURE_CLDOOR 6
-# define TEXTURE_CLDOOR_FILE "./textures/question.xpm"
+# define TEXTURE_CLDOOR_FILE "./textures/door/question.xpm"
 # define TEXTURE_OPDOOR 7
-# define TEXTURE_OPDOOR_FILE "./textures/question2.xpm"
+# define TEXTURE_OPDOOR_FILE "./textures/door/question2.xpm"
 # define TEXTURE_ITEM 8
-# define TEXTURE_ITEM_FILE "./textures/red.xpm"
+# define TEXTURE_ITEM_FILE "./textures/item/red.xpm"
 # define TEXTURE_ATTACK 9
 # define TEXTURE_ATTACK_FILE "./textures/attack/A0.xpm"
 
@@ -70,33 +70,29 @@
 ** HUD TEXTURE
 */
 # define TEXTURE_L0 10
-# define TEXTURE_L0_FILE "./textures/life/life0.xpm"
+# define TEXTURE_L0_FILE "./textures/life/L0.xpm"
 # define TEXTURE_L1 11
-# define TEXTURE_L1_FILE "./textures/life/life1.xpm"
+# define TEXTURE_L1_FILE "./textures/life/L1.xpm"
 # define TEXTURE_L2 12
-# define TEXTURE_L2_FILE "./textures/life/life2.xpm"
+# define TEXTURE_L2_FILE "./textures/life/L2.xpm"
 # define TEXTURE_L3 13
-# define TEXTURE_L3_FILE "./textures/life/life3.xpm"
+# define TEXTURE_L3_FILE "./textures/life/L3.xpm"
 # define TEXTURE_L4 14
-# define TEXTURE_L4_FILE "./textures/life/life4.xpm"
+# define TEXTURE_L4_FILE "./textures/life/L4.xpm"
 # define TEXTURE_L5 15
-# define TEXTURE_L5_FILE "./textures/life/life5.xpm"
+# define TEXTURE_L5_FILE "./textures/life/L5.xpm"
 # define TEXTURE_LUP 16
-# define TEXTURE_LUP_FILE "./textures/up.xpm"
+# define TEXTURE_LUP_FILE "./textures/life/up.xpm"
 # define TEXTURE_LDW 17
-# define TEXTURE_LDW_FILE "./textures/down.xpm"
+# define TEXTURE_LDW_FILE "./textures/life/down.xpm"
 
 /*
-** CEIL TEXTURE
+** BACKGROUND TEXTURE
 */
 # define TEXTURE_CEIL 20
-# define TEXTURE_CEIL_FILE "./textures/background.xpm"
-
-/*
-** FLOOR TEXTURE
-*/
+# define TEXTURE_CEIL_FILE "./textures/bg/background.xpm"
 # define TEXTURE_FLOOR 21
-# define TEXTURE_FLOOR_FILE "./textures/grass.xpm"
+# define TEXTURE_FLOOR_FILE "./textures/bg/grass.xpm"
 
 /*
 ** ANIMATION TEXTURE
