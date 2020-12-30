@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 12:26:42 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:46 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 14:26:14 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	get_resolution(t_disp *disp, char **word_buf, int wc)
 	if (is_number_arr(word_buf + 1, 2, CONFIG_R))
 		return (ERR_PARSE_CONFIG);
 	disp->config |= 1 << CONFIG_R;
-	disp->w = (int)fmin(ft_atoi(word_buf[1]), RESOLUTION_WIDTH_MAX);
-	disp->h = (int)fmin(ft_atoi(word_buf[2]), RESOLUTION_HEIGHT_MAX);
+	disp->w = (int)fmin(ft_atoi(word_buf[1]), CONFIG_R_WIDTH_MAX);
+	disp->h = (int)fmin(ft_atoi(word_buf[2]), CONFIG_R_HEIGHT_MAX);
 	printf("parse_resolution success\n");
 	return (0);
 }

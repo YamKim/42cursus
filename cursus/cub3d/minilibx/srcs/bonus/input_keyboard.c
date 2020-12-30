@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:23:35 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 10:31:07 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 13:26:22 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int		key_press(int key, t_loop *lv)
 		lv->player->key |= (1 << MOVE_A);
 	else if (key == KEY_D)
 		lv->player->key |= (1 << MOVE_D);
+	else if (key == KEY_LEFT)
+		lv->player->key |= (1 << MOVE_LEFT);
+	else if (key == KEY_RIGHT)
+		lv->player->key |= (1 << MOVE_RIGHT);
 	else if (key == KEY_H)
 		lv->player->key |= (1 << MOVE_H);
 	else if (key == KEY_G)
@@ -45,6 +49,10 @@ int		key_release(int key, t_loop *lv)
 		lv->player->key &= ~(1 << MOVE_A);
 	else if (key == KEY_D)
 		lv->player->key &= ~(1 << MOVE_D);
+	else if (key == KEY_LEFT)
+		lv->player->key &= ~(1 << MOVE_LEFT);
+	else if (key == KEY_RIGHT)
+		lv->player->key &= ~(1 << MOVE_RIGHT);
 	else if (key == KEY_H)
 		lv->player->key &= ~(1 << MOVE_H);
 	else if (key == KEY_G)
@@ -62,11 +70,9 @@ void	key_update(t_loop *lv)
 		move_left(lv->player, lv->disp->map);
 	if (lv->player->key & (1 << MOVE_D))
 		move_right(lv->player, lv->disp->map);
-#if 0
-	if (lv->player->key & (1 << MOVE_A))
+	if (lv->player->key & (1 << MOVE_LEFT))
 		turn_left(lv->player);
-	if (lv->player->key & (1 << MOVE_D))
+	if (lv->player->key & (1 << MOVE_RIGHT))
 		turn_right(lv->player);
-#endif
 	set_zaxis_motion(lv->disp, lv->player);
 }

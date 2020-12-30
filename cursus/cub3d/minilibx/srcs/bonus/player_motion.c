@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:58:17 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 10:40:04 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 13:28:55 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	move_left(t_player *player, t_map map)
 	t_veci	after_map_data;
 
 	tmp_dir.x = player->dir.y;
-	tmp_dir.y = player->dir.x;
-	after_move = translate_vec(player->pos, tmp_dir, player->trans_speed);
+	tmp_dir.y = -player->dir.x;
+	after_move = translate_vec(player->pos, tmp_dir, -player->trans_speed);
 	after_map_data.y = map.data[(int)after_move.y][(int)(player->pos.x)];
 	after_map_data.x = map.data[(int)(player->pos.y)][(int)after_move.x];
 	if (check_gostop(after_map_data.y))

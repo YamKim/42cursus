@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:02:53 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:44 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 13:59:13 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int			main(
 			err_num = ERR_CHECK_FILE;
 		if (err_num == 0)
 			err_num = get_info(&disp, argv[1]);
-		show_map_data(disp);
 		if (err_num == 0 && argc == 3 && !ft_strncmp(argv[2], "--save", 6))
 			return (run_program(&disp, &player, 1));
 		if (err_num == 0)

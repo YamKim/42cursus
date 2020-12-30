@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 10:32:54 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 13:30:03 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,15 @@
 # define KEY_S 1
 # define KEY_D 2
 # define KEY_F 3
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
 # define KEY_J 31
 # define MOVE_W 0
 # define MOVE_A 1
 # define MOVE_S 2
 # define MOVE_D 3
+# define MOVE_LEFT 4
+# define MOVE_RIGHT 5
 # define KEY_ESC 53
 
 /*

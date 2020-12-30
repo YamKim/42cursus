@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:22:40 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:35 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 19:12:31 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void		draw_floor(t_disp *disp, t_player *player, t_bg *bg, t_tex *tex)
 	t_vecd	floor;
 
 	bg->draw = set_background_draw(disp, 1);
+	bg->draw.x = -1;
 	while (++bg->draw.y <= bg->draw.yend)
 	{
 		bg->row_dist = (double)bg->draw.yctr / (bg->draw.y - bg->draw.yctr);
@@ -87,6 +88,32 @@ static void		draw_floor(t_disp *disp, t_player *player, t_bg *bg, t_tex *tex)
 	}
 }
 
+static void		draw_ceil_hud(t_disp *disp, t_bg *bg, t_tex *tex)
+{
+	t_vecd	tpos;
+	t_vecd	step;
+
+	bg->draw = set_background_draw(disp, 0);
+	step.x = (double)tex->w / disp->w;
+	step.y = (double)tex->h / disp->h * 1.5;
+	bg->draw.yctr = disp->h / 2;
+	bg->draw.xctr = disp->w / 2;
+	bg->draw.x = -1;
+	while (++(bg->draw.x) < bg->draw.xend)
+	{
+		tpos.x = bg->draw.x - bg->draw.xctr + (double)disp->w / 2;
+		bg->draw.tx = (int)fmin(tpos.x * step.x, tex->w - 1);
+		bg->draw.y = -1;
+		while (++(bg->draw.y) < bg->draw.yend)
+		{
+			tpos.y = bg->draw.y - bg->draw.yctr + (double)disp->h / 2;
+			bg->draw.ty = (int)fmin(tpos.y * step.y, tex->h - 1);
+			bg->draw.color = tex->data[bg->draw.ty * tex->w + bg->draw.tx];
+			disp->img.data[bg->draw.y * disp->w + bg->draw.x] = bg->draw.color;
+		}
+	}
+}
+
 int				draw_background(t_disp *disp, t_player *player)
 {
 	t_bg	bg;
@@ -95,7 +122,8 @@ int				draw_background(t_disp *disp, t_player *player)
 	bg.ray_dir0.y = player->dir.y - player->plane.y;
 	bg.ray_dir1.x = player->dir.x + player->plane.x;
 	bg.ray_dir1.y = player->dir.y + player->plane.y;
+	(void)draw_ceil;
+	draw_ceil_hud(disp, &bg, &(disp->tex[TEXTURE_CEIL]));
 	draw_floor(disp, player, &bg, &disp->tex[TEXTURE_FLOOR]);
-	draw_ceil(disp, player, &bg, &disp->tex[CONFIG_SO]);
 	return (0);
 }

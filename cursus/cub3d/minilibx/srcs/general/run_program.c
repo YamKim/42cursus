@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:28:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 19:03:59 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,15 @@ int				run_raycasting(t_loop *lv)
 	if (!(perp_buf = (double *)malloc(sizeof(double) * lv->disp->w)))
 		return (ERR_MALLOC);
 	if (repeat_bgm(lv->player))
-		return (ERR_PLAY_MUSIC);
-	if (draw_background(lv->disp, lv->player))
+		ret |= ERR_PLAY_MUSIC;
+	if (ret == 0 && draw_background(lv->disp, lv->player))
 		ret |= ERR_DRAW_IMG;
-	if (draw_main(lv->disp, lv->player, perp_buf, 0))
+	(void)draw_main;
+	if (ret == 0 && draw_main(lv->disp, lv->player, perp_buf, 0))
 		ret |= ERR_DRAW_IMG;
-	if (draw_main(lv->disp, lv->player, perp_buf, 1))
+	if (ret == 0 && draw_main(lv->disp, lv->player, perp_buf, 1))
 		ret |= ERR_DRAW_IMG;
-	if (draw_skybox(lv->disp, lv->player))
+	if (ret == 0 && draw_skybox(lv->disp, lv->player))
 		ret |= ERR_DRAW_IMG;
 	if (draw_hud_series(lv->disp, lv->player))
 		ret |= ERR_DRAW_IMG;

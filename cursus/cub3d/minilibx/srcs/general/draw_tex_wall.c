@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:32:34 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:38 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 13:42:19 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static void		draw_tex_wall_part(
 	double	tpos;
 	double	step_ty;
 
+	(void)hit_point;
 	step_ty = (double)tex.h / draw->lh;
 	tpos = draw->ybeg - draw->yctr + (double)draw->lh / 2;
 	tpos *= step_ty;
@@ -96,8 +97,6 @@ static void		draw_tex_wall_part(
 	{
 		draw->ty = (int)fmin(tpos, (double)tex.h - 1);
 		draw->color = tex.data[draw->ty * tex.w + draw->tx];
-		if (hit_point->side == HIT_SIDE_Y)
-			draw->color = (draw->color >> 1) & 8355711;
 		disp->img.data[draw->y * disp->w + draw->x] = draw->color;
 		tpos += step_ty;
 	}

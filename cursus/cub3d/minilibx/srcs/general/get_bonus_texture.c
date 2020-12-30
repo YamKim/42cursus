@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:14 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:39 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/29 16:50:07 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int			get_bonus_texture(t_disp *disp)
 	if (load_tex(&(disp->tex[TEXTURE_CLDOOR]), TEXTURE_CLDOOR_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[TEXTURE_OPDOOR]), TEXTURE_OPDOOR_FILE) != 0)
+		ret = ERR_TEXTURE_CALL;
+	if (load_tex(&(disp->tex[TEXTURE_CEIL]), TEXTURE_CEIL_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;
 	if (load_tex(&(disp->tex[TEXTURE_FLOOR]), TEXTURE_FLOOR_FILE) != 0)
 		ret = ERR_TEXTURE_CALL;

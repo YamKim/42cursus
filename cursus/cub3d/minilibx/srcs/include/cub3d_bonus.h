@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 13:58:21 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 09:14:25 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 14:11:44 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 */
 # define KEY_H 4
 # define KEY_G 5
-# define MOVE_H 4
-# define MOVE_G 5
+# define MOVE_H 6
+# define MOVE_G 7
 
 /*
 ** MOUSE HOOK

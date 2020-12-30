@@ -6,13 +6,13 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 19:19:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:38 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 13:43:46 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void			free_split_arr(char **tab)
+void	free_split_arr(char **tab)
 {
 	int	idx;
 

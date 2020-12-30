@@ -1,4 +1,4 @@
-NAME = program.out
+NAME = cub3D
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 MLXFLAGS = -L../ -lmlx -framework OpenGL -framework Appkit
@@ -10,6 +10,7 @@ SRC = main.c \
 	parse_config.c \
 	parse_map.c \
 	player_motion.c \
+	player_direction.c \
 	player_action.c \
 	calc_vector.c \
 	calc_dda.c \
@@ -21,7 +22,6 @@ SRC = main.c \
 	input_keyboard.c \
 	check_validity.c \
 	load_file.c \
-	show_data.c \
 	finish_program.c \
 	save_bmp_image.c \
 	get_bonus_texture.c \
@@ -52,7 +52,6 @@ SRC_BONUS = main.c \
 	input_keyboard.c \
 	check_validity.c \
 	load_file.c \
-	show_data.c \
 	finish_program.c \
 	save_bmp_image.c \
 	get_bonus_texture.c \
@@ -79,8 +78,15 @@ OBJS_BONUS = $(addprefix $(OBJDIR_BONUS)/, $(SRC_BONUS:.c=.o))
 
 all: $(NAME)
 
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLXFLAGS) -o $(NAME) $^
+
 bonus: $(OBJS_BONUS)
 	$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLXFLAGS) -o $(NAME) $^
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	mkdir $(OBJDIR) 2> /dev/null || true
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(OBJDIR_BONUS)/%.o: $(SRCDIR_BONUS)/%.c
 	mkdir $(OBJDIR_BONUS) 2> /dev/null || true

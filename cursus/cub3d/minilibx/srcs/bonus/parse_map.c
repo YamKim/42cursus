@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:01:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:47 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 14:08:30 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int			parse_map(t_disp *disp, char **map, int map_beg)
 	int r;
 	int	x;
 
-	get_bonus_texture(disp);
+	if (get_bonus_texture(disp))
+		return (ERR_PARSE_MAP);
 	r = map_beg + disp->map.h - 1;
 	y = -1;
 	while (++y < disp->map.h)

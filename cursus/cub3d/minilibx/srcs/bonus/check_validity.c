@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:46:20 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:35 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 13:43:25 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,6 @@ int	is_map_valid(t_map map)
 		x = 0;
 		while (map.data[y][x] != MAP_BOARDER_VAL)
 		{
-#if 0
-			if (map.data[y][x] != MAP_ROAD_VAL ||
-				map.data[y][x] == MAP_SPRITE_VAL)
-#endif
 			if (map.data[y][x] != MAP_WALL_VAL)
 				ret |= check_map_range(map, y, x);
 			if (map.data[y][x] == MAP_EXCEPTION_VAL)
