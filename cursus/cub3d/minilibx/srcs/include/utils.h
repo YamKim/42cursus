@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 10:32:21 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 08:52:44 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 09:33:15 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define TEXTURE_NUMBER 30
 # define TIC_NUMBER 3
 # define TEXTURE_ANI_NUMBER 5
+# define HUD_NUMBER 3
 
 typedef struct		s_tex
 {
@@ -127,6 +128,8 @@ typedef struct		s_disp
 	int				floor_color;
 	int				ceil_color;
 	t_img			img;
+	t_img			skybox;
+	t_img			hud[HUD_NUMBER];
 	t_tex			tex[TEXTURE_NUMBER];
 	t_tex			ani_tex[TEXTURE_ANI_NUMBER];
 	t_clk			clk[TEXTURE_NUMBER];

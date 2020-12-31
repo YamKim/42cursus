@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 12:26:42 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 20:14:45 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 09:47:20 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	get_resolution(t_disp *disp, char **word_buf, int wc)
 	disp->config |= 1 << CONFIG_R;
 	disp->w = (int)fmin(ft_atoi(word_buf[1]), CONFIG_R_WIDTH_MAX);
 	disp->h = (int)fmin(ft_atoi(word_buf[2]), CONFIG_R_HEIGHT_MAX);
-//	ft_putstr("RESOLUTION PARSING COMPLRETE\n");
+	ft_putstr("RESOLUTION PARSING COMPLRETE\n");
 	return (0);
 }
 
@@ -32,9 +32,9 @@ int	get_texture(t_disp *disp, char *fname, int type, int wc)
 	disp->config |= 1 << type;
 	if (load_texture(&(disp->tex[type]), fname) != 0)
 		return (ERR_PARSE_CONFIG);
-//	ft_putstr("PARSING TEXTURE[");
-//	ft_putstr(fname);
-//	ft_putstr("] COMPLETE\n");
+	ft_putstr("PARSING TEXTURE[");
+	ft_putstr(fname);
+	ft_putstr("] COMPLETE\n");
 	return (0);
 }
 
@@ -111,6 +111,6 @@ int	parse_config(t_disp *disp, char **line_buf, int *k)
 	}
 	if (ret != 0 || *k != CONFIG_NUMBER)
 		ret = ERR_PARSE_CONFIG;
-	//ft_putstr("CONFIGURATION PARSING COMPLETE!\n");
+	ft_putstr("CONFIGURATION PARSING COMPLETE!\n");
 	return (ret);
 }

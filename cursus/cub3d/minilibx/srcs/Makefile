@@ -39,6 +39,7 @@ SRC_BONUS = main.c \
 	run_program.c \
 	run_raycasting.c \
 	init_setting.c \
+	init_setting2.c \
 	parse_config.c \
 	parse_map.c \
 	check_file.c \
@@ -85,15 +86,15 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLXFLAGS) -o $(NAME) $^
 
 bonus: $(OBJS_BONUS)
-	$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLXFLAGS) -o $(NAME) $^
+	@$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLXFLAGS) -o $(NAME) $^
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	mkdir $(OBJDIR) 2> /dev/null || true
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 $(OBJDIR_BONUS)/%.o: $(SRCDIR_BONUS)/%.c
-	mkdir $(OBJDIR_BONUS) 2> /dev/null || true
-	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+	@mkdir $(OBJDIR_BONUS) 2> /dev/null || true
+	@$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 clean:
 	rm -rf $(OBJDIR_BONUS)

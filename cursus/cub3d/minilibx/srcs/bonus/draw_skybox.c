@@ -6,23 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:51:50 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 08:53:17 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 09:48:02 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-static t_img	set_skybox_img(const t_disp *disp)
-{
-	t_img	ret;
-	int		tmp;
-
-	ret.w = disp->w * DISP2SKYW;
-	ret.h = disp->h * DISP2SKYH;
-	ret.ptr = mlx_new_image(disp->mlx_ptr, ret.w, ret.h);
-	ret.data = (int *)mlx_get_data_addr(ret.ptr, &tmp, &tmp, &tmp);
-	return (ret);
-}
 
 static int		get_skybox_color(
 				const t_map *map,
@@ -99,26 +87,24 @@ int				draw_skybox(
 				t_disp *disp,
 				t_player *player)
 {
-	t_img	skybox;
+	t_img	*skybox;
 	t_veci	idx;
 	t_veci	step;
 
-	skybox = set_skybox_img(disp);
-	step.x = skybox.w / disp->map.max_w;
-	step.y = skybox.h / disp->map.h;
+	skybox = &(disp->skybox);
+	step.x = skybox->w / disp->map.max_w;
+	step.y = skybox->h / disp->map.h;
 	idx.x = -1;
-	while (++(idx.x) < skybox.w)
+	while (++(idx.x) < skybox->w)
 	{
 		idx.y = -1;
-		while (++(idx.y) < skybox.h)
+		while (++(idx.y) < skybox->h)
 		{
-			skybox.data[(skybox.h - 1 - idx.y) * skybox.w + idx.x] = \
+			skybox->data[(skybox->h - 1 - idx.y) * skybox->w + idx.x] = \
 				get_skybox_color(&(disp->map), idx, step);
 		}
 	}
-	draw_skybox_player(disp, &skybox, player);
-	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, skybox.ptr, 0, 0);
-	free(skybox.ptr);
-	free(skybox.data);
+	draw_skybox_player(disp, skybox, player);
+	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, skybox->ptr, 0, 0);
 	return (0);
 }

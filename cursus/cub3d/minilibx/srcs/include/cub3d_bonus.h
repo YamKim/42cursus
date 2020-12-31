@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 13:58:21 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 08:52:18 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 09:36:55 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,11 @@ typedef struct		s_bg
 int					get_bonus_texture(t_disp *disp);
 
 /*
+** BONUS SETTING
+*/
+void				init_setting_bonus(t_disp *disp);
+
+/*
 ** PLAYER ACTION
 */
 void				set_zaxis_motion(
@@ -219,7 +224,7 @@ int					draw_skybox(
 int					draw_hud(
 					t_disp *disp,
 					t_tex *tex,
-					t_vecd scale,
+					int hud_nbr,
 					t_veci bias);
 int					draw_hud_series(
 					t_disp *disp,

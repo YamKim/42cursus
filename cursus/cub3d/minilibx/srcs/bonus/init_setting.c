@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:19:46 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 08:51:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 09:51:51 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_loop			set_loop_val(
 						&(dp->img.bpp), &(dp->img.size_l), &(dp->img.endian));
 	dp->img.w = dp->w;
 	dp->img.h = dp->h;
+	init_setting_bonus(dp);
 	ret.disp = dp;
 	ret.player = player;
 	return (ret);

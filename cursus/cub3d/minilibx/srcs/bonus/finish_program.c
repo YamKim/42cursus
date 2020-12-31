@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 19:19:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 08:52:34 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 09:55:04 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	finish_program(t_loop *lv)
 	lv->player->sound = system("afplay -v 0.30 ./sound/sound_endgame.mp3\
 								&>/dev/null &");
 	mlx_destroy_window(lv->disp->mlx_ptr, lv->disp->win_ptr);
-	free(lv->disp->mlx_ptr);
 	ft_putstr("THE PROGRAM HAS ENDED\n");
-	while(1);
 	exit(0);
 }
