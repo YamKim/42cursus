@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:02:53 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 17:57:46 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 08:34:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ int			main(
 			err_num = run_program(&disp, &player, 0);
 	}
 	if (err_num != 0)
-		printf("error number: %d\n", err_num);
+	{
+		ft_putstr("error number: ");
+		ft_putnbr(err_num);
+		ft_putstr("\n");
+	}
+	lst_clear(&(disp.spr_lst));
 	return (0);
 }

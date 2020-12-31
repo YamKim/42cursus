@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:01:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 14:08:30 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 18:08:00 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,6 @@ static int	set_map_player(t_disp *disp, char orient, int y, int x)
 	return (MAP_ROAD_VAL);
 }
 
-static int	get_map_element_bonus(t_disp *disp, char data, int y, int x)
-{
-	if (data == MAP_SECRET)
-		return (MAP_SECRET_VAL);
-	else if (data == MAP_CLDOOR)
-		return (MAP_CLDOOR_VAL);
-	else if (data == MAP_OPDOOR)
-		return (MAP_OPDOOR_VAL);
-	else if (data == MAP_ITEM || data == MAP_ATTACK)
-		return (set_map_sprite(disp, y, x, data));
-	return (MAP_EXCEPTION_VAL);
-}
-
 static int	get_map_element(t_disp *disp, char data, int y, int x)
 {
 	if (data == MAP_SPACE)
@@ -64,7 +51,7 @@ static int	get_map_element(t_disp *disp, char data, int y, int x)
 			return (MAP_EXCEPTION_VAL);
 		return (set_map_player(disp, data, y, x));
 	}
-	return (get_map_element_bonus(disp, data, y, x));
+	return (MAP_EXCEPTION_VAL);
 }
 
 int			parse_map(t_disp *disp, char **map, int map_beg)
@@ -73,8 +60,6 @@ int			parse_map(t_disp *disp, char **map, int map_beg)
 	int r;
 	int	x;
 
-	if (get_bonus_texture(disp))
-		return (ERR_PARSE_MAP);
 	r = map_beg + disp->map.h - 1;
 	y = -1;
 	while (++y < disp->map.h)

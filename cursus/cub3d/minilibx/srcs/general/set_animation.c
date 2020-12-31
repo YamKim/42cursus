@@ -6,27 +6,11 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:39:30 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:52 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 18:08:51 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-static int	set_attack_animation(t_disp *disp, t_spr *spr, int tex_nbr)
-{
-	int	idx;
-
-	spr->tex_nbr = tex_nbr;
-	spr->tex = &(disp->tex[spr->tex_nbr]);
-	spr->ani.upflag = 1;
-	spr->ani.idx = 0;
-	spr->clk.beg = clock();
-	spr->clk.end = spr->clk.beg;
-	idx = -1;
-	while (++idx < TEXTURE_ANI_NUMBER)
-		spr->ani.tex[idx] = disp->ani_tex[idx];
-	return (MAP_ATTACK_VAL);
-}
 
 static int	set_no_animation(t_disp *disp, t_spr *spr, int tex_nbr)
 {
@@ -46,9 +30,5 @@ int			set_animation(t_disp *disp, t_spr *spr, char data)
 	ret = 0;
 	if (data == MAP_SPRITE)
 		ret = set_no_animation(disp, spr, CONFIG_S);
-	else if (data == MAP_ITEM)
-		ret = set_no_animation(disp, spr, TEXTURE_ITEM);
-	else if (data == MAP_ATTACK)
-		ret = set_attack_animation(disp, spr, TEXTURE_ATTACK);
 	return (ret);
 }

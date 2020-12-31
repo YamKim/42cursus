@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:19:46 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 09:51:51 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 18:04:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ static void		init_player_orient(t_player *player, char orient)
 	player->plane = rotate_vec(player->plane, angle * DEG2RAD);
 }
 
+static void		init_player_setting_bonus(t_player *player)
+{
+	player->life = LIFE_DEFAULT;
+	player->clk[TIC_ITEM].beg = clock() - INT_MAX;
+	player->clk[TIC_ITEM].end = player->clk[TIC_ITEM].beg;
+	player->clk[TIC_ATTACK].beg = clock() - INT_MAX;
+	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
+	player->sound = clock();
+	system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
+}
+
 void			init_player_setting(t_disp *disp, t_player *player)
 {
 	player->pos = disp->start_pos;
@@ -41,13 +52,7 @@ void			init_player_setting(t_disp *disp, t_player *player)
 	player->trans_speed = TRANS_SPEED;
 	player->rot_speed = ROT_SPEED;
 	init_player_orient(player, disp->start_orient);
-	player->life = LIFE_DEFAULT;
-	player->clk[TIC_ITEM].beg = clock() - INT_MAX;
-	player->clk[TIC_ITEM].end = player->clk[TIC_ITEM].beg;
-	player->clk[TIC_ATTACK].beg = clock() - INT_MAX;
-	player->clk[TIC_ATTACK].end = player->clk[TIC_ATTACK].beg;
-	player->sound = clock();
-	system("afplay -v 0.30 ./sound/maintheme.mp3 &>/dev/null &");
+	init_player_setting_bonus(player);
 }
 
 void			init_disp_setting(t_disp *disp)

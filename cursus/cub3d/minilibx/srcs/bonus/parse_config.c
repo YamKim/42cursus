@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 12:26:42 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 09:47:20 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 10:32:21 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,6 @@ int	parse_config(t_disp *disp, char **line_buf, int *k)
 	disp->config = 0;
 	*k = 0;
 	ret = 0;
-	(void)line_buf;
-	(void)word_buf;
-	(void)word_cnt;
 	while (ret == 0 && line_buf[*k])
 	{
 		if (disp->config == ((1 << CONFIG_NUMBER) - 1))

@@ -1,0 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_raycasting.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/31 09:46:36 by yekim             #+#    #+#             */
+/*   Updated: 2020/12/31 18:08:35 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/cub3d.h"
+
+static int		draw_main(
+				t_disp *disp,
+				t_player *player,
+				double *perp_buf,
+				int secret)
+{
+	t_hit	hp;
+	int		t;
+	double	camera_t;
+
+	t = -1;
+	hp.secret_door = secret;
+	while (++t < disp->w)
+	{
+		hp.pos.x = (int)(player->pos.x);
+		hp.pos.y = (int)(player->pos.y);
+		camera_t = (2 * t / (double)(disp->w)) - 1;
+		player->ray_dir.x = player->dir.x + player->plane.x * camera_t;
+		player->ray_dir.y = player->dir.y + player->plane.y * camera_t;
+		hp.perp_wall_dist = dda_algorithm(player, &hp, disp->map);
+		draw_tex_wall(disp, player, t, &hp);
+		perp_buf[t] = hp.perp_wall_dist;
+	}
+	draw_sprite(disp, player, perp_buf);
+	mlx_put_image_to_window(disp->mlx_ptr, disp->win_ptr, disp->img.ptr, 0, 0);
+	return (0);
+}
+
+int				run_raycasting(t_loop *lv)
+{
+	double	*perp_buf;
+	int		ret;
+
+	ret = 0;
+	if (!(perp_buf = (double *)malloc(sizeof(double) * lv->disp->w)))
+		return (ERR_MALLOC);
+	(void)draw_main;
+	if (ret == 0 && draw_background(lv->disp, lv->player))
+		ret |= ERR_DRAW_IMG;
+	if (ret == 0 && draw_main(lv->disp, lv->player, perp_buf, 0))
+		ret |= ERR_DRAW_IMG;
+	key_update(lv);
+	free(perp_buf);
+	return (ret);
+}

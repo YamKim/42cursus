@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:22:40 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 19:12:31 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 10:29:12 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,84 +31,31 @@ static t_draw	set_background_draw(t_disp *disp, int flag)
 	return (ret);
 }
 
-static void		draw_ceil(t_disp *disp, t_player *player, t_bg *bg, t_tex *tex)
+static void		draw_ceil(t_disp *disp, t_bg *bg)
 {
-	t_vecd	ceil;
-
 	bg->draw = set_background_draw(disp, 0);
+	bg->draw.x = -1;
 	while (++bg->draw.y <= bg->draw.yend)
 	{
-		bg->row_dist = (double)bg->draw.yctr / (bg->draw.yctr - bg->draw.y);
-		bg->step.x = bg->row_dist * (bg->ray_dir1.x - bg->ray_dir0.x) / disp->w;
-		bg->step.y = bg->row_dist * (bg->ray_dir1.y - bg->ray_dir0.y) / disp->w;
-		ceil.x = player->pos.x + bg->row_dist * bg->ray_dir0.x;
-		ceil.y = player->pos.y + bg->row_dist * bg->ray_dir0.y;
 		bg->draw.x = -1;
 		while (++bg->draw.x <= bg->draw.xend)
 		{
-			bg->draw.tx = (int)fmin(tex->w\
-							* (ceil.x - (int)ceil.x), tex->w - 1);
-			bg->draw.ty = (int)fmin(tex->h\
-							* (ceil.y - (int)ceil.y), tex->h - 1);
-			bg->draw.color = tex->data[bg->draw.ty * tex->w + bg->draw.tx];
-			bg->draw.color = (bg->draw.color >> 1) & 8355711;
+			bg->draw.color = disp->ceil_color;
 			disp->img.data[bg->draw.y * disp->w + bg->draw.x] = bg->draw.color;
-			ceil.x += bg->step.x;
-			ceil.y += bg->step.y;
 		}
 	}
 }
 
-static void		draw_floor(t_disp *disp, t_player *player, t_bg *bg, t_tex *tex)
+static void		draw_floor(t_disp *disp, t_bg *bg)
 {
-	t_vecd	floor;
-
 	bg->draw = set_background_draw(disp, 1);
 	bg->draw.x = -1;
 	while (++bg->draw.y <= bg->draw.yend)
 	{
-		bg->row_dist = (double)bg->draw.yctr / (bg->draw.y - bg->draw.yctr);
-		bg->step.x = bg->row_dist * (bg->ray_dir1.x - bg->ray_dir0.x) / disp->w;
-		bg->step.y = bg->row_dist * (bg->ray_dir1.y - bg->ray_dir0.y) / disp->w;
-		floor.x = player->pos.x + bg->row_dist * bg->ray_dir0.x;
-		floor.y = player->pos.y + bg->row_dist * bg->ray_dir0.y;
 		bg->draw.x = -1;
 		while (++bg->draw.x <= bg->draw.xend)
 		{
-			bg->draw.tx = (int)fmin(tex->w\
-							* (floor.x - (int)floor.x), tex->w - 1);
-			bg->draw.ty = (int)fmin(tex->h\
-							* (floor.y - (int)floor.y), tex->h - 1);
-			bg->draw.color = tex->data[bg->draw.ty * tex->w + bg->draw.tx];
-			bg->draw.color = (bg->draw.color >> 1) & 8355711;
-			disp->img.data[bg->draw.y * disp->w + bg->draw.x] = bg->draw.color;
-			floor.x += bg->step.x;
-			floor.y += bg->step.y;
-		}
-	}
-}
-
-static void		draw_ceil_hud(t_disp *disp, t_bg *bg, t_tex *tex)
-{
-	t_vecd	tpos;
-	t_vecd	step;
-
-	bg->draw = set_background_draw(disp, 0);
-	step.x = (double)tex->w / disp->w;
-	step.y = (double)tex->h / disp->h * 1.5;
-	bg->draw.yctr = disp->h / 2;
-	bg->draw.xctr = disp->w / 2;
-	bg->draw.x = -1;
-	while (++(bg->draw.x) < bg->draw.xend)
-	{
-		tpos.x = bg->draw.x - bg->draw.xctr + (double)disp->w / 2;
-		bg->draw.tx = (int)fmin(tpos.x * step.x, tex->w - 1);
-		bg->draw.y = -1;
-		while (++(bg->draw.y) < bg->draw.yend)
-		{
-			tpos.y = bg->draw.y - bg->draw.yctr + (double)disp->h / 2;
-			bg->draw.ty = (int)fmin(tpos.y * step.y, tex->h - 1);
-			bg->draw.color = tex->data[bg->draw.ty * tex->w + bg->draw.tx];
+			bg->draw.color = disp->floor_color;
 			disp->img.data[bg->draw.y * disp->w + bg->draw.x] = bg->draw.color;
 		}
 	}
@@ -118,12 +65,8 @@ int				draw_background(t_disp *disp, t_player *player)
 {
 	t_bg	bg;
 
-	bg.ray_dir0.x = player->dir.x - player->plane.x;
-	bg.ray_dir0.y = player->dir.y - player->plane.y;
-	bg.ray_dir1.x = player->dir.x + player->plane.x;
-	bg.ray_dir1.y = player->dir.y + player->plane.y;
-	(void)draw_ceil;
-	draw_ceil_hud(disp, &bg, &(disp->tex[TEXTURE_CEIL]));
-	draw_floor(disp, player, &bg, &disp->tex[TEXTURE_FLOOR]);
+	(void)player;
+	draw_ceil(disp, &bg);
+	draw_floor(disp, &bg);
 	return (0);
 }

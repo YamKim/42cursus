@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:48:52 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 13:40:37 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 18:06:52 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ int				draw_sprite(
 	t_spr	*spr;
 
 	g_perp_buf = perp_buf;
-	get_close_sprite(disp, player);
 	if (!(spr_pair = (t_pair *)malloc(sizeof(t_pair) * disp->spr_cnt)))
 		return (ERR_MALLOC);
 	set_spr_pair(disp, spr_pair, player);
@@ -130,7 +129,6 @@ int				draw_sprite(
 		spr = &(lst_get_idx(disp->spr_lst, spr_pair[i].ord)->spr);
 		draw = set_sprite_draw(disp, player->coef, spr->tex_nbr);
 		draw_sprite_part(disp, spr->tex, player, &draw);
-		animate_sprite(spr);
 	}
 	free(spr_pair);
 	return (1);

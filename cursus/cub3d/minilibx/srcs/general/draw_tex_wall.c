@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:32:34 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 13:42:19 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 18:07:03 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@ static t_tex	get_wall_type(
 				t_player *player,
 				t_hit *hp)
 {
-	if (hp->door_type == MAP_SECRET_VAL)
-		return (disp->tex[TEXTURE_SECRET]);
-	if (hp->door_type == MAP_CLDOOR_VAL)
-		return (disp->tex[TEXTURE_CLDOOR]);
-	if (hp->door_type == MAP_OPDOOR_VAL)
-		return (disp->tex[TEXTURE_OPDOOR]);
 	if (hp->side == HIT_SIDE_Y)
 	{
 		if (player->ray_dir.y > 0)

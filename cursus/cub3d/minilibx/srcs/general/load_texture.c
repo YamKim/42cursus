@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:44:58 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 18:04:50 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/30 20:12:18 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	load_texture(t_tex *tex, char *file_name)
 	if (tex->ptr == NULL)
 		return (ERR_TEXTURE_CALL);
 	tex->data = (int *)mlx_get_data_addr(tex->ptr, &tmp, &tmp, &tmp);
+	free(mlx_ptr);
 	return (0);
 }

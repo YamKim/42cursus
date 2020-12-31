@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:23:35 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 13:26:22 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 18:07:45 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@ int		key_press(int key, t_loop *lv)
 		lv->player->key |= (1 << MOVE_LEFT);
 	else if (key == KEY_RIGHT)
 		lv->player->key |= (1 << MOVE_RIGHT);
-	else if (key == KEY_H)
-		lv->player->key |= (1 << MOVE_H);
-	else if (key == KEY_G)
-		lv->player->key |= (1 << MOVE_G);
-	else if (key == KEY_F)
-		open_door_trigger(lv->disp, lv->player);
 	return (0);
 }
 
@@ -53,10 +47,6 @@ int		key_release(int key, t_loop *lv)
 		lv->player->key &= ~(1 << MOVE_LEFT);
 	else if (key == KEY_RIGHT)
 		lv->player->key &= ~(1 << MOVE_RIGHT);
-	else if (key == KEY_H)
-		lv->player->key &= ~(1 << MOVE_H);
-	else if (key == KEY_G)
-		lv->player->key &= ~(1 << MOVE_G);
 	return (0);
 }
 
@@ -74,5 +64,4 @@ void	key_update(t_loop *lv)
 		turn_left(lv->player);
 	if (lv->player->key & (1 << MOVE_RIGHT))
 		turn_right(lv->player);
-	set_zaxis_motion(lv->disp, lv->player);
 }

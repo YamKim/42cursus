@@ -6,14 +6,14 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 18:02:32 by yekim            ###   ########.fr       */
+/*   Updated: 2020/12/31 18:47:08 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _CUB3D_H
 # define _CUB3D_H
 
-# include "../../mlx.h"
+# include "mlx.h"
 # include "./cub3d_bonus.h"
 # include "./libft.h"
 # include "./utils.h"
