@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2021/01/01 13:19:32 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 13:53:47 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@
 # define ERR_PARSE_CONFIG 5
 # define ERR_PLAY_MUSIC 6
 # define ERR_RUN_PROGRAM 7
+# define ERR_PARSE_MAP 8
 # define ERR_TEXTURE_CALL 1
 # define ERR_RUN 1
 # define ERR_FILE 1
 # define ERR_READ 1
 # define ERR_MALLOC -1
 # define ERR_PARSE 1
-# define ERR_PARSE_MAP 8
 # define ERR_DRAW_IMG 1
 # define ERR_SAVE_BMP 5
 # define ERR_MESSAGE "ERROR ERROR ERROR\n"
