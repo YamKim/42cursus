@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2021/01/01 13:53:47 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 14:03:48 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@
 */
 # define SCALE_HDIV_SPRITE 1.0
 # define SCALE_WDIV_SPRITE 1.0
-# define SCALE_MOVE_SPRITE 200
+# define SCALE_MOVE_SPRITE 100
 
 /*
 ** BMP SETTING
