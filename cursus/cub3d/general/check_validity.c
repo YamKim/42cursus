@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:46:20 by yekim             #+#    #+#             */
-/*   Updated: 2021/01/01 15:13:36 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 15:55:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,16 @@ int	check_map_range(t_map map, int y, int x)
 		ret = 1;
 	else if (x <= 0 || map.data[y][x + 1] == MAP_BOARDER_VAL)
 		ret = 1;
-	else if (map.data[y - 1][x] == MAP_SPACE_VAL \
-			|| map.data[y + 1][x] == MAP_SPACE_VAL)
+	else if (map.data[y - 1][x] == MAP_SPACE_VAL\
+			|| map.data[y - 1][x] == MAP_UNUSED_VAL\
+			|| map.data[y + 1][x] == MAP_SPACE_VAL\
+			|| map.data[y + 1][x] == MAP_UNUSED_VAL)
+			
 		ret = 1;
 	else if (map.data[y][x - 1] == MAP_SPACE_VAL\
-			|| map.data[y][x + 1] == MAP_SPACE_VAL)
+			|| map.data[y][x - 1] == MAP_UNUSED_VAL\
+			|| map.data[y][x + 1] == MAP_SPACE_VAL\
+			|| map.data[y][x - 1] == MAP_UNUSED_VAL)
 		ret = 1;
 	return (ret);
 }
