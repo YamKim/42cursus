@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:46:20 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 13:43:25 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 15:13:36 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	is_map_valid(t_map map)
 		x = 0;
 		while (map.data[y][x] != MAP_BOARDER_VAL)
 		{
-			if (map.data[y][x] != MAP_WALL_VAL)
+			if (map.data[y][x] != MAP_WALL_VAL
+				&& map.data[y][x] != MAP_SPACE_VAL)
 				ret |= check_map_range(map, y, x);
 			if (map.data[y][x] == MAP_EXCEPTION_VAL)
 				ret |= 1;
