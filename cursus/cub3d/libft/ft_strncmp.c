@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 06:51:27 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/29 10:40:56 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 12:05:11 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,3 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (idx == n ? 0 : (int)(us1[idx] - us2[idx]));
 }
-

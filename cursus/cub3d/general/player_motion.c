@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:58:17 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 16:18:55 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 12:06:20 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@ int		check_gostop(int after_map_data)
 		return (0);
 	else if (after_map_data == MAP_SPRITE_VAL)
 		return (0);
-#if 0
-	else if (after_map_data == MAP_OPDOOR_VAL)
-		return (1);
-	else if (after_map_data == MAP_CLDOOR_VAL)
-		return (0);
-	else if (after_map_data == MAP_ATTACK_VAL)
-		return (0);
-#endif
 	return (1);
 }
 

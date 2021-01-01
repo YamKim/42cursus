@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 09:28:00 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 18:08:24 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 13:20:11 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int				run_program(t_disp *disp, t_player *player, int capture_flag)
 	mlx_loop_hook(disp->mlx_ptr, &run_raycasting, &loop_var);
 	mlx_hook(disp->win_ptr, EVENT_KEY_PRESS, 0, &key_press, &loop_var);
 	mlx_hook(disp->win_ptr, EVENT_KEY_RELEASE, 0, &key_release, &loop_var);
+	mlx_hook(disp->win_ptr, EVENT_KEY_EXIT, 0, &finish_program, &loop_var);
 	mlx_loop(disp->mlx_ptr);
 	return (0);
 }

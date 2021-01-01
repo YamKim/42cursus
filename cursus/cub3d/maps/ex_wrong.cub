@@ -4,12 +4,12 @@ SO ./textures/path_to_the_south_texture
 WE ./textures/path_to_the_west_texture
 EA ./textures/path_to_the_east_texture
 
-S ./textures/path_to_the_sprite_texture
-F 102,51,0
-C 51,204,204
+S ./textures/attack/A1.xpm
+F 220,100,0
+C 225,30,255
 
 11111111111111
-10001000000001
+100010000000001
 10000010002001
 1N001000200001
 11111101111111

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 12:30:18 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/30 20:18:59 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 11:53:13 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			save_bmp_image(t_loop *lv)
 	if (ret == 0)
 		ret = put_bmp_color(fd, pad, lv->disp);
 	close(fd);
-	finish_program(lv);
 	ft_putstr("BMP FILE IS SAVED!\n");
+	finish_program(lv);
 	return (ret);
 }

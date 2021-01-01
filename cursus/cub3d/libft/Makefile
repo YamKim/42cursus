@@ -39,7 +39,7 @@ all : $(NAME)
 clean :
 	@$(RM) $(OBJS) $(OBJS_B)
 
-fclean :
+fclean : clean
 	@$(RM) $(NAME)
 
 re : fclean all

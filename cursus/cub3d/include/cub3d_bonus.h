@@ -6,7 +6,7 @@
 /*   By: yekim <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 13:58:21 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 09:36:55 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 12:17:01 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,6 @@ typedef struct		s_bg
 	double			row_dist;
 	t_vecd			step;
 	t_draw			draw;
-
 }					t_bg;
 
 /*
@@ -200,6 +199,7 @@ void				init_setting_bonus(t_disp *disp);
 void				set_zaxis_motion(
 					t_disp *disp,
 					t_player *player);
+
 void				open_door_trigger(
 					t_disp *disp,
 					t_player *player);
@@ -226,6 +226,7 @@ int					draw_hud(
 					t_tex *tex,
 					int hud_nbr,
 					t_veci bias);
+
 int					draw_hud_series(
 					t_disp *disp,
 					t_player *player);
@@ -233,6 +234,9 @@ int					draw_hud_series(
 /*
 ** DRAWING ANIMATED SPRITE
 */
-int					set_animation(t_disp *disp, t_spr *spr, char data);
+int					set_animation(
+					t_disp *disp,
+					t_spr *spr,
+					char data);
 
 #endif

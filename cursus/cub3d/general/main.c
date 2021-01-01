@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:02:53 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 08:34:21 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 12:56:17 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,5 @@ int			main(
 		ft_putnbr(err_num);
 		ft_putstr("\n");
 	}
-	lst_clear(&(disp.spr_lst));
 	return (0);
 }

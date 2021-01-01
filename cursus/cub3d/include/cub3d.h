@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 07:05:15 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 18:47:08 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 13:19:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@
 ** CONFIGURATION
 */
 # define CONFIG_R_WIDTH_MAX 1920
-# define CONFIG_R_HEIGHT_MAX 1024
+# define CONFIG_R_HEIGHT_MAX 1096
 # define CONFIG_NUMBER 8
 # define CONFIG_NO 0
 # define CONFIG_SO 1
@@ -159,7 +159,11 @@
 ** initialize disp and player
 */
 void				init_disp_setting(t_disp *disp);
-void				init_player_setting(t_disp *disp, t_player *player);
+
+void				init_player_setting(
+					t_disp *disp,
+					t_player *player);
+
 t_loop				set_loop_val(
 					t_disp *dp,
 					t_player *player);
@@ -171,49 +175,86 @@ int					run_program(
 					t_disp *disp,
 					t_player *player,
 					int capture_flag);
+
 int					run_raycasting(t_loop *lv);
 
 /*
 ** run cub3d program
 */
-void				finish_program(t_loop *lv);
+int					exit_red(
+					t_loop *lv,
+					int flag);
+
+int					finish_program(t_loop *lv);
 
 /*
 ** parse configuration
 */
-int					parse_config(t_disp *disp, char **line_buf, int *k);
+int					parse_config(
+					t_disp *disp,
+					char **line_buf,
+					int *k);
 
 /*
 ** parse map
 */
-int					parse_map(t_disp *disp, char **map, int map_beg);
+int					parse_map(
+					t_disp *disp,
+					char **map,
+					int map_beg);
 
 /*
 ** PLAYER MOTION
 */
-void				move_forward(t_player *player, t_map map);
-void				move_backward(t_player *player, t_map map);
-void				move_left(t_player *player, t_map map);
-void				move_right(t_player *player, t_map map);
+void				move_forward(
+					t_player *player,
+					t_map map);
+
+void				move_backward(
+					t_player *player,
+					t_map map);
+
+void				move_left(
+					t_player *player,
+					t_map map);
+
+void				move_right(
+					t_player *player,
+					t_map map);
+
 void				turn_left(t_player *player);
 void				turn_right(t_player *player);
 
 /*
 ** VECTOR CALCULATION
 */
-t_vecd				translate_vec(t_vecd pos, t_vecd dir, double trans);
-t_vecd				rotate_vec(t_vecd dir, double theta);
+t_vecd				translate_vec(
+					t_vecd pos,
+					t_vecd dir,
+					double trans);
+
+t_vecd				rotate_vec(
+					t_vecd dir,
+					double theta);
 
 /*
 ** calculate basic algorithm
 */
-double				calc_dist(t_vecd p1, t_vecd p2);
-double				calc_det(t_vecd v1, t_vecd v2);
+double				calc_dist(
+					t_vecd p1,
+					t_vecd p2);
+
+double				calc_det(
+					t_vecd v1,
+					t_vecd v2);
 
 /*
 ** DDA ALGORITHM CALCULATION
 */
-double				dda_algorithm(t_player *player, t_hit *hp, t_map map);
+double				dda_algorithm(
+					t_player *player,
+					t_hit *hp,
+					t_map map);
 
 /*
 ** DRAWING UNTEXTURED WALL
@@ -257,19 +298,22 @@ t_vecd				set_sprite_scale(
 					t_vecd coef,
 					int tex_nbr);
 
-
 int					check_order(
 					t_disp *disp,
 					t_player *player,
 					t_draw *draw,
 					double *purp_buf);
+
 void				animate_sprite(t_spr *spr);
 
 /*
 ** load images from xpm files
 */
 int					check_file(char *fname);
-int					load_texture(t_tex *tex, char *file_name);
+
+int					load_texture(
+					t_tex *tex,
+					char *file_name);
 
 /*
 ** ft_split
@@ -279,23 +323,50 @@ void				free_split_arr(char **tab);
 /*
 ** keyboard hook from user
 */
-int					key_press(int key, t_loop *lv);
-int					key_release(int key, t_loop *lv);
+int					key_press(
+					int key,
+					t_loop *lv);
+
+int					key_release(
+					int key,
+					t_loop *lv);
+
 void				key_update(t_loop *lv);
 
 /*
 ** mouse hook from user
 */
-int					mouse_press(int button, int x, int y, t_loop *lv);
-int					mouse_release(int button, int x, int y, t_loop *lv);
-int					mouse_move(int x, int y, t_loop *lv);
+int					mouse_press(
+					int button,
+					int x,
+					int y,
+					t_loop *lv);
+
+int					mouse_release(
+					int button,
+					int x,
+					int y,
+					t_loop *lv);
+
+int					mouse_move(
+					int x,
+					int y,
+					t_loop *lv);
 
 /*
 ** check validity
 */
-int					is_number_arr(char **arr, int index_num, int type);
+int					is_number_arr(
+					char **arr,
+					int index_num,
+					int type);
+
 int					is_map_valid(t_map map);
-int					is_secret(int map_data, t_hit *hit_point, int *hit_flag);
+
+int					is_secret(
+					int map_data,
+					t_hit *hit_point,
+					int *hit_flag);
 
 /*
 ** show data
@@ -309,7 +380,9 @@ void				show_lst_data(t_lst *itr);
 /*
 ** door
 */
-int					check_door_type(t_hit *hit_point, int map_data);
+int					check_door_type(
+					t_hit *hit_point,
+					int map_data);
 int					save_bmp_image(t_loop *lv);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 19:19:38 by yekim             #+#    #+#             */
-/*   Updated: 2020/12/31 09:55:04 by yekim            ###   ########.fr       */
+/*   Updated: 2021/01/01 13:31:32 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_split_arr(char **tab)
 	free(tab);
 }
 
-void	finish_program(t_loop *lv)
+int		finish_program(t_loop *lv)
 {
 	lst_clear(&(lv->disp->spr_lst));
 	system("killall afplay");

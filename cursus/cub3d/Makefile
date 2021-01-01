@@ -63,7 +63,7 @@ SRC_BONUS = main.c \
 
 SRCDIR = ./general
 OBJDIR = ./general/objs
-LIBDIR = ./libft
+LIBFTDIR = ./libft
 MLXDIR = ./mlx
 INC = -I./include
 SRCDIR_BONUS = ./bonus
@@ -78,14 +78,14 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(MLXDIR) all 2> /dev/null || true
-	@$(MAKE) -C $(LIBDIR) all 2> /dev/null || true
+	@$(MAKE) -C $(LIBFTDIR) all 2> /dev/null || true
 	@echo "LIBFT MAKE COMPLETE"
 	@$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLX) -o $(NAME) $^
 	@echo "MAKE GENERAL COMPLETE"
 
 bonus: $(OBJS_BONUS)
 	@$(MAKE) -C $(MLXDIR) all 2> /dev/null || true
-	@$(MAKE) -C $(LIBDIR) all 2> /dev/null || true
+	@$(MAKE) -C $(LIBFTDIR) all 2> /dev/null || true
 	@echo "LIBFT MAKE COMPLETE"
 	@$(CC) $(CFLAGS) $(INC) $(LIBFT) $(MLX) -o $(NAME) $^
 	@echo "MAKE GENERAL COMPLETE"
@@ -100,12 +100,13 @@ $(OBJDIR_BONUS)/%.o: $(SRCDIR_BONUS)/%.c
 
 clean:
 	@$(MAKE) -C $(MLXDIR) fclean
-	@$(MAKE) -C $(LIBDIR) fclean
+	@$(MAKE) -C $(LIBFTDIR) fclean
 	@rm -rf $(OBJDIR_BONUS)
 	@rm -rf $(OBJDIR)
 	@echo "MAKE CLEAN"
 
 fclean: clean
+	@rm -f *.bmp
 	@rm -rf $(NAME)
 
 re: fclean all
