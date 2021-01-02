@@ -1,17 +1,17 @@
 R 640 480
-NO ./textures/path_to_the_north_texture
+NO ./textures/path_to_the_west_texture
 SO ./textures/path_to_the_south_texture
 WE ./textures/path_to_the_west_texture
 EA ./textures/path_to_the_east_texture
 
-S ./textures/attack/A1.xpm
-F 220,100,0
-C 225,30,255
+S ./textures/path_to_the_sprite_texture
+F 100,100,250
+C 225,30,0
 
    11111111111111
-   1 001000000001
+   10001000000001
    10000010002001
-   1N001000200001
+   1E001000200001
   1111110111111111
   10020000200001
   10000000000001
