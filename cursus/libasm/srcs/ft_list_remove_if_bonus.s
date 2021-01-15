@@ -1,58 +1,55 @@
-		%define	STRUCTURE_SIZE 16
-		section	.text
-		extern	_free
-		global	_ft_list_remove_if
-
-;	rdi: t_list **begin_list
-;	rsi: void	*data_ref
-;	rdx: int	*cmp()
-;	rcx: void	*free_fct(void *)
+	section .text
+	global	_ft_list_remove_if
+	extern	_free
 
 _ft_list_remove_if:
-		push	rbp
-		mov		rbp, rsp
+	push	rbp
+	mov		rbp, rsp
+	sub		rsp, 0x40
+	mov		qword[rbp-0x08], rdi	; t_list **begin_list
+	mov		qword[rbp-0x10], rsi	; void *data_ref
+	mov		qword[rbp-0x18], rdx	; int (*cmp)()
+	mov		rdi, [rdi]				; rdi = *begin_list
+	mov		qword[rbp-0x20], rdi	; t_list *curr = *begin_list
+	mov		qword[rbp-0x28], 0x0	; t_list *prev = NULL
+	push	rbx
+	push	r12
 
-		cmp		rdi, 0
-		je		return
-		cmp		qword [rdi], 0
-		je		return
+.loop:								;while(1){
+	mov		rbx, [rbp-0x20]		;	rbx = curr;
+	cmp		rbx, 0x0				;	if (curr == NULL)
+	je		.return					;		break;
+	mov		rdi, [rbx]				;	rdi = curr->data;
+	mov		rsi, [rbp-0x10]		;	rsi = data_ref;
+	call	[rbp-0x18]			;	rax = cmp(curr->data, data_ref);
+	cmp		rax, 0x0				;	if (rax == 0)
+	je		.remove					;		.drop
+.loop_inc:
+	mov		rbx, [rbp-0x20]		;	rbx = curr;
+	mov		[rbp-0x28], rbx		;	prev = curr;
+	mov		rbx, [rbx + 8]			;	rbx = curr->next;
+	mov		[rbp-0x20], rbx		;	curr = curr->next;
+	jmp		.loop					;}
 
-		mov		rbx, [rdi]				; rbx = *begin_list
-		mov		r8 , qword [rbx]		; r8 = (*begin_list)->data
-		mov		r9 , qword [rbx + 8]	; r9 = (*begin_list)->next
-
-		sub		rsp, 32
-		mov		qword [rbp -  8], r8	; [rbp - 8] = r8
-		mov		qword [rbp - 16], r9	; [rbp - 16] = r9
-		mov		qword [rbp - 24], rdi	; [rbp - 24] = **begin_list
-
-		mov		rdi, qword [rbp - 8]	; rdi = (*begin_list)->data
-										; rsi = *data
-		call	rdx
-		cmp		rax, 0
-		jne		recursion
-
-		mov		rdi, qword [rbp - 24]	; rdi = **begin_list
-		mov		r9 , qword [rbp - 16]
-		mov		[rdi], r9				; [rdi] = (*begin_list)->next	
-		mov		qword [rbp - 32], rdi	; [rbp - 32] = **new_begin_list
-
-		mov		
-		;mov		rdi, qword [rbp -  8]
-		;call	_free
-		;mov		rdi, rbx
-		;call	_free
-
-		mov		rdi, qword [rbp - 32]
-		call	_ft_list_remove_if
-		
-recursion:
-		add		rbx, 8
-		mov		rdi, rbx
-		call	_ft_list_remove_if		; consider about not finding case
-		jmp		return
-		
-return:
-		mov		rsp, rbp
-		pop		rbp
-		ret
+.remove:
+	mov		rbx, [rbp-0x28]		;rbx = prev;
+	mov		r12, [rbp-0x20]		;r12 = curr;
+	mov		r12, [r12 + 8]			;r12 = curr->next;
+	cmp		rbx, 0x0				;if (prev == NULL)
+	jne		.remove_set				;{
+	mov		rbx, [rbp-0x08]		;	rbx = begin_list;
+	mov		[rbx], r12				;	*begin_list = curr->next;
+	jmp		.remove_free			;}
+.remove_set:						;else
+	mov		[rbx + 8], r12			;	prev->next = curr->next;
+.remove_free:
+	mov		rdi, [rbp-0x20]
+	call	_free
+.remove_inc:
+	mov		[rbp-0x20], r12		;curr = curr->next;
+	jmp		.loop
+.return:
+	pop		r12
+	pop		rbx
+	leave
+	ret

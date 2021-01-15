@@ -3,7 +3,7 @@ NAME_TEST	= test
 ACC			= nasm
 AFLAGS		= -f macho64
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 AR			= ar
 ARFLAGS		= rcs
 RM			= rm -f
@@ -20,6 +20,9 @@ FUNC_BONUS = \
 		ft_list_size \
 		ft_list_push_front \
 		ft_list_remove_if \
+		ft_list_cmp_if \
+		ft_list_sort \
+		ft_atoi_base \
 
 SRCDIR = ./srcs
 OBJDIR = ./objs
