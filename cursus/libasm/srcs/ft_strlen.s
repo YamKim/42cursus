@@ -1,14 +1,17 @@
-	section .text
-	global	_ft_strlen
+		section .text
+		global	_ft_strlen
 
-_ft_strlen:
-	mov		rax, 0
+; rdi = char *str
+_ft_strlen:	
+		push	rbp
+		mov		rbp, rsp
+		xor		rax, rax			; ret = 0
 
-if_str_null:
-	cmp		byte [rdi + rax], 0
-	jne		inc_idx
-	ret
-
-inc_idx:
-	inc		rax
-	jmp		if_str_null
+.loop:								; while (1)
+		cmp		byte[rdi+rax], 0x00	;   if (str[ret] != 0)
+		je		.return				;     jmp .return
+		inc		eax					;   ++ret
+		jmp		.loop
+.return:
+		leave
+		ret

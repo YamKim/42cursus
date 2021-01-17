@@ -16,7 +16,16 @@ _ft_atoi_base:
 		cmp		eax, 0x00				; if (is_base == 0)	
 		je		.return					;   return (0);
 
-		jmp		.get_sign
+.skip_space:							; while (1)
+		mov		rbx, [rbp-0x10]			;   rbx = nbr
+		mov		rdi, [rbx]
+		call	_is_space				
+		cmp		al, 0x00				;   if (_is_space(*nbr))    
+		je		.get_sign				;     jmp .get_sign
+		add		rbx, 0x01
+		mov		[rbp-0x10], rbx			;   rbx = rbx + 1
+		jmp		.skip_space
+
 .get_base_type:
 		mov		rdi, [rbp-0x18]			
 		call	_ft_strlen				; base_type = ft_strlen(base)
@@ -26,11 +35,9 @@ _ft_atoi_base:
 		mov		rbx, qword[rbp-0x10]	; rbx = nbr
 		cmp		byte[rbx], 0x00			; if (*nbr == 0)
 		je		.set_return				;   jmp .set_return
+
 		push	rbx
-		;;;;;;;;;;;;;;;;;;;;;;;;;
-		;mov		rax, [rbp-0x20]
-		;jmp		.return
-		;;;;;;;;;;;;;;;;;;;;;;;;;
+
 		mov		rdi, [rbp-0x18]
 		mov		rsi, [rbx]
 		call	_get_add_nbr			; get_add_nbr(base, *nbr)
@@ -44,16 +51,13 @@ _ft_atoi_base:
 		add		eax, dword[rbp-0x30]	; ret = ret + add
 		mov		[rbp-0x08], rax			; [rbp-0x08] = ret
 
+.loop_inc:
 		pop		rbx
 		add		rbx, 0x01
 		mov		[rbp-0x10], rbx
 		jmp		.loop
 
 .set_return:
-		;;;;;;;;;;;;;;;;;;;;;;;;;
-		;mov		rax, [rbp-0x08]
-		;jmp		.return
-		;;;;;;;;;;;;;;;;;;;;;;;;;
 		mov		ebx, 0x02
 		mov		eax, dword[rbp-0x20]
 		cdq
@@ -163,18 +167,22 @@ _is_space:
 		mov		edx, edi				; edx = c
 		cmp		dl, 0x20				; if (c == ' ')
 		je		_return_yes				; 	return (1);
-		cmp		dl, 0x09				; if (c < ht) 
-		jl		_return_no				; 	return (0);
-		cmp		dl, 0x0c				; if (c > cr)
-		jg		_return_no				; 	return (0);
-		jmp		_return_yes				; return (1);
-		
-_return_yes:
-	  	mov		eax, 0x01
-	  	jmp		_return_is
+		cmp		dl, 0x09
+		je		_return_yes
+		cmp		dl, 0x0a
+		je		_return_yes
+		cmp		dl, 0x0b
+		je		_return_yes
+		cmp		dl, 0x0c
+		je		_return_yes
+		cmp		dl, 0x0d
+		je		_return_yes
 _return_no:
 	   	mov		eax, 0x00
 	   	jmp		_return_is
+_return_yes:
+	  	mov		eax, 0x01
+	  	jmp		_return_is
 _return_is:
 		leave
 		ret	

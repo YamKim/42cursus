@@ -1,26 +1,29 @@
 		section	.text
 		global	_ft_strcmp
 
+; rdi = char *str1
+; rsi = char *str2
 _ft_strcmp:
+		push	rbp
+		mov		rbp, rsp
 		xor		rax, rax
 		xor		rbx, rbx
 		xor		rcx, rcx
 
-if_same_char:
-		mov		al, byte [rdi + rcx]
-		mov		bl, byte [rsi + rcx]
-		cmp		rax, rbx
-		je		inc_idx
-		jne		done
+.loop:								; while(1)
+		mov		al, byte[rdi+rcx]	;   al = str[rcx]
+		mov		bl, byte[rsi+rcx]	;   bl = str[rcx]
+		cmp		rax, rbx			;   if (al != rbx)
+		jne		.return				;     jmp .return 
 
-inc_idx:
-		inc		rcx
-		cmp		al, 0
-		je		done
-		cmp		bl, 0
-		je		done
-		jmp		if_same_char
+		inc		ecx					;   ++rcx
+		cmp		al, 0x00			;   if (al == 0)
+		je		.return				;     jmp .return
+		cmp		bl, 0x00			;   if (bl == 0)
+		je		.return             ;     jmp .return
+		jmp		.loop
 
-done:
+.return:
 		sub		rax, rbx
+		leave
 		ret
