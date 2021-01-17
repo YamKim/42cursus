@@ -1,8 +1,7 @@
 #include "./incs/libasm.h"
 #include <stdio.h>
 
-void printf_list(t_list *list)
-{
+void printf_list(t_list *list) {
 	while (list) {
 		printf("addr: %p\n", list);
 		printf("next: %p\n", list->next);
@@ -78,8 +77,8 @@ int main(void) {
 	printf("result: %d\n", ft_atoi_base("123", "1 02"));
 	printf("result: %d\n", ft_atoi_base("123", "1-02"));
 	printf("result: %d\n", ft_atoi_base("123", "122"));
-	printf("result: %d\n", ft_atoi_base("123", "102"));
-	printf("result: %d\n", ft_atoi_base("123", "1302"));
+	printf("result: %d\n", ft_atoi_base("123", "0123456789"));
+	printf("result: %d\n", ft_atoi_base("-+0123", "0123456789abcdef"));
 
 	return (0);
 }
