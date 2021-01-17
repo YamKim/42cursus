@@ -1,39 +1,19 @@
-;		section	.text
-;		global	_ft_list_size
-;
-;_ft_list_size:
-;		push	rbp
-;		mov		rbp, rsp
-;		xor		rax, rax
-;
-;loop:
-;		cmp		rdi, 0
-;		je		return
-;		inc		rax
-;		mov		rdi, qword [rdi + 8]
-;		jmp		loop
-;
-;return:
-;		mov		rsp, rbp
-;		pop		rbp
-;		ret	
-		
 		section	.text
 		global	_ft_list_size
 
+; rdi = t_list *begin_list
 _ft_list_size:
-		;push	rbp
-		;mov		rbp, rsp
+		push	rbp
+		mov		rbp, rsp
 		xor		rax, rax
 
 loop:
-		cmp		rdi, 0
-		je		return
-		mov		rdi, qword [rdi + 8]
-		call	_ft_list_size
-		add		rax, 1
+		cmp		rdi, 0			; if (begin_list == NULL)
+		je		.return			;   jmp .return
+		mov		rdi, [rdi+0x08]	; begin_list = begin_list->next
+		call	_ft_list_size	; ret = ft_list_size(begin_list)
+		add		eax, 0x01		; ret += 1
 
-return:
-		;mov		rsp, rbp
-		;pop		rbp
+.return:
+		leave
 		ret	

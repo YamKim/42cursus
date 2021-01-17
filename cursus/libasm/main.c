@@ -9,7 +9,7 @@
 
 #if DEBUG_FT_STRLEN
 #define	FT_STRLEN(str)\
-		printf("length of [%s]: %lu\n", str, ft_strlen(str));
+		printf("length of [%s]: [%lu]\n", str, ft_strlen(str));
 int main(void) {
 	FT_STRLEN("Hello World");
 	FT_STRLEN("");
@@ -39,7 +39,7 @@ int main(void) {
 #if DEBUG_FT_STRCMP
 #define FT_STRCMP(str1, str2)\
 		printf("compare [%s] , [%s]\n", str1, str2);\
-		printf("result of ft_cmp %d\n", ft_strcmp(str1, str2));
+		printf("result of ft_cmp: [%d]\n", ft_strcmp(str1, str2));
 int main(void) {
 	FT_STRCMP("", "");
 	FT_STRCMP("", "4242");
@@ -53,10 +53,10 @@ int main(void) {
 
 #if DEBUG_FT_WRITE
 #define FT_WRITE(fd, str)\
-		printf("result of ft_write: %ld\n",\
+		printf("result of ft_write: [%ld]\n",\
 				ft_write(fd, str, ft_strlen(str))); \
-		printf("error number: %d\n", errno);\
-		printf("%s\n", strerror(errno));
+		printf("error number: [%d]\n", errno);\
+		printf("[%s]\n", strerror(errno));
 
 int main(void) {
 	FT_WRITE(1, "Hello 42 Seoul!\n");
@@ -74,10 +74,10 @@ int main(void) {
 
 #if DEBUG_FT_READ
 #define FT_READ(fd, buf)\
-		printf("result of ft_read: %ld\n", ft_read(fd, buf, 5));\
-		printf("error number: %d\n", errno);\
-		printf("%s\n", strerror(errno));\
-		printf("buf: %s\n", buf); 
+		printf("result of ft_read: [%ld]\n", ft_read(fd, buf, 5));\
+		printf("error number: [%d]\n", errno);\
+		printf("[%s]\n", strerror(errno));\
+		printf("buf: [%s]\n", buf); 
 
 int main(void) {
 	char buf1[50];

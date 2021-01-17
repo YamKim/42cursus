@@ -1,5 +1,70 @@
 #include "./incs/libasm.h"
-#include <stdio.h>
+
+#define DEBUG_FT_ATOI_BASE 0
+#define DEBUG_FT_LIST 1
+
+
+void printf_list(t_list *list);
+void ft_list_clear(t_list **list);
+int compare_greater(void *a, void *b);
+int compare(void *a, void *b);
+
+#if DEBUG_FT_ATOI_BASE
+#define FT_ATOI_BASE(str, base)\
+		printf("base: [%ld], result:[%d]\n",\
+		ft_strlen(base), ft_atoi_base(str, base));
+
+int main(void) {
+	FT_ATOI_BASE("42", "");
+	FT_ATOI_BASE("42", "1");
+	FT_ATOI_BASE("42", "10+2");
+	FT_ATOI_BASE("42", "10 2");
+	FT_ATOI_BASE("42", "10-2");
+	FT_ATOI_BASE("42", "4242");
+	FT_ATOI_BASE("101010", "01");
+	FT_ATOI_BASE("111", "314");
+	FT_ATOI_BASE("42", "0123456789");
+	FT_ATOI_BASE("42", "0123456789abcdef");
+
+	return (0);
+}
+#endif
+
+
+#if DEBUG_FT_LIST
+int	main(void) {
+	t_list	*list = (t_list *)malloc(16);
+	int i1 = 1, i2 = 2, i3 = 3, i4 = 4;
+
+	list->data = &i1;
+	list->next = NULL;
+	ft_list_push_front(&list, &i3);
+	ft_list_push_front(&list, &i2);
+	ft_list_push_front(&list, &i4);
+	ft_list_push_front(&list, &i4);
+	ft_list_push_front(&list, &i4);
+	ft_list_push_front(&list, &i4);
+	ft_list_push_front(&list, &i4);
+
+	printf("After pushing data===================\n");
+	printf_list(list);
+	printf("========= size of list: [%d] =========\n\n", ft_list_size(list));
+
+	printf("After sorting list===================\n");
+	list = ft_list_sort(list, compare_greater);
+	printf_list(list);
+	printf("========= size of list: [%d] =========\n\n", ft_list_size(list));
+
+	printf("After removing list==================\n");
+	ft_list_remove_if(&list, &i1, compare);
+	printf_list(list);
+	printf("========= size of list: [%d] =========\n\n", ft_list_size(list));
+
+	ft_list_clear(&list);
+
+	return (0);
+}
+#endif
 
 void printf_list(t_list *list) {
 	while (list) {
@@ -10,15 +75,7 @@ void printf_list(t_list *list) {
 	}
 }
 
-int compare(void *a, void *b) {
-	return (*(int *)a - *(int *)b);
-}
-
-int compare_greater(void *a, void *b) {
-	return (*((int *)a) - *((int *)b));
-}
-
-void ft_lstclear(t_list **list) {
+void ft_list_clear(t_list **list) {
 	t_list	*tmp;
 
 	while (*list) {
@@ -26,59 +83,15 @@ void ft_lstclear(t_list **list) {
 
 		printf("free addr: %p\n", *list);
 		printf("free data: %d\n", *(int *)((*list)->data));
-#if 0
-		if ((*list)->data)
-			free((*list)->data);
-#endif
 		free(*list);
 		*list = tmp;
 	}
 }
 
-#if 0
-int		main(void) {
-	t_list	*list = (t_list *)malloc(16);
-	int i1 = 1, i2 = 2, i3 = 3, i4 = 4;
-	(void)i1; (void)i2; (void)i3; (void)i4;
-
-	list->data = &i1;
-	list->next = NULL;
-	ft_list_push_front(&list, &i3);
-	ft_list_push_front(&list, &i2);
-	ft_list_push_front(&list, &i4);
-
-
-	printf("before removing\n");
-	printf("size: %d\n", ft_list_size(list));
-	printf_list(list);
-
-	printf("after sort\n");
-	list = ft_list_sort(list, compare_greater);
-	printf_list(list);
-
-
-#if 0
-	printf("after removing\n");
-	//ft_list_remove_if(&list, &i2, compare);
-	printf("size: %d\n", ft_list_size(list));
-	printf_list(list);
-#endif
-	ft_lstclear(&list);
-	while(1);
-
-	return (0);
+int compare(void *a, void *b) {
+	return (*(int *)a - *(int *)b);
 }
-#endif
 
-int main(void) {
-	printf("result: %d\n", ft_atoi_base("123", "1"));
-	printf("result: %d\n", ft_atoi_base("123", ""));
-	printf("result: %d\n", ft_atoi_base("123", "10+02"));
-	printf("result: %d\n", ft_atoi_base("123", "1 02"));
-	printf("result: %d\n", ft_atoi_base("123", "1-02"));
-	printf("result: %d\n", ft_atoi_base("123", "122"));
-	printf("result: %d\n", ft_atoi_base("123", "0123456789"));
-	printf("result: %d\n", ft_atoi_base("-+0123", "0123456789abcdef"));
-
-	return (0);
+int compare_greater(void *a, void *b) {
+	return (*((int *)a) - *((int *)b));
 }
