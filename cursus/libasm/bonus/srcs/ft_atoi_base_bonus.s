@@ -88,7 +88,7 @@ _ft_atoi_base:
 .get_sign_loop:
 		cmp		byte[rbx], 0x2d			; if (*nbr == '-')
 		je		.get_sign_inc_neg
-.get_sign_loop_inc
+.get_sign_loop_inc:
 		mov		[rbp-0x20], rax
 		add		rbx, 0x01				;
 		mov		[rbp-0x10], rbx			; [rbp-0x10 = rbx + 1
