@@ -1,18 +1,20 @@
 		section .text
 		global	_ft_list_sort
 
-; rdi = t_list *begin_list 
+; rdi = t_list **begin_list 
 ; rsi = int (*cmp)(int, int)
 _ft_list_sort:
 		push	rbp
 		mov		rbp, rsp
-		
+
+		mov		rbx, [rdi]			; rbx = *begin_list
 		sub		rsp, 0x40
 		mov		[rbp-0x08], rdi		; [rbp-0x08] = begin_list
 		mov		[rbp-0x10], rsi		; [rbp-0x10] = cmp
-		mov		[rbp-0x18], rdi		; [rbp-0x18] = t_list *lst
-		mov		[rbp-0x20], rdi		; [rbp-0x20] = t_list *pos
-		mov		[rbp-0x28], rdi		; [rbp-0x28] = t_list *min
+		mov		[rbp-0x18], rbx		; [rbp-0x18] = *lst = *begin_list
+		mov		[rbp-0x20], rbx		; [rbp-0x20] = *pos = *begin_list
+		mov		[rbp-0x28], rbx		; [rbp-0x28] = *min = *begin_list
+		mov		[rbp-0x30], rbx		; [rbp-0x28] = *beg = *begin_list
 
 .loop:								; while(1) {
 		mov		rbx, [rbp-0x18]		;   rbx = lst
@@ -62,6 +64,8 @@ _ft_list_sort:
 		jmp		.loop_inc
 
 .return:
-		mov		rax, [rbp-0x08]
+		mov		rdi, [rbp-0x08]
+		mov		rax, [rbp-0x30]
+		mov		[rdi], rax
 		leave
 		ret

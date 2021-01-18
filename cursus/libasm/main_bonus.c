@@ -51,7 +51,7 @@ int	main(void) {
 	printf("========= size of list: [%d] =========\n\n", ft_list_size(list));
 
 	printf("After sorting list===================\n");
-	list = ft_list_sort(list, compare_greater);
+	ft_list_sort(&list, compare_greater);
 	printf_list(list);
 	printf("========= size of list: [%d] =========\n\n", ft_list_size(list));
 

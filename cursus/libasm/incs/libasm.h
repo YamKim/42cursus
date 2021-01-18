@@ -50,8 +50,13 @@ void	ft_list_remove_if(
 		void *data_ref,
 		int (*cmp)());
 
+#if 0
 t_list	*ft_list_sort(
 		t_list *lst,
+		int (*cmp)());
+#endif
+t_list	*ft_list_sort(
+		t_list **begin_list,
 		int (*cmp)());
 
 #endif
