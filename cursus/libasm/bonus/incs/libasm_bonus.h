@@ -14,9 +14,11 @@ typedef struct	s_list
 
 
 size_t	ft_strlen(const char *s);
+
 char	*ft_strcpy(
 		char * dst,
 		const char * src);
+
 int		ft_strcmp(
 		const char *s1,
 		const char *s2);
@@ -49,7 +51,7 @@ void	ft_list_remove_if(
 		int (*cmp)(),
 		void (*free_fct)(void *));
 
-t_list	*ft_list_sort(
+void	ft_list_sort(
 		t_list **begin_list,
 		int (*cmp)());
 
