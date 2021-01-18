@@ -27,7 +27,6 @@ MAINDIR = ./mandatory/
 SRCDIR = ./mandatory/srcs
 OBJDIR = ./mandatory/objs
 INCDIR = ./mandatory/incs
-
 SRCS = $(addprefix $(SRCDIR)/, $(addsuffix .s, $(FUNC)))
 OBJS = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(FUNC)))
 
@@ -55,9 +54,10 @@ $(OBJDIR_BONUS)/%.o: $(SRCDIR_BONUS)/%.s
 	@$(ACC) $(AFLAGS) $< -o $@
 
 clean :
-	@$(RM) $(OBJS)
+	@$(RM) $(OBJDIR)
+	@$(RM) $(OBJDIR_BONUS)
 
-fclean :
+fclean : clean
 	@$(RM) $(NAME) $(NAME_TEST)
 	@$(RM) *.dSYM *.txt
 
