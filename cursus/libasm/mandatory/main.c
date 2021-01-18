@@ -81,7 +81,7 @@ int main(void) {
 
 int main(void) {
 	char buf1[50];
-	FT_READ(1, buf1);
+	FT_READ(0, buf1);
 	printf("=========================\n");
 
 	char buf2[50];

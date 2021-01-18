@@ -5,6 +5,7 @@
 ; rdi = t_list **begin_list
 ; rsi = void *data_ref
 ; rdx = int (*cmp)()
+; rcx = void *free_fct()
 _ft_list_remove_if:
 	push	rbp
 	mov		rbp, rsp
@@ -17,6 +18,7 @@ _ft_list_remove_if:
 
 	mov		qword[rbp-0x20], rbx	; *curr = *begin_list
 	mov		qword[rbp-0x28], 0x00	; *prev = NULL
+	mov		qword[rbp-0x38], rcx	; [rbp-0x38] = free_fct
 
 .loop:								; while(1){
 	mov		rbx, [rbp-0x20]			;   rbx = curr
@@ -52,7 +54,10 @@ _ft_list_remove_if:
 	mov		[rbx+0x08], rdx			; (*begin_list)->next
 .remove_free:
 	mov		rdi, [rbp-0x20]
-	call	_free					; free(begin_list)
+	mov		rdi, [rdi]
+	call	[rbp-0x38]				; free_fct(curr->data)
+	mov		rdi, [rbp-0x20]
+	call	_free					; free(curr)
 .remove_inc:
 	mov		rdx, [rbp-0x30]			; rdx = curr->next;
 	mov		[rbp-0x20], rdx			; curr = rdx;

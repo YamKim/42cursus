@@ -3,11 +3,11 @@
 #define DEBUG_FT_ATOI_BASE 0
 #define DEBUG_FT_LIST 1
 
-
 void printf_list(t_list *list);
 void ft_list_clear(t_list **list);
 int compare_greater(void *a, void *b);
 int compare(void *a, void *b);
+void free_fct(void *data);
 
 #if DEBUG_FT_ATOI_BASE
 #define FT_ATOI_BASE(str, base)\
@@ -21,6 +21,9 @@ int main(void) {
 	FT_ATOI_BASE("42", "10 2");
 	FT_ATOI_BASE("42", "10-2");
 	FT_ATOI_BASE("42", "4242");
+
+	FT_ATOI_BASE("--42", "0123456789");
+
 	FT_ATOI_BASE("101010", "01");
 	FT_ATOI_BASE("111", "314");
 	FT_ATOI_BASE("42", "0123456789");
@@ -30,21 +33,20 @@ int main(void) {
 }
 #endif
 
-
 #if DEBUG_FT_LIST
 int	main(void) {
 	t_list	*list = (t_list *)malloc(16);
-	int i1 = 1, i2 = 2, i3 = 3, i4 = 4;
+	int *i1 = (int *)malloc(sizeof(int));
+	int *i2 = (int *)malloc(sizeof(int));
+	int *i3 = (int *)malloc(sizeof(int));
+	int *i4 = (int *)malloc(sizeof(int));
+	*i1 = 1; *i2 = 2; *i3 = 3; *i4 = 4;
 
-	list->data = &i1;
+	list->data = i1;
 	list->next = NULL;
-	ft_list_push_front(&list, &i3);
-	ft_list_push_front(&list, &i2);
-	ft_list_push_front(&list, &i4);
-	ft_list_push_front(&list, &i4);
-	ft_list_push_front(&list, &i4);
-	ft_list_push_front(&list, &i4);
-	ft_list_push_front(&list, &i4);
+	ft_list_push_front(&list, i3);
+	ft_list_push_front(&list, i2);
+	ft_list_push_front(&list, i4);
 
 	printf("After pushing data===================\n");
 	printf_list(list);
@@ -56,7 +58,8 @@ int	main(void) {
 	printf("========= size of list: [%d] =========\n\n", ft_list_size(list));
 
 	printf("After removing list==================\n");
-	ft_list_remove_if(&list, &i1, compare);
+	ft_list_remove_if(&list, i2, compare, free_fct);
+	//ft_list_remove_if(&list, "", compare, free_fct);
 	printf_list(list);
 	printf("========= size of list: [%d] =========\n\n", ft_list_size(list));
 
@@ -65,6 +68,9 @@ int	main(void) {
 	return (0);
 }
 #endif
+void free_fct(void *data) {
+	free(data);
+}
 
 void printf_list(t_list *list) {
 	while (list) {
@@ -95,3 +101,4 @@ int compare(void *a, void *b) {
 int compare_greater(void *a, void *b) {
 	return (*((int *)a) - *((int *)b));
 }
+

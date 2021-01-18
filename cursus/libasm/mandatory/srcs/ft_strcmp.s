@@ -16,7 +16,7 @@ _ft_strcmp:
 		cmp		rax, rbx			;   if (al != rbx)
 		jne		.return				;     jmp .return 
 
-		inc		ecx					;   ++rcx
+		inc		ecx					;   ++ecx
 		cmp		al, 0x00			;   if (al == 0)
 		je		.return				;     jmp .return
 		cmp		bl, 0x00			;   if (bl == 0)
