@@ -68,9 +68,6 @@ int	main(void) {
 	return (0);
 }
 #endif
-void free_fct(void *data) {
-	free(data);
-}
 
 void printf_list(t_list *list) {
 	while (list) {
@@ -102,3 +99,6 @@ int compare_greater(void *a, void *b) {
 	return (*((int *)a) - *((int *)b));
 }
 
+void free_fct(void *data) {
+	free(data);
+}
