@@ -22,7 +22,7 @@ int main(void) {
 	FT_ATOI_BASE("42", "10-2");
 	FT_ATOI_BASE("42", "4242");
 
-	FT_ATOI_BASE("--42", "0123456789");
+	FT_ATOI_BASE("-+-42", "0123456789");
 
 	FT_ATOI_BASE("101010", "01");
 	FT_ATOI_BASE("111", "314");
@@ -40,13 +40,15 @@ int	main(void) {
 	int *i2 = (int *)malloc(sizeof(int));
 	int *i3 = (int *)malloc(sizeof(int));
 	int *i4 = (int *)malloc(sizeof(int));
-	*i1 = 1; *i2 = 2; *i3 = 3; *i4 = 4;
+	int *i5 = (int *)malloc(sizeof(int));
+	*i1 = 1; *i2 = 2; *i3 = 3; *i4 = 4; *i5 = 5;
 
 	list->data = i1;
 	list->next = NULL;
 	ft_list_push_front(&list, i3);
 	ft_list_push_front(&list, i2);
 	ft_list_push_front(&list, i4);
+	ft_list_push_front(&list, i5);
 
 	printf("After pushing data===================\n");
 	printf_list(list);
