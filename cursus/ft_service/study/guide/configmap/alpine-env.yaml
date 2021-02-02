@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine-env
+spec:
+  containers:
+    - name: alpine
+      image: alpine
+      command: ["sleep"]
+      args: ["100000"]
+      env:
+        - name: my_intra_id
+          valueFrom:
+            configMapKeyRef:
+              name: my-config
+              key: intra_id
+        - name: my_mutiline
+          valueFrom:
+            configMapKeyRef:
+              name: my-config
+              key: multiline
