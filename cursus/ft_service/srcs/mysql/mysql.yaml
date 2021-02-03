@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: yekim_mysql:1.1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3306
+          name: mysql-port
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 6000"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mysql
+spec:
+  type: LoadBalancer
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+    protocol: TCP
+    name: mysql-port
