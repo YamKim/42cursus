@@ -11,9 +11,10 @@ COPY ./srcs/start.sh /usr/sbin/start.sh
 COPY ./srcs/sshd_config /etc/ssh/sshd_config
 
 RUN ssh-keygen -A
-
 RUN chmod +x /usr/sbin/start.sh
 
 EXPOSE 22 80 443
+
+#WORKDIR /usr/sbin/
 
 ENTRYPOINT ["/usr/sbin/start.sh"]

@@ -1,8 +1,8 @@
 echo "MetalLB Uninstall"
 
 SRC_DIR=$(pwd)
-METALLB_DIR=./metallb
-NGINX_DIR=./nginx
+METALLB_DIR=${SRC_DIR}/metallb
+NGINX_DIR=${SRC_DIR}/nginx
 
 SERVICE_LIST="nginx"
 
@@ -21,3 +21,5 @@ kubectl delete configmap nginx-config
 cd ${NGINX_DIR}; make clean
 #cd ${FTPS_DIR}; make clean
 
+echo ${SRC_DIR}
+rm ${SRC_DIR}/log.txt
