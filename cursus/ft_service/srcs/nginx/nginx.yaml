@@ -38,7 +38,7 @@ spec:
         - name: nginx-secret
           mountPath: /etc/ssl
         - name: nginx-config
-          mountPath: /etc/nginx
+          mountPath: /etc/nginx/
       volumes:
       - name: nginx-secret
         secret:
