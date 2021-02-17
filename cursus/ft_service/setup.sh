@@ -5,7 +5,7 @@ SRC_DIR=${FTSVC_DIR}/srcs
 METALLB_DIR=${SRC_DIR}/metallb
 NGINX_DIR=${SRC_DIR}/nginx
 
-SERVICE_LIST="nginx"
+SERVICE_LIST="nginx phpmyadmin"
 
 # install MetalLB
 export LOG_PATH=${SRC_DIR}/log.txt

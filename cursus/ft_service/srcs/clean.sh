@@ -4,7 +4,7 @@ SRC_DIR=$(pwd)
 METALLB_DIR=${SRC_DIR}/metallb
 NGINX_DIR=${SRC_DIR}/nginx
 
-SERVICE_LIST="nginx"
+SERVICE_LIST="nginx phpmyadmin"
 
 for SERVICE in ${SERVICE_LIST}
 do
@@ -14,7 +14,7 @@ done
 kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
 
 kubectl delete secret nginx-secret
-kubectl delete configmap nginx-config
+#kubectl delete configmap nginx-config
 #kubectl delete secret ftps-secrets
 #kubectl delete configmap telegraf-config
 

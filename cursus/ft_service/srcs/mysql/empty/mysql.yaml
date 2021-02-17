@@ -9,11 +9,14 @@ spec:
   selector:
     matchLabels:
       app: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: mysql
     spec:
+      restartPolicy: Always
       containers:
       - name: mysql
         image: alpine:3.12
@@ -21,11 +24,32 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
+        env:
+        - name: PMA_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: PMA_USER
+        - name: PMA_PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: PMA_PASSWD
+        - name: WP_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: WP_USER
+        - name: WP_PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: WP_PASSWD
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 6000"]
         volumeMounts:
         - name: mysql-persistent-volume
           mountPath: /var/lib/mysql
-        command: ["/bin/sh"]
-        args: ["-c", "sleep 6000"]
       volumes:
       - name: mysql-persistent-volume
         persistentVolumeClaim:
@@ -36,7 +60,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
   labels:
-    app: mysql
+    app: mysql-app
 spec:
   accessModes:
   - ReadWriteOnce
@@ -62,9 +86,9 @@ metadata:
   labels:
     run: mysql
 spec:
-  selector:
-    app: mysql
   ports:
   - port: 3306
     protocol: TCP
     name: mysql
+  selector:
+    app: mysql
