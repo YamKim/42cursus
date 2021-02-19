@@ -5,7 +5,7 @@ RUN apk add mysql mysql-client
 RUN rm -rf /var/cache/apk/*
 
 COPY ./srcs/mariadb-server.cnf /etc/my.cnf.d/
-COPY ./srcs/init_db.sql /tmp/
+#COPY ./srcs/init_db.sql /tmp/
 COPY ./srcs/run.sh /usr/sbin/
 
 RUN chmod +x /usr/sbin/run.sh

@@ -16,19 +16,21 @@ RUN apk add php7-session php7-mbstring
 
 #RUN mkdir -p /usr/share/webapps/
 #RUN cd /usr/share/webapps
-RUN wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-all-languages.tar.gz
+WORKDIR /tmp/
+
+COPY ./srcs/phpMyAdmin-5.0.2-all-languages.tar.gz ./
 RUN tar zxvf phpMyAdmin-5.0.2-all-languages.tar.gz
 
 RUN rm phpMyAdmin-5.0.2-all-languages.tar.gz
 RUN mv phpMyAdmin-5.0.2-all-languages phpmyadmin
-RUN mv /phpmyadmin /var/www/
+RUN mv phpmyadmin /var/www/phpmyadmin
 
-COPY srcs/default.conf /etc/nginx/conf.d/default.conf
-COPY srcs/config.inc.php /var/www/phpmyadmin/
-COPY srcs/run.sh /usr/sbin/
+COPY ./srcs/default.conf /etc/nginx/conf.d/default.conf
+COPY ./srcs/config.inc.php /var/www/phpmyadmin/
+COPY ./srcs/run.sh /usr/sbin/
 
 RUN chmod +x /usr/sbin/run.sh
 
 EXPOSE 5000
 
-ENTRYPOINT ["/usr/sbin/run.sh"]
+#ENTRYPOINT ["sh", "/usr/sbin/run.sh"]

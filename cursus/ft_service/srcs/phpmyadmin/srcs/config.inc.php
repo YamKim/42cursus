@@ -20,12 +20,13 @@ $cfg['Servers'][$i]['auth_type'] = 'cookie';
 /* Server parameters */
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
-$cfg['Servers'][$i]['host'] = localhost;
+$cfg['Servers'][$i]['host'] = '127.0.0.1';
+#$cfg['Servers'][$i]['host'] = 'mysql';
 
 /* 추가해야하는 부분 */
-$cfg['Servers'][$i]['port'] = 3306;
-$cfg['Servers'][$i]['user'] = yekim;
-$cfg['Servers'][$i]['password'] = 5933;
+$cfg['Servers'][$i]['port'] = '3306';
+$cfg['Servers'][$i]['user'] = 'yekim';
+$cfg['Servers'][$i]['password'] = '5933';
 
 /**
  * phpMyAdmin configuration storage settings.
