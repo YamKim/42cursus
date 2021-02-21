@@ -20,7 +20,7 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'wordpress-db' );
+define( 'DB_NAME', 'wordpress' );
 
 /** MySQL database username */
 define( 'DB_USER', 'yekim' );
@@ -29,16 +29,15 @@ define( 'DB_USER', 'yekim' );
 define( 'DB_PASSWORD', '5933' );
 
 /** MySQL hostname */
-define( 'DB_HOST', 'mysql-service' );
+define( 'DB_HOST', '172.17.0.1' );
+#define( 'WP_HOME', 'http://172.17.0.5:5050' );
+#define( 'WP_SITEURL', 'http://172.17.0.5:5050' );
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
 
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
-
-/** [ADDED] Allow Wordpress to change files when updating */
-define( 'FS_METHOD', 'direct' );
 
 /**#@+
  * Authentication Unique Keys and Salts.

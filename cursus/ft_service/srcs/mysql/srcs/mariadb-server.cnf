@@ -4,9 +4,6 @@
 
 # this is read by the standalone daemon and embedded servers
 [server]
-port=3306
-bind-address=0.0.0.0
-skip-networking=false
 
 # this is only for the mysqld standalone daemon
 [mysqld]
