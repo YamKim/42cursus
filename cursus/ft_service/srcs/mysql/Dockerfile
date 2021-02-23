@@ -3,6 +3,7 @@ FROM alpine:3.12
 RUN apk update
 RUN	apk add mysql 
 RUN mkdir -p /run/mysqld
+RUN rm -rf /var/cache/apk/*
 
 COPY ./srcs/mariadb-server.cnf /etc/my.cnf.d/
 COPY ./srcs/init_db.sql /tmp/
