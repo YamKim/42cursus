@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 FTSVC_DIR=$(pwd)
 SRC_DIR=${FTSVC_DIR}/srcs

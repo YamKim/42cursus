@@ -4,7 +4,7 @@ SRC_DIR=$(pwd)
 METALLB_DIR=${SRC_DIR}/metallb
 NGINX_DIR=${SRC_DIR}/nginx
 
-SERVICE_LIST="mysql pma wp"
+SERVICE_LIST="mysql phpmyadmin wordpress ftps"
 
 for SERVICE in ${SERVICE_LIST}
 do
