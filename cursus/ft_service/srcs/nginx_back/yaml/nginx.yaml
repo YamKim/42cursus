@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: yekim_nginx:1.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
+        - containerPort: 22
+          name: ssh
+        env:
+        - name: SSH_USER
+          valueFrom:
+            secretKeyRef:
+              name: nginx-ssh-user
+              key: SSH_USER
+        - name: SSH_PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: nginx-ssh-user
+              key: SSH_PASSWD
+        volumeMounts:
+        - name: nginx-secret
+          mountPath: /etc/ssl
+        - name: nginx-config
+          mountPath: /etc/nginx/
+      volumes:
+      - name: nginx-secret
+        secret:
+          secretName: nginx-secret
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: nginx-ssh-user
+type: Opaque
+data:
+  SSH_USER: eWVraW0=
+  SSH_PASSWD: NTkzMw==
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+  labels:
+    app: nginx
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    protocol: TCP
+    name: https
+  - port: 22
+    protocol: TCP
+    name: ssh

@@ -39,6 +39,8 @@ spec:
           mountPath: /etc/ssl
         - name: nginx-config
           mountPath: /etc/nginx/
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 3"]
       volumes:
       - name: nginx-secret
         secret:
@@ -46,33 +48,4 @@ spec:
       - name: nginx-config
         configMap:
           name: nginx-config
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: nginx-ssh-user
-type: Opaque
-data:
-  SSH_USER: eWVraW0=
-  SSH_PASSWD: NTkzMw==
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-  labels:
-    app: nginx
-spec:
-  type: LoadBalancer
-  selector:
-    app: nginx
-  ports:
-  - port: 80
-    protocol: TCP
-    name: http
-  - port: 443
-    protocol: TCP
-    name: https
-  - port: 22
-    protocol: TCP
-    name: ssh
+
