@@ -31,9 +31,3 @@ spec:
         - containerPort: 21101
           hostPort: 21101
           name: passive1
-        livenessProbe:
-          initialDelaySeconds: 20
-          periodSeconds: 10
-          timeoutSeconds: 5
-          tcpSocket:
-            port: 21
