@@ -1,6 +1,6 @@
 FROM alpine:3.12
 
-RUN apk add openssl vsftpd
+RUN apk add vsftpd
 RUN rm -rf /var/cache/apk/* 
 
 COPY ./srcs/ssl/vsftpd.crt /etc/ssl/

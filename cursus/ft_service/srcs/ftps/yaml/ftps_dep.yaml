@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps
+  labels:
+    app: ftps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftps
+  template:
+    metadata:
+      labels:
+        app: ftps
+    spec:
+      containers:
+      - name: ftps
+        image: yekim_ftps:1.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 20
+          hostPort: 20
+          name: ftps-data
+        - containerPort: 21
+          hostPort: 21
+          name: ftps
+        - containerPort: 21100
+          hostPort: 21100
+          name: passive0
+        - containerPort: 21101
+          hostPort: 21101
+          name: passive1
+        livenessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 5
+          tcpSocket:
+            port: 21

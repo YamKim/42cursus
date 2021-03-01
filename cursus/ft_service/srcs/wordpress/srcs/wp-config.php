@@ -29,9 +29,10 @@ define( 'DB_USER', 'yekim' );
 define( 'DB_PASSWORD', '5933' );
 
 /** MySQL hostname */
-define( 'DB_HOST', '172.17.0.1' );
-#define( 'WP_HOME', 'http://172.17.0.5:5050' );
-#define( 'WP_SITEURL', 'http://172.17.0.5:5050' );
+#define( 'DB_HOST', '172.17.0.1' );
+define( 'DB_HOST', 'mysql' );
+define( 'WP_HOME', 'http://192.168.99.100:5050' );
+define( 'WP_SITEURL', 'http://192.168.99.100:5050' );
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
