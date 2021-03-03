@@ -4,8 +4,9 @@ FTSVC_DIR=$(pwd)
 SRC_DIR=${FTSVC_DIR}/srcs
 METALLB_DIR=${SRC_DIR}/metallb
 NGINX_DIR=${SRC_DIR}/nginx
+FTPS_DIR=${SRC_DIR}/ftps
 
-SERVICE_LIST="nginx phpmyadmin"
+SERVICE_LIST="nginx mysql phpmyadmin wordpress ftps influxdb grafana"
 
 # install MetalLB
 export LOG_PATH=${SRC_DIR}/log.txt
@@ -17,24 +18,23 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 
 # modify MetalLB configuration
 MINIKUBE_IP=$(minikube ip)
-cd ${METALLB_DIR}
-sed -i '.bak' "s/MINIKUBE_IP/${MINIKUBE_IP}/g" metallb.yaml
-kubectl apply -f metallb.yaml >> $LOG_PATH
+#cd ${METALLB_DIR}
+#sed -i '.bak' "s/MINIKUBE_IP/${MINIKUBE_IP}/g" metallb.yaml
+kubectl apply -f $METALLB_DIR/metallb_cm.yaml >> $LOG_PATH
 
 # enable docker deamon
 eval $(minikube -p minikube docker-env)
 
 # make keys for openssl
-cd ${NGINX_DIR}; make keys;
-#cd ${FTPS_DIR}; make keys;
-echo "nginx ssl success"
+$(MAKE) -C ${NGINX_DIR}
+$(MAKE) -C ${FTPS_DIR}
 
-kubectl create secret tls nginx-secret \
-	--key ${NGINX_DIR}/ssl/nginx.key \
-	--cert ${NGINX_DIR}/ssl/nginx.crt
-
-kubectl create configmap nginx-config \
-	--from-file=${NGINX_DIR}/srcs/nginx.conf
+#kubectl create secret tls nginx-secret \
+#	--key ${NGINX_DIR}/ssl/nginx.key \
+#	--cert ${NGINX_DIR}/ssl/nginx.crt
+#
+#kubectl create configmap nginx-config \
+#	--from-file=${NGINX_DIR}/srcs/nginx.conf
 
 for SERVICE in $SERVICE_LIST
 do
@@ -47,7 +47,5 @@ for SERVICE in $SERVICE_LIST
 do
 	SERVICE_DIR=${SRC_DIR}/${SERVICE}
 	#sed "s/MINIKUBE_IP/${MINIKUBE_IP}/g" ${SERVICE_DIR}/template.yaml > ${SERVICE_DIR}/${SERVICE}.yaml
-	kubectl apply -f ${SERVICE_DIR}/${SERVICE}.yaml
+	kubectl create -f ${SERVICE_DIR}/yaml
 done
-:<<'END'
-END
