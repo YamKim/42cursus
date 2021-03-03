@@ -15,3 +15,452 @@ daemonset.apps/speaker created
 deployment.apps/controller created
 secret/memberlist created
 configmap/config created
+Sending build context to Docker daemon  21.34MB
+Step 1/20 : FROM alpine:3.12
+ ---> 88dd2752d2ea
+Step 2/20 : RUN apk update
+ ---> Using cache
+ ---> 38b053a91543
+Step 3/20 : RUN mkdir -p /run/nginx
+ ---> Using cache
+ ---> fb9e929ddfed
+Step 4/20 : RUN	apk add nginx
+ ---> Using cache
+ ---> e131f875fb6f
+Step 5/20 : RUN apk add openssl
+ ---> Using cache
+ ---> 74cfabc07edb
+Step 6/20 : RUN apk add openssh
+ ---> Using cache
+ ---> 4b028189cfef
+Step 7/20 : RUN rm -rf /var/cache/apk/*
+ ---> Using cache
+ ---> f21d85ceb6fe
+Step 8/20 : COPY ./srcs/telegraf-1.14.0-static_linux_amd64.tar.gz ./
+ ---> Using cache
+ ---> d4bbf21982e1
+Step 9/20 : RUN tar zxvf telegraf-1.14.0-static_linux_amd64.tar.gz
+ ---> Using cache
+ ---> a507bc2cb747
+Step 10/20 : RUN mv telegraf-1.14.0-static_linux_amd64.tar.gz telegraf
+ ---> Using cache
+ ---> 67b01674b939
+Step 11/20 : RUN mv telegraf /usr/sbin
+ ---> Using cache
+ ---> 5efab051fa21
+Step 12/20 : COPY ./srcs/telegraf.conf /usr/sbin/telegraf/
+ ---> Using cache
+ ---> 568620c82e84
+Step 13/20 : ENV TELEGRAF_CONFIG_PATH /usr/sbin/telegraf/telegraf.conf
+ ---> Using cache
+ ---> 149b49e94e04
+Step 14/20 : COPY ./srcs/default.conf /etc/nginx/conf.d/
+ ---> Using cache
+ ---> f383610ffaa0
+Step 15/20 : COPY ./srcs/index.html /var/www/
+ ---> Using cache
+ ---> 04e05886f0bd
+Step 16/20 : COPY ./srcs/sshd_config /etc/ssh/
+ ---> Using cache
+ ---> 01df8deb2418
+Step 17/20 : COPY ./srcs/run.sh /usr/sbin/
+ ---> Using cache
+ ---> b5cd7797058c
+Step 18/20 : RUN chmod +x /usr/sbin/run.sh
+ ---> Using cache
+ ---> 9191959ca126
+Step 19/20 : EXPOSE 80 443 22
+ ---> Using cache
+ ---> e99fd9b9cbf1
+Step 20/20 : ENTRYPOINT ["sh", "/usr/sbin/run.sh"]
+ ---> Using cache
+ ---> d569c330f61d
+Successfully built d569c330f61d
+Successfully tagged yekim_nginx:1.0
+Sending build context to Docker daemon  21.35MB
+Step 1/17 : FROM alpine:3.12
+ ---> 88dd2752d2ea
+Step 2/17 : RUN apk update
+ ---> Using cache
+ ---> 38b053a91543
+Step 3/17 : RUN	apk add mysql
+ ---> Using cache
+ ---> 92135779bf4c
+Step 4/17 : RUN mkdir -p /run/mysqld
+ ---> Using cache
+ ---> 60d721dbb822
+Step 5/17 : COPY ./srcs/mariadb-server.cnf /etc/my.cnf.d/
+ ---> Using cache
+ ---> dea2dde18796
+Step 6/17 : COPY ./srcs/init_db.sql /tmp/
+ ---> Using cache
+ ---> db3804070a93
+Step 7/17 : COPY ./srcs/telegraf-1.14.0-static_linux_amd64.tar.gz ./
+ ---> Using cache
+ ---> f64b9c512f38
+Step 8/17 : RUN tar zxvf telegraf-1.14.0-static_linux_amd64.tar.gz
+ ---> Using cache
+ ---> 08c713695485
+Step 9/17 : RUN mv telegraf-1.14.0-static_linux_amd64.tar.gz telegraf
+ ---> Using cache
+ ---> 765c746972a1
+Step 10/17 : RUN mv telegraf /usr/sbin
+ ---> Using cache
+ ---> 1b79ba07b9f3
+Step 11/17 : COPY ./srcs/telegraf.conf /usr/sbin/telegraf/
+ ---> Using cache
+ ---> a67f90d52a25
+Step 12/17 : ENV TELEGRAF_CONFIG_PATH /usr/sbin/telegraf/telegraf.conf
+ ---> Using cache
+ ---> 344084b2aa2f
+Step 13/17 : RUN rm -rf /var/cache/apk/*
+ ---> Using cache
+ ---> 19418561ed28
+Step 14/17 : COPY ./srcs/run.sh /usr/sbin/
+ ---> a52d714d6e5a
+Step 15/17 : RUN chmod +x /usr/sbin/run.sh
+ ---> Running in 916c50b41fc8
+Removing intermediate container 916c50b41fc8
+ ---> d4e20e7d432b
+Step 16/17 : EXPOSE 3306
+ ---> Running in 5b6699faaadf
+Removing intermediate container 5b6699faaadf
+ ---> 508b25a68906
+Step 17/17 : ENTRYPOINT ["sh", "/usr/sbin/run.sh"]
+ ---> Running in 494ff2f066c2
+Removing intermediate container 494ff2f066c2
+ ---> 12807be91cf6
+Successfully built 12807be91cf6
+Successfully tagged yekim_mysql:1.0
+Sending build context to Docker daemon  34.14MB
+Step 1/24 : FROM alpine:3.12
+ ---> 88dd2752d2ea
+Step 2/24 : RUN apk update
+ ---> Using cache
+ ---> 38b053a91543
+Step 3/24 : RUN apk add nginx
+ ---> Using cache
+ ---> f7171adcdae1
+Step 4/24 : RUN	mkdir -p /run/nginx
+ ---> Using cache
+ ---> 7716a9abc30f
+Step 5/24 : RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli 	php7-zlib php7-curl php7-mbstring php7-json php7-session
+ ---> Using cache
+ ---> 367ea53146da
+Step 6/24 : WORKDIR /tmp/
+ ---> Using cache
+ ---> 026651fb81c6
+Step 7/24 : COPY ./srcs/phpMyAdmin-5.0.2-all-languages.tar.gz ./
+ ---> Using cache
+ ---> 71a0ee1f2d4a
+Step 8/24 : RUN tar zxvf phpMyAdmin-5.0.2-all-languages.tar.gz
+ ---> Using cache
+ ---> f3c10986fedb
+Step 9/24 : RUN rm phpMyAdmin-5.0.2-all-languages.tar.gz
+ ---> Using cache
+ ---> 394393163d94
+Step 10/24 : RUN mv phpMyAdmin-5.0.2-all-languages phpmyadmin
+ ---> Using cache
+ ---> d542184473b3
+Step 11/24 : RUN mv phpmyadmin /var/www/
+ ---> Using cache
+ ---> e6c235cfa0fb
+Step 12/24 : COPY ./srcs/telegraf-1.14.0-static_linux_amd64.tar.gz ./
+ ---> Using cache
+ ---> 95b9607f61f3
+Step 13/24 : RUN tar zxvf telegraf-1.14.0-static_linux_amd64.tar.gz
+ ---> Using cache
+ ---> 7135bc419d21
+Step 14/24 : RUN mv telegraf-1.14.0-static_linux_amd64.tar.gz telegraf
+ ---> Using cache
+ ---> 65cbcebccc31
+Step 15/24 : RUN mv telegraf /usr/sbin
+ ---> Using cache
+ ---> 3545881494e2
+Step 16/24 : COPY ./srcs/telegraf.conf /usr/sbin/telegraf/
+ ---> Using cache
+ ---> a7842f8b2500
+Step 17/24 : ENV TELEGRAF_CONFIG_PATH /usr/sbin/telegraf/telegraf.conf
+ ---> Using cache
+ ---> d0acada14012
+Step 18/24 : COPY ./srcs/nginx.conf /etc/nginx/
+ ---> Using cache
+ ---> c4efd8353c74
+Step 19/24 : COPY ./srcs/config.inc.php /var/www/phpmyadmin/
+ ---> Using cache
+ ---> cd35d55cab2b
+Step 20/24 : RUN rm -rf /var/cache/apk/*
+ ---> Using cache
+ ---> 29fbb1f64bc9
+Step 21/24 : COPY ./srcs/run.sh /usr/sbin/
+ ---> Using cache
+ ---> fb758f6ead2d
+Step 22/24 : RUN chmod +x /usr/sbin/run.sh
+ ---> Using cache
+ ---> ce463ae50ad6
+Step 23/24 : EXPOSE 5000
+ ---> Using cache
+ ---> 6d3af1888c8e
+Step 24/24 : ENTRYPOINT ["sh", "/usr/sbin/run.sh"]
+ ---> Using cache
+ ---> b25830d3f746
+Successfully built b25830d3f746
+Successfully tagged yekim_phpmyadmin:1.0
+Sending build context to Docker daemon  37.04MB
+Step 1/26 : FROM alpine:3.12
+ ---> 88dd2752d2ea
+Step 2/26 : RUN apk update
+ ---> Using cache
+ ---> 38b053a91543
+Step 3/26 : RUN apk add nginx mysql-client
+ ---> Using cache
+ ---> b0e1a188777e
+Step 4/26 : RUN	mkdir -p /run/nginx
+ ---> Using cache
+ ---> 44b88cd9fa03
+Step 5/26 : RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli 	php7-zlib php7-curl php7-mbstring php7-json php7-session
+ ---> Using cache
+ ---> 0243db7d7424
+Step 6/26 : WORKDIR /tmp/
+ ---> Using cache
+ ---> 6c4fd4c1338b
+Step 7/26 : COPY ./srcs/wordpress-5.6.1.tar.gz ./
+ ---> Using cache
+ ---> 6529671b5ac0
+Step 8/26 : RUN tar zxvf wordpress-5.6.1.tar.gz
+ ---> Using cache
+ ---> b3bebd14c25e
+Step 9/26 : RUN rm wordpress-5.6.1.tar.gz
+ ---> Using cache
+ ---> 5f973a56a106
+Step 10/26 : RUN mv wordpress /var/www/
+ ---> Using cache
+ ---> 7677e11888d8
+Step 11/26 : COPY ./srcs/telegraf-1.14.0-static_linux_amd64.tar.gz ./
+ ---> Using cache
+ ---> d3cf0d45b012
+Step 12/26 : RUN tar zxvf telegraf-1.14.0-static_linux_amd64.tar.gz
+ ---> Using cache
+ ---> 72a8191985dc
+Step 13/26 : RUN mv telegraf-1.14.0-static_linux_amd64.tar.gz telegraf
+ ---> Using cache
+ ---> 6d587addbd15
+Step 14/26 : RUN mv telegraf /usr/sbin
+ ---> Using cache
+ ---> be18547eff52
+Step 15/26 : COPY ./srcs/telegraf.conf /usr/sbin/telegraf/
+ ---> Using cache
+ ---> 74f047eab975
+Step 16/26 : ENV TELEGRAF_CONFIG_PATH /usr/sbin/telegraf/telegraf.conf
+ ---> Using cache
+ ---> a09baa083a1a
+Step 17/26 : COPY ./srcs/wordpress.sql ./
+ ---> Using cache
+ ---> 9b98b56a75ff
+Step 18/26 : COPY ./srcs/nginx.conf /etc/nginx/
+ ---> Using cache
+ ---> fd400baef004
+Step 19/26 : COPY ./srcs/wp-config.php /var/www/wordpress/
+ ---> Using cache
+ ---> d065264456a2
+Step 20/26 : COPY ./srcs/set_wpdb.sh ./
+ ---> Using cache
+ ---> bafe19af75eb
+Step 21/26 : COPY ./srcs/run.sh /usr/sbin/
+ ---> Using cache
+ ---> 76f80f2b30ce
+Step 22/26 : RUN chmod +x /tmp/set_wpdb.sh
+ ---> Using cache
+ ---> 6a12b5ccbb51
+Step 23/26 : RUN chmod +x /usr/sbin/run.sh
+ ---> Using cache
+ ---> 40716848ceba
+Step 24/26 : RUN rm -rf /var/cache/apk/*
+ ---> Using cache
+ ---> 1fd5057ad444
+Step 25/26 : EXPOSE 5050
+ ---> Using cache
+ ---> 247e7ca6275f
+Step 26/26 : ENTRYPOINT ["sh", "/usr/sbin/run.sh"]
+ ---> Using cache
+ ---> 955abaafa042
+Successfully built 955abaafa042
+Successfully tagged yekim_wordpress:1.0
+Sending build context to Docker daemon  21.34MB
+Step 1/15 : FROM alpine:3.12
+ ---> 88dd2752d2ea
+Step 2/15 : RUN apk add vsftpd
+ ---> Using cache
+ ---> 42e492552c2e
+Step 3/15 : RUN apk add openssl
+ ---> Using cache
+ ---> 79aec3d2f3f6
+Step 4/15 : COPY ./srcs/telegraf-1.14.0-static_linux_amd64.tar.gz ./
+ ---> Using cache
+ ---> 31fad9266536
+Step 5/15 : RUN tar zxvf telegraf-1.14.0-static_linux_amd64.tar.gz
+ ---> Using cache
+ ---> 9f5196f25cbb
+Step 6/15 : RUN mv telegraf-1.14.0-static_linux_amd64.tar.gz telegraf
+ ---> Using cache
+ ---> e80a4ffe1fca
+Step 7/15 : RUN mv telegraf /usr/sbin
+ ---> Using cache
+ ---> 3cd49cbf01f0
+Step 8/15 : COPY ./srcs/telegraf.conf /usr/sbin/telegraf/
+ ---> Using cache
+ ---> 653a5bb8019d
+Step 9/15 : ENV TELEGRAF_CONFIG_PATH /usr/sbin/telegraf/telegraf.conf
+ ---> Using cache
+ ---> 4274d229d5ff
+Step 10/15 : COPY ./srcs/vsftpd.conf /etc/vsftpd/
+ ---> Using cache
+ ---> 961974425434
+Step 11/15 : COPY ./srcs/run.sh /usr/sbin/
+ ---> 5207841c7634
+Step 12/15 : RUN rm -rf /var/cache/apk/*
+ ---> Running in 05cbe65ec731
+Removing intermediate container 05cbe65ec731
+ ---> cb5d1e8702cd
+Step 13/15 : EXPOSE 20 21 21100-21101
+ ---> Running in 4ea528846b07
+Removing intermediate container 4ea528846b07
+ ---> e494cbfb40c0
+Step 14/15 : RUN chmod +x /usr/sbin/run.sh
+ ---> Running in b6a3f3124e50
+Removing intermediate container b6a3f3124e50
+ ---> d671be6ca373
+Step 15/15 : ENTRYPOINT ["sh", "/usr/sbin/run.sh"]
+ ---> Running in cbece3b964cf
+Removing intermediate container cbece3b964cf
+ ---> 68b45d41fdd5
+Successfully built 68b45d41fdd5
+Successfully tagged yekim_ftps:1.0
+Sending build context to Docker daemon  21.38MB
+Step 1/15 : FROM alpine:3.12
+ ---> 88dd2752d2ea
+Step 2/15 : RUN apk update
+ ---> Using cache
+ ---> 38b053a91543
+Step 3/15 : RUN apk add influxdb
+ ---> Using cache
+ ---> fbe5420c52c2
+Step 4/15 : COPY ./srcs/telegraf-1.14.0-static_linux_amd64.tar.gz ./
+ ---> Using cache
+ ---> d450674356b3
+Step 5/15 : RUN tar zxvf telegraf-1.14.0-static_linux_amd64.tar.gz
+ ---> Using cache
+ ---> f289bef4fd6a
+Step 6/15 : RUN mv telegraf-1.14.0-static_linux_amd64.tar.gz telegraf
+ ---> Using cache
+ ---> 4b8f7326ab4e
+Step 7/15 : RUN mv telegraf /usr/sbin
+ ---> Using cache
+ ---> 87edbaeed4c9
+Step 8/15 : COPY ./srcs/telegraf.conf /usr/sbin/telegraf/
+ ---> Using cache
+ ---> 635c2d5b5fb6
+Step 9/15 : ENV TELEGRAF_CONFIG_PATH /usr/sbin/telegraf/telegraf.conf
+ ---> Using cache
+ ---> 23ebcc195385
+Step 10/15 : COPY ./srcs/influxdb.conf /etc/influxdb.conf
+ ---> Using cache
+ ---> b05f68130399
+Step 11/15 : RUN rm -rf /var/cache/apk/*
+ ---> Using cache
+ ---> 262e47540a34
+Step 12/15 : COPY ./srcs/run.sh /usr/sbin/
+ ---> Using cache
+ ---> 6ac96332e036
+Step 13/15 : RUN chmod +x /usr/sbin/run.sh
+ ---> Using cache
+ ---> cb0abda1d7b8
+Step 14/15 : EXPOSE 8086
+ ---> Using cache
+ ---> 630a2b8b2b3a
+Step 15/15 : ENTRYPOINT ["/usr/sbin/run.sh"]
+ ---> Using cache
+ ---> ade917f78ca3
+Successfully built ade917f78ca3
+Successfully tagged yekim_influxdb:1.0
+Sending build context to Docker daemon  72.62MB
+Step 1/21 : FROM alpine:3.12
+ ---> 88dd2752d2ea
+Step 2/21 : RUN apk update
+ ---> Using cache
+ ---> 38b053a91543
+Step 3/21 : RUN apk --no-cache add libc6-compat;
+ ---> Using cache
+ ---> cbfcdfcffac0
+Step 4/21 : COPY ./srcs/grafana-7.4.3.linux-amd64.tar.gz ./
+ ---> Using cache
+ ---> 463ee2e136b8
+Step 5/21 : RUN tar -zxvf grafana-7.4.3.linux-amd64.tar.gz
+ ---> Using cache
+ ---> 0ad2de2a9b33
+Step 6/21 : RUN mv grafana-7.4.3 /usr/share/grafana
+ ---> Using cache
+ ---> 37cb7d6bc1f8
+Step 7/21 : RUN mkdir -p /var/lib/grafana/dashboards
+ ---> Using cache
+ ---> 70525b150370
+Step 8/21 : COPY ./srcs/telegraf-1.14.0-static_linux_amd64.tar.gz ./
+ ---> Using cache
+ ---> 12f646512f90
+Step 9/21 : RUN tar zxvf telegraf-1.14.0-static_linux_amd64.tar.gz
+ ---> Using cache
+ ---> 28831fc21ca9
+Step 10/21 : RUN mv telegraf-1.14.0-static_linux_amd64.tar.gz telegraf
+ ---> Using cache
+ ---> 25fe7a3cbdd6
+Step 11/21 : RUN mv telegraf /usr/sbin
+ ---> Using cache
+ ---> fc2e6e33bca7
+Step 12/21 : COPY ./srcs/telegraf.conf /usr/sbin/telegraf/
+ ---> Using cache
+ ---> 89b0078cc1fd
+Step 13/21 : ENV TELEGRAF_CONFIG_PATH /usr/sbin/telegraf/telegraf.conf
+ ---> Using cache
+ ---> 3a478036f0df
+Step 14/21 : RUN rm -rf /var/cache/apk/*
+ ---> Using cache
+ ---> 8038a461df41
+Step 15/21 : COPY ./srcs/dashboards /var/lib/grafana/dashboards/
+ ---> Using cache
+ ---> 2a2b37b2c9dc
+Step 16/21 : COPY ./srcs/config/influxdb.yaml /usr/share/grafana/conf/provisioning/datasources/
+ ---> Using cache
+ ---> 57e825151ced
+Step 17/21 : COPY ./srcs/config/dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/
+ ---> Using cache
+ ---> 4b2b61f4d0b7
+Step 18/21 : COPY ./srcs/run.sh /usr/sbin/
+ ---> Using cache
+ ---> 2d0194faa5e1
+Step 19/21 : RUN chmod +x /usr/sbin/run.sh
+ ---> Using cache
+ ---> 5187340a02b2
+Step 20/21 : EXPOSE 3000
+ ---> Using cache
+ ---> 0ea981feac90
+Step 21/21 : ENTRYPOINT ["sh", "/usr/sbin/run.sh"]
+ ---> Using cache
+ ---> 9f3a3a840e49
+Successfully built 9f3a3a840e49
+Successfully tagged yekim_grafana:1.0
+deployment.apps/nginx created
+service/nginx-svc created
+deployment.apps/mysql created
+persistentvolumeclaim/mysql created
+service/mysql created
+deployment.apps/phpmyadmin created
+service/phpmyadmin created
+deployment.apps/wordpress created
+service/wordpress created
+deployment.apps/ftps created
+service/ftps created
+deployment.apps/influxdb created
+persistentvolumeclaim/influxdb created
+service/influxdb created
+deployment.apps/grafana created
+service/grafana created

@@ -9,5 +9,7 @@ echo "yekim:5933" | chpasswd
 
 ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ""
 
+/usr/sbin/telegraf/telegraf &
+
 /usr/sbin/sshd
 /usr/sbin/nginx -g "daemon off;"

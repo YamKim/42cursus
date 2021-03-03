@@ -2,6 +2,7 @@ FROM alpine:3.12
 
 # ftps setting
 RUN apk add vsftpd
+RUN apk add openssl
 
 # telegraf setting
 COPY ./srcs/telegraf-1.14.0-static_linux_amd64.tar.gz ./
@@ -12,13 +13,11 @@ COPY ./srcs/telegraf.conf /usr/sbin/telegraf/
 ENV TELEGRAF_CONFIG_PATH /usr/sbin/telegraf/telegraf.conf
 
 # configuration setting
-COPY ./srcs/ssl/vsftpd.crt /etc/ssl/
-COPY ./srcs/ssl/vsftpd.key /etc/ssl/
 COPY ./srcs/vsftpd.conf /etc/vsftpd/
 COPY ./srcs/run.sh /usr/sbin/
 RUN rm -rf /var/cache/apk/* 
 
-EXPOSE 20 21 21100-21104
+EXPOSE 20 21 21100-21101
 
 # run setting
 RUN chmod +x /usr/sbin/run.sh

@@ -1,29 +1,25 @@
 echo "MetalLB Uninstall"
 
-SRC_DIR=$(pwd)
-METALLB_DIR=${SRC_DIR}/metallb
-NGINX_DIR=${SRC_DIR}/nginx
-FTPS_DIR=${SRC_DIR}/ftps
+SRC_DIR=$PWD
+METALLB_DIR=$SRC_DIR/metallb
 
 SERVICE_LIST="nginx mysql phpmyadmin wordpress ftps influxdb grafana"
 
-for SERVICE in ${SERVICE_LIST}
+for SERVICE in $SERVICE_LIST
 do
-	kubectl delete -f $SRC_DIR/$SERVICE/yaml
+	echo "DELETE SERVICE OF $SERVICE"
+	kubectl delete -f $SRC_DIR/$SERVICE/yaml > /dev/null 2>&1
 done
 
 for SERVICE in $SERVICE_LIST
 do
-	echo "DOCKERFILE OF $SERVICE DELETE"
-	docker rmi -f yekim_$SERVICE:1.0
+	echo "DELETE BUILT DOCKERFILE OF $SERVICE"
+	docker rmi -f yekim_$SERVICE:1.0 > /dev/null 2>&1
 	sleep 1.5
 done
 
-kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
-kubectl delete -f $METALLB_DIR/metallb_cm.yaml
+kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml > /dev/null 2>&1
+kubectl delete -f $METALLB_DIR/metallb_cm.yaml > /dev/null 2>&1
 
-$(MAKE) -C $NGINX_DIR clean
-$(MAKE) -C $FTPS_DIR clean
-
-echo ${SRC_DIR}
-rm ${SRC_DIR}/log.txt
+echo "DELETE LOG FILE"
+rm -f $SRC_DIR/log.txt > /dev/null 2>&1
