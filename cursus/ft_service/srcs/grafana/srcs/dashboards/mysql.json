@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 4,
   "links": [],
   "panels": [
     {
@@ -23,7 +23,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "influxdb",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -45,7 +45,6 @@
         "avg": true,
         "current": false,
         "hideEmpty": false,
-        "hideZero": false,
         "max": true,
         "min": true,
         "rightSide": true,
@@ -55,6 +54,7 @@
       },
       "lines": true,
       "linewidth": 1,
+      "maxDataPoints": null,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
@@ -70,6 +70,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "alias": "usage_system",
           "groupBy": [
             {
               "params": [
@@ -87,6 +88,7 @@
           "measurement": "cpu",
           "orderByTime": "ASC",
           "policy": "default",
+          "queryType": "randomWalk",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -112,6 +114,7 @@
           ]
         },
         {
+          "alias": "usage_user",
           "groupBy": [
             {
               "params": [
@@ -159,7 +162,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU Usage",
+      "title": "CPU Usaage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -176,7 +179,7 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:58",
+          "$$hashKey": "object:40",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -185,7 +188,7 @@
           "show": true
         },
         {
-          "$$hashKey": "object:59",
+          "$$hashKey": "object:41",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -200,6 +203,7 @@
       }
     }
   ],
+  "refresh": "5s",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -207,12 +211,12 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "mysql",
-  "uid": "cAW4OjsMz",
+  "uid": "ZQizDn8Gk",
   "version": 1
 }
