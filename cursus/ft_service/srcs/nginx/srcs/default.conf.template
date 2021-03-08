@@ -21,12 +21,12 @@ server {
 	}
 
 	location /wordpress {
-		return 307 http://192.168.99.100:5050;
+		return 307 http://MINIKUBE_IP:5050;
 	}	
 
 	location /phpmyadmin/ {
 		proxy_set_header X-Forwarded-Proto https;
-		proxy_pass http://192.168.99.100:5000/;
+		proxy_pass http://MINIKUBE_IP:5000/;
 		#proxy_redirect /index.php /phpmyadmin/index.php;
 		#try_files $uri $uri/ index.php  =404;
 	}

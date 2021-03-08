@@ -1,12 +1,21 @@
 #!/bin/sh
 
-SRC_DIR=$PWD/srcs/
-METALLB_DIR=$SRC_DIR/metallb
+SRCS_DIR=$PWD/srcs/
+METALLB_DIR=$SRCS_DIR/metallb
+
+# MODIFIY CONFIG FILES FROM TEMPLATE
+MINIKUBE_IP=$(minikube ip)
+NGINX_SRCS_DIR=$SRCS_DIR/nginx/srcs
+sed "s/MINIKUBE_IP/$MINIKUBE_IP/" $NGINX_SRCS_DIR/default.conf.template > $NGINX_SRCS_DIR/default.conf
+FTPS_SRCS_DIR=$SRCS_DIR/ftps/srcs
+sed "s/MINIKUBE_IP/$MINIKUBE_IP/" $FTPS_SRCS_DIR/vsftpd.conf.template > $FTPS_SRCS_DIR/vsftpd.conf
+WORDPRESS_SRCS_DIR=$SRCS_DIR/wordpress/srcs
+sed "s/MINIKUBE_IP/$MINIKUBE_IP/" $WORDPRESS_SRCS_DIR/wp-config.php.template > $WORDPRESS_SRCS_DIR/wp-config.php
 
 SERVICE_LIST="nginx mysql phpmyadmin wordpress ftps influxdb grafana"
 
 # install MetalLB
-export LOG_PATH=$SRC_DIR/log.txt
+export LOG_PATH=$SRCS_DIR/log.txt
 touch $LOG_PATH
 
 echo "INSTALL MetalLB..."
@@ -19,10 +28,6 @@ kubectl apply -f $METALLB_DIR/metallb_cm.yaml >> $LOG_PATH
 # enable docker deamon
 eval $(minikube -p minikube docker-env)
 
-# make keys for openssl
-$MAKE -C $SRC_DIR/nginx/ keys >> $LOG_PATH
-$MAKE -C $SRC_DIR/ftps/ keys >> $LOG_PATH
-
 # show dashboard on background
 minikube dashboard &
 
@@ -30,7 +35,7 @@ minikube dashboard &
 for SERVICE in $SERVICE_LIST
 do
 	echo "BUILD DOCKERFILE FOR $SERVICE"
-	docker build -t yekim_$SERVICE:1.0 ${SRC_DIR}/$SERVICE >> $LOG_PATH
+	docker build -t yekim_$SERVICE:1.0 ${SRCS_DIR}/$SERVICE >> $LOG_PATH
 	sleep 1.5
 done
 
@@ -38,6 +43,6 @@ done
 for SERVICE in $SERVICE_LIST
 do
 	echo "CREATE $SERVICE SERVICE"
-	SERVICE_DIR=${SRC_DIR}/${SERVICE}
+	SERVICE_DIR=${SRCS_DIR}/${SERVICE}
 	kubectl create -f ${SERVICE_DIR}/yaml >> $LOG_PATH
 done
