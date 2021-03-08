@@ -7,6 +7,7 @@ METALLB_DIR=$SRCS_DIR/metallb
 NGINX_SRCS_DIR=$SRCS_DIR/nginx/srcs
 FTPS_SRSC_DIR=$SRCS_DIR/ftps/srcs
 WORDPRESS_SRCS_DIR=$SRCS_DIR/wordpress/srcs
+rm -rf $METALLB_DIR/metallb_cm.yaml 
 rm -rf $NGINX_SRCS_DIR/default.conf
 rm -rf $FTPS_SRCS_DIR/vsftpd.conf
 rm -rf $WORDPRESS_SRCS_DIR/wp-config.php

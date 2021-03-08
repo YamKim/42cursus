@@ -1,10 +1,11 @@
 #!/bin/sh
 
 SRCS_DIR=$PWD/srcs/
-METALLB_DIR=$SRCS_DIR/metallb
+MINIKUBE_IP=$(minikube ip)
 
 # MODIFIY CONFIG FILES FROM TEMPLATE
-MINIKUBE_IP=$(minikube ip)
+METALLB_DIR=$SRCS_DIR/metallb
+sed "s/MINIKUBE_IP/$MINIKUBE_IP/" $METALLB_DIR/metallb_cm.yaml.template > $METALLB_DIR/metallb_cm.yaml
 NGINX_SRCS_DIR=$SRCS_DIR/nginx/srcs
 sed "s/MINIKUBE_IP/$MINIKUBE_IP/" $NGINX_SRCS_DIR/default.conf.template > $NGINX_SRCS_DIR/default.conf
 FTPS_SRCS_DIR=$SRCS_DIR/ftps/srcs
