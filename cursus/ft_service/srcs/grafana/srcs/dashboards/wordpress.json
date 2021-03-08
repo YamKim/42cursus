@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 3,
   "links": [],
   "panels": [
     {
@@ -23,7 +23,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "influxdb",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -68,6 +68,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "alias": "usage_system",
           "groupBy": [
             {
               "params": [
@@ -85,6 +86,7 @@
           "measurement": "cpu",
           "orderByTime": "ASC",
           "policy": "default",
+          "queryType": "randomWalk",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -110,6 +112,7 @@
           ]
         },
         {
+          "alias": "usage_user",
           "groupBy": [
             {
               "params": [
@@ -157,7 +160,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU Usage",
+      "title": "Panel Title",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -174,7 +177,7 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:493",
+          "$$hashKey": "object:563",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -183,7 +186,7 @@
           "show": true
         },
         {
-          "$$hashKey": "object:494",
+          "$$hashKey": "object:564",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -198,6 +201,7 @@
       }
     }
   ],
+  "refresh": false,
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -205,12 +209,12 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "wordpress",
-  "uid": "A6lFOCsGk",
+  "uid": "ca0Dd7UGz",
   "version": 1
 }
