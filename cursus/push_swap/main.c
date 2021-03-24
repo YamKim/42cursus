@@ -1,4 +1,5 @@
 #include "./libft/libft.h"
+#include <stdio.h>
 
 // > ./checker 3 2 1 0
 
@@ -17,7 +18,16 @@ int	is_int_range(char *str, int num)
 	return (1);
 }
 
-#include <stdio.h>
+int	is_more_than_one(t_list *stack_head)
+{
+	if (!stack_head || !(stack_head->next))
+	{
+		printf("ft_swap_one::stack_has no or one elements\n");
+		return (0);
+	}
+	return (1);
+}
+
 int	is_right_argv(int *num_arr, char **argv)
 {
 	int	idx;
@@ -83,26 +93,76 @@ void	print_list(t_list *list_head)
 {
 	while (list_head)
 	{
-		printf("list_content: %d\n", *(int *)(list_head->content));
-		printf("addr of list_content: %p\n", list_head->content);
-		//free(list_head->content);
+		printf("addr of prev: %p\n", list_head->prev);
+		printf("addr of curr: %p\n", list_head);
+		printf("addr of next: %p\n", list_head->next);
+		printf("data of list: %d\n\n", *(int *)(list_head->content));
+		//printf("list_content: %d\n", *(int *)(list_head->content));
+		//printf("addr of list_content: %p\n\n", list_head->content);
 		list_head = list_head->next;
 	}
 }
 
-void	ft_swap_one(t_list *stack_head)
+void	ft_swap_one(t_list **stack_head)
 {
-	if (!stack_head || !stack_head->next)
-	{
-		printf("ft_swap_one::stack_has no or one elements\n");
-		return ;	
-	}
+	t_list	*list1;
+	t_list	*list2;
 
+	if(!is_more_than_one(*stack_head))
+		return ;
+	list1 = *stack_head;
+	list2 = (*stack_head)->next;
+	list1->next = list2->next;
+	list2->prev = list1->prev;
+	list1->prev = list2;
+	list2->next = list1;
+	*stack_head = list2;
 }
 
-void	ft_swap_both()
+void	ft_swap_both(t_list *a_head, t_list *b_head)
 {
-;
+	ft_swap_one(&a_head);
+	ft_swap_one(&b_head);
+}
+
+void	ft_push_one(t_list **src, t_list **dst)
+{
+	t_list	*tmp;
+
+	if (*src == NULL)
+	{
+		printf("ft_push_one::src_stack is empty\n");
+		return ;
+	}
+	tmp = *src;
+	*src = (*src)->next;
+	ft_lstadd_front(dst, tmp); 
+}
+
+void	ft_push_both(t_list **a_head, t_list **b_head)
+{
+	ft_push_one(a_head, b_head);
+	ft_push_one(b_head, a_head);
+}
+
+void	ft_rotate_one(t_list **stack_head)
+{
+	t_list	*last;
+
+	if (!is_more_than_one(*stack_head))
+		return ;
+	last = ft_lstlast(*stack_head);
+	last->prev->next = last->next;
+	last->prev = (*stack_head)->prev;
+	(*stack_head)->prev = last;
+	last->next = *stack_head;
+	*stack_head = last;
+}
+
+void	ft_rotate_both(t_list **a_head, t_list **b_head)
+{
+	ft_rotate_one(a_head);
+	ft_rotate_one(b_head);
 }
 
 void	free_num_arr(void *num_arr)
@@ -124,13 +184,28 @@ int main(int argc, char *argv[])
 		return (error_case());
 	a_head = cvt_arr_to_list(num_arr, argc - 1);
 	b_head = NULL;
-	print_list(a_head);
 
-//	ft_swap_one(a_head);
-	printf("list size: %d\n", ft_lstsize(a_head));
-	
+#if 0
+	ft_swap_one(&a_head);
+	print_list(a_head);
+#endif
+
+#if 0
+	ft_push_one(&b_head, &a_head);
+	printf("print a list =====================\n");
+	print_list(a_head);
+	printf("print b list =====================\n");
+	print_list(b_head);
+#endif
+#if 0
+	ft_rotate_one(&a_head);
+	printf("print a list =====================\n");
+	print_list(a_head);
+#endif
+	ft_rotate_both(&a_head, &b_head);
 	free(num_arr);
 	ft_lstclear(&a_head, &free);
+	ft_lstclear(&b_head, &free);
 
 	return (0);
 }
