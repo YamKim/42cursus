@@ -7,7 +7,7 @@ int	error_case()
 	return (0);
 }
 
-int	is_int_range(char *str, int num)
+static int	is_int_range(char *str, int num)
 {
 	int	zero_case;
 
@@ -17,7 +17,7 @@ int	is_int_range(char *str, int num)
 	return (1);
 }
 
-int	is_right_argv(int *num_arr, char **argv)
+static int	is_right_argv(int *num_arr, char **argv)
 {
 	int	idx;
 	int	num;
@@ -78,13 +78,9 @@ t_list	*cvt_arr_to_list(int *num_arr, int size)
 	return (ret);
 }
 
-int	ft_checker(int argc, char *argv[])
-{
-
-}
-
 int main(int argc, char *argv[])
 {
+	int		idx;
 	int		*num_arr;
 	t_list	*a_head;
 	t_list	*b_head;
