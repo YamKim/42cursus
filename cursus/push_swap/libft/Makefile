@@ -63,7 +63,7 @@ $(NAME) : $(OBJS)
 bonus: $(NAME) $(OBJS_B)
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJS_B)
 
-all : $(NAME)
+all : $(NAME) bonus
 
 clean :
 	@$(RM) $(OBJS) $(OBJS_B)

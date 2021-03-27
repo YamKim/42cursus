@@ -1,18 +1,20 @@
 #include "../incs/push_swap.h"
 
-void	ft_rotate_one(t_stack *stack)
+void	ft_rrotate_one(t_stack *stack)
 {
 	t_list	*last;
 	t_list	*top;
+	t_list	*list2;
 
 	top = stack->top;
 	if (!is_more_than_one_elem(top))
 		return ;
+	list2 = top->next;
 	last = ft_lstlast(top);
-	last->prev->next = last->next;
-	last->prev = top->prev;
+	top->next = last->next;
 	top->prev = last;
 	last->next = top;
-	stack->top = last;
+	top = list2;
+	stack->top = top;
 }
 

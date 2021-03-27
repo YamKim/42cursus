@@ -22,8 +22,8 @@ static int	ft_isspace(char c)
 
 int			ft_atoi(const char *nptr)
 {
-	long ret;
-	int	 sign;
+	long long	ret;
+	int			sign;
 
 	sign = 0;
 	while (ft_isspace(*nptr))
@@ -36,11 +36,11 @@ int			ft_atoi(const char *nptr)
 	}
 	ret = 0;
 	while (ft_isdigit(*nptr))
-		ret = ret * 10 + (long)(*(nptr++) - '0');
+		ret = ret * 10 + (long long)(*(nptr++) - '0');
 	ret = sign % 2 == 0 ? ret : -ret;
-	if (ret > INT_MAX)
-		return (0);
-	if (ret < INT_MIN)
+	if (ret > LONG_MAX)
+		return (-1);
+	if (ret < LONG_MIN)
 		return (0);
 	return ((int)ret);
 }

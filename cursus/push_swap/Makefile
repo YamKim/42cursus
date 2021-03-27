@@ -11,8 +11,19 @@ FUNC = ft_swap_one \
 	ft_push_both \
 	ft_rotate_one \
 	ft_rotate_both \
+	ft_rrotate_one \
+	ft_rrotate_both \
 	is_more_than_one_elem \
+	ft_checker \
+	is_sorted_stack \
+	gen_init_nbr_list \
+	gen_inst_list \
+	gen_stack \
 	print_list \
+	print_inst_list \
+	print_stack \
+	get_next_line \
+	free_stack_both \
 	
 SRCDIR = ./srcs
 INCDIR = ./incs
@@ -23,6 +34,10 @@ LIBFT  = ./libft/libft.a
 SRC  = $(addsuffix .c, $(FUNC))
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 OBJS = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
+
+test: re
+	@$(CC) $(CFLAGS) -o test main.c -L./ -lpushswap
+	@echo "TYPE INSTRUCTION=============================="
 
 all: $(NAME)
 
@@ -46,4 +61,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test
