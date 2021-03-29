@@ -16,6 +16,19 @@ static int	is_int_range(char *str, int num)
 	return (1);
 }
 
+static int	is_duplicated_num(int *num_arr, int idx, int num)
+{
+	int	itr;
+
+	itr = -1;
+	while (++itr < idx)
+	{
+		if (num_arr[itr] == num)
+			return (1);
+	}
+	return (0);
+}
+
 static int	is_right_argv(int *num_arr, char **argv)
 {
 	int	idx;
@@ -28,6 +41,11 @@ static int	is_right_argv(int *num_arr, char **argv)
 		if (!is_int_range(argv[idx], num))
 		{
 			printf("is_right_argv::over arg range or str\n");
+			return (0);
+		}
+		if (is_duplicated_num(num_arr, idx, num))
+		{
+			printf("is_right_argv::num_arr has duplicated number\n");
 			return (0);
 		}
 		num_arr[idx - 1] = num;

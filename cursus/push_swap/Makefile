@@ -9,6 +9,7 @@ FUNC = ft_swap_one \
 	ft_swap_both \
 	ft_push_one \
 	ft_push_both \
+	ft_push_all \
 	ft_rotate_one \
 	ft_rotate_both \
 	ft_rrotate_one \
@@ -24,6 +25,10 @@ FUNC = ft_swap_one \
 	print_stack \
 	get_next_line \
 	free_stack_both \
+	ft_push_swap \
+	get_int_data \
+	set_min_max_val \
+	solve_select_sort \
 	
 SRCDIR = ./srcs
 INCDIR = ./incs

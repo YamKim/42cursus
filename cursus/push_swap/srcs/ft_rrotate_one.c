@@ -1,6 +1,6 @@
 #include "../incs/push_swap.h"
 
-void	ft_rrotate_one(t_stack *stack)
+void	ft_rotate_one(t_stack *stack)
 {
 	t_list	*last;
 	t_list	*top;
@@ -16,5 +16,6 @@ void	ft_rrotate_one(t_stack *stack)
 	last->next = top;
 	top = list2;
 	stack->top = top;
+	++(stack->cnt[CNT_R]);
 }
 

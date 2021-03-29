@@ -21,24 +21,38 @@
 # define INST_RRB 1 << 10
 # define INST_RRR 1 << 11
 
+# define CNT_SIZE 4
+# define CNT_S 0
+# define CNT_P 1
+# define CNT_R 2
+# define CNT_RR 3
+
 typedef struct	s_stack
 {
 	t_list		*top;
 	int			size;
+	int			cnt[CNT_SIZE];
+	int			min_val;
+	int			max_val;
 }				t_stack;
 
 
 int		is_more_than_one_elem(t_list *list_head);
 
-void	ft_swap_one(t_stack *stack);
-void	ft_swap_both(
+void	ft_swap_one(t_stack *stack); void	ft_swap_both(
 		t_stack *a,
 		t_stack *b);
 
-void	ft_push_one(t_stack *src, t_stack *dst);
+void	ft_push_one(
+		t_stack *src,
+		t_stack *dst);
 void	ft_push_both(
 		t_stack *a,
 		t_stack *b);
+
+void	ft_push_all(
+		t_stack *src,
+		t_stack *dst);
 
 void	ft_rotate_one(t_stack *stack);
 void	ft_rotate_both(
@@ -70,4 +84,14 @@ void	print_inst_list(t_list *list_head);
 void	print_stack(t_stack stack);
 
 void	free_stack_both(t_stack a, t_stack b);
+
+
+
+
+
+int		ft_push_swap(t_stack *a, t_stack *b);
+void	set_min_max_val(t_stack *stack);
+int		get_int_data(t_list *list);
+
+int		solve_select_sort(t_stack *a, t_stack *b);
 #endif
