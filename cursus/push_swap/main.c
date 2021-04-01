@@ -23,8 +23,6 @@ int main(int argc, char *argv[])
 #if 1
 	ft_push_swap(&a, &b);
 #endif
-	print_stack(a);
-	print_stack(b);
 	free_stack_both(a, b);
 	return (0);
 }

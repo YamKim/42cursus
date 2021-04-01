@@ -11,11 +11,15 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 void	ft_lstadd_front(t_list **lst, t_list *new_lst)
 {
 	if (lst == 0 || new_lst == NULL)
 		return ;
 	new_lst->next = *lst;
+	new_lst->prev = NULL;
+	if (*lst != NULL)
+		(*lst)->prev = new_lst;
 	*lst = new_lst;
 }

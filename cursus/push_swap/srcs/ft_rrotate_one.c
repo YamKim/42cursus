@@ -1,6 +1,6 @@
 #include "../incs/push_swap.h"
 
-void	ft_rotate_one(t_stack *stack)
+int	ft_rotate_one(t_stack *stack)
 {
 	t_list	*last;
 	t_list	*top;
@@ -8,7 +8,7 @@ void	ft_rotate_one(t_stack *stack)
 
 	top = stack->top;
 	if (!is_more_than_one_elem(top))
-		return ;
+		return (0);
 	list2 = top->next;
 	last = ft_lstlast(top);
 	top->next = last->next;
@@ -16,6 +16,6 @@ void	ft_rotate_one(t_stack *stack)
 	last->next = top;
 	top = list2;
 	stack->top = top;
-	++(stack->cnt[CNT_R]);
+	return (1);
 }
 

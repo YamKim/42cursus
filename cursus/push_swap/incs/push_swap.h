@@ -7,6 +7,7 @@
 
 # define TRUE 1
 # define FALSE 0
+# define INF 987654321
 
 # define INST_NAN 0
 # define INST_SA 1 << 1
@@ -31,7 +32,7 @@ typedef struct	s_stack
 {
 	t_list		*top;
 	int			size;
-	int			cnt[CNT_SIZE];
+//	int			cnt[CNT_SIZE];
 	int			min_val;
 	int			max_val;
 }				t_stack;
@@ -43,7 +44,7 @@ void	ft_swap_one(t_stack *stack); void	ft_swap_both(
 		t_stack *a,
 		t_stack *b);
 
-void	ft_push_one(
+int		ft_push_one(
 		t_stack *src,
 		t_stack *dst);
 void	ft_push_both(
@@ -54,12 +55,12 @@ void	ft_push_all(
 		t_stack *src,
 		t_stack *dst);
 
-void	ft_rotate_one(t_stack *stack);
+int		ft_rotate_one(t_stack *stack);
 void	ft_rotate_both(
 		t_stack *a,
 		t_stack *b);
 
-void	ft_rrotate_one(t_stack *stack);
+int		ft_rrotate_one(t_stack *stack);
 void	ft_rrotate_both(
 		t_stack *a,
 		t_stack *b);
@@ -93,5 +94,12 @@ int		ft_push_swap(t_stack *a, t_stack *b);
 void	set_min_max_val(t_stack *stack);
 int		get_int_data(t_list *list);
 
+int		get_median_val(t_stack stack, int range);
 int		solve_select_sort(t_stack *a, t_stack *b);
+
+void	set_init_arr(int arr[], int size);
+
+// calc_util.c
+int		calc_min(int num1, int num2);
+void	calc_swap(int *num1, int *num2);
 #endif

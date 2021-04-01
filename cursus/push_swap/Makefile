@@ -27,8 +27,11 @@ FUNC = ft_swap_one \
 	free_stack_both \
 	ft_push_swap \
 	get_int_data \
+	get_median_val \
 	set_min_max_val \
 	solve_select_sort \
+	calc_util \
+	set_init_arr \
 	
 SRCDIR = ./srcs
 INCDIR = ./incs
