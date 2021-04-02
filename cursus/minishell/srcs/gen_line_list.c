@@ -1,8 +1,8 @@
 #include "../incs/minishell.h"
 
-// devide cmd, args set by ;
+// devide cmd, args tokens by ;
 // return line_list as linked_list form
-t_list	*gen_set_str_list(char *line)
+t_list	*gen_line_list(char *line)
 {
 	char	*line_cpy;
 	char	**line_part;

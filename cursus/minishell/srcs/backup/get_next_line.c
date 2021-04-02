@@ -36,7 +36,7 @@ static void	handle_eof(t_info *info, char *backup)
 		g_ret = exit_shell(info);
 		exit(0);
 	}
-	ft_putstr_fd("  \b\b", STDERR);
+	ft_putstr_fd("  \b\b", STDERR_FILENO);
 }
 
 int 		get_next_line(t_info *info, char **line) 

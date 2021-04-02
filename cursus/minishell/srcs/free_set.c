@@ -1,13 +1,13 @@
 #include "../incs/minishell.h"
 
-void	free_set(void *_set)
+void	free_set(void *_tokens)
 {
-	t_set	*set;
+	t_tokens	*tokens;
 
-	set = (t_set *)_set;
-	free_darr(set->set, INF);
-	free(set->cmd);
-	set->cmd = NULL;
-	free(set);
-	set = NULL;
+	tokens = (t_tokens *)_tokens;
+	free_darr(tokens->tokens, INF);
+	free(tokens->cmd);
+	tokens->cmd = NULL;
+	free(tokens);
+	tokens = NULL;
 }

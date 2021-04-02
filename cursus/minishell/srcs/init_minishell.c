@@ -26,8 +26,8 @@ static void			init_info(
 {
 	info->prompt.data = ">> ";//shell💃we🕺dance===> 
 	info->prompt.size = ft_strlen(info->prompt.data);
-	info->set_list = NULL;
-	info->set_str_list = NULL;
+	info->tokens_list = NULL;
+	info->line_list = NULL;
 	info->env_list = NULL;
 	info->exit = 0;
 	info->ret = 0;

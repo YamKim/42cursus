@@ -10,12 +10,12 @@ FUNC =	main \
 		handle_quote \
 		handle_bit \
 		inc_shlvl \
-		gen_set_str_list \
-		gen_set_list \
+		gen_line_list \
+		gen_tokens_list \
 		del_quote \
 		get_eval \
-		gen_set \
-		print_set \
+		gen_tokens \
+		print_tokens \
 		free_set \
 		set_list_to_darr \
 		print_darr \
@@ -47,7 +47,7 @@ FUNC =	main \
 		add_elist \
 		free_elist \
 		print_elist \
-		print_slist \
+		print_line_list \
 		set_darr_to_list \
 		print_list \
 		run_cmd \

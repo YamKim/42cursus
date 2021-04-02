@@ -8,7 +8,7 @@
 
 #define STDIN		0
 #define STDOUT		1
-#define STDERR		2
+#define STDERR_FILENO		2
 
 #define TYPE_END	0
 #define TYPE_PIPE	1
@@ -43,7 +43,7 @@ int ft_strlen(char const *str)
 int show_error(char const *str)
 {
 	if (str)
-		write(STDERR, str, ft_strlen(str));
+		write(STDERR_FILENO, str, ft_strlen(str));
 	return (EXIT_FAILURE);
 }
 

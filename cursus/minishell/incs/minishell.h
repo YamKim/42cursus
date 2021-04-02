@@ -62,9 +62,9 @@ typedef struct		s_tc
 	t_cursor		cursor;
 }					t_tc;
 
-typedef struct		s_set
+typedef struct		s_tokens
 {
-	char			**set;
+	char			**tokens;
 	char			*cmd;
 	char			**args;
 	int				type;
@@ -73,16 +73,16 @@ typedef struct		s_set
 	int				fd_in[1024];
 	int				fd_out_idx;
 	int				fd_out[1024];
-}					t_set;
+}					t_tokens;
 
 typedef struct		s_info
 {
 	t_list			*env_list;
-	t_list			*set_list;
-	t_list			*set_str_list;
+	t_list			*tokens_list;
+	t_list			*line_list;
 	t_list			*history;
 	t_list			*history_ptr;
-	t_set			*set;
+	t_tokens		*tokens;
     int     		exit;
     int     		ret;
 	int				dollar_ret;
@@ -100,8 +100,6 @@ typedef struct		s_info
 #define OFF 0x00000
 #define INF 987654321
 #define BUF_SIZE 1024
-
-#define STDERR 2
 
 /*
 ** handle_quote.c
@@ -196,14 +194,14 @@ void				print_list(
 					t_list *head);
 
 /*
-** print_set.c
+** print_tokens.c
 */
-void				print_set(t_set *set);
+void				print_tokens(t_tokens *tokens);
 
 /*
-** print_slist.c
+** print_line_list.c
 */
-void				print_slist(
+void				print_line_list(
 					t_list *head);
 
 /*
@@ -224,22 +222,22 @@ void				free_elist(t_list *list_head);
 /*
 ** free_elist.c
 */
-void				free_set(void *_set);
+void				free_set(void *_tokens);
 
 /*
-** gen_set_str_list.c
+** gen_line_list.c
 */
-t_list				*gen_set_str_list(char *line);
+t_list				*gen_line_list(char *lines);
 
 /*
-** gen_set.c
+** gen_tokens.c
 */
-t_set				*gen_set(t_info *info, char *set_str);
+t_tokens				*gen_tokens(t_info *info, char *set_str);
 
 /*
 ** gen_env.c
 */
-t_env				*gen_env(char *set);
+t_env				*gen_env(char *tokens);
 
 /*
 ** free_env.c
@@ -250,7 +248,7 @@ void				free_env(void *_env);
 ** categorize_cmd.c
 */
 int					categorize_cmd(
-					t_set *set,
+					t_tokens *tokens,
 					t_info *info);
 
 /*
@@ -277,14 +275,14 @@ char				**free_darr(char **tab, int limit);
 ** select_sh_bti.c
 */
 int					select_sh_bti(
-					t_set *set,
+					t_tokens *tokens,
 					t_info *info);
 
 /*
 ** run_bti.c
 */
 int					run_bti(
-					t_set *set,
+					t_tokens *tokens,
 					t_list *env_list);
 /*
 ** get_bti_path.c
@@ -382,9 +380,9 @@ int					set_darr_to_list(
 					t_list **list_head,
 					char **str);
 /*
-** gen_set_list.c
+** gen_tokens_list.c
 */
-t_list				*gen_set_list(t_info *info);
+t_list				*gen_tokens_list(t_info *info);
 
 /*
 ** run_cmd.c
@@ -411,7 +409,7 @@ int					exit_fatal(void);
 /*
 ** redo_sh_bti.c
 */
-int					redo_sh_bti(t_set *set, t_info *info);
+int					redo_sh_bti(t_tokens *tokens, t_info *info);
 
 /*
 ** set_bracet_type.c
@@ -420,13 +418,13 @@ int					set_bracket_type(char *str, int *idx);
 /*
 ** set_fd.c
 */
-char				*set_fd(t_set *set, char *set_str);
+char				*set_fd(t_tokens *tokens, char *set_str);
 
 /*
 ** set_fd_info.c
 */
 int					set_fd_info(
-					t_set *set,
+					t_tokens *tokens,
 					char *str,
 					int curr_type);
 /*
@@ -438,7 +436,7 @@ int					is_bracket(char c);
 ** is_valid_fd.c
 */
 int					is_valid_fd(
-					t_set *set,
+					t_tokens *tokens,
 					char *str,
 					int *idx,
 					int type);
@@ -447,7 +445,7 @@ int					is_valid_fd(
 ** open_valid_fd.c
 */
 int					open_valid_fd(
-					t_set *set,
+					t_tokens *tokens,
 					char *set_str,
 					int *idx,
 					int type);

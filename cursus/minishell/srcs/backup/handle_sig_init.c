@@ -3,7 +3,7 @@
 static void	sigint_handler(int signo)
 {
 	//remove signal, and change line
-	ft_putstr_fd("\b\b  \n", STDERR);
+	ft_putstr_fd("\b\b  \n", STDERR_FILENO);
 //	display_prompt();
 	//change dollar_ret
 	g_ret = 130;
@@ -13,7 +13,7 @@ static void	sigint_handler(int signo)
 static void	sigquit_handler(int signo)
 {
   	//remove signal(nothing to change on the screen)
-  	ft_putstr_fd("\b\b  \b\b", STDERR);
+  	ft_putstr_fd("\b\b  \b\b", STDERR_FILENO);
   	//do nothing
 	//no change dollar_ret
 }
