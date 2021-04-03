@@ -8,7 +8,7 @@ static int	is_exit_cond_a(t_stack *a, int range)
 	int	top_num;
 	int	second_num;
 	
-	if (range == 1)
+	if (range <= 1)
 		return (1);
 	if (range == 2)
 	{
@@ -26,7 +26,7 @@ static int	is_exit_cond_b(
 			t_stack *a,
 			int range)
 {
-	if (range == 1)
+	if (range <= 1)
 	{
 		ft_push_one(b, a);
 		return (1);
@@ -39,25 +39,22 @@ static void	move_a_to_b(
 		t_stack *b,
 		int	range)
 {
-	t_list		*node;
 	int			itr;
 	t_pivot		pivot;
 	int			cnt[CNT_SIZE];
 
-	node = a->top;
 	range = calc_min(range, a->size);
-	set_init_arr(cnt, CNT_SIZE);
 	if (is_exit_cond_a(a, range))
 		return ;
+	set_init_arr(cnt, CNT_SIZE);
 	itr = -1;
 	pivot = get_median_pivot(*a, range);
 	while (++itr < range)
 	{
-		if (*(int *)(node->data) >= pivot.median)
+		if (*(int *)(a->top->data) >= pivot.median)
 			cnt[CNT_RA] += ft_rotate_one(a);
 		else
 			cnt[CNT_PB] += ft_push_one(a, b);
-		node = a->top;
 	}
 	itr = -1;
 	while (++itr < cnt[CNT_RA])
@@ -71,25 +68,22 @@ static void	move_b_to_a(
 			t_stack *a,
 			int	range)
 {
-	t_list		*node;
 	int			itr;
 	t_pivot		pivot;
 	int			cnt[CNT_SIZE];
 
-	node = b->top;
 	range = calc_min(range, b->size);
-	set_init_arr(cnt, 3);
 	if (is_exit_cond_b(b, a, range))
 		return ;
+	set_init_arr(cnt, 3);
 	itr = -1;
 	pivot = get_median_pivot(*b, range);
 	while (++itr < range)
 	{
-		if (*(int *)(node->data) >= pivot.median)
+		if (*(int *)(b->top->data) >= pivot.median)
 			cnt[CNT_PA] += ft_push_one(b, a);
 		else
 			cnt[CNT_RB] += ft_rotate_one(b);
-		node = b->top;
 	}
 	itr = -1;
 	while (++itr < cnt[CNT_RB])
