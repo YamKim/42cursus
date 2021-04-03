@@ -28,10 +28,16 @@
 # define CNT_R 2
 # define CNT_RR 3
 
+# define NAME_A 1 << 1
+# define NAME_B 1 << 2
+# define PRINT_ON 1 << 3
+# define PRINT_OFF 1 << 4
+
 typedef struct	s_stack
 {
 	t_list		*top;
 	int			size;
+	int			flag;
 //	int			cnt[CNT_SIZE];
 	int			min_val;
 	int			max_val;
@@ -71,12 +77,13 @@ int		ft_checker(
 int		is_sorted_stack(t_stack *stack);
 
 t_list	*gen_init_nbr_list(
-		int argc,
+		int size,
 		char *argv[]);
 t_list	*gen_inst_list();
 t_stack	gen_stack(
 		int list_size,
-		char **argv);
+		char **argv,
+		int name);
 
 int		get_next_line(char **line);
 
@@ -95,11 +102,14 @@ void	set_min_max_val(t_stack *stack);
 int		get_int_data(t_list *list);
 
 int		get_median_val(t_stack stack, int range);
-int		solve_select_sort(t_stack *a, t_stack *b);
 
 void	set_init_arr(int arr[], int size);
 
 // calc_util.c
 int		calc_min(int num1, int num2);
 void	calc_swap(int *num1, int *num2);
+
+int		solve_select_sort(t_stack *a, t_stack *b);
+void	solve_nlog2n(t_stack *a, t_stack *b);
+void	solve_nlog3n(t_stack *a, t_stack *b);
 #endif

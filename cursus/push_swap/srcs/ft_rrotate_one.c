@@ -16,6 +16,10 @@ int	ft_rotate_one(t_stack *stack)
 	last->next = top;
 	top = list2;
 	stack->top = top;
+	if ((stack->flag & (NAME_A | PRINT_ON)) == stack->flag)
+		ft_putstr_fd("rra\n", STDOUT_FILENO);
+	if ((stack->flag & (NAME_B | PRINT_ON)) == stack->flag)
+		ft_putstr_fd("rrb\n", STDOUT_FILENO);
 	return (1);
 }
 

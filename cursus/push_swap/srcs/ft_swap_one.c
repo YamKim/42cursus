@@ -14,5 +14,8 @@ void	ft_swap_one(t_stack *stack)
 	list1->prev = list2;
 	list2->next = list1;
 	stack->top = list2;
+	if ((stack->flag & (NAME_A | PRINT_ON)) == stack->flag)
+		ft_putstr_fd("sa\n", STDOUT_FILENO);
+	if ((stack->flag & (NAME_B | PRINT_ON)) == stack->flag)
+		ft_putstr_fd("sb\n", STDOUT_FILENO);
 }
-

@@ -46,9 +46,6 @@ int	run_inst(
 		run_inst_part1(a, b, inst);
 		run_inst_part2(a, b, inst);
 		inst_list = inst_list->next;
-
-		print_stack(*a);
-		print_stack(*b);
 	}
 	return (0);
 }

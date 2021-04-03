@@ -6,7 +6,7 @@ int	ft_push_one(t_stack *src, t_stack *dst)
 
 	if (src->top == NULL)
 	{
-		printf("ft_push_one::src_stack is empty\n");
+		ft_putstr_fd("ft_push_one::src_stack is empty\n", STDERR_FILENO);
 		return (0);
 	}
 	tmp = src->top;
@@ -18,6 +18,10 @@ int	ft_push_one(t_stack *src, t_stack *dst)
 	dst->size = ft_lstsize(dst->top);
 	set_min_max_val(src);
 	set_min_max_val(dst);
+	if ((dst->flag & (NAME_A | PRINT_ON)) == dst->flag)
+		ft_putstr_fd("pa\n", STDOUT_FILENO);
+	if ((dst->flag & (NAME_B | PRINT_ON)) == dst->flag)
+		ft_putstr_fd("pb\n", STDOUT_FILENO);
 	return (1);
 }
 

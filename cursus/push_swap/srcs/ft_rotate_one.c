@@ -14,6 +14,10 @@ int	ft_rrotate_one(t_stack *stack)
 	top->prev = last;
 	last->next = top;
 	stack->top = last;
+	if ((stack->flag & (NAME_A | PRINT_ON)) == stack->flag)
+		ft_putstr_fd("ra\n", STDOUT_FILENO);
+	if ((stack->flag & (NAME_B | PRINT_ON)) == stack->flag)
+		ft_putstr_fd("rb\n", STDOUT_FILENO);
 	return (1);
 }
 

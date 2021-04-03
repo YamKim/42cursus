@@ -1,3 +1,5 @@
+CHECKER = checker
+PUSH_SWAP = push_swap
 NAME = libpushswap.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -29,22 +31,25 @@ FUNC = ft_swap_one \
 	get_int_data \
 	get_median_val \
 	set_min_max_val \
-	solve_select_sort \
 	calc_util \
 	set_init_arr \
+	solve_select_sort \
+	solve_nlog2n \
 	
 SRCDIR = ./srcs
 INCDIR = ./incs
 OBJDIR = ./objs
 LIBDIR = ./libft
 LIBFT  = ./libft/libft.a
+MAINDIR = ./main
 
 SRC  = $(addsuffix .c, $(FUNC))
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 OBJS = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 test: re
-	@$(CC) $(CFLAGS) -o test main.c -L./ -lpushswap
+	@$(CC) $(CFLAGS) -o $(CHECKER) $(MAINDIR)/checker.c -L./ -lpushswap
+	@$(CC) $(CFLAGS) -o $(PUSH_SWAP) $(MAINDIR)/push_swap.c -L./ -lpushswap
 	@echo "TYPE INSTRUCTION=============================="
 
 all: $(NAME)
@@ -65,6 +70,7 @@ clean:
 
 fclean: clean
 	@$(RM) $(NAME)
+	@$(RM) $(CHECKER) $(PUSH_SWAP)
 	@$(MAKE) -C $(LIBDIR) fclean
 
 re: fclean all
