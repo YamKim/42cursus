@@ -22,16 +22,25 @@
 # define INST_RRB 1 << 10
 # define INST_RRR 1 << 11
 
-# define CNT_SIZE 4
-# define CNT_S 0
-# define CNT_P 1
-# define CNT_R 2
-# define CNT_RR 3
+# define CNT_SIZE 6
+# define CNT_PA 0
+# define CNT_PB 1
+# define CNT_RA 2
+# define CNT_RB 3
+# define CNT_RRA 4
+# define CNT_RRB 5
 
 # define NAME_A 1 << 1
 # define NAME_B 1 << 2
 # define PRINT_ON 1 << 3
 # define PRINT_OFF 1 << 4
+
+typedef struct	s_pivot
+{
+	int			first;
+	int			second;
+	int			median;
+}				t_pivot;
 
 typedef struct	s_stack
 {
@@ -101,9 +110,12 @@ int		ft_push_swap(t_stack *a, t_stack *b);
 void	set_min_max_val(t_stack *stack);
 int		get_int_data(t_list *list);
 
-int		get_median_val(t_stack stack, int range);
 
 void	set_init_arr(int arr[], int size);
+
+void	quick_sort(int *num_arr, int left, int right);
+t_pivot	get_median_pivot(t_stack stack, int range);
+t_pivot	get_tri_division_pivot(t_stack stack, int range);
 
 // calc_util.c
 int		calc_min(int num1, int num2);

@@ -41,29 +41,29 @@ static void	move_a_to_b(
 {
 	t_list		*node;
 	int			itr;
-	int			pivot;
-	int			cnt[3];
+	t_pivot		pivot;
+	int			cnt[CNT_SIZE];
 
 	node = a->top;
 	range = calc_min(range, a->size);
-	set_init_arr(cnt, 3);
+	set_init_arr(cnt, CNT_SIZE);
 	if (is_exit_cond_a(a, range))
 		return ;
 	itr = -1;
-	pivot = get_median_val(*a, range);
+	pivot = get_median_pivot(*a, range);
 	while (++itr < range)
 	{
-		if (*(int *)(node->data) >= pivot)
-			cnt[CNT_R] += ft_rotate_one(a);
+		if (*(int *)(node->data) >= pivot.median)
+			cnt[CNT_RA] += ft_rotate_one(a);
 		else
-			cnt[CNT_P] += ft_push_one(a, b);
+			cnt[CNT_PB] += ft_push_one(a, b);
 		node = a->top;
 	}
 	itr = -1;
-	while (++itr < cnt[CNT_R])
+	while (++itr < cnt[CNT_RA])
 		ft_rrotate_one(a);
-	move_a_to_b(a, b, cnt[CNT_R]);
-	move_b_to_a(b, a, cnt[CNT_P]);
+	move_a_to_b(a, b, cnt[CNT_RA]);
+	move_b_to_a(b, a, cnt[CNT_PB]);
 }
 
 static void	move_b_to_a(
@@ -73,8 +73,8 @@ static void	move_b_to_a(
 {
 	t_list		*node;
 	int			itr;
-	int			pivot;
-	int			cnt[3];
+	t_pivot		pivot;
+	int			cnt[CNT_SIZE];
 
 	node = b->top;
 	range = calc_min(range, b->size);
@@ -82,20 +82,20 @@ static void	move_b_to_a(
 	if (is_exit_cond_b(b, a, range))
 		return ;
 	itr = -1;
-	pivot = get_median_val(*b, range);
+	pivot = get_median_pivot(*b, range);
 	while (++itr < range)
 	{
-		if (*(int *)(node->data) >= pivot)
-			cnt[CNT_P] += ft_push_one(b, a);
+		if (*(int *)(node->data) >= pivot.median)
+			cnt[CNT_PA] += ft_push_one(b, a);
 		else
-			cnt[CNT_R] += ft_rotate_one(b);
+			cnt[CNT_RB] += ft_rotate_one(b);
 		node = b->top;
 	}
 	itr = -1;
-	while (++itr < cnt[CNT_R])
+	while (++itr < cnt[CNT_RB])
 		ft_rrotate_one(b);
-	move_a_to_b(a, b, cnt[CNT_P]);
-	move_b_to_a(b, a, cnt[CNT_R]);
+	move_a_to_b(a, b, cnt[CNT_PA]);
+	move_b_to_a(b, a, cnt[CNT_RB]);
 }
 
 void		solve_nlog2n(t_stack *a, t_stack *b)

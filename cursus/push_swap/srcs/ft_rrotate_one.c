@@ -1,21 +1,19 @@
 #include "../incs/push_swap.h"
 
-int	ft_rotate_one(t_stack *stack)
+int	ft_rrotate_one(t_stack *stack)
 {
 	t_list	*last;
 	t_list	*top;
-	t_list	*list2;
 
 	top = stack->top;
 	if (!is_more_than_one_elem(top))
 		return (0);
-	list2 = top->next;
 	last = ft_lstlast(top);
-	top->next = last->next;
+	last->prev->next = last->next;
+	last->prev = top->prev;
 	top->prev = last;
 	last->next = top;
-	top = list2;
-	stack->top = top;
+	stack->top = last;
 	if ((stack->flag & (NAME_A | PRINT_ON)) == stack->flag)
 		ft_putstr_fd("rra\n", STDOUT_FILENO);
 	if ((stack->flag & (NAME_B | PRINT_ON)) == stack->flag)

@@ -29,12 +29,15 @@ FUNC = ft_swap_one \
 	free_stack_both \
 	ft_push_swap \
 	get_int_data \
-	get_median_val \
+	get_median_pivot \
+	get_tri_division_pivot \
 	set_min_max_val \
 	calc_util \
 	set_init_arr \
+	quick_sort \
 	solve_select_sort \
 	solve_nlog2n \
+	solve_nlog3n \
 	
 SRCDIR = ./srcs
 INCDIR = ./incs
