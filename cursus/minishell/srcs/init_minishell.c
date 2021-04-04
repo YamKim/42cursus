@@ -1,5 +1,7 @@
 #include "../incs/minishell.h"
 
+extern int	g_signal;
+
 static t_tc	gen_tc()
 {
 	t_tc	ret;
@@ -46,7 +48,8 @@ int					init_minishell
 	int ret;
 
 	ret = 0;
-	
+
+	g_signal = OFF;	
 	init_info(info);
 	if (ret == 0)
 		if (!(info->env_list = gen_elist(env)))

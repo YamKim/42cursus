@@ -66,6 +66,7 @@ FUNC =	main \
 		calc \
 		is_key_arrow \
 		append_history_list \
+		handle_sig_in_gnl
 
 OBJDIR = ./objs
 INCDIR = ./incs

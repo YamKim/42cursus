@@ -1,5 +1,7 @@
 #include "../incs/minishell.h"
 
+extern int	g_signal;
+
 static char	*get_str_by_inst_arr(long inst_arr[], int inst_arr_size)
 {
 	int		idx;
@@ -94,6 +96,7 @@ static int	set_inst_arr_in_loop(
 			idx = handle_key_arrow(info, arr, c, info->prompt.size + buf_len);
 		else if (c == KEY_BACKSPACE && --buf_len)
 			ft_cursor_clr_line_end(info->tc, info->prompt.size);
+		//handle_sig_in_gnl(*info, arr);
 		c = 0;
 	}
 	if (c == '\n')

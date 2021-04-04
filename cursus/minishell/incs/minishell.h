@@ -31,6 +31,8 @@
 
 # define BUFFER_SIZE 1024
 
+# define SIG_SIGINT 1
+
 //# define FLAG_FD_OPEN 1
 
 # define OPEN 1
@@ -91,8 +93,6 @@ typedef struct		s_info
 	t_prompt		prompt;
 }           		t_info;
 //global return value
-//int	g_ret;
-//int	g_fsh_buf;
 
 #define BIT_SQUOTE 1
 #define BIT_DQUOTE 2
@@ -100,6 +100,7 @@ typedef struct		s_info
 #define OFF 0x00000
 #define INF 987654321
 #define BUF_SIZE 1024
+
 
 /*
 ** handle_quote.c
@@ -495,6 +496,8 @@ void				append_history_list(
 int					calc_min(int num1, int num2);
 int					calc_max(int num1, int num2);
 #endif
+
+void				handle_sig_in_gnl(t_info info, long *inst_arr);
 
 #if 0
 

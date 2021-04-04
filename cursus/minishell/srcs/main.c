@@ -1,5 +1,7 @@
 #include "../incs/minishell.h" //memory free about tokens
 
+int		g_signal;
+
 void change_head(t_info *info)
 {
 	t_list	*tmp;
