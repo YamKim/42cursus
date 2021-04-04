@@ -10,9 +10,9 @@ void	show_cmd_error(char *cmd)
 static void	close_redir_fd(t_tokens *curr)
 {
 	if (curr->type & TYPE_REOUT_D)
-		close(curr->fd_out[0]);
+		close(curr->fd_out[curr->fd_out_idx]);
 	if (curr->type & TYPE_REOUT)
-		close(curr->fd_out[0]);
+		close(curr->fd_out[curr->fd_out_idx]);
 	if (curr->type & TYPE_REIN)
 		close(curr->fd_in[0]);
 }
@@ -20,9 +20,9 @@ static void	close_redir_fd(t_tokens *curr)
 static void	open_redir_fd(t_tokens *curr)
 {
 	if (curr->type & TYPE_REOUT)
-		dup2(curr->fd_out[0], STDOUT_FILENO);
+		dup2(curr->fd_out[curr->fd_out_idx], STDOUT_FILENO);
 	if (curr->type & TYPE_REOUT_D)
-		dup2(curr->fd_out[0], STDOUT_FILENO);
+		dup2(curr->fd_out[curr->fd_out_idx], STDOUT_FILENO);
 	if (curr->type & TYPE_REIN)
 		dup2(curr->fd_in[0], STDIN_FILENO);
 }

@@ -16,7 +16,7 @@ FUNC =	main \
 		get_eval \
 		gen_tokens \
 		print_tokens \
-		free_set \
+		free_tokens \
 		set_list_to_darr \
 		print_darr \
 		free_darr \

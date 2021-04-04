@@ -13,7 +13,7 @@ t_list	*gen_tokens_list_part(t_info *info, char **str)
 		tmp_tokens = gen_tokens(info, str[idx]);
 		if (tmp_tokens == NULL)
 		{
-			ft_lstclear(&ret, &free_set);
+			ft_lstclear(&ret, &free_tokens);
 			return (NULL);
 		}
 		else

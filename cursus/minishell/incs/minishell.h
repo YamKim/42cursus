@@ -222,7 +222,7 @@ void				free_elist(t_list *list_head);
 /*
 ** free_elist.c
 */
-void				free_set(void *_tokens);
+void				free_tokens(void *_tokens);
 
 /*
 ** gen_line_list.c

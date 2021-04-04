@@ -1,6 +1,6 @@
 #include "../incs/minishell.h"
 
-void	free_set(void *_tokens)
+void	free_tokens(void *_tokens)
 {
 	t_tokens	*tokens;
 

@@ -5,7 +5,7 @@ void change_head(t_info *info)
 	t_list	*tmp;
 	int		i;
 
-	ft_lstclear(&(info->tokens_list), &free_set);
+	ft_lstclear(&(info->tokens_list), &free_tokens);
 	tmp = (info->line_list)->next;
 	ft_lstdelone(info->line_list, &free);
 	info->line_list = tmp;
@@ -30,7 +30,6 @@ int run(t_info *info)
 			}
 			if (!(info->line_list = gen_line_list(lines)))
 				return -1;
-			//free(line);
 		}
 		info->tokens_list = gen_tokens_list(info);
 		while (info->tokens_list)
@@ -38,10 +37,9 @@ int run(t_info *info)
 			int flag = 0;
 			run_cmd(info);
 			next = info->tokens_list->next;
-			ft_lstdelone(info->tokens_list, &free_set);
+			ft_lstdelone(info->tokens_list, &free_tokens);
 			info->tokens_list = next;
 		}
-		//handle_rest_redir();
 		change_head(info);
 	}
 

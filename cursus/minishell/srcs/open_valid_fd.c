@@ -39,9 +39,9 @@ int	open_valid_fd(t_tokens *tokens, char *set_str, int *idx, int type)
 	if (fd < 0)
 		return (0);
 	if (type & TYPE_REIN)
-		tokens->fd_in[tokens->fd_in_idx++] = fd;
+		tokens->fd_in[++(tokens->fd_in_idx)] = fd;
 	if (type & (TYPE_REOUT | TYPE_REOUT_D))
-		tokens->fd_out[tokens->fd_out_idx++] = fd;
+		tokens->fd_out[++(tokens->fd_out_idx)] = fd;
 	free(file_name);
 	*idx += inc_idx;
 	return (1);

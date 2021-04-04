@@ -37,7 +37,6 @@ static int	join_history_line(
 	char	*history_line;
 
 	ft_cursor_clr_line_all(info->tc);
-	ft_cursor_mv_head(info->tc);
 	ft_memset(inst_arr, 0, BUFFER_SIZE);
 	if (key_arrow == KEY_UP_ARROW && info->history_ptr->next != NULL)
 		info->history_ptr = info->history_ptr->next;
@@ -45,7 +44,7 @@ static int	join_history_line(
 		info->history_ptr = info->history_ptr->prev;
 	history_line = (char *)(info->history_ptr->data);
 	write(1, info->prompt.data, info->prompt.size);
-	ft_putstr_fd(history_line, 1);
+	ft_putstr_fd(history_line, STDOUT_FILENO);
 	ret = -1;
 	while (++ret < ft_strlen(history_line))
 		inst_arr[ret] = (long)history_line[ret];

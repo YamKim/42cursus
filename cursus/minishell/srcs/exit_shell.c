@@ -6,7 +6,7 @@ int		exit_shell(t_info *info)
 	int i;
 
 	ft_lstclear(&(info->line_list), &free);
-	ft_lstclear(&(info->tokens_list), &free_set);
+	ft_lstclear(&(info->tokens_list), &free_tokens);
 	ft_lstclear(&(info->env_list), &free_env);
 	ft_lstclear(&(info->history), &free_env);
 	if (info->env_list)

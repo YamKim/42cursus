@@ -1,3 +1,0 @@
-#include "../incs/minishell.h"
-
-
