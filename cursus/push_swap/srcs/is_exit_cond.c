@@ -89,7 +89,6 @@ static int	is_exit_cond_b(t_stack *b, t_stack *a, int range)
 	}
 	else if (range == 3)
 	{
-		return (0);
 		return (optimize_tri_elements_b(b));
 	}
 	return (0);

@@ -43,12 +43,12 @@ static void	move_a_to_b(
 	pivot = get_tri_division_pivot(*a, range);
 	while (range--)
 	{
-		if (*(int *)(a->top->data) >= pivot.second)
+		if (get_int_data(a->top) >= pivot.second)
 			cnt[CNT_RA] += ft_rotate_one(a);
 		else
 		{
 			cnt[CNT_PB] += ft_push_one(a, b);
-			if (*(int *)(b->top->data) >= pivot.first)
+			if (get_int_data(b->top) >= pivot.first)
 				cnt[CNT_RB] += ft_rotate_one(b);
 		}
 	}
@@ -74,12 +74,12 @@ static void	move_b_to_a(
 	pivot = get_tri_division_pivot(*b, range);
 	while (range--)
 	{
-		if (*(int *)(b->top->data) < pivot.first)
+		if (get_int_data(b->top) < pivot.first)
 			cnt[CNT_RB] += ft_rotate_one(b);
 		else
 		{
 			cnt[CNT_PA] += ft_push_one(b, a);
-			if (*(int *)(a->top->data) < pivot.second)
+			if (get_int_data(a->top) < pivot.second)
 				cnt[CNT_RA] += ft_rotate_one(a);
 		}
 	}
@@ -106,7 +106,7 @@ void	solve_nlog3n(t_stack *a, t_stack *b)
 #if 1
 	move_a_to_b(a, b, a->size);
 #endif
-#if 1
+#if 0
 	print_stack(*a);
 	print_stack(*b);
 #endif

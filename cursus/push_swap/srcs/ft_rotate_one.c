@@ -8,7 +8,7 @@ int	ft_rotate_one(t_stack *stack)
 
 	top = stack->top;
 	if (!is_more_than_one_elem(top))
-		return (0);
+		return (1);
 	list2 = top->next;
 	last = ft_lstlast(top);
 	top->next = last->next;
