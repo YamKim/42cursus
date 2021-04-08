@@ -102,8 +102,16 @@ void	print_stack(t_stack stack);
 
 void	free_stack_both(t_stack a, t_stack b);
 
+int		*cvt_stack_data_to_arr(
+		t_stack *stack,
+		int range);
 
 
+int		is_exit_cond(
+		int stack_name,
+		t_stack *a,
+		t_stack *b,
+		int range);
 
 
 int		ft_push_swap(t_stack *a, t_stack *b);

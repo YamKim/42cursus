@@ -38,6 +38,8 @@ FUNC = ft_swap_one \
 	solve_select_sort \
 	solve_nlog2n \
 	solve_nlog3n \
+	cvt_stack_data_to_arr \
+	is_exit_cond \
 	
 SRCDIR = ./srcs
 INCDIR = ./incs

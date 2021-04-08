@@ -9,6 +9,8 @@ void	ft_swap_one(t_stack *stack)
 	if(!is_more_than_one_elem(list1))
 		return ;
 	list2 = list1->next;
+	if (list2->next)
+		list2->next->prev = list1;
 	list1->next = list2->next;
 	list2->prev = list1->prev;
 	list1->prev = list2;
