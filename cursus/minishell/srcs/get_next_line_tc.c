@@ -20,8 +20,6 @@ static char	*get_str_by_inst_arr(long inst_arr[], int inst_arr_size)
 			tmp_ret_idx = calc_max(tmp_ret_idx - 1, 0);
 			tmp_ret[tmp_ret_idx] = '\0';
 		}
-		else if (is_key_arrow(inst_arr[idx]))
-			continue ;
 		else
 			tmp_ret[tmp_ret_idx++] = (char)inst_arr[idx];
 	}
@@ -91,7 +89,7 @@ static int	set_inst_arr_in_loop(
 		if (c <= 4500000)
 			arr[++idx] = c;
 		if (ft_isprint(c) && ++buf_len)
-			ft_putchar_fd(c, 1);
+			ft_putchar_fd(c, STDOUT_FILENO);
 		else if (is_key_arrow(c))
 			idx = handle_key_arrow(info, arr, c, info->prompt.size + buf_len);
 		else if (c == KEY_BACKSPACE && --buf_len)
@@ -100,7 +98,7 @@ static int	set_inst_arr_in_loop(
 		c = 0;
 	}
 	if (c == '\n')
-		write(STDOUT_FILENO, &c, 1);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (idx + 1);
 }
 
