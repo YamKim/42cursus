@@ -60,37 +60,7 @@ int	ft_checker(
 	inst_list = gen_inst_list();
 
 	run_inst(a, b, inst_list);
-	if (!is_sorted_stack(a))
+	if (!is_sorted_stack(a, a->size, DIR_ASCEND))
 		return (1);
 	return (0);
 }
-
-#if 0
-	ft_swap_one(a);
-	print_stack(*a);
-#endif
-
-#if 0
-	ft_push_one(a, b);
-	printf("print a list =====================\n");
-	print_stack(*a);
-	printf("print b list =====================\n");
-	print_stack(*b);
-#endif
-
-#if 0
-	ft_rotate_one(a);
-	ft_rotate_one(a);
-	print_stack(*a);
-#endif
-
-#if 0
-	ft_rrotate_one(a);
-	print_stack(*a);
-#endif
-
-#if 0
-	ft_rrotate_both(&a_head, &b_head);
-	print_list(a_head);
-#endif
-

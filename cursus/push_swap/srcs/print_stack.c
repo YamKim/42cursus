@@ -2,7 +2,10 @@
 
 void	print_stack(t_stack stack)
 {
-	printf("print_stack::TOP============\n");
+	if (stack.flag & NAME_A)
+		printf("print_stack::TOP of A===========\n");
+	if (stack.flag & NAME_B)
+		printf("print_stack::TOP of B===========\n");
 	if (stack.top == NULL)
 		return ;
 	print_list(stack.top);

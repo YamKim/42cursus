@@ -35,6 +35,9 @@
 # define PRINT_ON 1 << 3
 # define PRINT_OFF 1 << 4
 
+# define DIR_ASCEND 0
+# define DIR_DESCEND 1
+
 typedef struct	s_pivot
 {
 	int			first;
@@ -83,7 +86,9 @@ void	ft_rrotate_both(
 int		ft_checker(
 		t_stack *a,
 		t_stack *b);
-int		is_sorted_stack(t_stack *stack);
+
+int		is_sorted_stack(t_stack *stack, int range, int dir);
+//int		is_sorted_stack(t_stack *stack);
 
 t_list	*gen_init_nbr_list(
 		int size,
