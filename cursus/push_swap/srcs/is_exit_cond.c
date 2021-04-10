@@ -57,6 +57,7 @@ static int	is_exit_cond_a(t_stack *a, int range)
 		return (1);
 	else if (range == 2)
 	{
+		return (0);
 		top_num = get_int_data(a->top);
 		second_num = get_int_data(a->top->next);
 		if (top_num > second_num)
@@ -65,6 +66,7 @@ static int	is_exit_cond_a(t_stack *a, int range)
 	}
 	else if (range == 3)
 	{
+		return (0);
 		return (optimize_tri_elements_a(a));
 	}
 	return (0);
@@ -85,10 +87,13 @@ static int	is_exit_cond_b(t_stack *b, t_stack *a, int range)
 		second_num = get_int_data(b->top->next);
 		if (top_num < second_num)
 			ft_swap_one(b);
+		ft_push_one(b, a);
+		ft_push_one(b, a);
 		return (1);
 	}
 	else if (range == 3)
 	{
+		return (0);
 		return (optimize_tri_elements_b(b));
 	}
 	return (0);

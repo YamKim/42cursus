@@ -79,13 +79,13 @@ static void	move_b_to_a(
 		else
 		{
 			cnt[CNT_PA] += ft_push_one(b, a);
-			if (get_int_data(a->top) < pivot.second)
+			if (get_int_data(a->top) <= pivot.second)
 				cnt[CNT_RA] += ft_rotate_one(a);
 		}
 	}
 	move_a_to_b(a, b, cnt[CNT_PA] - cnt[CNT_RA]);
-	ft_rrotate_loop(NULL, b, cnt[CNT_RB]);
 	ft_rrotate_loop(a, NULL, cnt[CNT_RA]);
+	ft_rrotate_loop(NULL, b, cnt[CNT_RB]);
 	move_a_to_b(a, b, cnt[CNT_RA]);
 	move_b_to_a(b, a, cnt[CNT_RB]);
 }
@@ -106,7 +106,7 @@ void	solve_nlog3n(t_stack *a, t_stack *b)
 #if 1
 	move_a_to_b(a, b, a->size);
 #endif
-#if 0
+#if 1
 	print_stack(*a);
 	print_stack(*b);
 #endif

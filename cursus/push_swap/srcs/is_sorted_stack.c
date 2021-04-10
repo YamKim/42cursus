@@ -14,7 +14,7 @@ int	is_sorted_stack(t_stack *stack)
 	obs = stack->top;
 	pre_num = *(int *)(obs->data);
 	obs = obs->next;
-	if (obs)
+	while (obs)
 	{
 		cur_num = *(int *)(obs->data);
 		if (pre_num > cur_num)
