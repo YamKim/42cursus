@@ -15,5 +15,5 @@ void
 		status_str = "is sleeping";
 	dif_time = get_cur_time() - info->beg_time;
 	printf("%lld %d %s\n", dif_time, philo->pos, status_str);
+//	ft_putnbr_fd(dif_time, STDOUT_FILENO);
 }
-

@@ -62,7 +62,10 @@ int
 /*
 ** ft_utils.c
 */
-int			ft_atoi(const char *nptr);
+int
+	ft_atoi(const char *nptr);
+void
+	ft_putnbr_fd(int n, int fd);
 
 /*
 ** show_message.c
@@ -75,5 +78,6 @@ void
 */
 uint64_t
 	get_cur_time();
+
 
 #endif

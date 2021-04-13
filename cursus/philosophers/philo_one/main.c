@@ -9,10 +9,8 @@ void
 	lfork = philo->lfork;
 	rfork = philo->rfork;
 	pthread_mutex_lock(&(info->fork_mutexes[lfork]));
-	printf("taken: lfork[%d]\n", lfork); 
 	show_message(philo, STATUS_FORK);
 	pthread_mutex_lock(&(info->fork_mutexes[rfork]));
-	printf("taken: rfork[%d]\n", rfork); 
 	show_message(philo, STATUS_FORK);
 }
 
@@ -33,10 +31,10 @@ void
 void
 	run_eat(t_info *info, t_philo *philo)
 {
-	philo->is_eating = 1;
+//	philo->is_eating = 1;
 	show_message(philo, STATUS_EAT);
 	usleep(info->time_to_eat * MSEC2USEC);
-	philo->is_eating = 0;
+//	philo->is_eating = 0;
 }
 
 void
@@ -54,7 +52,6 @@ void
 	info = ((t_philo *)philo)->info;
 	while (1)
 	{
-		printf("philo[%d] is ready to eat\n", ((t_philo *)philo)->pos);
 		take_fork(info, philo);
 		run_eat(info, philo);	
 		return_fork(info, philo);
@@ -75,9 +72,11 @@ int
 	while (++idx < info->num_of_philos)
 	{
 		philo = (void *)(&info->philos[idx]);
+		//printf("philo[%d] is created!===================\n", ((t_philo *)philo)->pos);
 		if (pthread_create(&tid, NULL, &run_routine, philo))
 			return (1);
 		pthread_detach(tid);
+		usleep(100);
 	}
 	return (0);
 }
@@ -92,10 +91,12 @@ int
 			info.num_of_philos, info.time_to_die, info.time_to_eat, info.time_to_sleep);
 	init_threads(&info);
 
+#if 1
 	while(1)
 	{
 	;
 	}
+#endif
 
 	free(info.philos);
 	return (0);
