@@ -5,13 +5,16 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <sys/time.h>
 
 # define STATUS_EAT 0
 # define STATUS_SLEEP 1
 # define STATUS_FORK 2
 # define STATUS_THINK 3
 
+# define SEC2USEC 1000
 # define MSEC2USEC 1000
+# define USEC2MSEC 1/1000
 
 
 typedef struct	s_status
@@ -22,6 +25,8 @@ typedef struct	s_status
 
 typedef	struct	s_info
 {
+	uint64_t	beg_time;
+	uint64_t	cur_time;
 	int			num_of_philos;
 	uint64_t	time_to_die;
 	uint64_t	time_to_eat;
@@ -64,5 +69,11 @@ int			ft_atoi(const char *nptr);
 */
 void
 	show_message(t_philo *philo, int status);
+
+/*
+** get_cur_time.c
+*/
+uint64_t
+	get_cur_time();
 
 #endif

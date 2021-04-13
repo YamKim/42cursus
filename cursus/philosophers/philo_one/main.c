@@ -71,6 +71,7 @@ int
 	pthread_t	tid;
 
 	idx = -1;
+	info->beg_time = get_cur_time();
 	while (++idx < info->num_of_philos)
 	{
 		philo = (void *)(&info->philos[idx]);
