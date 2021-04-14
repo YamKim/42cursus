@@ -1,65 +1,5 @@
 #include "philo.h"
 
-void
-	take_fork(t_info *info, t_philo *philo)
-{
-	int	lfork;
-	int	rfork;
-
-	lfork = philo->lfork;
-	rfork = philo->rfork;
-	pthread_mutex_lock(&(info->fork_mutexes[lfork]));
-	show_message(philo, STATUS_FORK);
-	pthread_mutex_lock(&(info->fork_mutexes[rfork]));
-	show_message(philo, STATUS_FORK);
-}
-
-void
-	return_fork(t_info *info, t_philo *philo)
-{
-	int	lfork;
-	int	rfork;
-
-	lfork = philo->lfork;
-	rfork = philo->rfork;
-	printf("returned: lfork[%d]\n", lfork); 
-	pthread_mutex_unlock(&(info->fork_mutexes[lfork]));
-	printf("returned: rfork[%d]\n", rfork); 
-	pthread_mutex_unlock(&(info->fork_mutexes[rfork]));
-}
-
-void
-	run_eat(t_info *info, t_philo *philo)
-{
-//	philo->is_eating = 1;
-	show_message(philo, STATUS_EAT);
-	usleep(info->time_to_eat * MSEC2USEC);
-//	philo->is_eating = 0;
-}
-
-void
-	run_sleep(t_info *info, t_philo *philo)
-{
-	show_message(philo, STATUS_SLEEP);
-	usleep(info->time_to_sleep * MSEC2USEC);
-}
-
-void
-	*run_routine(void *philo)
-{
-	t_info	*info;
-
-	info = ((t_philo *)philo)->info;
-	while (1)
-	{
-		take_fork(info, philo);
-		run_eat(info, philo);	
-		return_fork(info, philo);
-		run_sleep(info, philo);
-	}
-	return (NULL);
-}
-
 int
 	init_threads(t_info *info)
 {
@@ -68,11 +8,10 @@ int
 	pthread_t	tid;
 
 	idx = -1;
-	info->beg_time = get_cur_time();
+	info->beg_prog_time = get_cur_time();
 	while (++idx < info->num_of_philos)
 	{
 		philo = (void *)(&info->philos[idx]);
-		//printf("philo[%d] is created!===================\n", ((t_philo *)philo)->pos);
 		if (pthread_create(&tid, NULL, &run_routine, philo))
 			return (1);
 		pthread_detach(tid);
@@ -87,17 +26,13 @@ int
 	t_info	info;
 
 	init_info(&info, argc, argv);
-	printf("info->num_of_philos: %d, time_to_die: %lld, time_to_eat: %lld, time_to_sleep: %lld\n",\
-			info.num_of_philos, info.time_to_die, info.time_to_eat, info.time_to_sleep);
 	init_threads(&info);
-
-#if 1
-	while(1)
+	while (1)
 	{
 	;
 	}
-#endif
 
+	// free info.mutexes
 	free(info.philos);
 	return (0);
 }

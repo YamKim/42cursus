@@ -16,16 +16,9 @@
 # define MSEC2USEC 1000
 # define USEC2MSEC 1/1000
 
-
-typedef struct	s_status
-{
-
-
-}				t_status;
-
 typedef	struct	s_info
 {
-	uint64_t	beg_time;
+	uint64_t	beg_prog_time;
 	uint64_t	cur_time;
 	int			num_of_philos;
 	uint64_t	time_to_die;
@@ -40,14 +33,14 @@ typedef	struct	s_info
 
 typedef struct	s_philo
 {
+	pthread_mutex_t \
+				mutex;
 	int			pos;
 	int			is_eating;
-	uint64_t	limit;
-	uint64_t	last_eat_start;
+	uint64_t	beg_eat_time;
 	int			lfork;
 	int			rfork;
 	t_info		*info;
-	t_status	*status;
 }				t_philo;
 
 /*
@@ -79,5 +72,30 @@ void
 uint64_t
 	get_cur_time();
 
+/*
+** do_eat.c
+*/
+void
+	do_eat(t_info *info, t_philo *philo);
+
+/*
+** do_sleep.c
+*/
+void
+	do_sleep(t_info *info, t_philo *philo);
+
+/*
+** run_routine.c
+*/
+void
+	*run_routine(void *philo);
+
+/*
+** take_fork.c
+*/
+void
+	take_fork(t_info *info, t_philo *philo);
+void
+	return_fork(t_info *info, t_philo *philo);
 
 #endif

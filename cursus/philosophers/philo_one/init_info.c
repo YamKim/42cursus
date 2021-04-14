@@ -19,16 +19,18 @@ static int
 static void
 	init_philos(t_info *info)
 {
-	int		itr;
+	int		idx;
 
-	itr = -1;
-	while (++itr < info->num_of_philos)
+	idx = -1;
+	while (++idx < info->num_of_philos)
 	{
-		info->philos[itr].is_eating = 0;
-		info->philos[itr].pos = itr + 1;
-		info->philos[itr].lfork = itr;
-		info->philos[itr].rfork = (itr + 1) % info->num_of_philos;
-		info->philos[itr].info = info;
+		info->philos[idx].is_eating = 0;
+		info->philos[idx].pos = idx + 1;
+		info->philos[idx].beg_eat_time = get_cur_time();
+		info->philos[idx].lfork = idx;
+		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
+		info->philos[idx].info = info;
+		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
 }
 
@@ -48,5 +50,5 @@ int
 		return (1);
 	init_philos(info);
 	
-	return (init_mutexes(info) );
+	return (init_mutexes(info));
 }
