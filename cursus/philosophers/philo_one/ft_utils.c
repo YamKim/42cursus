@@ -6,6 +6,8 @@ int
 	long long	ret;
 	int			sign;
 
+	if (nptr == NULL)
+		return (0);
 	sign = 0;
 	while (*nptr == '\f' || *nptr == '\n' || *nptr == '\r'
 			|| *nptr == '\t' || *nptr == '\v' || *nptr == ' ')

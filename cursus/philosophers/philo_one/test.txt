@@ -1,0 +1,25 @@
+0 1 has taken a fork
+0 1 has taken a fork
+0 1 is eating
+1 3 has taken a fork
+1 3 has taken a fork
+1 3 is eating
+205 1 is sleeping
+205 2 has taken a fork
+205 3 is sleeping
+205 4 has taken a fork
+205 4 has taken a fork
+205 4 is eating
+205 2 has taken a fork
+205 2 is eating
+406 2 is sleeping
+410 3 has taken a fork
+pos: 1
+eat_cnt: 1
+eat_cnt_arr[]: 0
+411 4 is sleeping
+411 3 has taken a fork
+411 3 is eating
+411 1 has taken a fork
+411 1 has taken a fork
+411 1 is eating

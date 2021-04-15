@@ -6,15 +6,21 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <string.h>
 
 # define STATUS_EAT 0
 # define STATUS_SLEEP 1
 # define STATUS_FORK 2
 # define STATUS_THINK 3
+# define STATUS_DIE 4
+
+# define ERR_INIT_THREAD 1
 
 # define SEC2USEC 1000
 # define MSEC2USEC 1000
 # define USEC2MSEC 1/1000
+
+# define MAX_NUM_OF_PHILOS 200
 
 typedef	struct	s_info
 {
@@ -24,7 +30,9 @@ typedef	struct	s_info
 	uint64_t	time_to_die;
 	uint64_t	time_to_eat;
 	uint64_t	time_to_sleep;
+	int			num_of_must_eat;
 	int			which_thread;
+	int			eat_cnt_arr[200];
 	pthread_mutex_t \
 				*fork_mutexes;
 	struct s_philo	\
@@ -36,10 +44,11 @@ typedef struct	s_philo
 	pthread_mutex_t \
 				mutex;
 	int			pos;
-	int			is_eating;
+	int			status;
 	uint64_t	beg_eat_time;
 	int			lfork;
 	int			rfork;
+	int			eat_cnt;
 	t_info		*info;
 }				t_philo;
 
@@ -97,5 +106,13 @@ void
 	take_fork(t_info *info, t_philo *philo);
 void
 	return_fork(t_info *info, t_philo *philo);
+
+/*
+** exit_program.c
+*/
+void
+	*exit_threads(t_info *info);
+void
+	exit_program(t_info *info);
 
 #endif

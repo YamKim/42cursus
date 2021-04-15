@@ -13,10 +13,17 @@ static void
 		pthread_mutex_lock(&philo->mutex);
 		dif_time = get_cur_time() - philo->beg_eat_time;
 		lim_time = philo->info->time_to_die;
-		if (!philo->is_eating && dif_time > lim_time)
+		if (!(philo->status == STATUS_EAT) && dif_time > lim_time)
 		{
-			printf("philo[%d], cur_time: %lld, dif_time: %lld, eating: %d\n", philo->pos, get_cur_time() - philo->info->beg_prog_time, dif_time, philo->is_eating);
-			exit(1);
+			// TODO: solve the segment fault problem
+			// TODO: when somebody is died! do need mutex?
+			show_message(philo, STATUS_DIE);
+#if 0
+			printf("pos: %d\n", philo->pos);
+			printf("eat_cnt: %d\n", philo->eat_cnt);
+			printf("eat_cnt_arr[]: %d\n", philo->info->eat_cnt_arr[philo->pos - 1]);
+#endif
+			return(exit_threads(philo->info));
 		}
 		pthread_mutex_unlock(&philo->mutex);
 		usleep(10 * USEC2MSEC);

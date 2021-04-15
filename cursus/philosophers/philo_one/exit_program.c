@@ -1,7 +1,7 @@
 #include "philo.h"
 
-int
-	exit_program(t_info *info)
+void
+	*exit_threads(t_info *info)
 {
 	int		idx;
 	t_philo	*philo;
@@ -11,7 +11,6 @@ int
 		idx = -1;
 		while (++idx < info->num_of_philos)
 			pthread_mutex_destroy(&(info->fork_mutexes[idx]));
-		free(info->fork_mutexes);
 	}
 	if (info->philos)
 	{
@@ -21,8 +20,15 @@ int
 			philo = &(info->philos[idx]);
 			pthread_mutex_destroy(&(philo->mutex));
 		}
-		free(info->philos);
 	}
+	return (NULL);
+}
+
+void
+	exit_program(t_info *info)
+{
+	free(info->fork_mutexes);
+	info->fork_mutexes = NULL;
 	free(info->philos);
-	return (1);
+	info->philos = NULL;
 }
