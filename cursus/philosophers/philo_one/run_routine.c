@@ -1,5 +1,6 @@
 #include "philo.h"
 
+#if 0
 static void
 	*do_observe(void *_philo)
 {
@@ -42,6 +43,25 @@ void
 	observer = (t_philo *)philo;
 	if (pthread_create(&tid, NULL, &do_observe, observer))
 		return (NULL);
+	pthread_detach(tid);
+	while (1)
+	{
+		take_fork(info, philo);
+		do_eat(info, philo);
+		return_fork(info, philo);
+		do_sleep(info, philo);
+	}
+	return (NULL);
+}
+#endif
+
+void
+	*run_routine(void *philo)
+{
+	t_info		*info;
+	pthread_t	tid;
+
+	info = ((t_philo *)philo)->info;
 	pthread_detach(tid);
 	while (1)
 	{
