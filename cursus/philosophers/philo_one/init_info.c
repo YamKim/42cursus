@@ -13,6 +13,7 @@ static int
 	idx = -1;
 	while (++idx < info->num_of_philos)
 		pthread_mutex_init(&(info->fork_mutexes[idx]), NULL);
+	pthread_mutex_init(&(info->mutex), NULL);
 	return (0);
 }
 

@@ -24,6 +24,8 @@
 
 typedef	struct	s_info
 {
+	pthread_mutex_t \
+				mutex;
 	uint64_t	beg_prog_time;
 	uint64_t	cur_time;
 	int			num_of_philos;

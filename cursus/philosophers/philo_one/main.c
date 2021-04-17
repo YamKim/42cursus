@@ -9,6 +9,7 @@ void
 	info = (t_info *)_info;
 	while (1)
 	{
+		pthread_mutex_lock(&info->mutex);
 		idx = -1;
 		while (++idx < info->num_of_philos)
 		{
@@ -18,9 +19,32 @@ void
 				break ;
 		}
 		if (idx == info->num_of_philos)
-			return(exit_threads(info));
+		{
+			exit(0);
+			//return(exit_threads(info));
+		}
+		pthread_mutex_unlock(&info->mutex);
 	}
 	return (NULL);
+}
+
+static int
+	is_all_philos_eat_must(t_info *info)
+{
+	int	idx;
+	int	ret;
+
+	idx = -1;
+	while (++idx < info->num_of_philos)
+	{
+		// TODO: solve the segment fault problem
+		// TODO: when somebody is died! do need mutex?
+		if (!(info->eat_cnt_arr[idx]))
+			break ;
+	}
+	if (idx == info->num_of_philos)
+		return(1);
+	return (0);
 }
 
 static void
@@ -46,17 +70,17 @@ static void
 			{
 				show_message(philo, STATUS_DIE);
 				exit(0);
-				return(exit_threads(philo->info));
+			//	return(exit_threads(philo->info));
 			}
 			pthread_mutex_unlock(&philo->mutex);
 		}
-		//usleep(10 * USEC2MSEC);
+		usleep(10 * USEC2MSEC);
 	}
 	return (NULL);
 }
 
 int
-	init_threads(t_info *info)
+	run_threads(t_info *info)
 {
 	int			idx;
 	void		*philo;
@@ -64,7 +88,7 @@ int
 
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
-#if 0
+#if 1
 	if (info->num_of_must_eat > 0)
 	{
 		if (pthread_create(&tid, NULL, &observe_must_eat_arr, info))
@@ -92,7 +116,7 @@ int
 	t_info	info;
 
 	init_info(&info, argc, argv);
-	init_threads(&info);
+	run_threads(&info);
 #if 1
 	while (1)
 	{
