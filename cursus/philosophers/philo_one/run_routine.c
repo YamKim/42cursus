@@ -67,6 +67,8 @@ void
 	pthread_detach(tid);
 	while (1)
 	{
+		if (info->someone_dead)
+			return (NULL);
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);

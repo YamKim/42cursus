@@ -97,6 +97,12 @@ void
 	do_sleep(t_info *info, t_philo *philo);
 
 /*
+** do_die.c
+*/
+void
+	do_die(t_info *info, t_philo *philo);
+
+/*
 ** run_routine.c
 */
 void

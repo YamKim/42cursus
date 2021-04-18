@@ -27,9 +27,14 @@ void
 void
 	exit_program(t_info *info)
 {
-	printf("exit_program::DEBUG======================\n");
-	free(info->fork_mutexes);
-	info->fork_mutexes = NULL;
-	free(info->philos);
-	info->philos = NULL;
+	if (info->fork_mutexes != NULL)
+	{
+		free(info->fork_mutexes);
+		info->fork_mutexes = NULL;
+	}
+	if (info->philos != NULL)
+	{
+		free(info->philos);
+		info->philos = NULL;
+	}
 }
