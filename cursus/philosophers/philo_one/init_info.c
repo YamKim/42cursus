@@ -31,6 +31,7 @@ static void
 		info->philos[idx].lfork = idx;
 		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
 		info->philos[idx].eat_cnt = 0;
+		info->philos[idx].eat_finish = 0;
 		info->philos[idx].info = info;
 		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
@@ -49,7 +50,8 @@ int
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->num_of_must_eat = ft_atoi(argv[5]);
 	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philos);
-	memset(info->eat_cnt_arr, 0, MAX_NUM_OF_PHILOS);
+	memset(info->finished_thread, 0, MAX_NUM_OF_PHILOS);
+	info->someone_dead = 0;
 	if (!info->philos)
 		return (1);
 	init_philos(info);

@@ -56,18 +56,25 @@ void
 #endif
 
 void
-	*run_routine(void *philo)
+	*run_routine(void *_philo)
 {
 	t_info		*info;
+	t_philo		*philo;
 	pthread_t	tid;
 
-	info = ((t_philo *)philo)->info;
+	philo = (t_philo *)_philo;
+	info = philo->info;
 	pthread_detach(tid);
 	while (1)
 	{
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);
+		if (philo->eat_finish)
+		{
+			info->finished_thread[philo->pos - 1] = 1;
+			break ;
+		}
 		do_sleep(info, philo);
 	}
 	return (NULL);

@@ -1,19 +1,26 @@
 #include "philo.h"
 
+static char
+	*get_status_message(int status)
+{
+	if (status == STATUS_FORK)
+		return("has taken a fork");
+	else if  (status == STATUS_EAT)
+		return("is eating");
+	else if  (status == STATUS_SLEEP)
+		return("is sleeping");
+	return ("died");
+}
+
 void
 	show_message(t_philo *philo, int status)
 {
-	char		*status_str;
+	char		*status_msg;
 	t_info		*info;
 	uint64_t	dif_time;
 
 	info = philo->info;
-	if (status == STATUS_FORK)
-		status_str = "has taken a fork";
-	else if  (status == STATUS_EAT)
-		status_str = "is eating";
-	else if  (status == STATUS_SLEEP)
-		status_str = "is sleeping";
 	dif_time = get_cur_time() - info->beg_prog_time;
-	printf("%lld %d %s\n", dif_time, philo->pos, status_str);
+	status_msg = get_status_message(status);
+	printf("%lld %d %s\n", dif_time, philo->pos, status_msg);
 }

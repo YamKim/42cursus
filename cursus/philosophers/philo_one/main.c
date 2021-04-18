@@ -1,5 +1,6 @@
 #include "philo.h"
 
+#if 0
 void
 	*observe_must_eat_arr(void *_info)
 {
@@ -20,32 +21,18 @@ void
 		}
 		if (idx == info->num_of_philos)
 		{
-			exit(0);
+			info->someone_dead = 1;
+			pthread_mutex_unlock(&info->mutex);
+			break ;
+		//	exit(0);
 			//return(exit_threads(info));
 		}
 		pthread_mutex_unlock(&info->mutex);
 	}
 	return (NULL);
 }
+#endif
 
-static int
-	is_all_philos_eat_must(t_info *info)
-{
-	int	idx;
-	int	ret;
-
-	idx = -1;
-	while (++idx < info->num_of_philos)
-	{
-		// TODO: solve the segment fault problem
-		// TODO: when somebody is died! do need mutex?
-		if (!(info->eat_cnt_arr[idx]))
-			break ;
-	}
-	if (idx == info->num_of_philos)
-		return(1);
-	return (0);
-}
 
 static void
 	*do_observe_philos_status(void *_info)
@@ -68,13 +55,14 @@ static void
 			lim_time = philo->info->time_to_die;
 			if (!(philo->status == STATUS_EAT) && dif_time > lim_time)
 			{
+				philo->status = STATUS_DIE;
 				show_message(philo, STATUS_DIE);
-				exit(0);
-			//	return(exit_threads(philo->info));
+				info->someone_dead = 1;
+				pthread_mutex_unlock(&philo->mutex);
+				return (NULL);
 			}
 			pthread_mutex_unlock(&philo->mutex);
 		}
-		usleep(10 * USEC2MSEC);
 	}
 	return (NULL);
 }
@@ -88,7 +76,7 @@ int
 
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
-#if 1
+#if 0
 	if (info->num_of_must_eat > 0)
 	{
 		if (pthread_create(&tid, NULL, &observe_must_eat_arr, info))
@@ -96,9 +84,11 @@ int
 		pthread_detach(tid);
 	}
 #endif
+#if 1
 	if (pthread_create(&tid, NULL, &do_observe_philos_status, info))
-			return (ERR_INIT_THREAD);
+		return (ERR_INIT_THREAD);
 	pthread_detach(tid);
+#endif
 	while (++idx < info->num_of_philos)
 	{
 		philo = (void *)(&info->philos[idx]);
@@ -107,6 +97,23 @@ int
 		pthread_detach(tid);
 		usleep(100);
 	}
+	return (0);
+}
+
+static int
+	is_all_philos_eat_must(t_info *info)
+{
+	int	idx;
+	int	ret;
+
+	idx = -1;
+	while (++idx < info->num_of_philos)
+	{
+		if (!(info->finished_thread[idx]))
+			break ;
+	}
+	if (idx == info->num_of_philos)
+		return(1);
 	return (0);
 }
 
@@ -120,11 +127,21 @@ int
 #if 1
 	while (1)
 	{
-	;
+		pthread_mutex_lock(&info.mutex);
+		if (info.someone_dead)
+		{
+			pthread_mutex_unlock(&info.mutex);
+			break ;
+		}
+		if (is_all_philos_eat_must(&info))
+		{
+			pthread_mutex_unlock(&info.mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&info.mutex);
+		usleep(10 * USEC2MSEC);
 	}
 #endif
-
-	printf("main::DEBUG======================\n");
-	exit_program(&info);
+	//exit_program(&info);
 	return (0);
 }
