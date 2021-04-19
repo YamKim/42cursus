@@ -18,7 +18,7 @@ static int
 }
 #endif
 
-#if 0
+#if 1
 static void
 	*do_observe_philos_status(void *_info)
 {
@@ -42,7 +42,6 @@ static void
 				do_die(info, philo);
 				if (sem_post(philo->mutex))
 					return (NULL);
-				pause();
 				usleep(100);
 			}
 			if (sem_post(philo->mutex))
@@ -62,7 +61,7 @@ int
 
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
-#if 0
+#if 1
 	if (pthread_create(&tid, NULL, &do_observe_philos_status, info))
 		return (ERR_INIT_THREAD);
 	pthread_detach(tid);
@@ -90,7 +89,7 @@ int
 	{
 		if (sem_wait(info.mutex))
 			return (1);
-#if 0
+#if 1
 		if (info.someone_dead)
 		{
 			if (sem_post(info.mutex))
