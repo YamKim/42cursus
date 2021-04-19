@@ -18,11 +18,8 @@ void
 			return (NULL);
 		if (return_fork(info, philo))
 			return (NULL);
-		if (philo->eat_finish)
-		{
-			info->finished_thread[philo->pos - 1] = 1;
+		if (info->finished_thread[philo->pos - 1])
 			break ;
-		}
 		if (info->someone_dead)
 			return (NULL);
 		if (do_sleep(info, philo))

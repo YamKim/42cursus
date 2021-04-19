@@ -1,0 +1,28 @@
+0 1 has taken a fork
+0 1 has taken a fork
+0 1 is eating
+0 2 has taken a fork
+0 2 has taken a fork
+0 2 is eating
+205 3 has taken a fork
+205 1 is sleeping
+205 4 has taken a fork
+205 3 has taken a fork
+205 3 is eating
+205 2 is sleeping
+205 4 has taken a fork
+205 4 is eating
+410 4 is sleeping
+410 1 has taken a fork
+410 1 has taken a fork
+410 1 is eating
+410 3 is sleeping
+410 2 has taken a fork
+410 2 has taken a fork
+410 2 is eating
+615 4 has taken a fork
+615 4 has taken a fork
+615 4 is eating
+615 3 has taken a fork
+615 3 has taken a fork
+615 3 is eating

@@ -54,7 +54,6 @@ typedef struct	s_philo
 	int			lfork;
 	int			rfork;
 	int			eat_cnt;
-	int			eat_finish;
 	t_info		*info;
 }				t_philo;
 

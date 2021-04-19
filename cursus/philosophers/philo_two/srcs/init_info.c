@@ -6,11 +6,9 @@ static int
 	int		idx;
 	char	sem_name[255];
 
-#if 1
 	info->mutex = ft_sem_open(SEM_INFO, 1);
 	if (!info->mutex)
 		return (ERR_SEM_OPEN);
-#endif
 	info->fork_mutexes = ft_sem_open(SEM_FORK, info->num_of_philos);
 	if (!info->fork_mutexes)
 		return (ERR_SEM_OPEN);
@@ -40,7 +38,6 @@ static void
 		info->philos[idx].lfork = idx;
 		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
 		info->philos[idx].eat_cnt = 0;
-	//	info->philos[idx].eat_finish = 0;
 		info->philos[idx].info = info;
 	}
 }
