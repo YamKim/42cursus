@@ -75,7 +75,6 @@ int
 
 	init_info(&info, argc, argv);
 	run_threads(&info);
-#if 1
 	while (1)
 	{
 		pthread_mutex_lock(&info.mutex);
@@ -92,50 +91,7 @@ int
 		pthread_mutex_unlock(&info.mutex);
 		usleep(10 * USEC2MSEC);
 	}
-#endif
+	exit_threads(&info);
 	//free_memory(&info);
 	return (0);
 }
-
-#if 0
-	if (info->num_of_must_eat > 0)
-	{
-		if (pthread_create(&tid, NULL, &observe_must_eat_arr, info))
-			return (ERR_INIT_THREAD);
-		pthread_detach(tid);
-	}
-#endif
-
-#if 0
-void
-	*observe_must_eat_arr(void *_info)
-{
-	int		idx;
-	t_info	*info;
-	
-	info = (t_info *)_info;
-	while (1)
-	{
-		pthread_mutex_lock(&info->mutex);
-		idx = -1;
-		while (++idx < info->num_of_philos)
-		{
-			// TODO: solve the segment fault problem
-			// TODO: when somebody is died! do need mutex?
-			if (!(info->eat_cnt_arr[idx]))
-				break ;
-		}
-		if (idx == info->num_of_philos)
-		{
-			info->someone_dead = 1;
-			pthread_mutex_unlock(&info->mutex);
-			break ;
-		//	exit(0);
-			//return(exit_threads(info));
-		}
-		pthread_mutex_unlock(&info->mutex);
-	}
-	return (NULL);
-}
-#endif
-
