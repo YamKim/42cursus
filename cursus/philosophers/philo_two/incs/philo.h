@@ -21,6 +21,8 @@
 
 # define ERR_INIT_THREAD 1
 # define ERR_SEM_OPEN 1
+# define ERR_INIT_INFO 1
+# define ERR_SEM_DO 1
 
 # define SEC2USEC 1000
 # define MSEC2USEC 1000
@@ -83,7 +85,7 @@ void
 /*
 ** show_message.c
 */
-void
+int
 	show_message(t_philo *philo, int status);
 
 /*
@@ -107,7 +109,7 @@ int
 /*
 ** do_die.c
 */
-void
+int
 	do_die(t_info *info, t_philo *philo);
 
 /*
@@ -125,17 +127,21 @@ int
 	return_fork(t_info *info, t_philo *philo);
 
 /*
-** exit_program.c
+** exit_threads.c
 */
 void
 	*exit_threads(t_info *info);
-void
-	exit_program(t_info *info);
 
 /*
 ** ft_sem_open.c
 */
 sem_t
 	*ft_sem_open(char *name, int value);
+
+/*
+** free_memory.c
+*/
+void
+	free_memory(t_info *info);
 
 #endif

@@ -11,10 +11,11 @@ FUNC = \
 	do_eat \
 	do_sleep \
 	do_die \
-	exit_program \
 	ft_utils \
 	show_message \
 	get_cur_time \
+	free_memory \
+	exit_threads \
 	ft_sem_open
 
 SRCDIR = ./srcs

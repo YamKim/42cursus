@@ -4,11 +4,19 @@ int
 	take_fork(t_info *info, t_philo *philo)
 {
 	if (sem_wait(info->fork_mutexes))
-		return (1);
-	show_message(philo, STATUS_FORK);
+		return (ERR_SEM_DO);
+	if (show_message(philo, STATUS_FORK))
+	{
+		if (sem_post(info->fork_mutexes))
+			return (ERR_SEM_DO);
+	}
 	if (sem_wait(info->fork_mutexes))
-		return (1);
-	show_message(philo, STATUS_FORK);
+		return (ERR_SEM_DO);
+	if (show_message(philo, STATUS_FORK))
+	{
+		if (sem_post(info->fork_mutexes))
+			return (ERR_SEM_DO);
+	}
 	return (0);
 }
 
@@ -17,8 +25,8 @@ int
 {
 	(void)philo;
 	if (sem_post(info->fork_mutexes))
-		return (1);
+		return (ERR_SEM_DO);
 	if (sem_post(info->fork_mutexes))
-		return (1);
+		return (ERR_SEM_DO);
 	return (0);
 }

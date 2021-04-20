@@ -24,11 +24,14 @@ static int
 	return (0);
 }
 
-static void
+static int
 	init_philos(t_info *info)
 {
 	int			idx;
-			
+
+	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philos);
+	if (!info->philos)
+		return (ERR_INIT_INFO);
 	idx = -1;
 	while (++idx < info->num_of_philos)
 	{
@@ -40,6 +43,7 @@ static void
 		info->philos[idx].eat_cnt = 0;
 		info->philos[idx].info = info;
 	}
+	return (0);
 }
 
 int
@@ -55,11 +59,9 @@ int
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->num_of_must_eat = ft_atoi(argv[5]);
-	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philos);
 	memset(info->finished_thread, 0, MAX_NUM_OF_PHILOS);
 	info->someone_dead = 0;
-	if (!info->philos)
-		return (1);
-	init_philos(info);
+	if (init_philos(info))
+		return (ERR_INIT_INFO);
 	return (init_semaphores(info));
 }

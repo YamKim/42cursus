@@ -16,6 +16,7 @@ static int
 	return (0);
 }
 
+#if 1
 static void
 	*do_observe_philos_status(void *_info)
 {
@@ -36,17 +37,20 @@ static void
 			dif_time = get_cur_time() - philo->beg_eat_time;
 			if (!(philo->status == STATUS_EAT) && dif_time > info->time_to_die)
 			{
-				do_die(info, philo);
+				if (do_die(info, philo))
+					return (NULL);
 				if (sem_post(philo->mutex))
 					return (NULL);
-				usleep(100);
+				return (NULL);
 			}
 			if (sem_post(philo->mutex))
 				return (NULL);
+			usleep(100);
 		}
 	}
 	return (NULL);
 }
+#endif
 
 int
 	run_threads(t_info *info)
@@ -57,9 +61,11 @@ int
 
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
+#if 1
 	if (pthread_create(&tid, NULL, &do_observe_philos_status, info))
 		return (ERR_INIT_THREAD);
 	pthread_detach(tid);
+#endif
 	while (++idx < info->num_of_philos)
 	{
 		philo = (void *)(&info->philos[idx]);
@@ -98,6 +104,7 @@ int
 			return (1);
 		usleep(10 * USEC2MSEC);
 	}
-	//exit_program(&info);
+	exit_threads(&info);
+	//free_memory(&info);
 	return (0);
 }

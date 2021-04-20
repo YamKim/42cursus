@@ -12,7 +12,7 @@ static char
 	return ("died");
 }
 
-void
+int
 	show_message(t_philo *philo, int status)
 {
 	char		*status_msg;
@@ -22,5 +22,8 @@ void
 	info = philo->info;
 	dif_time = get_cur_time() - info->beg_prog_time;
 	status_msg = get_status_message(status);
+	if (info->someone_dead)
+		return (1);
 	printf("%lld %d %s\n", dif_time, philo->pos, status_msg);
+	return (0);
 }
