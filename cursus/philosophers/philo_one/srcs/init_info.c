@@ -22,6 +22,7 @@ static void
 {
 	int			idx;
 			
+	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philos);
 	idx = -1;
 	while (++idx < info->num_of_philos)
 	{
@@ -49,7 +50,6 @@ int
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->num_of_must_eat = ft_atoi(argv[5]);
-	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philos);
 	memset(info->finished_thread, 0, MAX_NUM_OF_PHILOS);
 	info->someone_dead = 0;
 	if (!info->philos)
