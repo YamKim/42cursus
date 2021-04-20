@@ -9,7 +9,7 @@ static int
 	size = sizeof(pthread_mutex_t) * info->num_of_philos;
 	info->fork_mutexes = (pthread_mutex_t *)malloc(size);
 	if (!info->fork_mutexes)
-		return (1);
+		return (ERR_INIT_INFO);
 	idx = -1;
 	while (++idx < info->num_of_philos)
 		pthread_mutex_init(&(info->fork_mutexes[idx]), NULL);
@@ -17,12 +17,14 @@ static int
 	return (0);
 }
 
-static void
+static int
 	init_philos(t_info *info)
 {
 	int			idx;
 			
 	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philos);
+	if (!info->philos)
+		return (ERR_INIT_INFO);
 	idx = -1;
 	while (++idx < info->num_of_philos)
 	{
@@ -35,6 +37,7 @@ static void
 		info->philos[idx].info = info;
 		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
+	return (0);
 }
 
 int
@@ -52,8 +55,7 @@ int
 	info->num_of_must_eat = ft_atoi(argv[5]);
 	memset(info->finished_thread, 0, MAX_NUM_OF_PHILOS);
 	info->someone_dead = 0;
-	if (!info->philos)
-		return (1);
-	init_philos(info);
+	if (init_philos(info))
+		return (ERR_INIT_INFO);
 	return (init_mutexes(info));
 }

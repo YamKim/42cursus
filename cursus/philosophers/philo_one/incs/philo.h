@@ -15,6 +15,7 @@
 # define STATUS_DIE 4
 
 # define ERR_INIT_THREAD 1
+# define ERR_INIT_INFO 1
 
 # define SEC2USEC 1000
 # define MSEC2USEC 1000
