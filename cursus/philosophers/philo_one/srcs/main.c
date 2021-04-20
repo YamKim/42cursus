@@ -1,5 +1,6 @@
 #include "../incs/philo.h"
 
+#if 0
 static int
 	is_all_philos_eat_must(t_info *info)
 {
@@ -15,7 +16,9 @@ static int
 		return(1);
 	return (0);
 }
+#endif
 
+#if 0
 static void
 	*do_observe_philos_status(void *_info)
 {
@@ -31,19 +34,18 @@ static void
 		while (++idx < info->num_of_philos)
 		{
 			philo = &(info->philos[idx]);
-			pthread_mutex_lock(&philo->mutex);
 			dif_time = get_cur_time() - philo->beg_eat_time;
-			if (!(philo->status == STATUS_EAT) && dif_time > info->time_to_die)
+			if (!(philo->status == STATUS_EAT) \
+					&& dif_time > info->time_to_die)
 			{
 				do_die(info, philo);
-				pthread_mutex_unlock(&philo->mutex);
 				return (NULL);
 			}
-			pthread_mutex_unlock(&philo->mutex);
 		}
 	}
 	return (NULL);
 }
+#endif
 
 int
 	run_threads(t_info *info)
@@ -54,9 +56,11 @@ int
 
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
+#if 0
 	if (pthread_create(&tid, NULL, &do_observe_philos_status, info))
 		return (ERR_INIT_THREAD);
 	pthread_detach(tid);
+#endif
 	while (++idx < info->num_of_philos)
 	{
 		philo = (void *)(&info->philos[idx]);
@@ -77,21 +81,18 @@ int
 	run_threads(&info);
 	while (1)
 	{
-		pthread_mutex_lock(&info.mutex);
 		if (info.someone_dead)
 		{
-			pthread_mutex_unlock(&info.mutex);
 			break ;
 		}
+#if 0
 		if (is_all_philos_eat_must(&info))
-		{
-			pthread_mutex_unlock(&info.mutex);
 			break ;
-		}
 		pthread_mutex_unlock(&info.mutex);
 		usleep(10 * USEC2MSEC);
+#endif
 	}
-	exit_threads(&info);
+	destroy_mutexes(&info);
 	//free_memory(&info);
 	return (0);
 }

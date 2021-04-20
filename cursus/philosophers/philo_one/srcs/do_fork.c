@@ -5,6 +5,7 @@ void
 {
 	pthread_mutex_lock(&(info->fork_mutexes[philo->lfork]));
 	show_message(philo, STATUS_FORK);
+
 	pthread_mutex_lock(&(info->fork_mutexes[philo->rfork]));
 	show_message(philo, STATUS_FORK);
 }

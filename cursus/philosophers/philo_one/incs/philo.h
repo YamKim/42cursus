@@ -19,14 +19,12 @@
 
 # define SEC2USEC 1000
 # define MSEC2USEC 1000
-# define USEC2MSEC 1/1000
+# define USEC2MSEC 0.001
 
 # define MAX_NUM_OF_PHILOS 200
 
 typedef	struct	s_info
 {
-	pthread_mutex_t \
-				mutex;
 	uint64_t	beg_prog_time;
 	uint64_t	cur_time;
 	int			num_of_philos;
@@ -38,14 +36,14 @@ typedef	struct	s_info
 	pthread_mutex_t \
 				*fork_mutexes;
 	int			someone_dead;
+	pthread_mutex_t \
+				msg_mutex;
 	struct s_philo	\
 				*philos;
 }				t_info;
 
 typedef struct	s_philo
 {
-	pthread_mutex_t \
-				mutex;
 	int			pos;
 	int			status;
 	uint64_t	beg_eat_time;
@@ -117,10 +115,10 @@ void
 	return_fork(t_info *info, t_philo *philo);
 
 /*
-** exit_threads.c
+** destroy_mutexes.c
 */
 void
-	*exit_threads(t_info *info);
+	*destroy_mutexes(t_info *info);
 
 /*
 ** free_memory.c

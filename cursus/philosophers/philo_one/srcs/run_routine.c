@@ -1,13 +1,6 @@
 #include "../incs/philo.h"
 
 void
-	*exit_philo_thread(t_philo *philo)
-{
-	pthread_mutex_destroy(&(philo->mutex));
-	return (NULL);
-}
-
-void
 	*run_routine(void *_philo)
 {
 	t_info		*info;
@@ -17,13 +10,19 @@ void
 	info = philo->info;
 	while (1)
 	{
+#if 0
 		if (info->someone_dead)
-			return (exit_philo_thread(philo));
+			return (NULL);
+#endif
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);
 		if (info->finished_thread[philo->pos - 1])
-			return (exit_philo_thread(philo));
+			return (NULL);
+#if 0
+		if (info->someone_dead)
+			return (NULL);
+#endif
 		do_sleep(info, philo);
 	}
 	return (NULL);

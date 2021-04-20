@@ -19,8 +19,11 @@ void
 	t_info		*info;
 	uint64_t	dif_time;
 
+	
 	info = philo->info;
+	pthread_mutex_lock(&info->msg_mutex);
 	dif_time = get_cur_time() - info->beg_prog_time;
 	status_msg = get_status_message(status);
 	printf("%lld %d %s\n", dif_time, philo->pos, status_msg);
+	pthread_mutex_unlock(&info->msg_mutex);
 }

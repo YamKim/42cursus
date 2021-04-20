@@ -11,7 +11,7 @@ FUNC = \
 	do_eat \
 	do_sleep \
 	do_die \
-	exit_threads \
+	destroy_mutexes \
 	ft_utils \
 	show_message \
 	free_memory \

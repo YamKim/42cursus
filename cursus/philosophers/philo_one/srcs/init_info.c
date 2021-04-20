@@ -13,7 +13,7 @@ static int
 	idx = -1;
 	while (++idx < info->num_of_philos)
 		pthread_mutex_init(&(info->fork_mutexes[idx]), NULL);
-	pthread_mutex_init(&(info->mutex), NULL);
+	pthread_mutex_init(&(info->msg_mutex), NULL);
 	return (0);
 }
 
@@ -35,7 +35,6 @@ static int
 		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
 		info->philos[idx].eat_cnt = 0;
 		info->philos[idx].info = info;
-		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
 	return (0);
 }
