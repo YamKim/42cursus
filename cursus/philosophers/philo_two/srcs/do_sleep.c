@@ -5,10 +5,11 @@ int
 {
 	if (sem_wait(philo->mutex) != 0)
 		return (ERR_SEM_DO);
+
 	philo->status = STATUS_SLEEP;
-	if (show_message(philo, STATUS_SLEEP))
-		return (ERR_SEM_DO);
+	show_message(philo, STATUS_SLEEP);
 	usleep(info->time_to_sleep * MSEC2USEC);
+
 	if (sem_post(philo->mutex))
 		return (ERR_SEM_DO);
 	return (0);

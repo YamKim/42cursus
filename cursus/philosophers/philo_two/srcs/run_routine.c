@@ -23,18 +23,18 @@ void
 	{
 		if (info->someone_dead)
 			return (exit_philo_thread(philo));
+
 		if (take_fork(info, philo))
 			return (NULL);
-		if (!info->someone_dead && do_eat(info, philo))
+		if (do_eat(info, philo))
 			return (NULL);
 		if (return_fork(info, philo))
 			return (NULL);
 		if (info->finished_thread[philo->pos - 1])
 			return (exit_philo_thread(philo));
-#if 1
+
 		if (info->someone_dead)
 			return (exit_philo_thread(philo));
-#endif
 		if (do_sleep(info, philo))
 			return (NULL);
 	}

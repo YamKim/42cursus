@@ -1,5 +1,6 @@
 #include "../incs/philo.h"
 
+#if 1
 static int
 	is_all_philos_eat_must(t_info *info)
 {
@@ -15,6 +16,7 @@ static int
 		return(1);
 	return (0);
 }
+#endif
 
 #if 1
 static void
@@ -34,6 +36,7 @@ static void
 			philo = &(info->philos[idx]);
 			if (sem_wait(philo->mutex) != 0)
 				return (NULL);
+
 			dif_time = get_cur_time() - philo->beg_eat_time;
 			if (!(philo->status == STATUS_EAT) && dif_time > info->time_to_die)
 			{
@@ -43,9 +46,10 @@ static void
 					return (NULL);
 				return (NULL);
 			}
+
 			if (sem_post(philo->mutex))
 				return (NULL);
-			usleep(100);
+			//usleep(100);
 		}
 	}
 	return (NULL);
@@ -61,11 +65,9 @@ int
 
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
-#if 1
 	if (pthread_create(&tid, NULL, &do_observe_philos_status, info))
 		return (ERR_INIT_THREAD);
 	pthread_detach(tid);
-#endif
 	while (++idx < info->num_of_philos)
 	{
 		philo = (void *)(&info->philos[idx]);
