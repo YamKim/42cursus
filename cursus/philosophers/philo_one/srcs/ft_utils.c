@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../incs/philo.h"
 
 int
 	ft_atoi(const char *nptr)

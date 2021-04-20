@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../incs/philo.h"
 
 void
 	do_die(t_info *info, t_philo *philo)

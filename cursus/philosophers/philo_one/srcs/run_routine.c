@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../incs/philo.h"
 
 #if 0
 static void
@@ -60,11 +60,9 @@ void
 {
 	t_info		*info;
 	t_philo		*philo;
-	pthread_t	tid;
 
 	philo = (t_philo *)_philo;
 	info = philo->info;
-	pthread_detach(tid);
 	while (1)
 	{
 		if (info->someone_dead)
@@ -72,11 +70,8 @@ void
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);
-		if (philo->eat_finish)
-		{
-			info->finished_thread[philo->pos - 1] = 1;
+		if (info->finished_thread[philo->pos - 1])
 			break ;
-		}
 		do_sleep(info, philo);
 	}
 	return (NULL);

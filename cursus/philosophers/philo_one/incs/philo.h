@@ -51,7 +51,6 @@ typedef struct	s_philo
 	int			lfork;
 	int			rfork;
 	int			eat_cnt;
-	int			eat_finish;
 	t_info		*info;
 }				t_philo;
 
@@ -117,11 +116,15 @@ void
 	return_fork(t_info *info, t_philo *philo);
 
 /*
-** exit_program.c
+** exit_threads.c
 */
 void
 	*exit_threads(t_info *info);
+
+/*
+** free_memory.c
+*/
 void
-	exit_program(t_info *info);
+	free_memory(t_info *info);
 
 #endif

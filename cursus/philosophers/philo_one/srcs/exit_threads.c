@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../incs/philo.h"
 
 void
 	*exit_threads(t_info *info)
@@ -24,17 +24,3 @@ void
 	return (NULL);
 }
 
-void
-	exit_program(t_info *info)
-{
-	if (info->fork_mutexes != NULL)
-	{
-		free(info->fork_mutexes);
-		info->fork_mutexes = NULL;
-	}
-	if (info->philos != NULL)
-	{
-		free(info->philos);
-		info->philos = NULL;
-	}
-}

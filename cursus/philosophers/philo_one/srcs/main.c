@@ -1,13 +1,11 @@
-#include "philo.h"
+#include "../incs/philo.h"
 
 static int
 	is_all_philos_eat_must(t_info *info)
 {
 	int	idx;
-	int	ret;
 
 	idx = -1;
-	
 	while (++idx < info->num_of_philos)
 	{
 		if (!(info->finished_thread[idx]))
@@ -95,8 +93,7 @@ int
 		usleep(10 * USEC2MSEC);
 	}
 #endif
-	//exit_program(&info);
-	pause();
+	//free_memory(&info);
 	return (0);
 }
 

@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../incs/philo.h"
 
 static int
 	init_mutexes(t_info *info)
@@ -31,7 +31,6 @@ static void
 		info->philos[idx].lfork = idx;
 		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
 		info->philos[idx].eat_cnt = 0;
-		info->philos[idx].eat_finish = 0;
 		info->philos[idx].info = info;
 		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
@@ -43,6 +42,7 @@ int
 	int argc,
 	char *argv[])
 {
+	(void)argc;
 	info->num_of_philos = ft_atoi(argv[1]);
 	info->time_to_die = ft_atoi(argv[2]);
 	info->time_to_eat = ft_atoi(argv[3]);

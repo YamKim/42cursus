@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../incs/philo.h"
 
 void
 	take_fork(t_info *info, t_philo *philo)

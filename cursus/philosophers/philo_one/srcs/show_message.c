@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../incs/philo.h"
 
 static char
 	*get_status_message(int status)
