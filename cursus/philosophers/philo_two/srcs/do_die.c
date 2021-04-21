@@ -1,11 +1,9 @@
 #include "../incs/philo.h"
 
-int
+void
 	do_die(t_info *info, t_philo *philo)
 {
-	philo->status = STATUS_DIE;
-	if (show_message(philo, STATUS_DIE))
-		return (ERR_SEM_DO);
+	show_message(philo, STATUS_DIE);
 	info->someone_dead = 1;
-	return (0);
+	pthread_mutex_unlock(&(philo->mutex));
 }

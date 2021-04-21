@@ -1,4 +1,4 @@
-NAME = philo_one
+NAME = philo_two
 CC = arch -x86_64 gcc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
@@ -11,11 +11,12 @@ FUNC = \
 	do_eat \
 	do_sleep \
 	do_die \
-	destroy_mutexes \
 	ft_utils \
 	show_message \
+	get_cur_time \
 	free_memory \
-	get_cur_time
+	exit_threads \
+	ft_sem_open
 
 SRCDIR = ./srcs
 INCDIR = ./incs

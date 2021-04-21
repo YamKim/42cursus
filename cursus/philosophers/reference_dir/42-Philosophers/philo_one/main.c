@@ -6,7 +6,7 @@
 /*   By: ncolomer <ncolomer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 15:30:46 by ncolomer          #+#    #+#             */
-/*   Updated: 2021/04/13 14:30:04 by yekim            ###   ########.fr       */
+/*   Updated: 2021/04/13 16:15:15 by yekim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void
 	pthread_mutex_unlock(&state->somebody_dead_m);
 	return ((void*)0);
 }
-
+#if 0
 static void
 	*monitor(void *philo_v)
 {
@@ -53,6 +53,7 @@ static void
 		usleep(1000);
 	}
 }
+#endif
 
 static void
 	*routine(void *philo_v)
@@ -63,6 +64,8 @@ static void
 	philo = (t_philo*)philo_v;
 	philo->last_eat = get_time();
 	philo->limit = philo->last_eat + philo->state->time_to_die;
+
+	(void)tid;
 #if 0
 	if (pthread_create(&tid, NULL, &monitor, philo_v) != 0)
 		return ((void*)1);

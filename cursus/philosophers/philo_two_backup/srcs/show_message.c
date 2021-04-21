@@ -12,7 +12,7 @@ static char
 	return ("died");
 }
 
-void
+int
 	show_message(t_philo *philo, int status)
 {
 	char		*status_msg;
@@ -20,9 +20,10 @@ void
 	uint64_t	dif_time;
 
 	info = philo->info;
-	pthread_mutex_lock(&info->msg_mutex);
 	dif_time = get_cur_time() - info->beg_prog_time;
 	status_msg = get_status_message(status);
+	if (info->someone_dead)
+		return (1);
 	printf("%lld %d %s\n", dif_time, philo->pos, status_msg);
-	pthread_mutex_unlock(&info->msg_mutex);
+	return (0);
 }

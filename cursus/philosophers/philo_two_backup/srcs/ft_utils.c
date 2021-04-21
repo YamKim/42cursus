@@ -26,6 +26,17 @@ int
 }
 
 size_t
+	ft_strlen(const char *str)
+{
+	size_t	ret;
+
+	ret = 0;
+	while (*(str++))
+		++ret;
+	return (ret);
+}
+
+size_t
 	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	ret;

@@ -6,7 +6,7 @@ static int
 	int		idx;
 	char	sem_name[255];
 
-	info->mutex = ft_sem_open(SEM_FORKS, info->num_of_philos);
+	info->mutex = ft_sem_open(SEM_INFO, 1);
 	if (!info->mutex)
 		return (ERR_SEM_OPEN);
 	info->fork_mutexes = ft_sem_open(SEM_FORK, info->num_of_philos);
@@ -28,7 +28,7 @@ static int
 	init_philos(t_info *info)
 {
 	int			idx;
-			
+
 	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philos);
 	if (!info->philos)
 		return (ERR_INIT_INFO);
@@ -42,8 +42,6 @@ static int
 		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
 		info->philos[idx].eat_cnt = 0;
 		info->philos[idx].info = info;
-		info->someone_dead = 0;
-		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
 	return (0);
 }
@@ -65,5 +63,5 @@ int
 	info->someone_dead = 0;
 	if (init_philos(info))
 		return (ERR_INIT_INFO);
-	return (init_mutexes(info));
+	return (init_semaphores(info));
 }
