@@ -50,6 +50,8 @@ typedef struct	s_philo
 	int			lfork;
 	int			rfork;
 	int			eat_cnt;
+	pthread_mutex_t \
+				mutex;
 	t_info		*info;
 }				t_philo;
 

@@ -19,7 +19,6 @@ void
 	t_info		*info;
 	uint64_t	dif_time;
 
-	
 	info = philo->info;
 	pthread_mutex_lock(&info->msg_mutex);
 	dif_time = get_cur_time() - info->beg_prog_time;

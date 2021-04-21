@@ -35,6 +35,8 @@ static int
 		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
 		info->philos[idx].eat_cnt = 0;
 		info->philos[idx].info = info;
+		info->someone_dead = 0;
+		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
 	return (0);
 }
