@@ -17,7 +17,7 @@
 # define ERR_INIT_THREAD 1
 # define ERR_INIT_INFO 1
 
-# define SEC2USEC 1000
+# define SEC2USEC (uint64_t)1000
 # define MSEC2USEC 1000
 # define USEC2MSEC 0.001
 
