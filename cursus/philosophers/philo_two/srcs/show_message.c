@@ -12,7 +12,7 @@ static char
 	return ("died");
 }
 
-void
+int
 	show_message(t_philo *philo, int status)
 {
 	char		*status_msg;
@@ -20,9 +20,13 @@ void
 	uint64_t	dif_time;
 
 	info = philo->info;
-	pthread_mutex_lock(&info->msg_mutex);
+	if (sem_wait(info->msg_mutex) != 0)
+		return (ERR_SEM_DO);
+	info = philo->info;
 	dif_time = get_cur_time() - info->beg_prog_time;
 	status_msg = get_status_message(status);
 	printf("%lld %d %s\n", dif_time, philo->pos, status_msg);
-	pthread_mutex_unlock(&info->msg_mutex);
+	if (sem_post(info->msg_mutex))
+		return (ERR_SEM_DO);
+	return (0);
 }

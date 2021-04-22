@@ -6,11 +6,11 @@ static int
 	int		idx;
 	char	sem_name[255];
 
-	info->mutex = ft_sem_open(SEM_FORKS, info->num_of_philos);
-	if (!info->mutex)
-		return (ERR_SEM_OPEN);
 	info->fork_mutexes = ft_sem_open(SEM_FORK, info->num_of_philos);
 	if (!info->fork_mutexes)
+		return (ERR_SEM_OPEN);
+	info->msg_mutex = ft_sem_open(SEM_MSG, 1);
+	if (!info->msg_mutex)
 		return (ERR_SEM_OPEN);
 	idx = -1;
 	while (++idx < info->num_of_philos)
@@ -18,7 +18,7 @@ static int
 		memset(sem_name, 0, 255);
 		gen_name_tag(sem_name, idx);
 		info->philos[idx].mutex = ft_sem_open(sem_name, 1);
-		if (info->philos[idx].mutex < 0)
+		if (!(info->philos[idx].mutex))
 			return (ERR_SEM_OPEN);
 	}
 	return (0);
@@ -43,7 +43,6 @@ static int
 		info->philos[idx].eat_cnt = 0;
 		info->philos[idx].info = info;
 		info->someone_dead = 0;
-		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
 	return (0);
 }
@@ -65,5 +64,5 @@ int
 	info->someone_dead = 0;
 	if (init_philos(info))
 		return (ERR_INIT_INFO);
-	return (init_mutexes(info));
+	return (init_semaphores(info));
 }

@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <string.h>
+# include <semaphore.h>
 
 # define STATUS_EAT 0
 # define STATUS_SLEEP 1
@@ -16,13 +17,16 @@
 
 # define ERR_INIT_THREAD 1
 # define ERR_INIT_INFO 1
+# define ERR_SEM_OPEN 1
+# define ERR_SEM_DO 1
 
-# define SEC2USEC 1000
+# define SEC2USEC (uint64_t)1000
 # define MSEC2USEC 1000
 # define USEC2MSEC 0.001
 
 # define SEM_PHILO "SEM_PHILO"
 # define SEM_FORK "SEM_FORKS"
+# define SEM_MSG "SEM_MSG"
 
 # define MAX_NUM_OF_PHILOS 200
 
@@ -37,7 +41,7 @@ typedef	struct	s_info
 	int			num_of_must_eat;
 	int			finished_thread[200];
 	sem_t		*fork_mutexes;
-	sem_t		msg_mutex;
+	sem_t		*msg_mutex;
 	int			someone_dead;
 	struct s_philo	\
 				*philos;
@@ -51,9 +55,7 @@ typedef struct	s_philo
 	int			lfork;
 	int			rfork;
 	int			eat_cnt;
-	sem_t		mutex;
-	pthread_mutex_t \
-				mutex;
+	sem_t		*mutex;
 	t_info		*info;
 }				t_philo;
 
@@ -67,17 +69,26 @@ int
 	char *argv[]);
 
 /*
+** run_routine.c
+*/
+void
+	*run_routine(void *_philo);
+
+
+/*
 ** ft_utils.c
 */
 int
 	ft_atoi(const char *nptr);
 void
 	ft_putnbr_fd(int n, int fd);
+void
+	gen_name_tag(char *name, int nbr);
 
 /*
 ** show_message.c
 */
-void
+int
 	show_message(t_philo *philo, int status);
 
 /*
@@ -89,34 +100,34 @@ uint64_t
 /*
 ** do_eat.c
 */
-void
+int
 	do_eat(t_info *info, t_philo *philo);
 
 /*
 ** do_sleep.c
 */
-void
+int
 	do_sleep(t_info *info, t_philo *philo);
 
 /*
 ** do_die.c
 */
-void
+int
 	do_die(t_info *info, t_philo *philo);
-
-/*
-** run_routine.c
-*/
-void
-	*run_routine(void *philo);
 
 /*
 ** take_fork.c
 */
-void
+int
 	take_fork(t_info *info, t_philo *philo);
-void
+int
 	return_fork(t_info *info, t_philo *philo);
+
+/*
+** ft_sem_open.c
+*/
+sem_t
+	*ft_sem_open(char *name, int value);
 
 /*
 ** destroy_mutexes.c

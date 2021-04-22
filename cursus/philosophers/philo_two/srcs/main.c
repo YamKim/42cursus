@@ -44,9 +44,9 @@ int
 	run_threads(&info);
 	while (1)
 	{
-		if (is_all_thread_finished(&info))
-			break ;
 		if (info.someone_dead)
+			break ;
+		if (is_all_thread_finished(&info))
 			break ;
 	}
 	usleep(10000);

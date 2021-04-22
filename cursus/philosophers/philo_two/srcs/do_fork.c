@@ -1,18 +1,26 @@
 #include "../incs/philo.h"
 
-void
+int
 	take_fork(t_info *info, t_philo *philo)
 {
-	pthread_mutex_lock(&(info->fork_mutexes[philo->lfork]));
-	show_message(philo, STATUS_FORK);
-
-	pthread_mutex_lock(&(info->fork_mutexes[philo->rfork]));
-	show_message(philo, STATUS_FORK);
+	if (sem_wait(info->fork_mutexes))
+		return (ERR_SEM_DO);
+	if (show_message(philo, STATUS_FORK))
+		return (ERR_SEM_DO);
+	if (sem_wait(info->fork_mutexes))
+		return (ERR_SEM_DO);
+	if (show_message(philo, STATUS_FORK))
+		return (ERR_SEM_DO);
+	return (0);
 }
 
-void
+int
 	return_fork(t_info *info, t_philo *philo)
 {
-	pthread_mutex_unlock(&(info->fork_mutexes[philo->lfork]));
-	pthread_mutex_unlock(&(info->fork_mutexes[philo->rfork]));
+	(void)philo;
+	if (sem_post(info->fork_mutexes))
+		return (ERR_SEM_DO);
+	if (sem_post(info->fork_mutexes))
+		return (ERR_SEM_DO);
+	return (0);
 }

@@ -1,5 +1,16 @@
 #include "../incs/philo.h"
 
+size_t
+	ft_strlen(const char *str)
+{
+	size_t	ret;
+
+	ret = 0;
+	while (*(str++))
+		++ret;
+	return (ret);
+}
+
 int
 	ft_atoi(const char *nptr)
 {

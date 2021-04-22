@@ -1,4 +1,4 @@
-NAME = philo_one
+NAME = philo_two
 CC = arch -x86_64 gcc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
@@ -14,6 +14,7 @@ FUNC = \
 	destroy_mutexes \
 	ft_utils \
 	show_message \
+	ft_sem_open \
 	free_memory \
 	get_cur_time
 
