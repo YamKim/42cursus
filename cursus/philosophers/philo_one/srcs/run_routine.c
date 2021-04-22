@@ -47,11 +47,11 @@ void
 		if (info->someone_dead)
 			return (NULL);
 #endif
+		if (philo->eat_finished)
+			return (NULL);
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);
-		if (info->finished_thread[philo->pos - 1])
-			return (NULL);
 #if 0
 		if (info->someone_dead)
 			return (NULL);

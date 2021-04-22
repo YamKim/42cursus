@@ -37,7 +37,10 @@ static int
 		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
 		info->philos[idx].eat_cnt = 0;
 		info->philos[idx].info = info;
+		info->philos[idx].eat_finished = 0;
 		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
+		pthread_mutex_init(&(info->philos[idx].eat_mutex), NULL);
+		pthread_mutex_lock(&(info->philos[idx].eat_mutex));
 	}
 	return (0);
 }
@@ -55,8 +58,6 @@ int
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->num_of_must_eat = ft_atoi(argv[5]);
-	memset(info->finished_thread, 0, MAX_NUM_OF_PHILOS);
-//	info->someone_dead = 0;
 	if (init_philos(info))
 		return (ERR_INIT_INFO);
 	return (init_mutexes(info));

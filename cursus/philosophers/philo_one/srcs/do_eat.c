@@ -11,7 +11,10 @@ void
 	++(philo->eat_cnt);
 #if 1
 	if (philo->eat_cnt == info->num_of_must_eat)
-		info->finished_thread[philo->pos - 1] = 1;
+	{
+		philo->eat_finished = 1;
+		pthread_mutex_unlock(&(philo->eat_mutex));
+	}
 #endif
 	pthread_mutex_unlock(&(philo->mutex));
 }

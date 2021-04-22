@@ -1,18 +1,21 @@
 #include "../incs/philo.h"
 
-int
-	is_all_thread_finished(t_info *info)
+static void
+	*is_all_eat(void *_info)
 {
-	int	idx;
+	int		idx;
+	t_info	*info;
 
+	info = (t_info *)_info;
 	idx = -1;
 	while (++idx < info->num_of_philos)
 	{
-		if (!(info->finished_thread[idx]))
-			return (0);
+		if (!(info->philos[idx].eat_finished))
+			pthread_mutex_lock(&info->philos[idx].eat_mutex);
+		// unlock! for each philo's eat_mutex  before exit this program
 	}
-
-	return (1);
+	pthread_mutex_unlock(&(info->someone_dead_mutex));
+	return (NULL);
 }
 
 int
@@ -22,6 +25,8 @@ int
 	void		*philo;
 	pthread_t	tid;
 
+	if (pthread_create(&tid, NULL, &is_all_eat, info))
+		return (ERR_INIT_THREAD);
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
 	while (++idx < info->num_of_philos)
@@ -42,13 +47,18 @@ int
 
 	init_info(&info, argc, argv);
 	run_threads(&info);
-#if 0
+#if  0
 	while (1)
 	{
-		if (is_all_thread_finished(&info))
+		if (info->num_of_must_eat > 0)
+			if (is_all_thread_finished(&info))
+				break ;
+		else
 			break ;
+#if 0
 		if (info.someone_dead)
 			break ;
+#endif
 	}
 #endif
 	
@@ -59,3 +69,20 @@ int
 	free_memory(&info);
 	return (0);
 }
+
+#if 0
+int
+	is_all_thread_finished(t_info *info)
+{
+	int	idx;
+
+	idx = -1;
+	while (++idx < info->num_of_philos)
+	{
+		if (!(info->finished_thread[idx]))
+			return (0);
+	}
+
+	return (1);
+}
+#endif
