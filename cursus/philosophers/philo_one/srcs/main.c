@@ -42,6 +42,7 @@ int
 
 	init_info(&info, argc, argv);
 	run_threads(&info);
+#if 0
 	while (1)
 	{
 		if (is_all_thread_finished(&info))
@@ -49,6 +50,10 @@ int
 		if (info.someone_dead)
 			break ;
 	}
+#endif
+	
+	pthread_mutex_lock(&(info.someone_dead_mutex));
+	pthread_mutex_unlock(&(info.someone_dead_mutex));
 	usleep(10000);
 	destroy_mutexes(&info);
 	free_memory(&info);

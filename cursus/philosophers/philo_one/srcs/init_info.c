@@ -14,6 +14,8 @@ static int
 	while (++idx < info->num_of_philos)
 		pthread_mutex_init(&(info->fork_mutexes[idx]), NULL);
 	pthread_mutex_init(&(info->msg_mutex), NULL);
+	pthread_mutex_init(&(info->someone_dead_mutex), NULL);
+	pthread_mutex_lock(&(info->someone_dead_mutex));
 	return (0);
 }
 
@@ -35,7 +37,6 @@ static int
 		info->philos[idx].rfork = (idx + 1) % info->num_of_philos;
 		info->philos[idx].eat_cnt = 0;
 		info->philos[idx].info = info;
-		info->someone_dead = 0;
 		pthread_mutex_init(&(info->philos[idx].mutex), NULL);
 	}
 	return (0);
@@ -55,7 +56,7 @@ int
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->num_of_must_eat = ft_atoi(argv[5]);
 	memset(info->finished_thread, 0, MAX_NUM_OF_PHILOS);
-	info->someone_dead = 0;
+//	info->someone_dead = 0;
 	if (init_philos(info))
 		return (ERR_INIT_INFO);
 	return (init_mutexes(info));

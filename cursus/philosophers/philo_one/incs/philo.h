@@ -35,7 +35,9 @@ typedef	struct	s_info
 	int			finished_thread[200];
 	pthread_mutex_t \
 				*fork_mutexes;
-	int			someone_dead;
+//	int			someone_dead;
+	pthread_mutex_t \
+				someone_dead_mutex;
 	pthread_mutex_t \
 				msg_mutex;
 	struct s_philo	\
@@ -115,6 +117,12 @@ void
 	take_fork(t_info *info, t_philo *philo);
 void
 	return_fork(t_info *info, t_philo *philo);
+
+/*
+** my_sleep.c
+*/
+void
+	my_sleep(uint64_t wait_time);
 
 /*
 ** destroy_mutexes.c
