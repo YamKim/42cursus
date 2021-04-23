@@ -62,7 +62,7 @@ void
 {
 	int	idx;
 
-	idx = ft_strlcpy(name, SEM_PHILO, ft_strlen(SEM_PHILO) + 1);
+	idx = ft_strlcpy(name, SEM_PHILO_EAT, ft_strlen(SEM_PHILO_EAT) + 1);
 	if (nbr < 10)
 	{
 		name[idx++] = '0';

@@ -20,13 +20,14 @@
 # define ERR_SEM_OPEN 1
 # define ERR_SEM_DO 1
 
-# define SEC2USEC (uint64_t)1000
+# define SEC2MSEC (uint64_t)1000
 # define MSEC2USEC 1000
 # define USEC2MSEC 0.001
 
-# define SEM_PHILO "SEM_PHILO"
+# define SEM_PHILO_EAT "SEM_PHILO_EAT"
 # define SEM_FORK "SEM_FORKS"
 # define SEM_MSG "SEM_MSG"
+# define SEM_SOMEONE_DEAD "SEM_SOMEONE_DEAD"
 
 # define MAX_NUM_OF_PHILOS 200
 
@@ -39,9 +40,10 @@ typedef	struct	s_info
 	uint64_t	time_to_eat;
 	uint64_t	time_to_sleep;
 	int			num_of_must_eat;
-	int			finished_thread[200];
+//	int			eat_finished[200];
 	sem_t		*fork_mutexes;
 	sem_t		*msg_mutex;
+	sem_t		*someone_dead_mutex;
 	int			someone_dead;
 	struct s_philo	\
 				*philos;
@@ -55,7 +57,9 @@ typedef struct	s_philo
 	int			lfork;
 	int			rfork;
 	int			eat_cnt;
-	sem_t		*mutex;
+	int			eat_finished;
+	//sem_t		*mutex;
+	sem_t		*eat_mutex;
 	t_info		*info;
 }				t_philo;
 
@@ -96,6 +100,12 @@ int
 */
 uint64_t
 	get_cur_time();
+
+/*
+** my_sleep.c
+*/
+void
+	my_sleep(uint64_t wait_time);
 
 /*
 ** do_eat.c

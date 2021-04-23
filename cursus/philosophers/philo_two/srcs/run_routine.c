@@ -14,17 +14,14 @@ static void
 	{
 		if (info->someone_dead)
 			return (NULL);
-		if (sem_wait(philo->mutex))
-			return (NULL);
 		dif_time = get_cur_time() - philo->beg_eat_time;
 		if (!(philo->status == STATUS_EAT) \
 				&& dif_time > info->time_to_die)
 		{
-			do_die(info, philo);
+			if (do_die(info, philo))
+				return (NULL);
 			return (NULL);
 		}
-		if (sem_post(philo->mutex))
-			return (NULL);
 		usleep(100);
 	}
 	return (NULL);
@@ -55,8 +52,10 @@ void
 			return (NULL);
 		if (return_fork(info, philo))
 			return (NULL);
-		if (info->finished_thread[philo->pos - 1])
+#if 1
+		if (philo->eat_finished)
 			return (NULL);
+#endif
 		if (info->someone_dead)
 			return (NULL);
 		if (do_sleep(info, philo))
