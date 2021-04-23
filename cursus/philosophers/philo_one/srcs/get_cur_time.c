@@ -7,5 +7,5 @@ uint64_t
 
 	if (gettimeofday(&tmp, NULL) == -1)
 		return (-1);
-	return (tmp.tv_sec * SEC2USEC + tmp.tv_usec * USEC2MSEC);
+	return (tmp.tv_sec * SEC2MSEC + tmp.tv_usec * USEC2MSEC);
 }

@@ -1,5 +1,6 @@
 #include "../incs/philo.h"
 
+#if 1
 static void
 	*is_all_eat(void *_info)
 {
@@ -17,6 +18,7 @@ static void
 	pthread_mutex_unlock(&(info->someone_dead_mutex));
 	return (NULL);
 }
+#endif
 
 int
 	run_threads(t_info *info)
@@ -25,8 +27,10 @@ int
 	void		*philo;
 	pthread_t	tid;
 
+#if 1
 	if (pthread_create(&tid, NULL, &is_all_eat, info))
 		return (ERR_INIT_THREAD);
+#endif
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
 	while (++idx < info->num_of_philos)
@@ -47,21 +51,9 @@ int
 
 	init_info(&info, argc, argv);
 	run_threads(&info);
-#if  0
-	while (1)
-	{
-		if (info->num_of_must_eat > 0)
-			if (is_all_thread_finished(&info))
-				break ;
-		else
-			break ;
-#if 0
-		if (info.someone_dead)
-			break ;
-#endif
-	}
-#endif
-	
+
+	if (info.someone_dead)
+		pthread_mutex_unlock(&(info.msg_mutex));
 	pthread_mutex_lock(&(info.someone_dead_mutex));
 	pthread_mutex_unlock(&(info.someone_dead_mutex));
 	usleep(10000);
@@ -69,20 +61,3 @@ int
 	free_memory(&info);
 	return (0);
 }
-
-#if 0
-int
-	is_all_thread_finished(t_info *info)
-{
-	int	idx;
-
-	idx = -1;
-	while (++idx < info->num_of_philos)
-	{
-		if (!(info->finished_thread[idx]))
-			return (0);
-	}
-
-	return (1);
-}
-#endif

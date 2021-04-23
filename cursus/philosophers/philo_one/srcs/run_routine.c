@@ -11,7 +11,7 @@ static void
 	info = philo->info;
 	while(1)
 	{
-#if 0
+#if 1
 		if (info->someone_dead)
 			return (NULL);
 #endif
@@ -43,7 +43,7 @@ void
 	pthread_detach(tid);
 	while (1)
 	{
-#if 0
+#if 1
 		if (info->someone_dead)
 			return (NULL);
 #endif
@@ -52,7 +52,7 @@ void
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);
-#if 0
+#if 1
 		if (info->someone_dead)
 			return (NULL);
 #endif

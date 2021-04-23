@@ -15,6 +15,7 @@ FUNC = \
 	ft_utils \
 	show_message \
 	free_memory \
+	my_sleep \
 	get_cur_time
 
 SRCDIR = ./srcs

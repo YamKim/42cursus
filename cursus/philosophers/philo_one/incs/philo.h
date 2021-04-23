@@ -17,7 +17,7 @@
 # define ERR_INIT_THREAD 1
 # define ERR_INIT_INFO 1
 
-# define SEC2USEC (uint64_t)1000
+# define SEC2MSEC (uint64_t)1000
 # define MSEC2USEC 1000
 # define USEC2MSEC 0.001
 
@@ -32,6 +32,7 @@ typedef	struct	s_info
 	uint64_t	time_to_eat;
 	uint64_t	time_to_sleep;
 	int			num_of_must_eat;
+	int			someone_dead;
 	pthread_mutex_t \
 				*fork_mutexes;
 	pthread_mutex_t \
