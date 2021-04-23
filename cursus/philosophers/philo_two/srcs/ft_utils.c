@@ -58,11 +58,14 @@ size_t
 }
 
 void
-	gen_name_tag(char *name, int nbr)
+	gen_name_tag(
+	char *name,
+	char *type,
+	int nbr)
 {
 	int	idx;
 
-	idx = ft_strlcpy(name, SEM_PHILO_EAT, ft_strlen(SEM_PHILO_EAT) + 1);
+	idx = ft_strlcpy(name, type, ft_strlen(type) + 1);
 	if (nbr < 10)
 	{
 		name[idx++] = '0';

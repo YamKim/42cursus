@@ -7,6 +7,8 @@ int
 		return (ERR_SEM_DO);
 	if (show_message(philo, STATUS_FORK))
 		return (ERR_SEM_DO);
+	if (info->someone_dead)
+		return (0);
 	if (sem_wait(info->fork_mutexes))
 		return (ERR_SEM_DO);
 	if (show_message(philo, STATUS_FORK))

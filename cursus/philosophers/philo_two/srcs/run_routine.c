@@ -8,12 +8,12 @@ static void
 	t_info		*info;
 	uint64_t	dif_time;
 
-	philo = (t_philo *)_philo;
-	info = philo->info;
+	philo = (t_philo *)_philo; info = philo->info;
 	while(1)
 	{
 		if (info->someone_dead)
 			return (NULL);
+		
 		dif_time = get_cur_time() - philo->beg_eat_time;
 		if (!(philo->status == STATUS_EAT) \
 				&& dif_time > info->time_to_die)

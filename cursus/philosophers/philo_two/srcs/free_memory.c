@@ -3,5 +3,5 @@
 void
 	free_memory(t_info *info)
 {
-	(void)info;
+	free(info->philos);
 }

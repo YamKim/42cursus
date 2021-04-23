@@ -14,8 +14,6 @@ static void
 		if (!(info->philos[idx].eat_finished))
 			if (sem_wait(info->philos[idx].eat_mutex))
 				return (NULL);
-				
-		// unlock! for each philo's eat_mutex  before exit this program
 	}
 	if (sem_post(info->someone_dead_mutex))
 		return (NULL);

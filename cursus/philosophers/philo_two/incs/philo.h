@@ -25,6 +25,7 @@
 # define USEC2MSEC 0.001
 
 # define SEM_PHILO_EAT "SEM_PHILO_EAT"
+# define SEM_PHILO "SEM_PHILO"
 # define SEM_FORK "SEM_FORKS"
 # define SEM_MSG "SEM_MSG"
 # define SEM_SOMEONE_DEAD "SEM_SOMEONE_DEAD"
@@ -40,7 +41,6 @@ typedef	struct	s_info
 	uint64_t	time_to_eat;
 	uint64_t	time_to_sleep;
 	int			num_of_must_eat;
-//	int			eat_finished[200];
 	sem_t		*fork_mutexes;
 	sem_t		*msg_mutex;
 	sem_t		*someone_dead_mutex;
@@ -54,11 +54,8 @@ typedef struct	s_philo
 	int			pos;
 	int			status;
 	uint64_t	beg_eat_time;
-	int			lfork;
-	int			rfork;
 	int			eat_cnt;
 	int			eat_finished;
-	//sem_t		*mutex;
 	sem_t		*eat_mutex;
 	t_info		*info;
 }				t_philo;
@@ -87,7 +84,10 @@ int
 void
 	ft_putnbr_fd(int n, int fd);
 void
-	gen_name_tag(char *name, int nbr);
+	gen_name_tag(
+	char *name,
+	char *type,
+	int nbr);
 
 /*
 ** show_message.c
