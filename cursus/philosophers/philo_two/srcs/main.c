@@ -11,9 +11,8 @@ static void
 	idx = -1;
 	while (++idx < info->num_of_philos)
 	{
-		if (!(info->philos[idx].eat_finished))
-			if (sem_wait(info->philos[idx].eat_mutex))
-				return (NULL);
+		if (sem_wait(info->philos[idx].eat_mutex))
+			return (NULL);
 	}
 	if (sem_post(info->someone_dead_mutex))
 		return (NULL);
@@ -29,8 +28,11 @@ int
 	pthread_t	tid;
 
 #if 1
-	if (pthread_create(&tid, NULL, &is_all_eat, info))
-		return (ERR_INIT_THREAD);
+	if (info->num_of_must_eat)
+	{
+		if (pthread_create(&tid, NULL, &is_all_eat, info))
+			return (ERR_INIT_THREAD);
+	}
 #endif
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
@@ -53,12 +55,9 @@ int
 	init_info(&info, argc, argv);
 	run_threads(&info);
 
-#if 1
-	if (info.someone_dead)
-	{
-		if (sem_wait(info.msg_mutex))
-			return (1);
-	}
+#if 0
+	if (sem_wait(info.msg_mutex))
+		return (1);
 #endif
 	if (sem_wait(info.someone_dead_mutex))
 		return (1);
@@ -67,6 +66,7 @@ int
 	usleep(10000);
 	destroy_mutexes(&info);
 	free_memory(&info);
+	while (1);
 	return (0);
 }
 

@@ -3,7 +3,6 @@
 int
 	do_die(t_info *info, t_philo *philo)
 {
-	info->someone_dead = 1;
 	if (sem_post(info->someone_dead_mutex))
 		return (ERR_SEM_DO);
 	show_message(philo, STATUS_DIE);

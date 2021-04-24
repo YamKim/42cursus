@@ -44,7 +44,6 @@ typedef	struct	s_info
 	sem_t		*fork_mutexes;
 	sem_t		*msg_mutex;
 	sem_t		*someone_dead_mutex;
-	int			someone_dead;
 	struct s_philo	\
 				*philos;
 }				t_info;

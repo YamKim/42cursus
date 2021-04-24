@@ -11,9 +11,8 @@ static void
 	philo = (t_philo *)_philo; info = philo->info;
 	while(1)
 	{
-		if (info->someone_dead)
+		if (philo->eat_finished)
 			return (NULL);
-		
 		dif_time = get_cur_time() - philo->beg_eat_time;
 		if (!(philo->status == STATUS_EAT) \
 				&& dif_time > info->time_to_die)
@@ -28,8 +27,7 @@ static void
 }
 #endif
 
-void
-	*run_routine(void *_philo)
+void *run_routine(void *_philo)
 {
 	t_info		*info;
 	t_philo		*philo;
@@ -44,7 +42,7 @@ void
 #endif
 	while (1)
 	{
-		if (info->someone_dead)
+		if (philo->eat_finished)
 			return (NULL);
 		if (take_fork(info, philo))
 			return (NULL);
@@ -52,11 +50,7 @@ void
 			return (NULL);
 		if (return_fork(info, philo))
 			return (NULL);
-#if 1
 		if (philo->eat_finished)
-			return (NULL);
-#endif
-		if (info->someone_dead)
 			return (NULL);
 		if (do_sleep(info, philo))
 			return (NULL);
