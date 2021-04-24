@@ -50,6 +50,8 @@ void
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);
+		if (philo->eat_finished)
+			return (NULL);
 #if 0
 		if (info->someone_dead)
 			return (NULL);
