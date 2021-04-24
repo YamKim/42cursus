@@ -66,7 +66,6 @@ int
 	usleep(10000);
 	destroy_mutexes(&info);
 	free_memory(&info);
-	while (1);
 	return (0);
 }
 
