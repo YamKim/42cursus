@@ -24,5 +24,6 @@ void
 	dif_time = get_cur_time() - info->beg_prog_time;
 	status_msg = get_status_message(status);
 	printf("%lld %d %s\n", dif_time, philo->pos, status_msg);
-	pthread_mutex_unlock(&info->msg_mutex);
+	if (status != STATUS_DIE)
+		pthread_mutex_unlock(&info->msg_mutex);
 }

@@ -6,7 +6,6 @@ void
 	int	idx;
 
 	show_message(philo, STATUS_DIE);
-	pthread_mutex_lock(&(info->msg_mutex));
 	pthread_mutex_unlock(&(info->someone_dead_mutex));
 	idx = -1;
 #if 1
