@@ -32,7 +32,7 @@ typedef	struct	s_info
 	uint64_t	time_to_eat;
 	uint64_t	time_to_sleep;
 	int			num_of_must_eat;
-	int			someone_dead;
+//	int			someone_dead;
 	pthread_mutex_t \
 				*fork_mutexes;
 	pthread_mutex_t \
@@ -52,8 +52,6 @@ typedef struct	s_philo
 	int			rfork;
 	int			eat_cnt;
 	int			eat_finished;
-	pthread_mutex_t \
-				mutex;
 	pthread_mutex_t \
 				eat_mutex;
 	t_info		*info;

@@ -10,11 +10,7 @@ static void
 	info = (t_info *)_info;
 	idx = -1;
 	while (++idx < info->num_of_philos)
-	{
-		if (!(info->philos[idx].eat_finished))
-			pthread_mutex_lock(&info->philos[idx].eat_mutex);
-		// unlock! for each philo's eat_mutex  before exit this program
-	}
+		pthread_mutex_lock(&info->philos[idx].eat_mutex);
 	pthread_mutex_unlock(&(info->someone_dead_mutex));
 	return (NULL);
 }
@@ -28,8 +24,12 @@ int
 	pthread_t	tid;
 
 #if 1
-	if (pthread_create(&tid, NULL, &is_all_eat, info))
-		return (ERR_INIT_THREAD);
+	if (info->num_of_must_eat)
+	{
+		if (pthread_create(&tid, NULL, &is_all_eat, info))
+			return (ERR_INIT_THREAD);
+		pthread_detach(tid);
+	}
 #endif
 	idx = -1;
 	info->beg_prog_time = get_cur_time();
@@ -45,18 +45,15 @@ int
 }
 
 int
-	main(int argc, char *argv[])
-{
+	main(int argc, char *argv[]) {
 	t_info	info;
 
 	init_info(&info, argc, argv);
 	run_threads(&info);
 
-	if (info.someone_dead)
-		pthread_mutex_unlock(&(info.msg_mutex));
 	pthread_mutex_lock(&(info.someone_dead_mutex));
 	pthread_mutex_unlock(&(info.someone_dead_mutex));
-	usleep(10000);
+	usleep(500000);
 	destroy_mutexes(&info);
 	free_memory(&info);
 	return (0);

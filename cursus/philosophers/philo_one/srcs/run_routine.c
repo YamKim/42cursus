@@ -11,11 +11,8 @@ static void
 	info = philo->info;
 	while(1)
 	{
-#if 1
-		if (info->someone_dead)
+		if (philo->eat_finished)
 			return (NULL);
-#endif
-		pthread_mutex_lock(&(philo->mutex));
 		dif_time = get_cur_time() - philo->beg_eat_time;
 		if (!(philo->status == STATUS_EAT) \
 				&& dif_time > info->time_to_die)
@@ -23,7 +20,6 @@ static void
 			do_die(info, philo);
 			return (NULL);
 		}
-		pthread_mutex_unlock(&(philo->mutex));
 		usleep(100);
 	}
 	return (NULL);
@@ -43,16 +39,18 @@ void
 	pthread_detach(tid);
 	while (1)
 	{
-#if 1
+#if 0
 		if (info->someone_dead)
 			return (NULL);
 #endif
+#if 1
 		if (philo->eat_finished)
 			return (NULL);
+#endif
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);
-#if 1
+#if 0
 		if (info->someone_dead)
 			return (NULL);
 #endif
