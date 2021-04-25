@@ -12,7 +12,8 @@ static int
 		memset(sem_name, 0, 255);
 		gen_name_tag(sem_name, SEM_PHILO_EAT, idx);
 		info->philos[idx].eat_mutex = ft_sem_open(sem_name, 1);
-		if (!(info->philos[idx].eat_mutex))
+		sem_unlink(sem_name);
+		if ((info->philos[idx].eat_mutex) < 0)
 			return (ERR_SEM_OPEN);
 		if (sem_wait(info->philos[idx].eat_mutex))
 			return (ERR_SEM_DO);
@@ -22,22 +23,16 @@ static int
 
 static int
 	init_semaphores(t_info *info) {
-
-	info->fork_mutexes = ft_sem_open(SEM_FORK, info->num_of_philos);
-	if (!info->fork_mutexes)
-		return (ERR_SEM_OPEN);
-
-	info->msg_mutex = ft_sem_open(SEM_MSG, 1);
-	if (!info->msg_mutex)
-		return (ERR_SEM_OPEN);
-
-	info->someone_dead_mutex = ft_sem_open(SEM_SOMEONE_DEAD, 1);
-	if (!info->someone_dead_mutex)
+	sem_unlink(SEM_FORK);
+	sem_unlink(SEM_MSG);
+	sem_unlink(SEM_SOMEONE_DEAD);
+	if ((info->fork_mutexes = ft_sem_open(SEM_FORK, info->num_of_philos)) < 0
+		|| (info->msg_mutex = ft_sem_open(SEM_MSG, 1)) < 0
+		|| (info->someone_dead_mutex = ft_sem_open(SEM_SOMEONE_DEAD, 1)) < 0
+		|| init_semaphores_for_philos(info))
 		return (ERR_SEM_OPEN);
 	if (sem_wait(info->someone_dead_mutex))
 		return (ERR_SEM_DO);
-	if (init_semaphores_for_philos(info))
-		return (ERR_SEM_OPEN);
 	return (0);
 }
 
