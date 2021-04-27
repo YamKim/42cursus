@@ -11,7 +11,7 @@ static void
 	info = philo->info;
 	while(1)
 	{
-		if (philo->eat_finished)
+		if (info->program_finished || philo->eat_finished)
 			return (NULL);
 		dif_time = get_cur_time() - philo->beg_eat_time;
 		if (!(philo->status == STATUS_EAT) \
@@ -39,23 +39,15 @@ void
 	pthread_detach(tid);
 	while (1)
 	{
-#if 0
-		if (info->someone_dead)
-			return (NULL);
-#endif
 #if 1
-		if (philo->eat_finished)
+		if (info->program_finished || philo->eat_finished)
 			return (NULL);
 #endif
 		take_fork(info, philo);
 		do_eat(info, philo);
 		return_fork(info, philo);
-		if (philo->eat_finished)
+		if (info->program_finished || philo->eat_finished)
 			return (NULL);
-#if 0
-		if (info->someone_dead)
-			return (NULL);
-#endif
 		do_sleep(info, philo);
 	}
 	return (NULL);

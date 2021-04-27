@@ -9,9 +9,11 @@ static void
 
 	info = (t_info *)_info;
 	idx = -1;
-	while (++idx < info->num_of_philos)
+	while (!(info->program_finished) && ++idx < info->num_of_philos)
 		pthread_mutex_lock(&info->philos[idx].eat_mutex);
-	pthread_mutex_unlock(&(info->someone_dead_mutex));
+	if (idx == info->num_of_philos)
+		pthread_mutex_unlock(&(info->someone_dead_mutex));
+	info->program_finished = 1;
 	return (NULL);
 }
 #endif
@@ -53,7 +55,7 @@ int
 
 	pthread_mutex_lock(&(info.someone_dead_mutex));
 	pthread_mutex_unlock(&(info.someone_dead_mutex));
-	usleep(500000);
+	pthread_mutex_unlock(&info.msg_mutex);
 	destroy_mutexes(&info);
 	free_memory(&info);
 	return (0);

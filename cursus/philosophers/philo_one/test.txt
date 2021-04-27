@@ -1,0 +1,44 @@
+0 1 has taken a fork
+0 1 has taken a fork
+0 1 is eating
+1 3 has taken a fork
+1 3 has taken a fork
+1 3 is eating
+2000 1 is sleeping
+2000 2 has taken a fork
+2001 3 is sleeping
+2001 4 has taken a fork
+2001 4 has taken a fork
+2001 4 is eating
+2001 2 has taken a fork
+2001 2 is eating
+4001 4 is sleeping
+4001 1 has taken a fork
+4001 2 is sleeping
+4001 3 has taken a fork
+4001 3 has taken a fork
+4001 3 is eating
+4001 1 has taken a fork
+4001 1 is eating
+6001 3 is sleeping
+6001 4 has taken a fork
+6001 4 has taken a fork
+6001 4 is eating
+6001 1 is sleeping
+6001 2 has taken a fork
+6001 2 has taken a fork
+6001 2 is eating
+8001 4 is sleeping
+8001 1 has taken a fork
+8001 3 has taken a fork
+8001 3 has taken a fork
+8001 3 is eating
+8001 2 is sleeping
+8001 1 has taken a fork
+8001 1 is eating
+10001 4 has taken a fork
+10001 4 has taken a fork
+10001 4 is eating
+10001 2 has taken a fork
+10001 2 has taken a fork
+10001 2 is eating

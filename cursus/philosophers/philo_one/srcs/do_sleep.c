@@ -5,5 +5,5 @@ void
 {
 	philo->status = STATUS_SLEEP;
 	show_message(philo, STATUS_SLEEP);
-	my_sleep(info->time_to_sleep);
+	my_sleep(info->time_to_sleep, info);
 }

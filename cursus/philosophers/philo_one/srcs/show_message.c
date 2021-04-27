@@ -21,6 +21,8 @@ void
 
 	info = philo->info;
 	pthread_mutex_lock(&info->msg_mutex);
+	if (info->program_finished)
+		return ;
 	dif_time = get_cur_time() - info->beg_prog_time;
 	status_msg = get_status_message(status);
 	printf("%lld %d %s\n", dif_time, philo->pos, status_msg);

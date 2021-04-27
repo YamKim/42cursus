@@ -32,7 +32,7 @@ typedef	struct	s_info
 	uint64_t	time_to_eat;
 	uint64_t	time_to_sleep;
 	int			num_of_must_eat;
-//	int			someone_dead;
+	int			program_finished;
 	pthread_mutex_t \
 				*fork_mutexes;
 	pthread_mutex_t \
@@ -122,7 +122,7 @@ void
 ** my_sleep.c
 */
 void
-	my_sleep(uint64_t wait_time);
+	my_sleep(uint64_t wait_time, t_info *info);
 
 /*
 ** destroy_mutexes.c

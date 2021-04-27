@@ -13,7 +13,6 @@ static int
 	idx = -1;
 	while (++idx < info->num_of_philos)
 		pthread_mutex_init(&(info->fork_mutexes[idx]), NULL);
-//	info->someone_dead = 0;
 	pthread_mutex_init(&(info->msg_mutex), NULL);
 	pthread_mutex_init(&(info->someone_dead_mutex), NULL);
 	pthread_mutex_lock(&(info->someone_dead_mutex));
@@ -58,6 +57,7 @@ int
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->num_of_must_eat = ft_atoi(argv[5]);
+	info->program_finished = 0;
 	if (init_philos(info))
 		return (ERR_INIT_INFO);
 	return (init_mutexes(info));

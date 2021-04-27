@@ -5,14 +5,14 @@ void
 {
 	int		idx;
 
-	if (info->fork_mutexes)
-	{
-		idx = -1;
-		while (++idx < info->num_of_philos)
-		{
-			pthread_mutex_destroy(&(info->fork_mutexes[idx]));
-		}
-	}
+	idx = -1;
+	while (++idx < info->num_of_philos)
+		pthread_mutex_destroy(&(info->fork_mutexes[idx]));
+#if 1
+	idx = -1;
+	while (++idx < info->num_of_philos)
+		pthread_mutex_destroy(&(info->philos[idx].eat_mutex));
+#endif
 	pthread_mutex_destroy(&(info->msg_mutex));
 	return (NULL);
 }

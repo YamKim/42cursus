@@ -5,11 +5,18 @@ void
 {
 	int	idx;
 
+	if (info->program_finished)
+		return ;
 	show_message(philo, STATUS_DIE);
 	pthread_mutex_unlock(&(info->someone_dead_mutex));
 	idx = -1;
+	info->program_finished = 1;
 #if 1
 	while (++idx < info->num_of_philos)
+	{
+		if (info->philos[idx].eat_finished)
+			continue ;
 		pthread_mutex_unlock(&info->philos[idx].eat_mutex);
+	}
 #endif
 }
