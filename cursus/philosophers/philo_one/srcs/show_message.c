@@ -27,5 +27,8 @@ void
 	status_msg = get_status_message(status);
 	printf("%lld %d %s\n", dif_time, philo->pos, status_msg);
 	if (status != STATUS_DIE)
+	{
+		info->msg_mutex_flag = 1;
 		pthread_mutex_unlock(&info->msg_mutex);
+	}
 }

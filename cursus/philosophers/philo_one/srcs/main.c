@@ -55,7 +55,10 @@ int
 
 	pthread_mutex_lock(&(info.someone_dead_mutex));
 	pthread_mutex_unlock(&(info.someone_dead_mutex));
-	pthread_mutex_unlock(&info.msg_mutex);
+	usleep(5 * SEC2MSEC);
+	if (info.msg_mutex_flag)
+		pthread_mutex_unlock(&info.msg_mutex);
+	while (1);
 	destroy_mutexes(&info);
 	free_memory(&info);
 	return (0);

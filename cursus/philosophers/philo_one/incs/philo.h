@@ -37,6 +37,7 @@ typedef	struct	s_info
 				*fork_mutexes;
 	pthread_mutex_t \
 				someone_dead_mutex;
+	int			msg_mutex_flag;
 	pthread_mutex_t \
 				msg_mutex;
 	struct s_philo	\

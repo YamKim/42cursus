@@ -8,9 +8,7 @@ void
 	if (info->program_finished)
 		return ;
 	show_message(philo, STATUS_DIE);
-	pthread_mutex_unlock(&(info->someone_dead_mutex));
 	idx = -1;
-	info->program_finished = 1;
 #if 1
 	while (++idx < info->num_of_philos)
 	{
@@ -19,4 +17,6 @@ void
 		pthread_mutex_unlock(&info->philos[idx].eat_mutex);
 	}
 #endif
+	pthread_mutex_unlock(&(info->someone_dead_mutex));
+	info->program_finished = 1;
 }

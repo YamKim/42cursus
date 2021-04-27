@@ -14,6 +14,7 @@ void
 		pthread_mutex_destroy(&(info->philos[idx].eat_mutex));
 #endif
 	pthread_mutex_destroy(&(info->msg_mutex));
+	pthread_mutex_destroy(&(info->someone_dead_mutex));
 	return (NULL);
 }
 
