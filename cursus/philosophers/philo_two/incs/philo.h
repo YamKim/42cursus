@@ -41,7 +41,9 @@ typedef	struct	s_info
 	uint64_t	time_to_eat;
 	uint64_t	time_to_sleep;
 	int			num_of_must_eat;
+	int			program_finished;
 	sem_t		*fork_mutexes;
+	int			msg_mutex_flag;
 	sem_t		*msg_mutex;
 	sem_t		*someone_dead_mutex;
 	struct s_philo	\
@@ -104,7 +106,7 @@ uint64_t
 ** my_sleep.c
 */
 void
-	my_sleep(uint64_t wait_time);
+	my_sleep(uint64_t wait_time, t_info *info);
 
 /*
 ** do_eat.c

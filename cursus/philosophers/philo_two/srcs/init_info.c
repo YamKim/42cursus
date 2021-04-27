@@ -70,6 +70,8 @@ int
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->time_to_sleep = ft_atoi(argv[4]);
 	info->num_of_must_eat = ft_atoi(argv[5]);
+	info->msg_mutex_flag = 0;
+	info->program_finished = 0;
 	if (init_philos(info))
 		return (ERR_INIT_INFO);
 	return (init_semaphores(info));

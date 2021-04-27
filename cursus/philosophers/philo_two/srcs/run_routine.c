@@ -11,7 +11,7 @@ static void
 	philo = (t_philo *)_philo; info = philo->info;
 	while(1)
 	{
-		if (philo->eat_finished)
+		if (info->program_finished || philo->eat_finished)
 			return (NULL);
 		dif_time = get_cur_time() - philo->beg_eat_time;
 		if (!(philo->status == STATUS_EAT) \
@@ -42,7 +42,7 @@ void *run_routine(void *_philo)
 #endif
 	while (1)
 	{
-		if (philo->eat_finished)
+		if (info->program_finished || philo->eat_finished)
 			return (NULL);
 		if (take_fork(info, philo))
 			return (NULL);
@@ -50,7 +50,7 @@ void *run_routine(void *_philo)
 			return (NULL);
 		if (return_fork(info, philo))
 			return (NULL);
-		if (philo->eat_finished)
+		if (info->program_finished || philo->eat_finished)
 			return (NULL);
 		if (do_sleep(info, philo))
 			return (NULL);

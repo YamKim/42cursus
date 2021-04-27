@@ -9,13 +9,17 @@ static void
 
 	info = (t_info *)_info;
 	idx = -1;
-	while (++idx < info->num_of_philos)
+	while (!(info->program_finished) && ++idx < info->num_of_philos)
 	{
 		if (sem_wait(info->philos[idx].eat_mutex))
 			return (NULL);
 	}
-	if (sem_post(info->someone_dead_mutex))
-		return (NULL);
+	if (idx == info->num_of_philos)
+	{
+		if (sem_post(info->someone_dead_mutex))
+			return (NULL);
+	}
+	info->program_finished = 1;
 	return (NULL);
 }
 #endif
@@ -55,36 +59,18 @@ int
 	init_info(&info, argc, argv);
 	run_threads(&info);
 
-#if 0
-	if (sem_wait(info.msg_mutex))
-		return (1);
-#endif
 	if (sem_wait(info.someone_dead_mutex))
-		return (1);
+		return (ERR_SEM_DO);
 	if (sem_post(info.someone_dead_mutex))
-		return (1);
-	usleep(10000);
+		return (ERR_SEM_DO);
+	usleep(5 * SEC2MSEC);
+	if (info.msg_mutex_flag)
+	{
+		if (sem_post(info.msg_mutex))
+			return (ERR_SEM_DO);
+	}
 	destroy_mutexes(&info);
+	while (1);
 	free_memory(&info);
 	return (0);
 }
-
-#if 0
-static void
-	*is_all_eat(void *_info)
-{
-	int		idx;
-	t_info	*info;
-
-	info = (t_info *)_info;
-	idx = -1;
-	while (++idx < info->num_of_philos)
-	{
-		if (!(info->philos[idx].eat_finished))
-			pthread_mutex_lock(&info->philos[idx].eat_mutex);
-		// unlock! for each philo's eat_mutex  before exit this program
-	}
-	pthread_mutex_unlock(&(info->someone_dead_mutex));
-	return (NULL);
-}
-#endif

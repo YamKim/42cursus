@@ -8,7 +8,6 @@ void
 
 	(void)info;
     sem_unlink(SEM_FORK);
-    sem_unlink(SEM_MSG);
     sem_unlink(SEM_SOMEONE_DEAD);
 	idx = -1;
 	while (++idx < info->num_of_philos)
@@ -17,5 +16,6 @@ void
 		gen_name_tag(sem_name, SEM_PHILO_EAT, idx);
 		sem_unlink(sem_name);
 	}
+    sem_unlink(SEM_MSG);
 	return (NULL);
 }
