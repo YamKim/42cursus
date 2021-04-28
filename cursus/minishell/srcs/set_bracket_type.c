@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_bracket_type.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juepark <juepark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 13:20:34 by juepark           #+#    #+#             */
+/*   Updated: 2021/04/27 14:50:09 by juepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incs/minishell.h"
 
-static int	is_bracket_error(
-			char *str,
-			int *idx,
-			char bracket,
-			int *cnt)
+static int
+	is_bracket_error(
+	char *str,
+	int *idx,
+	char bracket,
+	int *cnt)
 {
 	while (str[*idx] && str[*idx] == bracket && (*cnt)--)
 		++(*idx);
@@ -13,9 +26,9 @@ static int	is_bracket_error(
 	return (0);
 }
 
-int set_bracket_type(char *str, int *idx)
+int
+	set_bracket_type(char *str, int *idx)
 {
-	int		ret;
 	int		cnt;
 
 	cnt = 2;

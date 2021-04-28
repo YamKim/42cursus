@@ -1,15 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_dollar_eval.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juepark <juepark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 13:17:13 by juepark           #+#    #+#             */
+/*   Updated: 2021/04/27 14:44:28 by juepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incs/minishell.h"
 
-static int	is_finish_cond(char c)
+extern int g_signal;
+
+static int
+	is_finish_cond(char c)
 {
 	if (c == '\"')
-		return (1); if (c == '\'') return (1);
+		return (1);
+	if (c == '\'')
+		return (1);
 	if (c == ' ')
+		return (1);
+	if (c == '/')
 		return (1);
 	return (0);
 }
 
-static int	get_word_len(char *part)
+static int
+	get_word_len(char *part)
 {
 	int	ret;
 
@@ -23,32 +43,26 @@ static int	get_word_len(char *part)
 	return (ret);
 }
 
-char	*get_dollar_eval(char *part, t_list *env_list, int *idx)
+char
+	*get_dollar_eval(char *part, t_list *env_list, int *idx)
 {
 	char	*ret;
 	int		word_len;
-	int		dollor_eval_len;
 	char	*tmp_key;
 
 	if (part[0] != '$')
 		return (NULL);
 	word_len = get_word_len(part);
-	//$
 	if (word_len == 1)
 	{
 		*idx = *idx + word_len;
 		return (ft_strdup("$"));
 	}
-	//$$
-	//$? 
-#if 0
-	if ((ft_strncmp("$?", part, get_max_strlen("$?", part))) == 0)
+	if (exact_strncmp("$?", part) == 0)
 	{
 		*idx = *idx + word_len;
-		return (ft_itoa(g_ret));	
+		return (ft_itoa(g_signal));
 	}
-#endif
-	//$HOME
 	tmp_key = ft_substr(part, 1, word_len - 1);
 	ret = ft_strdup(get_eval(env_list, tmp_key));
 	*idx = *idx + word_len;

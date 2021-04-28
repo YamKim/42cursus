@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gen_env.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juepark <juepark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/16 13:16:24 by juepark           #+#    #+#             */
+/*   Updated: 2021/04/27 14:41:22 by juepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incs/minishell.h"
 
-static int	get_eq_idx(char *set_cpy)
+static int
+	get_eq_idx(char *set_cpy)
 {
 	int	ret;
 
@@ -15,7 +28,8 @@ static int	get_eq_idx(char *set_cpy)
 	return (-1);
 }
 
-static char	*get_item(char *str, char *str_cpy, char delimit)
+static char
+	*get_item(char *str, char *str_cpy, char delimit)
 {
 	char	**tab;
 	char	*ret;
@@ -27,7 +41,8 @@ static char	*get_item(char *str, char *str_cpy, char delimit)
 	return (ret);
 }
 
-static t_env	*get_env_form(char *key, char *val)
+static t_env
+	*get_env_form(char *key, char *val)
 {
 	t_env	*ret;
 
@@ -39,13 +54,13 @@ static t_env	*get_env_form(char *key, char *val)
 	return (ret);
 }
 
-t_env	*gen_env(char *str)
+t_env
+	*gen_env(char *str)
 {
 	char	*str_cpy;
 	char	*key;
 	char	*val;
 	int		eq_idx;
-	t_list	*tmp_elist;
 
 	if (!(str_cpy = ft_strdup(str)))
 		return (NULL);
@@ -56,12 +71,10 @@ t_env	*gen_env(char *str)
 	else if (!(key = get_item(str, str_cpy, '=')))
 		return (NULL);
 	eq_idx = get_eq_idx(str_cpy) + 1;
-	// in case that export has only key without val
 	if (eq_idx == 0)
 		val = ft_strdup("");
 	else if (!(val = get_item(&str[eq_idx], &str_cpy[eq_idx], ' ')))
 		return (NULL);
-	// in case that finding key in env_list
 	free(str_cpy);
-	return (get_env_form(key, val));	
+	return (get_env_form(key, val));
 }

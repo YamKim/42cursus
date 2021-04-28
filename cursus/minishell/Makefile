@@ -1,72 +1,71 @@
 NAME = minishell
 
 CC = gcc
-#CFLAGS = -Wall -Wextra -Werror
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 
 FUNC =	main \
-	  	init_minishell \
-		pk_split \
-		handle_quote \
-		handle_bit \
-		inc_shlvl \
-		gen_line_list \
-		gen_tokens_list \
-		del_quote \
-		get_eval \
-		gen_tokens \
-		print_tokens \
-		free_tokens \
-		set_list_to_darr \
-		print_darr \
-		free_darr \
+		add_elist \
+		append_history_list \
+		calc \
 		categorize_cmd \
-		select_sh_bti \
+		close_tokens_fds \
+		cvt_char_to_str \
+		del_quote \
+		exact_strncmp \
+		free_darr \
+		free_env \
+		free_tokens \
+		ft_cursor \
+		ft_putchar_tc \
+		gen_elist \
+		gen_env \
+		gen_line_list \
+		gen_tokens \
+		gen_tokens_list \
+		get_dollar_eval \
+		get_elist \
+		get_eval \
+		get_max_strlen \
+		get_next_line_tc \
+		handle_arg \
+		handle_bit \
+		handle_key_arrow \
+		handle_quote \
+		handle_sig \
+		handle_sig_in_proc \
+		inc_shlvl \
+		is_bracket \
+		is_dquote \
+		is_exist_dir \
+		is_key_arrow \
+		is_squote \
+		mod_eval \
+		open_valid_fd \
+		pk_split \
+		print_elist \
+		print_list \
+		print_sorted_elist \
+		print_tokens \
 		redo_sh_bti \
 		run_bti \
-		get_bti_path \
-		mod_eval \
-		gen_env \
-		free_env \
-		sh_bti_export \
-		sh_bti_unset \
-		sh_bti_env \
-		sh_bti_echo \
-		sh_bti_cd \
-		sh_bti_pwd \
-		sh_bti_exit \
-		get_max_strlen \
-		get_dollar_eval \
-		cvt_char_to_str \
-		is_squote \
-		is_dquote \
-		handle_arg \
-		exact_strncmp \
-		gen_elist \
-		get_elist \
-		add_elist \
-		free_elist \
-		print_elist \
-		print_line_list \
-		set_darr_to_list \
-		print_list \
 		run_cmd \
-		show_error \
-		exit_fatal \
-		exit_shell \
-		is_bracket \
+		select_sh_bti \
 		set_bracket_type \
+		set_darr_to_list \
 		set_fd \
-		is_valid_fd \
-		open_valid_fd \
-		get_next_line_tc \
-		ft_cursor \
-		ft_cursor2 \
-		ft_putchar_tc \
-		calc \
-		is_key_arrow \
-		append_history_list \
-		handle_sig_in_gnl
+		set_list_to_darr \
+		set_signo \
+		sh_bti_cd \
+		sh_bti_echo \
+		sh_bti_env \
+		sh_bti_exit \
+		sh_bti_export \
+		sh_bti_export_utils \
+		sh_bti_pwd \
+		sh_bti_unset \
+		show_error \
+		sort_elist \
+		init_minishell \
 
 OBJDIR = ./objs
 INCDIR = ./incs
@@ -81,14 +80,14 @@ OBJS = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(MAKE) -C $(LIBDIR) all
-	$(CC) $(CFLAGS) -lcurses -o $(NAME) $(LIBFT) $(OBJS) #2> /dev/null || true
-	echo "Start Program"
+	@$(MAKE) -C $(LIBDIR) all
+	@$(CC) $(CFLAGS) -ltermcap -o $(NAME) $(LIBFT) $(OBJS) 2> /dev/null || true
+	@echo "Start Program"
 	
-#$(OBJS): $(SRCS)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	mkdir $(OBJDIR) 2> /dev/null || true
-	$(CC) $(CFLAGS) -I$(INCDIR) -lcurses -o $@ -c $< #2> /dev/null || true
+	@printf "Generating minishell... %-33.33s\r" $@
+	@mkdir $(OBJDIR) 2> /dev/null || true
+	@$(CC) $(CFLAGS) -I$(INCDIR) -o $@ -c $< 2> /dev/null || true
 
 clean:
 	@rm -rf $(OBJDIR)

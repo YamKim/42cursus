@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_quote.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/21 11:22:03 by yekim             #+#    #+#             */
+/*   Updated: 2021/04/21 11:22:31 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incs/minishell.h"
 
 static int	handle_squote_in_dquote(int val)
@@ -29,13 +41,11 @@ int			handle_quote(
 {
 	int	ret;
 	int	str_cpy_idx;
-	int	tmp_flag;
 
 	ret = 0;
 	str_cpy_idx = -1;
 	while (*str)
 	{
-		// when DQUOTE is opened, SQUOTE is useless as str starter
 		if (!check_bit(ret, BIT_SQUOTE) && *str == '\'')
 			ret = handle_squote_in_dquote(ret);
 		else if (!check_bit(ret, BIT_DQUOTE) && *str == '\"')
@@ -44,7 +54,11 @@ int			handle_quote(
 			ret = turn_off_bit(ret, BIT_SQUOTE);
 		else if (check_bit(ret, BIT_DQUOTE) && *str == '\"')
 			ret = turn_off_bit(ret, BIT_DQUOTE);
-		// when SQUOTE or DQUOTE is on
+		if (*str == '\\' && *str != '\0')
+		{
+			++str;
+			++str_cpy_idx;
+		}
 		if (((*str_cpy)[++str_cpy_idx] == c && ret))
 			(*str_cpy)[str_cpy_idx] = '_';
 		++str;
