@@ -30,7 +30,8 @@ bool Contact::setInfo(int index)
     this->index = index;
     for (int i = FirstName; i <= Secret; ++i)
     {
-        std::cout << "# Input " << fieldName[i] << ":" << std::endl;
+        std::cout << "** Input " << fieldName[i] << ":" << std::endl;
+        std::cout << ">> ";
         #if !DEBUG_FILESTREAM
         std::getline(std::cin, this->info[i]);
         #endif
@@ -59,12 +60,18 @@ void Contact::showInfo(void)
     for (int i = FirstName; i <= Nickname; i++)
 	{
 		std::cout << "|";
-        #if 0
 		if (this->info[i].length() > COUT_COLUMN_WIDTH)
 			std::cout << this->info[i].substr(0, 9) << ".";
 		else
-        #endif
 			std::cout << std::setw(COUT_COLUMN_WIDTH) << this->info[i];
 	}
 	std::cout << "|" << std::endl;
+}
+
+void Contact::showAllField(void)
+{
+   std::cout << "| index: " << this->index << " ---------------------------------|" << std::endl;
+   for (int i = FirstName; i <= Secret; ++i)
+        std::cout << "| " << fieldName[i] << ": " << this->info[i] << std::endl;
+   std::cout << "|------------------------------------------|" << std::endl;
 }

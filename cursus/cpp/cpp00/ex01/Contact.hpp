@@ -39,4 +39,6 @@ public:
         setInfo(int index);
     void
         showInfo(void);
+    void
+        showAllField(void);
 };

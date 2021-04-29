@@ -18,9 +18,9 @@ public:
     PhoneBook();
     ~PhoneBook();
 
-    void showContacts();
-    void addContact();
-    void searchContact();
+    void showAllContactInfo(void);
+    void addContact(void);
+    void searchContact(void);
 };
 
 #endif
