@@ -19,10 +19,10 @@ void ponyOnTheHeap(void)
 
 int main(void)
 {
-    std::cout << "* ponyOnTheStack==============="<< std::endl;
+    std::cout << "==========ponyOnTheStack============"<< std::endl;
     ponyOnTheStack();
-    std::cout << "* ponyOnTheHeap================"<< std::endl;
+    std::cout << "==========ponyOnTheHeap============="<< std::endl;
     ponyOnTheHeap();
-    std::cout << "* Program End==================" << std::endl;
+    std::cout << "==========Program End===============" << std::endl;
     return (0);
 }
