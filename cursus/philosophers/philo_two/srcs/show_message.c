@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show_message.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/01 06:56:40 by yekim             #+#    #+#             */
+/*   Updated: 2021/05/01 07:07:23 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incs/philo.h"
 
 static char
 	*get_status_message(int status)
 {
 	if (status == STATUS_FORK)
-		return("has taken a fork");
-	else if  (status == STATUS_EAT)
-		return("is eating");
-	else if  (status == STATUS_SLEEP)
-		return("is sleeping");
+		return ("has taken a fork");
+	else if (status == STATUS_EAT)
+		return ("is eating");
+	else if (status == STATUS_SLEEP)
+		return ("is sleeping");
 	return ("died");
 }
 
@@ -33,6 +45,5 @@ int
 		if (sem_post(info->msg_mutex))
 			return (ERR_SEM_DO);
 	}
-		
 	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_info.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yekim <yekim@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/01 06:56:38 by yekim             #+#    #+#             */
+/*   Updated: 2021/05/01 07:06:11 by yekim            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incs/philo.h"
 
 static int
@@ -22,7 +34,8 @@ static int
 }
 
 static int
-	init_semaphores(t_info *info) {
+	init_semaphores(t_info *info)
+{
 	sem_unlink(SEM_FORK);
 	sem_unlink(SEM_MSG);
 	sem_unlink(SEM_SOMEONE_DEAD);
@@ -40,7 +53,7 @@ static int
 	init_philos(t_info *info)
 {
 	int			idx;
-			
+
 	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philos);
 	if (!info->philos)
 		return (ERR_INIT_INFO);
