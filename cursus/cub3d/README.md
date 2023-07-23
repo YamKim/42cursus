@@ -30,5 +30,6 @@ $ ./cub3D maps/ex_bonus.cub
 - esc: 게임 종료
 
 ### Demo
+[시연 영상](cub3D.mov)
 ![시작장면](cub3D_screen_shot1.png)
 ![필드](cub3D_screen_shot2.png)
