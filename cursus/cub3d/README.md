@@ -28,3 +28,7 @@ $ ./cub3D maps/ex_bonus.cub
 - h: 올려다 보기
 - g: 내려다 보기
 - esc: 게임 종료
+
+### Demo
+![시작장면](cub3D_screen_shot1.png)
+![필드](cub3D_screen_shot2.png)
